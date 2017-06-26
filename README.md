@@ -1,5 +1,8 @@
 # SE_Project
 The software engineering course projecct in SJTU
-hi
-我是谢振涛
-我是钱鑫鑫
+
+## Group Member
+[ZhaoMingxin](https://github.com/Katnisszmx)\
+[QianXinxin](https://github.com/naiveee-Q)\
+[XieZhantao](https://github.com/sjtuXZT)\
+[Wang Tao](https://github.com/IrvingW)\
