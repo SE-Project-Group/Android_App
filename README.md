@@ -1,10 +1,8 @@
 ﻿# Android App
 The software engineering course project in SJTU
-fenzhifenzhi
-why why why
 
 ## Group Member
-[ZhaoMingxin](https://github.com/Katnisszmx)\
-[QianXinxin](https://github.com/naiveee-Q)\
-[XieZhantao](https://github.com/sjtuXZT)\
+[Zhao Mingxin](https://github.com/Katnisszmx)\
+[Qian Xinxin](https://github.com/naiveee-Q)\
+[Xie Zhentao](https://github.com/sjtuXZT)\
 [Wang Tao](https://github.com/IrvingW)
