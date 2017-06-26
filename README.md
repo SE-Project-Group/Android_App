@@ -1,4 +1,4 @@
-﻿# SE_Project
+﻿# Android App
 The software engineering course project in SJTU
 fenzhifenzhi
 why why why
