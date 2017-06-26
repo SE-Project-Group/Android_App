@@ -1,8 +1,10 @@
-﻿# Android App
+﻿# SE_Project
 The software engineering course project in SJTU
-
+qisiwole
+test233
+aaaa
 ## Group Member
-[Zhao Mingxin](https://github.com/Katnisszmx)\
-[Qian Xinxin](https://github.com/naiveee-Q)\
-[Xie Zhentao](https://github.com/sjtuXZT)\
+[ZhaoMingxin](https://github.com/Katnisszmx)\
+[QianXinxin](https://github.com/naiveee-Q)\
+[XieZhantao](https://github.com/sjtuXZT)\
 [Wang Tao](https://github.com/IrvingW)
