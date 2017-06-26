@@ -1,6 +1,7 @@
 ﻿# SE_Project
 The software engineering course project in SJTU
 fenzhifenzhi
+why why why
 
 ## Group Member
 [ZhaoMingxin](https://github.com/Katnisszmx)\
