@@ -1,8 +1,8 @@
 # SE_Project
-The software engineering course projecct in SJTU
+The software engineering course project in SJTU
 
 ## Group Member
 [ZhaoMingxin](https://github.com/Katnisszmx)\
 [QianXinxin](https://github.com/naiveee-Q)\
 [XieZhantao](https://github.com/sjtuXZT)\
-[Wang Tao](https://github.com/IrvingW)\
+[Wang Tao](https://github.com/IrvingW)
