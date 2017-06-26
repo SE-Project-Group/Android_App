@@ -1,9 +1,7 @@
-# SE_Project
+﻿# SE_Project
 The software engineering course project in SJTU
-test
+fenzhifenzhi
 
-ÌÎÌÎ´ó±¿µ°
-test233
 ## Group Member
 [ZhaoMingxin](https://github.com/Katnisszmx)\
 [QianXinxin](https://github.com/naiveee-Q)\
