@@ -1,7 +1,6 @@
-# SE_Project
+﻿# SE_Project
 The software engineering course project in SJTU
-
-ÌÎÌÎ´ó±¿µ°
+qisiwole
 test233
 ## Group Member
 [ZhaoMingxin](https://github.com/Katnisszmx)\
