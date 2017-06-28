@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        android:alpha="100"
+        android:layout_below="@+id/typonumber"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入手机号"
+                android:maxLines="2"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入密码"
+                android:maxLines="2"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_com"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="再次输入密码"
+                android:maxLines="2"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/sign_up_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:text="注册" />
+    </android.support.design.widget.BottomNavigationView>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/shadow"
+            android:alpha="100"
+            android:layout_below="@+id/typonumber"/>
+    </LinearLayout>
+
+</LinearLayout>
