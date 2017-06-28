@@ -24,8 +24,8 @@
         android:id="@+id/sign_btn"
         android:text="注册/登陆"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btn_style"/>
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>
 
     <LinearLayout
