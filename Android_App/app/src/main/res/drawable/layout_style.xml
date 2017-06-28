@@ -2,13 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item>
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-
         <solid android:color="#FFFFFF" />
-
         <stroke
             android:width="0.5dp"
             android:color="#505050" />
-
         <padding
             android:bottom="1dp"
             android:left="0.5dp"

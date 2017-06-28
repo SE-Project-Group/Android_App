@@ -57,13 +57,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Feed feed = mFeedList.get(position);
         holder.feed_owner_view.setText(feed.getFeed_owner());
         holder.feedText_view.setText(feed.getText());
-        //
         String temp = String.valueOf(feed.getComment_cnt());
         holder.comment_btn.setText(temp);
         temp = String.valueOf(feed.getLike_cnt());
         holder.like_btn.setText(temp);
         holder.position_view.setText(feed.getPosition());
-        holder.timestamp_view.setText(feed.getTimestamp().toString());
+        temp = feed.getTimestamp().toString();
+        holder.timestamp_view.setText(temp);
         holder.portrait_view.setImageResource(feed.getPortrait_id());
         holder.picture_view.setImageResource((feed.getPic_id_list()).get(0));
     }
