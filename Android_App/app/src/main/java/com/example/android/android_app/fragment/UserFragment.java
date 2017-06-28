@@ -1,12 +1,16 @@
 package com.example.android.android_app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.example.android.android_app.HomeActivity;
+import com.example.android.android_app.LogInActivity;
 import com.example.android.android_app.R;
 
 /**
@@ -21,4 +25,16 @@ public class UserFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Button sign_btn = (Button) getActivity().findViewById(R.id.sign_btn);
+        sign_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 }
