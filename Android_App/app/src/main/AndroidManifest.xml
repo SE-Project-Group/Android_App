@@ -11,14 +11,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LogInActivity"
-            android:label="注册">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="请登录">
         </activity>
 
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".HomeActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>

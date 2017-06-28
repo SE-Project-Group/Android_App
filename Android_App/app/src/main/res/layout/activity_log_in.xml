@@ -6,58 +6,40 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginLeft="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_marginTop="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名:"
-            android:textSize="30dp"/>
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0.25" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginLeft="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_marginTop="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  密码  "
-            android:textSize="30dp"/>
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="0.25"
-            android:inputType="textPassword"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:background="#3F51B5"
-        android:text="注册"
-        android:textSize="30dp"
-        android:textAlignment="center"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical"
+        android:layout_marginTop="30dp">
+        <EditText
+            android:id="@+id/user_name"
+            android:background="@drawable/edittext_bg"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:hint="用户名/手机号" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:hint="密码" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#3F51B5"
+            android:layout_marginTop="20dp"
+            android:text="登陆"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+
 
 
 </LinearLayout>

@@ -20,4 +20,5 @@ public class UserFragment extends Fragment {
         View view = inflater.inflate(R.layout.user_fragment, container, false);
         return view;
     }
+
 }

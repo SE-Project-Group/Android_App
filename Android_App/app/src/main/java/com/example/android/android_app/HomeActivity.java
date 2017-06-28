@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -18,7 +19,7 @@ import com.example.android.android_app.fragment.UserFragment;
 
 import static java.security.AccessController.getContext;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
     private NewFeedFragment newFeedFragment;
@@ -31,6 +32,18 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         setDefaultFragment();
         setBottomNavigator();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.sign_btn:
+                Intent intent = new Intent(HomeActivity.this, LogInActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 
     private void setDefaultFragment(){
@@ -100,4 +113,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
