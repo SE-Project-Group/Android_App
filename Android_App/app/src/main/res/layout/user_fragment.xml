@@ -34,7 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/layout_style"
         android:orientation="vertical">
 
@@ -43,43 +43,62 @@
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_albumn"/>
             <TextView
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的相册"/>
 
         </LinearLayout>
+        <View
+            android:layout_height="0.1px"
+            android:background="#505050"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="40dp">
+        </View>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
             android:orientation="horizontal">
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="收藏"/>
+                android:src="@drawable/user_favorite"/>
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的点赞"/>
 
         </LinearLayout>
+        <View
+            android:layout_height="1px"
+            android:background="#505050"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dp">
+        </View>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_comment"/>
             <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的评论"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/menu_item"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的草稿"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -87,7 +106,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/layout_style"
         android:orientation="vertical">
 
@@ -96,8 +115,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
             android:orientation="horizontal">
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_settings"/>
             <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="设置"/>
