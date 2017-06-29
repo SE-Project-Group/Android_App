@@ -23,7 +23,7 @@
         android:text="登陆体验更多功能"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:textSize="15dp"
+        android:textSize="17dp"
         />
     <Button
         android:layout_width="wrap_content"
@@ -53,13 +53,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_albumn"/>
+                android:src="@drawable/user_albumn"
+                android:layout_marginTop="5dp"/>
             <TextView
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的相册"/>
+                android:text="我的相册"
+                android:textSize="17dp"/>
 
         </LinearLayout>
         <View
@@ -76,13 +79,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_favorite"/>
+                android:src="@drawable/user_favorite"
+                android:layout_marginTop="5dp"/>
             <TextView
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的点赞"/>
+                android:text="我的点赞"
+                android:textSize="17dp"/>
 
         </LinearLayout>
         <View
@@ -99,13 +105,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_comment"/>
+                android:src="@drawable/user_comment"
+                android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的评论"/>
+                android:text="我的评论"
+                android:textSize="17dp"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -125,13 +134,16 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_settings"/>
+                android:src="@drawable/user_settings"
+                android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设置"/>
+                android:text="设置"
+                android:textSize="17dp"/>
 
         </LinearLayout>
 

@@ -19,11 +19,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="头像"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:textSize="17dp"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
+                android:layout_marginTop="2dp"
                 />
 
         </LinearLayout>
@@ -46,7 +48,8 @@
                     android:layout_marginTop="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="用户名" />
+                    android:text="用户名"
+                    android:textSize="17dp"/>
 
             </LinearLayout>
             <View
@@ -66,11 +69,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="手机号码"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="17dp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/detail_right_back"
+                    android:layout_marginTop="2dp"
                     />
             </LinearLayout>
             <View
@@ -90,11 +95,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="密码"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="17dp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/detail_right_back"
+                    android:layout_marginTop="2dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -116,7 +123,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="性别"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="17dp"/>
 
             </LinearLayout>
 
@@ -138,11 +146,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="生日"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="17dp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/detail_right_back"
+                    android:layout_marginTop="2dp"
                     />
         </LinearLayout>
 
