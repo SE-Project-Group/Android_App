@@ -38,7 +38,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="hhhh"
+                        android:text="@string/user_name"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:textSize="17dp"/>
@@ -104,13 +104,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
         <View
             android:layout_height="0.1px"
-            android:background="#505050"
+            android:background="#e0e0e0"
             android:layout_width="match_parent"
             android:layout_marginLeft="40dp">
         </View>
@@ -137,13 +137,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
         <View
             android:layout_height="1px"
-            android:background="#505050"
+            android:background="#e0e0e0"
             android:layout_width="fill_parent"
             android:layout_marginLeft="40dp">
         </View>
@@ -170,14 +170,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
 
         <View
             android:layout_height="1px"
-            android:background="#505050"
+            android:background="#e0e0e0"
             android:layout_width="fill_parent"
             android:layout_marginLeft="40dp">
         </View>
@@ -205,14 +205,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
 
         <View
             android:layout_height="1px"
-            android:background="#505050"
+            android:background="#e0e0e0"
             android:layout_width="fill_parent"
             android:layout_marginLeft="40dp">
         </View>
@@ -240,7 +240,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
@@ -276,7 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 />
 
         </LinearLayout>
