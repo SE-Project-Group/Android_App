@@ -47,7 +47,8 @@
             android:process=":remote" />
 
         <activity android:name=".NewFeedActivity" />
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PersonalPageActivity"></activity>
     </application>
 
 </manifest>

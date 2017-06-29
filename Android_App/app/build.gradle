@@ -29,6 +29,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
     compile 'com.android.support:recyclerview-v7:25.2.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    testCompile 'junit:junit:4.12'
 }

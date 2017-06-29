@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.baidu.platform.comapi.map.B;
 import com.example.android.android_app.LogInActivity;
+import com.example.android.android_app.PersonalPageActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SearchActivity;
 import com.example.android.android_app.SettingActivity;
@@ -40,11 +41,22 @@ public class LogedUserFragment extends Fragment{
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.logedUserToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        // setting button
         LinearLayout setting_btn = (LinearLayout) getActivity().findViewById(R.id.setting_btn);
         setting_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // personal page button
+        LinearLayout personalPage_btn = (LinearLayout) getActivity().findViewById(R.id.personalPage_btn);
+        personalPage_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PersonalPageActivity.class);
                 startActivity(intent);
             }
         });
