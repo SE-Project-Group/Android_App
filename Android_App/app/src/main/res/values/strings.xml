@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Android_App</string>
     <string name="user_name">User WangTao</string>
+    <string name="feed_num">8</string>
+    <string name="my_follow">4</string>
+    <string name="my_follower">7999</string>
+    <string name="like_num">222</string>
+    <string name="share_num">768787</string>
 </resources>
