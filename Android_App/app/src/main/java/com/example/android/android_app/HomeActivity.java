@@ -37,6 +37,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.example.android.android_app.fragment.DiscoverAroundFragment;
 import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
+import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
 import com.example.android.android_app.fragment.NewFeedFragment;
 import com.example.android.android_app.fragment.UserFragment;
@@ -53,10 +54,14 @@ public class HomeActivity extends AppCompatActivity{
     private NewFeedFragment newFeedFragment;
     private DiscoverFragment discoverFragment;
     private DiscoverAroundFragment discoverAroundFragment;
+    private LogedUserFragment logedUserFragment;
     private UserFragment userFragment;
     private BottomNavigationBar bottomNavigationBar;
     private SearchView mSearchView;
     private LocationClient mLocationClient;
+
+    private boolean loged;
+
 
     public LocationClient getmLocationClient() {
         return mLocationClient;
@@ -109,6 +114,7 @@ public class HomeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
 
+        loged = true;
     }
 
     private void setDefaultFragment(){
@@ -161,9 +167,17 @@ public class HomeActivity extends AppCompatActivity{
                         f = homeFragment;
                         break;
                     case 4:
-                        if(userFragment == null)
-                            userFragment = new UserFragment();
-                        f = userFragment;
+                        // check if the user has log in first
+                        if(loged == true) {
+                            if (logedUserFragment == null)
+                                logedUserFragment = new LogedUserFragment();
+                            f = logedUserFragment;
+                        }
+                        else{
+                            if(userFragment == null)
+                                userFragment = new UserFragment();
+                            f = userFragment;
+                        }
                         break;
                     default:
                         break;

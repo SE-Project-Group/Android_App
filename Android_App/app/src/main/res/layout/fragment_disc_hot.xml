@@ -17,14 +17,16 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <Button
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/discover_search"
                 android:id="@+id/search_toolBar_btn"
                 android:layout_width="match_parent"
                 android:layout_height="70px"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:background="@color/white"
-                android:text="搜索"
-                android:textColor="@color/black"/>
+                android:background="@drawable/search_button"
+                android:text="搜索更多精彩内容"
+                android:textColor="@color/black" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
