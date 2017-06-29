@@ -4,11 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static android.R.attr.button;
 
@@ -54,6 +59,16 @@ public class LogInActivity extends AppCompatActivity {
         String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
         String password = ((EditText) findViewById(R.id.password)).getText().toString();
         // send log in information to server
+        String url = "http://10.0.2.2/track/clientLogin?user_name="+user_name+"&password="+password ;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url).build();
+        try{
+            Response response = client.newCall(request).execute();
+            String result = response.body().string();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         // get result
 
