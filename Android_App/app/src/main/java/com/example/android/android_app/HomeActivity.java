@@ -1,12 +1,17 @@
 package com.example.android.android_app;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,30 +30,81 @@ import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.mapapi.SDKInitializer;
+import com.example.android.android_app.fragment.DiscoverAroundFragment;
 import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
 import com.example.android.android_app.fragment.MessageFragment;
 import com.example.android.android_app.fragment.NewFeedFragment;
 import com.example.android.android_app.fragment.UserFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.security.AccessController.getContext;
 
 public class HomeActivity extends AppCompatActivity{
+    private BDLocation now_location;
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
     private NewFeedFragment newFeedFragment;
     private DiscoverFragment discoverFragment;
+    private DiscoverAroundFragment discoverAroundFragment;
     private UserFragment userFragment;
     private BottomNavigationBar bottomNavigationBar;
     private SearchView mSearchView;
+    private LocationClient mLocationClient;
+
+    public LocationClient getmLocationClient() {
+        return mLocationClient;
+    }
+
+    public DiscoverFragment getDiscoverFragment() {
+        return discoverFragment;
+    }
+
+    public DiscoverAroundFragment getDiscoverAroundFragment() {
+        return discoverAroundFragment;
+    }
+
+    // new discoverAroundFragment instance when switch fragment
+    public void setDiscoverAroundFragment(DiscoverAroundFragment discoverAroundFragment) {
+        this.discoverAroundFragment = discoverAroundFragment;
+    }
+
+    public BDLocation getNow_location() {
+        return now_location;
+    }
+
+    // location listener
+    public class MyLocationListener implements BDLocationListener{
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            now_location = bdLocation;
+        }
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // get location client
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(new MyLocationListener());
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_home);
+        // get permissions
+        getPermissions();
         setDefaultFragment();
         setBottomNavigator();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
+
     }
 
     private void setDefaultFragment(){
@@ -119,5 +175,60 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
     }
-    
+
+    private void getPermissions(){
+        List<String> permissionList = new ArrayList<>();
+        // access fine location permission
+        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
+        permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        // access read phone state permission
+        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
+                permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        // access write external storage permission
+        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
+                permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        // check permission list
+        if(!permissionList.isEmpty()){
+            String [] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(HomeActivity.this, permissions, 1);
+        }
+    }
+
+    // deal with request permission result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case 1:
+                if (grantResults.length > 0){
+                    for (int result : grantResults){
+                        if (result != PackageManager.PERMISSION_GRANTED){
+                            // show message
+                            Toast.makeText(this, "必须同意所有权限才可以使用本程序", Toast.LENGTH_SHORT).show();
+                            finish();
+                            return;
+                        }
+                    }
+                }else{
+                    Toast.makeText(this, "未知错误", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    // make good use of resource
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }
