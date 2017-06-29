@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editText"
+            android:background="@drawable/add_text_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="7"
+            android:textSize="16dp"
+            android:layout_gravity="top"
+            android:inputType="textMultiLine" />
+
+    </LinearLayout>
+    <View
+        android:layout_height="1px"
+        android:background="#e0e0e0"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="40dp">
+    </View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/layout_style">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/new_feed_location"
+                android:layout_marginTop="4dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:text="所在位置"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/detail_right_back"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_style"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/new_feed_eye"
+                android:layout_marginTop="4dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:text="谁可以看"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/detail_right_back"/>
+        </LinearLayout>
+
+        <View
+            android:layout_height="1px"
+            android:background="#e0e0e0"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dp">
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_item"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/new_feed_at"
+                android:layout_marginTop="4dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:text="提醒谁看"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/detail_right_back"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
