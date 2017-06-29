@@ -84,6 +84,10 @@ public class HomeActivity extends AppCompatActivity{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             now_location = bdLocation;
+            String info = "latitude:" + String.valueOf(now_location.getLatitude())
+                    + "   longtitude:" + String.valueOf(now_location.getLongitude());
+            Log.d("Location", info);
+            discoverAroundFragment.locateMe();
         }
         @Override
         public void onConnectHotSpotMessage(String s, int i) {

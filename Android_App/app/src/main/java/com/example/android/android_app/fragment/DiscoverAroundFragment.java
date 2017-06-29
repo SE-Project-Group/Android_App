@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,16 @@ import android.widget.Button;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SearchActivity;
 
+import static android.content.ContentValues.TAG;
 import static com.example.android.android_app.R.id.around_btn;
 import static com.example.android.android_app.R.id.hot_btn;
 
@@ -32,7 +37,7 @@ import static com.example.android.android_app.R.id.hot_btn;
 public class DiscoverAroundFragment extends Fragment {
     private MapView mapView;
     private BaiduMap baiduMap;
-    private Thread markThread;
+    private boolean firstLocate = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,23 +65,6 @@ public class DiscoverAroundFragment extends Fragment {
         mapView = (MapView) getActivity().findViewById(R.id.bmapView);
         // set location on map
         startLocate();
-
-        //use another thread to mark me on map every 5 s
-        markThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    try{
-                        Thread.sleep(5000);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                    markMeOnMap();
-                }
-            }
-        });
-        markThread.start();
-
     }
 
     private void startLocate(){
@@ -85,18 +73,33 @@ public class DiscoverAroundFragment extends Fragment {
             baiduMap = mapView.getMap();
             baiduMap.setMyLocationEnabled(true);
         }
-        // initialize options
+        // initialize options， set scan span and CoorType (Baidu Map use BD09LL location)
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(5000);
+        option.setCoorType("bd09ll");
         ((HomeActivity) getActivity()).getmLocationClient().setLocOption(option);
+
 
         //start
         ((HomeActivity) getActivity()).getmLocationClient().start();
     }
 
-    private void markMeOnMap(){
-        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
+    public void locateMe(){
+        // navigate to my location on map
         BDLocation location = ((HomeActivity) getActivity()).getNow_location();
+        if(firstLocate == true) {
+            if (location.getLocType() == BDLocation.TypeNetWorkLocation ||
+                    location.getLocType() == BDLocation.TypeGpsLocation) {
+                LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+                MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+                baiduMap.animateMapStatus(update);
+                update = MapStatusUpdateFactory.zoomTo(19f);
+                baiduMap.animateMapStatus(update);
+            }
+            firstLocate = false;
+        }
+        // Mark me on the map
+        MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
         locationBuilder.latitude(location.getLatitude());
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
@@ -130,6 +133,6 @@ public class DiscoverAroundFragment extends Fragment {
         mapView.onDestroy();
         ((HomeActivity) getActivity()).getmLocationClient().stop();
         baiduMap.setMyLocationEnabled(false);
-        markThread.interrupt();
+        firstLocate = true;
     }
 }
