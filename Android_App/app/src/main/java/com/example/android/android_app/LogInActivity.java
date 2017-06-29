@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,11 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        // set ToolBar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.logInToolBar);
+        setSupportActionBar(toolbar);
+
+        // set button listener
         Button button = (Button) findViewById(R.id.login_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

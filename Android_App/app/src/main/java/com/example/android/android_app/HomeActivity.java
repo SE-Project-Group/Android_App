@@ -1,15 +1,27 @@
 package com.example.android.android_app;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -28,25 +40,23 @@ public class HomeActivity extends AppCompatActivity{
     private DiscoverFragment discoverFragment;
     private UserFragment userFragment;
     private BottomNavigationBar bottomNavigationBar;
+    private SearchView mSearchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setDefaultFragment();
         setBottomNavigator();
-
-
-
-
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
+        setSupportActionBar(toolbar);
     }
 
-
     private void setDefaultFragment(){
-        homeFragment = new HomeFragment();
+        discoverFragment = new DiscoverFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment, homeFragment);
+        transaction.replace(R.id.fragment, discoverFragment);
+        transaction.commit();
     }
 
     private void setBottomNavigator(){
@@ -58,11 +68,11 @@ public class HomeActivity extends AppCompatActivity{
         bottomNavigationBar.setInActiveColor(R.color.gray);
 
         // inflate items
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_home, "主页"))
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_discover, "发现"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_message, "消息"))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_add,"新动态"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_discover, "发现"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "用户"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_circle, "圈子"))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "我的"))
                 .initialise();
 
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -70,10 +80,10 @@ public class HomeActivity extends AppCompatActivity{
             public void onTabSelected(int position) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                Fragment f = homeFragment;
+                Fragment f = discoverFragment;
                 switch (position) {
                     case 0:
-                        f = homeFragment;
+                        f = discoverFragment;
                         break;
                     case 1:
                         if(messageFragment == null)
@@ -86,9 +96,9 @@ public class HomeActivity extends AppCompatActivity{
                         f = newFeedFragment;
                         break;
                     case 3:
-                        if(discoverFragment == null)
-                            discoverFragment = new DiscoverFragment();
-                        f = discoverFragment;
+                        if(homeFragment == null)
+                            homeFragment = new HomeFragment();
+                        f = homeFragment;
                         break;
                     case 4:
                         if(userFragment == null)
@@ -109,6 +119,5 @@ public class HomeActivity extends AppCompatActivity{
             }
         });
     }
-
-
+    
 }

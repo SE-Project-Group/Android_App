@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,11 @@ public class UserFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //set tool bar
+        Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.userToolBar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        // set button listener
         Button sign_btn = (Button) getActivity().findViewById(R.id.sign_btn);
         sign_btn.setOnClickListener(new View.OnClickListener() {
             @Override
