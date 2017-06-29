@@ -26,13 +26,24 @@
                 android:background="@drawable/menu_item"
                 android:orientation="vertical"
                 android:layout_marginLeft="5dp">
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/user_name"
-                    android:textSize="19dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/user_name"
+                        android:textSize="19dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="5dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/personal_set"/>
+                </LinearLayout>
+
                 <View
                     android:layout_height="1px"
                     android:background="#e0e0e0"
@@ -160,23 +171,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:layout_width="wrap_content"
+            android:background="@drawable/menu_item"
+            android:layout_marginTop="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="全部动态"
-                android:textSize="17dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="4dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/detail_right_back"/>
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全部动态"
+                    android:textSize="17dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/detail_right_back"/>
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -188,51 +206,56 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:layout_width="wrap_content"
+            android:background="@drawable/menu_item"
+            android:orientation="vertical"
+            android:layout_marginTop="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我的点赞"
-                android:textSize="17dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="4dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:background=""
+                android:layout_marginLeft="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的点赞"
+                    android:textSize="17dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/detail_right_back"/>
+            </LinearLayout>
+            <View
+                android:layout_height="1px"
+                android:background="#e0e0e0"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="15dp">
+            </View>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/detail_right_back"/>
-        </LinearLayout>
-
-        <View
-            android:layout_height="1px"
-            android:background="#e0e0e0"
-            android:layout_width="fill_parent"
-            android:layout_marginLeft="20dp">
-        </View>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1"
-            android:layout_marginLeft="15dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的分享"
-                android:textSize="17dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="4dp"
-                android:layout_weight="1"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/detail_right_back"/>
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我的分享"
+                    android:textSize="17dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/detail_right_back"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
