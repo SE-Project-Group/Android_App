@@ -15,11 +15,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/layout_style"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginTop="1dp">
             <ImageView
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
@@ -85,7 +86,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -257,27 +259,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_settings"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:src="@drawable/user_settings" />
+
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="7dp"
-                android:layout_marginBottom="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="设置"
-                android:textSize="17dp"
-                android:layout_weight="1"/>
+                android:textSize="17dp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/detail_right_back"
                 android:layout_marginTop="6dp"
-                />
+                android:src="@drawable/detail_right_back" />
 
         </LinearLayout>
 

@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_style"
@@ -12,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
             <TextView
                 android:layout_marginTop="4dp"
                 android:layout_marginLeft="10dp"
@@ -42,7 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/menu_item"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp">
                 <TextView
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="4dp"
@@ -116,7 +119,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/menu_item"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp">
                 <TextView
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="10dp"

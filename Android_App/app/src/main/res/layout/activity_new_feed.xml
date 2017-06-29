@@ -4,9 +4,11 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@drawable/layout_style"
+        android:orientation="vertical">
         <EditText
             android:id="@+id/editText"
             android:background="@drawable/add_text_bg"
@@ -15,21 +17,15 @@
             android:minLines="7"
             android:textSize="16dp"
             android:layout_gravity="top"
-            android:inputType="textMultiLine" />
-
-    </LinearLayout>
-    <View
+            android:inputType="textMultiLine"
+            android:layout_marginTop="1dp"/>
+        <View
         android:layout_height="1px"
         android:background="#e0e0e0"
         android:layout_width="fill_parent"
         android:layout_marginLeft="40dp">
-    </View>
+        </View>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/layout_style">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +51,9 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"/>
         </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="1dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
