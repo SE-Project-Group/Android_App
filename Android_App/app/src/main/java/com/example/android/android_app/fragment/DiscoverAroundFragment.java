@@ -37,11 +37,13 @@ import static com.example.android.android_app.R.id.hot_btn;
 public class DiscoverAroundFragment extends Fragment {
     private MapView mapView;
     private BaiduMap baiduMap;
-    private boolean firstLocate = true;
+    private boolean firstLocate;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_disc_around, container, false);
+        // set firstLocate
+        firstLocate = true;
         return view;
     }
 
@@ -75,7 +77,7 @@ public class DiscoverAroundFragment extends Fragment {
         }
         // initialize options， set scan span and CoorType (Baidu Map use BD09LL location)
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(5000);
+        option.setScanSpan(2000);
         option.setCoorType("bd09ll");
         ((HomeActivity) getActivity()).getmLocationClient().setLocOption(option);
 
@@ -133,6 +135,5 @@ public class DiscoverAroundFragment extends Fragment {
         mapView.onDestroy();
         ((HomeActivity) getActivity()).getmLocationClient().stop();
         baiduMap.setMyLocationEnabled(false);
-        firstLocate = true;
     }
 }

@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.LogInActivity;
 import com.example.android.android_app.R;
+import com.example.android.android_app.SettingActivity;
 
 /**
  * Created by thor on 2017/6/28.
@@ -40,6 +42,14 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+        LinearLayout setting_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_setting_btn);
+        setting_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });
