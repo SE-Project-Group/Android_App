@@ -24,7 +24,11 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_weight="1"
-               android:background="@drawable/menu_item"
+               android:background="?android:attr/selectableItemBackground"
+               android:paddingTop="5dp"
+               android:paddingBottom="5dp"
+               android:paddingLeft="5dp"
+               android:paddingRight="5dp"
                android:layout_marginTop="1dp">
                <ImageView
                    android:layout_marginTop="5dp"
@@ -72,9 +76,12 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
-                   android:orientation="horizontal"
-                   android:layout_marginTop="1dp">
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:orientation="horizontal">
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -98,15 +105,20 @@
 
                </LinearLayout>
                <View
-                   android:layout_height="0.1px"
+                   android:layout_height="1px"
                    android:background="#e0e0e0"
                    android:layout_width="match_parent"
                    android:layout_marginLeft="40dp">
                </View>
+
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
                    android:orientation="horizontal">
                    <ImageView
                        android:layout_width="wrap_content"
@@ -139,7 +151,11 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
                    android:orientation="horizontal">
                    <ImageView
                        android:layout_width="wrap_content"
@@ -174,7 +190,11 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
                    android:orientation="horizontal">
                    <ImageView
                        android:layout_width="wrap_content"
@@ -209,30 +229,37 @@
                <LinearLayout
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
                    android:orientation="horizontal">
+
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:src="@drawable/user_share"
-                       android:layout_marginTop="5dp"/>
+                       android:layout_marginTop="5dp"
+                       android:src="@drawable/user_share" />
+
                    <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginBottom="5dp"
                        android:layout_marginLeft="10dp"
                        android:layout_marginTop="7dp"
-                       android:layout_marginBottom="5dp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
                        android:text="我的分享"
-                       android:textSize="17dp"
-                       android:layout_weight="1"/>
+                       android:textSize="17dp" />
+
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:src="@drawable/detail_right_back"
                        android:layout_gravity="center_vertical"
-                       />
+                       android:src="@drawable/detail_right_back" />
 
                </LinearLayout>
+
            </LinearLayout>
 
            <LinearLayout
@@ -246,7 +273,11 @@
                    android:id="@+id/setting_btn"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:background="@drawable/menu_item"
+                   android:background="?android:attr/selectableItemBackground"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
                    android:orientation="horizontal"
                    android:clickable="true"
                    android:layout_marginTop="1dp">

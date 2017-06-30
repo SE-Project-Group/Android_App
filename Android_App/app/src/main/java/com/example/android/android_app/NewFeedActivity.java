@@ -46,7 +46,6 @@ public class NewFeedActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_feed_toolbar,menu);
@@ -62,6 +61,9 @@ public class NewFeedActivity extends AppCompatActivity {
         return true;
     }
 
+
+    // jedge if the user can add a picture, and let the user choose type
+    // then descide which function to use ， takeNewPhoto or addFromAlbum
     private void add_pic(){
         int full = 0;
         switch (picture_cnt){
@@ -70,7 +72,7 @@ public class NewFeedActivity extends AppCompatActivity {
                 new_pic = picture_0;
                 break;
             case 1:
-                Toast.makeText(NewFeedActivity.this, "最多一张图片", Toast.LENGTH_SHORT);
+                Toast.makeText(NewFeedActivity.this, "最多一张图片", Toast.LENGTH_SHORT).show();
                 full = 1;
                 break;
             default:
@@ -80,6 +82,7 @@ public class NewFeedActivity extends AppCompatActivity {
             takeNewPhoto();
     }
 
+    // select
     private void takeNewPhoto(){
         // get ready for storage photo
         File outputImage = new File(getExternalCacheDir(), "new_taken_photo.png");

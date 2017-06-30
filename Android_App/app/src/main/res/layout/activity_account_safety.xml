@@ -11,7 +11,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_item"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:orientation="horizontal"
             android:layout_marginTop="1dp">
             <LinearLayout
@@ -45,7 +49,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_item"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -79,7 +87,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_item"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
