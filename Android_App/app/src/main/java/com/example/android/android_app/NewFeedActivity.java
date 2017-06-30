@@ -26,6 +26,7 @@ import static com.baidu.location.d.j.m;
 import static com.baidu.location.d.j.t;
 
 public class NewFeedActivity extends AppCompatActivity {
+    private BottomPopView bottomPopView;
     private int picture_cnt = 0;
     private ImageView picture_0;
     private ImageView new_pic;
@@ -72,15 +73,42 @@ public class NewFeedActivity extends AppCompatActivity {
                 new_pic = picture_0;
                 break;
             case 1:
-                Toast.makeText(NewFeedActivity.this, "最多一张图片", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewFeedActivity.this, "达到图片数量上限", Toast.LENGTH_SHORT).show();
+
                 full = 1;
                 break;
             default:
                 break;
         }
-        if(full == 0)
-            takeNewPhoto();
+        // if the number of picture has already reach the limitation
+        if(full != 0)
+            return;
+        setPopView();
     }
+
+
+    // set PopView and get ready for the select click
+    private void setPopView(){
+        bottomPopView = new BottomPopView(this, findViewById(R.id.newFeedPage_root)) {
+            @Override
+            public void onTopButtonClick() {
+                bottomPopView.dismiss();
+                takeNewPhoto();
+            }
+            @Override
+            public void onBottomButtonClick() {
+
+                //choosePhoto();
+                bottomPopView.dismiss();
+                selectFromAlbum();
+            }
+        };
+        bottomPopView.setTopText("拍照");
+        bottomPopView.setBottomText("选择照片");
+        // 显示底部菜单
+        bottomPopView.show();
+    }
+
 
     // select
     private void takeNewPhoto(){
@@ -105,6 +133,9 @@ public class NewFeedActivity extends AppCompatActivity {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, new_pic_uri);
         startActivityForResult(intent, TAKE_PHOTO);
+    }
+    private void selectFromAlbum(){
+
     }
 
     @Override
