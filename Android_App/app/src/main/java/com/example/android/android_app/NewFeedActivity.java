@@ -1,6 +1,7 @@
 package com.example.android.android_app;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.android.android_app.Class.ImageUriParser;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private ImageView new_pic;
     private Uri new_pic_uri;
     private static final int TAKE_PHOTO = 1;
+    private static final int CHOOSE_PHOTO = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +139,10 @@ public class NewFeedActivity extends AppCompatActivity {
         startActivityForResult(intent, TAKE_PHOTO);
     }
     private void selectFromAlbum(){
-
+        // open album
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        startActivityForResult(intent, CHOOSE_PHOTO);
     }
 
     @Override
@@ -143,7 +150,7 @@ public class NewFeedActivity extends AppCompatActivity {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 2;
         switch (requestCode){
-            case  TAKE_PHOTO:
+            case TAKE_PHOTO :
                 if(resultCode == RESULT_OK){
                     Bitmap bitmap = BitmapFactory.decodeFile(new_pic_uri.getPath(), options);
                     Bitmap scaled = scaleBitmap(bitmap, 300,300);
@@ -151,6 +158,13 @@ public class NewFeedActivity extends AppCompatActivity {
                     picture_cnt ++;
                 }
                 break;
+            case CHOOSE_PHOTO :
+                ImageUriParser imageUriParser = new ImageUriParser(this);
+                String path = imageUriParser.parse(data.getData());
+                Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                Bitmap scaled = scaleBitmap(bitmap, 300,300);
+                new_pic.setImageBitmap(scaled);
+                picture_cnt ++;
             default:
                 break;
         }
