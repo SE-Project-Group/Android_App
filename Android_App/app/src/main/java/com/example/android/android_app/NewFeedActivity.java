@@ -74,6 +74,7 @@ public class NewFeedActivity extends AppCompatActivity {
                 break;
             case 1:
                 Toast.makeText(NewFeedActivity.this, "达到图片数量上限", Toast.LENGTH_SHORT).show();
+
                 full = 1;
                 break;
             default:
@@ -84,6 +85,7 @@ public class NewFeedActivity extends AppCompatActivity {
             return;
         setPopView();
     }
+
 
     // set PopView and get ready for the select click
     private void setPopView(){
@@ -106,6 +108,7 @@ public class NewFeedActivity extends AppCompatActivity {
         // 显示底部菜单
         bottomPopView.show();
     }
+
 
     // select
     private void takeNewPhoto(){
