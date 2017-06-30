@@ -3,6 +3,7 @@ package com.example.android.android_app;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.baidu.location.d.j.m;
+import static com.baidu.location.d.j.t;
 
 public class NewFeedActivity extends AppCompatActivity {
     private int picture_cnt = 0;
@@ -40,7 +42,6 @@ public class NewFeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 add_pic();
-                picture_cnt ++;
             }
         });
     }
@@ -62,15 +63,24 @@ public class NewFeedActivity extends AppCompatActivity {
     }
 
     private void add_pic(){
+        int full = 0;
         switch (picture_cnt){
             case 0:
                 picture_0  = (ImageView) findViewById(R.id.new_pic_0);
                 new_pic = picture_0;
                 break;
+            case 1:
+                Toast.makeText(NewFeedActivity.this, "最多一张图片", Toast.LENGTH_SHORT);
+                full = 1;
+                break;
             default:
                 break;
         }
+        if(full == 0)
+            takeNewPhoto();
+    }
 
+    private void takeNewPhoto(){
         // get ready for storage photo
         File outputImage = new File(getExternalCacheDir(), "new_taken_photo.png");
         try{
@@ -83,7 +93,7 @@ public class NewFeedActivity extends AppCompatActivity {
         }
         // create image URI
         if(Build.VERSION.SDK_INT >= 24){ // lower than Android 7.0
-            new_pic_uri = FileProvider.getUriForFile(NewFeedActivity.this, "com.example.android.uidesign.fileProvider", outputImage);
+            new_pic_uri = FileProvider.getUriForFile(NewFeedActivity.this, "com.example.android.Android_app.fileProvider", outputImage);
         }else{
             new_pic_uri = Uri.fromFile(outputImage);
         }
@@ -101,12 +111,31 @@ public class NewFeedActivity extends AppCompatActivity {
         switch (requestCode){
             case  TAKE_PHOTO:
                 if(resultCode == RESULT_OK){
-                    Bitmap bitmap1 = BitmapFactory.decodeFile(new_pic_uri.getPath(), options);
-                    new_pic.setImageBitmap(bitmap1);
+                    Bitmap bitmap = BitmapFactory.decodeFile(new_pic_uri.getPath(), options);
+                    Bitmap scaled = scaleBitmap(bitmap, 300,300);
+                    new_pic.setImageBitmap(scaled);
+                    picture_cnt ++;
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight){
+        if (origin == null) {
+            return null;
+        }
+        int height = origin.getHeight();
+        int width = origin.getWidth();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);// 使用后乘
+        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        if (!origin.isRecycled()) {
+            origin.recycle();
+        }
+        return newBM;
     }
 }
