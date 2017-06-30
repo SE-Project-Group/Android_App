@@ -43,6 +43,7 @@
                         android:hint="说点什么吧..."
                         android:textColorHint="@color/gray"/>
 
+
                     <!--pircture group-->
                     <LinearLayout
                         android:layout_marginTop="30px"
