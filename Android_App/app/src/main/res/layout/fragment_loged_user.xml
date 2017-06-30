@@ -18,11 +18,14 @@
            android:orientation="horizontal"
            android:background="@drawable/layout_style"
            android:layout_marginTop="5dp"
-           android:clickable="true">
+           android:clickable="true"
+           android:focusable="true">
            <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_weight="1">
+               android:layout_weight="1"
+               android:background="@drawable/menu_item"
+               android:layout_marginTop="1dp">
                <ImageView
                    android:layout_marginTop="5dp"
                    android:layout_marginLeft="5dp"
@@ -70,7 +73,8 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:background="@drawable/menu_item"
-                   android:orientation="horizontal">
+                   android:orientation="horizontal"
+                   android:layout_marginTop="1dp">
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -95,7 +99,7 @@
                </LinearLayout>
                <View
                    android:layout_height="0.1px"
-                   android:background="#505050"
+                   android:background="#e0e0e0"
                    android:layout_width="match_parent"
                    android:layout_marginLeft="40dp">
                </View>
@@ -128,7 +132,7 @@
                </LinearLayout>
                <View
                    android:layout_height="1px"
-                   android:background="#505050"
+                   android:background="#e0e0e0"
                    android:layout_width="fill_parent"
                    android:layout_marginLeft="40dp">
                </View>
@@ -162,7 +166,7 @@
 
                <View
                    android:layout_height="1px"
-                   android:background="#505050"
+                   android:background="#e0e0e0"
                    android:layout_width="fill_parent"
                    android:layout_marginLeft="40dp">
                </View>
@@ -197,7 +201,7 @@
 
                <View
                    android:layout_height="1px"
-                   android:background="#505050"
+                   android:background="#e0e0e0"
                    android:layout_width="fill_parent"
                    android:layout_marginLeft="40dp">
                </View>
@@ -244,7 +248,8 @@
                    android:layout_height="wrap_content"
                    android:background="@drawable/menu_item"
                    android:orientation="horizontal"
-                   android:clickable="true">
+                   android:clickable="true"
+                   android:layout_marginTop="1dp">
                    <ImageView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -266,10 +271,6 @@
                        android:layout_gravity="center_vertical"
                        />
                </LinearLayout>
-               <Button
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:id="@+id/test_btn"/>
            </LinearLayout>
 
 </LinearLayout>

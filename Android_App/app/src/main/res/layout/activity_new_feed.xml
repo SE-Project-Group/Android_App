@@ -72,6 +72,7 @@
                 android:src="@drawable/detail_right_back"/>
         </LinearLayout>
     </LinearLayout>
+  </LinearLayout>
 
 
     <LinearLayout

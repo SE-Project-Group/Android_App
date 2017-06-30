@@ -15,7 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginRight="14dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,14 +33,16 @@
                         android:layout_height="25dp"
                         android:text="热门"
                         android:background="@drawable/discover_top_btn_bg"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:layout_marginRight="5dp"/>
                     />
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:text="周边"
                         android:background="@drawable/discover_top_btn_bg"
-                        android:textColor="@color/orange"/>
+                        android:textColor="@color/orange"
+                        android:layout_marginLeft="5dp"/>
                 </LinearLayout>
 
             </RelativeLayout>
