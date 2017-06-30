@@ -126,7 +126,9 @@
         android:background="@drawable/layout_style"
         android:orientation="vertical">
 
+
         <LinearLayout
+            android:id="@+id/unlog_setting_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/menu_item"

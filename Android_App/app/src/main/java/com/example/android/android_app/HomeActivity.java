@@ -1,31 +1,20 @@
 package com.example.android.android_app;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -39,19 +28,15 @@ import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
 import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
-import com.example.android.android_app.fragment.NewFeedFragment;
 import com.example.android.android_app.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
-    private NewFeedFragment newFeedFragment;
     private DiscoverFragment discoverFragment;
     private DiscoverAroundFragment discoverAroundFragment;
     private LogedUserFragment logedUserFragment;
@@ -62,15 +47,12 @@ public class HomeActivity extends AppCompatActivity{
 
     private boolean loged;
 
-
     public LocationClient getmLocationClient() {
         return mLocationClient;
     }
-
     public DiscoverFragment getDiscoverFragment() {
         return discoverFragment;
     }
-
     public DiscoverAroundFragment getDiscoverAroundFragment() {
         return discoverAroundFragment;
     }
@@ -84,7 +66,7 @@ public class HomeActivity extends AppCompatActivity{
         return now_location;
     }
 
-    // location listener
+    // location receive listener
     public class MyLocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
@@ -109,22 +91,33 @@ public class HomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home);
         // get permissions
         getPermissions();
-        setDefaultFragment();
-        setBottomNavigator();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
+        setBottomNavigator();
 
-        loged = true;
+        loged = false;
     }
 
+    // when come back from other avtivity, set default fragment and reset bottom navigation bar
+    // when first time run onResume, set default fragment and set bottom navigation bar
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDefaultFragment();
+        bottomNavigationBar.selectTab(0);
+    }
+
+    // set default fragment to discover fragment
     private void setDefaultFragment(){
-        discoverFragment = new DiscoverFragment();
+        if (discoverFragment == null)
+            discoverFragment = new DiscoverFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment, discoverFragment);
         transaction.commit();
     }
 
+    // set bottom navigation bar
     private void setBottomNavigator(){
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);  // set mode
@@ -141,6 +134,7 @@ public class HomeActivity extends AppCompatActivity{
                 .addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "我的"))
                 .initialise();
 
+        // bottom navigator bar listener
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -157,9 +151,12 @@ public class HomeActivity extends AppCompatActivity{
                         f = messageFragment;
                         break;
                     case 2:
-                        if(newFeedFragment == null)
-                            newFeedFragment = new NewFeedFragment();
-                        f = newFeedFragment;
+
+                       Intent intent = new Intent(HomeActivity.this, NewFeedActivity.class);
+                        // test http request with new feed activity
+                        //Intent intent = new Intent(Intent.ACTION_VIEW);
+                        //intent.setData(Uri.parse("http://1507c590.all123.net:8080/track/rest/app/clientLogin?user_name=565&password=44"));
+                        startActivity(intent);
                         break;
                     case 3:
                         if(homeFragment == null)
@@ -194,6 +191,8 @@ public class HomeActivity extends AppCompatActivity{
         });
     }
 
+
+    // deal with request permission
     private void getPermissions(){
         List<String> permissionList = new ArrayList<>();
         // access fine location permission
@@ -217,8 +216,6 @@ public class HomeActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(HomeActivity.this, permissions, 1);
         }
     }
-
-    // deal with request permission result
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -242,11 +239,6 @@ public class HomeActivity extends AppCompatActivity{
         }
     }
 
-    // make good use of resource
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-    }
 }

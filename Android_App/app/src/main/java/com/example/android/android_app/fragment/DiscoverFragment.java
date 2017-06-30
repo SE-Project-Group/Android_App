@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +20,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.android.android_app.Feed;
+import com.example.android.android_app.FeedAdapter;
 import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SearchActivity;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -29,6 +37,7 @@ import static android.content.ContentValues.TAG;
  */
 
 public class DiscoverFragment extends Fragment {
+    private List<Feed> feedList = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +67,14 @@ public class DiscoverFragment extends Fragment {
                 switch_frag ();
             }
         });
+
+        // set Recycle View
+        initFeeds();
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        FeedAdapter adapter = new FeedAdapter(feedList);
+        recyclerView.setAdapter(adapter);
     }
 
     private void switch_frag(){
@@ -70,6 +87,14 @@ public class DiscoverFragment extends Fragment {
         }
         transaction.replace(R.id.fragment,fragment);
         transaction.commit();
+    }
+
+    private void initFeeds(){
+        List<Integer> list = new ArrayList<>();
+        list.add(R.drawable.exp_pic);
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Feed exp = new Feed("SJTU",0,"ROOT",time, "Today is my birthday",0,0,list,R.drawable.exp_portrait);
+        feedList.add(exp);
     }
 }
 
