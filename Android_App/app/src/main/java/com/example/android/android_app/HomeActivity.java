@@ -47,15 +47,12 @@ public class HomeActivity extends AppCompatActivity{
 
     private boolean loged;
 
-
     public LocationClient getmLocationClient() {
         return mLocationClient;
     }
-
     public DiscoverFragment getDiscoverFragment() {
         return discoverFragment;
     }
-
     public DiscoverAroundFragment getDiscoverAroundFragment() {
         return discoverAroundFragment;
     }
@@ -69,7 +66,7 @@ public class HomeActivity extends AppCompatActivity{
         return now_location;
     }
 
-    // location listener
+    // location receive listener
     public class MyLocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
@@ -94,22 +91,33 @@ public class HomeActivity extends AppCompatActivity{
         setContentView(R.layout.activity_home);
         // get permissions
         getPermissions();
-        setDefaultFragment();
-        setBottomNavigator();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
+        setBottomNavigator();
 
         loged = false;
     }
 
+    // when come back from other avtivity, set default fragment and reset bottom navigation bar
+    // when first time run onResume, set default fragment and set bottom navigation bar
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setDefaultFragment();
+        bottomNavigationBar.selectTab(0);
+    }
+
+    // set default fragment to discover fragment
     private void setDefaultFragment(){
-        discoverFragment = new DiscoverFragment();
+        if (discoverFragment == null)
+            discoverFragment = new DiscoverFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment, discoverFragment);
         transaction.commit();
     }
 
+    // set bottom navigation bar
     private void setBottomNavigator(){
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);  // set mode
@@ -126,6 +134,7 @@ public class HomeActivity extends AppCompatActivity{
                 .addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "我的"))
                 .initialise();
 
+        // bottom navigator bar listener
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
@@ -182,6 +191,8 @@ public class HomeActivity extends AppCompatActivity{
         });
     }
 
+
+    // deal with request permission
     private void getPermissions(){
         List<String> permissionList = new ArrayList<>();
         // access fine location permission
@@ -205,8 +216,6 @@ public class HomeActivity extends AppCompatActivity{
             ActivityCompat.requestPermissions(HomeActivity.this, permissions, 1);
         }
     }
-
-    // deal with request permission result
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -230,11 +239,6 @@ public class HomeActivity extends AppCompatActivity{
         }
     }
 
-    // make good use of resource
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-    }
 }
