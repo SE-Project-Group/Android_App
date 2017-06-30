@@ -1,31 +1,20 @@
 package com.example.android.android_app;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -39,19 +28,15 @@ import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
 import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
-import com.example.android.android_app.fragment.NewFeedFragment;
 import com.example.android.android_app.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.security.AccessController.getContext;
-
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
     private HomeFragment homeFragment;
     private MessageFragment messageFragment;
-    private NewFeedFragment newFeedFragment;
     private DiscoverFragment discoverFragment;
     private DiscoverAroundFragment discoverAroundFragment;
     private LogedUserFragment logedUserFragment;
@@ -114,7 +99,7 @@ public class HomeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
 
-        loged = true;
+        loged = false;
     }
 
     private void setDefaultFragment(){
@@ -157,9 +142,12 @@ public class HomeActivity extends AppCompatActivity{
                         f = messageFragment;
                         break;
                     case 2:
-                        if(newFeedFragment == null)
-                            newFeedFragment = new NewFeedFragment();
-                        f = newFeedFragment;
+
+                       Intent intent = new Intent(HomeActivity.this, NewFeedActivity.class);
+                        // test http request with new feed activity
+                        //Intent intent = new Intent(Intent.ACTION_VIEW);
+                        //intent.setData(Uri.parse("http://1507c590.all123.net:8080/track/rest/app/clientLogin?user_name=565&password=44"));
+                        startActivity(intent);
                         break;
                     case 3:
                         if(homeFragment == null)
