@@ -58,7 +58,8 @@
         -->
         <activity android:name=".SettingActivity" />
         <activity android:name=".PersonalPageActivity" />
-        <activity android:name=".UserSercurityActivity"></activity>
+        <activity android:name=".UserSercurityActivity" />
+        <activity android:name=".PersonalSettingActivity"></activity>
     </application>
 
 </manifest>
