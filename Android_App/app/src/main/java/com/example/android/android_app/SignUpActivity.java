@@ -1,8 +1,16 @@
 package com.example.android.android_app;
 
+import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -13,5 +21,235 @@ public class SignUpActivity extends AppCompatActivity {
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.signUpToolBar);
         setSupportActionBar(toolbar);
+
+        final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.phone_num);
+        EditText phone_num = textInputLayout.getEditText();
+
+        phone_num.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length()==0) {
+                    textInputLayout.setError("手机号码不可为空");
+                    textInputLayout.setErrorEnabled(true);
+                } else {
+                    textInputLayout.setErrorEnabled(false);
+                }
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()==0) {
+                    textInputLayout.setError("手机号码不可为空");
+                    textInputLayout.setErrorEnabled(true);
+                } else {
+                    textInputLayout.setErrorEnabled(false);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s.length()==0) {
+                    textInputLayout.setError("手机号码不可为空");
+                    textInputLayout.setErrorEnabled(true);
+                } else {
+                    textInputLayout.setErrorEnabled(false);
+                }
+            }
+
+        });
+
+        final TextInputLayout textInputLayout2 = (TextInputLayout) findViewById(R.id.security_code);
+        EditText security_code = textInputLayout2.getEditText();
+
+        security_code.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() == 0) {
+                    textInputLayout2.setError("验证码不可为空");
+                    textInputLayout2.setErrorEnabled(true);
+                } else {
+                    textInputLayout2.setErrorEnabled(false);
+                }
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()==0) {
+                    textInputLayout2.setError("验证码不可为空");
+                    textInputLayout2.setErrorEnabled(true);
+                } else {
+                    textInputLayout2.setErrorEnabled(false);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s.length()==0) {
+                    textInputLayout2.setError("验证码不可为空");
+                    textInputLayout2.setErrorEnabled(true);
+                } else {
+                    textInputLayout2.setErrorEnabled(false);
+                }
+            }
+        });
+
+        final TextInputLayout textInputLayout3 = (TextInputLayout) findViewById(R.id.user_name);
+        EditText user_name = textInputLayout3.getEditText();
+
+        user_name.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() == 0) {
+                    textInputLayout3.setError("用户名不可为空");
+                    textInputLayout3.setErrorEnabled(true);
+                }else if(s.length()<5){
+                    textInputLayout3.setError("用户名不可少于5个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout3.setError("用户名不可多于15个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout3.setErrorEnabled(false);
+                }
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()==0) {
+                    textInputLayout3.setError("用户名不可为空");
+                    textInputLayout3.setErrorEnabled(true);
+                } else if(s.length()<5){
+                    textInputLayout3.setError("用户名不可少于5个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout3.setError("用户名不可多于15个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout3.setErrorEnabled(false);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s.length()==0) {
+                    textInputLayout3.setError("用户名不可为空");
+                    textInputLayout3.setErrorEnabled(true);
+                } else if(s.length()<5){
+                    textInputLayout3.setError("用户名不可少于5个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout3.setError("用户名不可多于15个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                }else {
+                    textInputLayout3.setErrorEnabled(false);
+                }
+            }
+        });
+
+        final TextInputLayout textInputLayout4 = (TextInputLayout) findViewById(R.id.password);
+        final EditText password = textInputLayout4.getEditText();
+
+        password.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s.length() == 0) {
+                    textInputLayout4.setError("密码不可为空");
+                    textInputLayout4.setErrorEnabled(true);
+                }else if(s.length()<5){
+                    textInputLayout4.setError("密码不可少于5个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout4.setError("密码不可多于15个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout4.setErrorEnabled(false);
+                }
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()==0) {
+                    textInputLayout4.setError("密码不可为空");
+                    textInputLayout4.setErrorEnabled(true);
+                } else if(s.length()<5){
+                    textInputLayout4.setError("密码不可少于5个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout4.setError("密码不可多于15个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }else {
+                    textInputLayout4.setErrorEnabled(false);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s.length()==0) {
+                    textInputLayout4.setError("密码不可为空");
+                    textInputLayout4.setErrorEnabled(true);
+                } else if(s.length()<5){
+                    textInputLayout4.setError("密码不可少于5个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }else if(s.length()>15){
+                    textInputLayout4.setError("密码不可多于15个字符");
+                    textInputLayout4.setErrorEnabled(true);
+                }else {
+                    textInputLayout4.setErrorEnabled(false);
+                }
+            }
+        });
+
+        // Password Confirm
+
+        /*final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
+        final EditText password_com = textInputLayout5.getEditText();
+        final EditText pass = textInputLayout4.getEditText();
+
+        password_com.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (s != pass) {
+                    textInputLayout5.setError("确认密码与密码不相同");
+                    textInputLayout5.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout5.setErrorEnabled(false);
+                }
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s != pass) {
+                    textInputLayout5.setError("确认密码与密码不相同");
+                    textInputLayout5.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout5.setErrorEnabled(false);
+                }
+            }
+
+            public void afterTextChanged(Editable s) {
+                if (s != pass) {
+                    textInputLayout5.setError("确认密码与密码不相同");
+                    textInputLayout5.setErrorEnabled(true);
+                }
+                else {
+                    textInputLayout5.setErrorEnabled(false);
+                }
+            }
+        });*/
+
+
+        //android.support.design.widget.TextInputLayout phone_num = (android.support.design.widget.TextInputLayout) findViewById(R.id.phone_num);
+        //EditText phone_num = (EditText)findViewById(R.id.phone_num);
+        /*if (phone_num.getEditText().toString().trim().equalsIgnoreCase("")) {
+            phone_num.setError("电话号码不可为空");
+        }*/
+
+
+        TextView LogIn_text = (TextView) findViewById(R.id.LogIn_text);
+
+        LogIn_text.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(SignUpActivity.this,LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
+        sign_up_btn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+            }
+        });
     }
 }

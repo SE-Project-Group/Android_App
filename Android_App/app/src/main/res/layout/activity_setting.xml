@@ -172,6 +172,8 @@
         android:orientation="vertical"
         android:layout_marginTop="10dp">
         <LinearLayout
+            android:clickable="true"
+            android:id="@+id/user_security"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
