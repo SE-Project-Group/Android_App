@@ -1,12 +1,15 @@
 package com.example.android.android_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +19,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,26 +34,54 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static android.R.attr.id;
+import static android.R.attr.name;
 import static com.baidu.location.d.j.m;
 import static com.baidu.location.d.j.t;
 
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
     private LocationClient mLocationClient;
-    private double latitude;
-    private double longtitude;
     private TextView tv_position;
-    private int picture_cnt = 0;
+
     private ImageView picture_0;
     private ImageView new_pic;
     private Uri new_pic_uri;
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO = 2;
+
+
+    // used to send to server
+    // select show area
+    private int picture_cnt = 0;
+    private boolean showLocation;
+    private double latitude;
+    private double longtitude;
+    private String text;
+    private String shareArea;
+    private static final String PUBLIC = "public";
+    private static final String FRIEND = "friend";
+    private static final String PRIVATE = "private";
+    private static final int UPLOAD_OK = 3;
+
+    // @ someone ids
+    private List<Long> mentionList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,22 +137,108 @@ public class NewFeedActivity extends AppCompatActivity {
         mLocationClient.start();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.new_feed_toolbar,menu);
         return true;
     }
 
+    // send button is pressed
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.send_btn:
-                Toast.makeText(getApplicationContext(), "send", Toast.LENGTH_SHORT).show();
+                final String jsonString = generateJsonString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        upload(jsonString);
+                    }
+                }).start();
         }
         return true;
     }
 
+    // get and check information form page
+    private String generateJsonString(){
+        EditText edit_text = (EditText) findViewById(R.id.edit_text);
+        text = edit_text.getText().toString();
+
+        RadioGroup shareArea_group = (RadioGroup) findViewById(R.id.shareArea_group);
+        int selection = shareArea_group.getCheckedRadioButtonId();
+        switch (selection){
+            case 0:
+                shareArea = PUBLIC;
+                break;
+            case 1:
+                shareArea = FRIEND;
+                break;
+            case 2:
+                shareArea = PRIVATE;
+        }
+        CheckBox showLocation_btn = (CheckBox) findViewById(R.id.showLocation_btn);
+        if(showLocation_btn.isChecked())
+            showLocation = true;
+        else
+            showLocation = false;
+
+        //create json
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("user_id",0);
+            jsonObject.put("text", text);
+            jsonObject.put("showLocation", showLocation);
+            jsonObject.put("latitude", latitude);
+            JSONArray location = new JSONArray();
+            JSONObject location_item = new JSONObject();
+            location_item.put("latitude", latitude);
+            location.put(0, location_item);
+            location_item.put("longtitude", longtitude);
+            location.put(1, location_item);
+            jsonObject.put("location", location);
+            jsonObject.put("shareArea", shareArea);
+            jsonObject.put("mentionList", mentionList);
+            // put picure id in it
+            JSONArray picId_array = new JSONArray();
+            JSONObject picId = new JSONObject();
+            picId.put("id",0);
+            picId_array.put(0,picId);
+            jsonObject.put("pictures", picId_array);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return jsonObject.toString();  // use to send
+
+    }
+
+    // send  son to server, picture should be sent to cloud storage
+    private void upload(String jsonString){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
+
+        Request request = new Request.Builder()
+                .url("http://202.120.38.35:11080/api/add_patient")
+                .post(requestBody)
+                .build();
+
+        // get response
+        try{
+            Response response = okHttpClient.newCall(request).execute();
+            if(response.isSuccessful()){
+                //Log.i(TAG, "send_json: ok ");
+                // send message
+                Message message = new Message();
+                message.what = UPLOAD_OK;
+                handler.sendMessage(message);
+            }
+            else{
+               // Log.i(TAG, "send_json: error");
+                Toast.makeText(getApplicationContext(), "can't upload to server", Toast.LENGTH_SHORT).show();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
     // jedge if the user can add a picture, and let the user choose type
     // then descide which function to use ， takeNewPhoto or addFromAlbum
@@ -237,4 +359,23 @@ public class NewFeedActivity extends AppCompatActivity {
         }
         return newBM;
     }
+
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String token = "";
+            int user_id = 0;
+            switch (msg.what){
+                case UPLOAD_OK:
+                    Toast.makeText(getApplicationContext(), "upload ok", Toast.LENGTH_SHORT).show();
+                    // go back to home activity
+                    Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }
