@@ -217,7 +217,7 @@ public class NewFeedActivity extends AppCompatActivity {
         RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
 
         Request request = new Request.Builder()
-                .url("http://202.120.38.35:11080/api/add_patient")
+                .url("http://")
                 .post(requestBody)
                 .build();
 
@@ -285,7 +285,6 @@ public class NewFeedActivity extends AppCompatActivity {
         // 显示底部菜单
         bottomPopView.show();
     }
-
 
     // select
     private void takeNewPhoto(){

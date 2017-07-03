@@ -159,7 +159,6 @@
                         <RadioButton
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:checked="true"
                             android:text="所有人"/>
                         <RadioButton
                             android:layout_width="match_parent"
