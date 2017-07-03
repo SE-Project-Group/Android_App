@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/signUpToolBar"
@@ -19,18 +20,50 @@
         android:layout_marginRight="40dp"
         android:orientation="vertical"
         android:layout_marginTop="30dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/phone_num"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入手机号"
+                    android:maxLines="2"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="发送验证码"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/phone_num"
+            android:id="@+id/security_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="请输入手机号"
+                android:hint="请输入验证码"
                 android:maxLines="2"/>
 
         </android.support.design.widget.TextInputLayout>
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/user_name"
             android:layout_width="match_parent"
@@ -80,14 +113,9 @@
             android:background="@color/colorAccent"
             android:textColor="@color/white"
             android:layout_marginTop="20dp"
-            android:text="注册" />
+            android:text="注册"
+            android:textSize="17dp"/>
     </android.support.design.widget.BottomNavigationView>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@drawable/shadow"
-            android:alpha="100"
-            android:layout_below="@+id/typonumber"/>
     </LinearLayout>
 
 </LinearLayout>
