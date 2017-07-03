@@ -64,7 +64,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private Uri new_pic_uri;
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO = 2;
-
+    private String detailed_location;
+    private static final int LOCATE_OK = 4;
 
     // used to send to server
     // select show area
@@ -78,6 +79,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String FRIEND = "friend";
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
+
 
     // @ someone ids
     private List<Long> mentionList = new ArrayList<>();
@@ -119,8 +121,11 @@ public class NewFeedActivity extends AppCompatActivity {
             String building = bdLocation.getBuildingName();
             StringBuilder currentPosition = new StringBuilder();
             currentPosition.append(city).append(district).append(street).append("(").append(building).append(")");
-            tv_position.setText(currentPosition);
+            detailed_location = currentPosition.toString();
             mLocationClient.stop();
+            Message msg = new Message();
+            msg.what = LOCATE_OK;
+            handler.sendMessage(msg);
         }
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
@@ -371,6 +376,10 @@ public class NewFeedActivity extends AppCompatActivity {
                     // go back to home activity
                     Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
                     startActivity(intent);
+                    break;
+                case LOCATE_OK:
+                    TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);
+                    tv_currentPosition.setText(detailed_location);
                     break;
                 default:
                     break;
