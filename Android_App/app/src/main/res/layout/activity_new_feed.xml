@@ -88,7 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/new_feed_location"
-                            android:layout_marginTop="4dp"/>
+                            android:layout_marginTop="6dp"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -98,12 +98,18 @@
                             android:layout_marginLeft="10dp"
                             android:text="所在位置"
                             android:layout_weight="1"/>
-                        <ImageView
+                        <CheckBox
                             android:layout_marginTop="6dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/detail_right_back"/>
+                            android:shadowColor="@color/orange"
+                            android:text="显示位置"/>
                     </LinearLayout>
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:id="@+id/tv_currentPosition"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp" />
                 </LinearLayout>
             </LinearLayout>
 

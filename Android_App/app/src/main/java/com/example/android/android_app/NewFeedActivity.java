@@ -12,12 +12,18 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
 
 import java.io.File;
@@ -30,6 +36,10 @@ import static com.baidu.location.d.j.t;
 
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
+    private LocationClient mLocationClient;
+    private double latitude;
+    private double longtitude;
+    private TextView tv_position;
     private int picture_cnt = 0;
     private ImageView picture_0;
     private ImageView new_pic;
@@ -39,9 +49,16 @@ public class NewFeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(new MyLocationListener());
         setContentView(R.layout.activity_new_feed);
+        // set tool bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.newFeedToolBar);
         setSupportActionBar(toolbar);
+        tv_position = (TextView) findViewById(R.id.tv_currentPosition);
+        // get location
+        locate();
+        // add picture function
         ImageView add_btn = (ImageView) findViewById(R.id.add_pic_btn);
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +66,41 @@ public class NewFeedActivity extends AppCompatActivity {
                 add_pic();
             }
         });
+
     }
+
+    // location receive listener
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            // get postion
+            latitude = bdLocation.getLatitude();
+            longtitude = bdLocation.getLongitude();
+            // set position easy to understand on screen
+            String city = bdLocation.getCity();
+            String district = bdLocation.getDistrict();
+            String street = bdLocation.getStreet();
+            String building = bdLocation.getBuildingName();
+            StringBuilder currentPosition = new StringBuilder();
+            currentPosition.append(city).append(district).append(street).append("(").append(building).append(")");
+            tv_position.setText(currentPosition);
+            mLocationClient.stop();
+        }
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+        }
+    }
+
+    // locate me
+    private void locate(){
+        tv_position.setText("正在获取位置....");
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        option.setCoorType("bd09ll");
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
