@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressDialog = new ProgressDialog(LogInActivity.this);
-                progressDialog.setTitle("正在注册");
+                progressDialog.setTitle("正在登录");
                 progressDialog.setMessage("请稍后");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
@@ -60,14 +61,23 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
         // go to sign up page
-        Button signUp_btn = (Button) findViewById(R.id.signUp_btn);
+        TextView signUp_text = (TextView) findViewById(R.id.signUp_text);
+
+        signUp_text.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(LogInActivity.this,SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+        /*Button signUp_btn = (Button) findViewById(R.id.signUp_btn);
         signUp_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 

@@ -39,22 +39,32 @@
             android:id="@+id/login_btn"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/btn_style"
             android:layout_marginTop="20dp"
             android:text="登陆"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/signUp_text"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="注册"
-                android:id="@+id/signUp_btn"/>
+                android:textSize="17dp"
+                android:textAlignment="center"/>
+            <!--<Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="注册"
+                android:id="@+id/signUp_btn"
+                android:textSize="17dp"/>-->
 
         </LinearLayout>
     </LinearLayout>
