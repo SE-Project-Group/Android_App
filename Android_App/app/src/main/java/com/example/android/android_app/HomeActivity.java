@@ -2,6 +2,7 @@ package com.example.android.android_app;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -94,8 +95,6 @@ public class HomeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
         setBottomNavigator();
-
-        loged = false;
     }
 
     // when come back from other avtivity, set default fragment and reset bottom navigation bar
@@ -105,6 +104,13 @@ public class HomeActivity extends AppCompatActivity{
         super.onResume();
         setDefaultFragment();
         bottomNavigationBar.selectTab(0);
+
+        // get login info from file in onResume , so loged can change when come back from login activity
+        SharedPreferences pref = getSharedPreferences("login_data", MODE_PRIVATE);
+        if(pref.getBoolean("loged",false) == false)
+            loged = false;
+        else
+            loged = true;
     }
 
     // set default fragment to discover fragment
