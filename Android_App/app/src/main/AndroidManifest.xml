@@ -29,7 +29,8 @@
         <activity
             android:name=".LogInActivity"
             android:label="请登录" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

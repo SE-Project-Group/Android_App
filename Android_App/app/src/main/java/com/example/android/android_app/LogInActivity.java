@@ -2,6 +2,7 @@ package com.example.android.android_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -107,9 +108,17 @@ public class LogInActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            String token = "";
+            int user_id = 0;
             switch (msg.what){
                 case LOG_IN_OK:
                     // if success, store token and swith to Home.
+                    SharedPreferences.Editor editor = getSharedPreferences("login_data", MODE_PRIVATE).edit();
+                    editor.putBoolean("loged",true);
+                    editor.putString("token", token);
+                    editor.putInt("user_id", user_id);
+                    editor.apply();
+                    // restart home activity, whose startup mode is singleTask
                     Intent intent = new Intent(LogInActivity.this,HomeActivity.class );
                     startActivity(intent);
                     break;
