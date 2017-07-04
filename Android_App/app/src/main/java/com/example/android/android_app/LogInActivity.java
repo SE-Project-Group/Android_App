@@ -29,6 +29,10 @@ public class LogInActivity extends AppCompatActivity {
     private static final int LOG_IN_OK = 0;
     private static final int LOG_IN_FAILED = 1;
     private ProgressDialog progressDialog;
+    private static final String uri = "http://192.168.1.200:8080/track/rest/app/clientLogin";
+
+    private String token;
+    private long user_id;
 
 
     @Override
@@ -85,7 +89,7 @@ public class LogInActivity extends AppCompatActivity {
         String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
         String password = ((EditText) findViewById(R.id.password)).getText().toString();
         // send log in information to server
-        String url = "http://192.168.1.13:8088/track/rest/test/clientLogin?user_name="+user_name+"&password="+password ;
+        String url = uri + "?user_name="+user_name+"&password="+password ;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url).build();
