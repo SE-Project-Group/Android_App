@@ -32,16 +32,8 @@ public class JsonSender {
         this.context = context;
     }
 
-    public void send(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                threadWork();
-            }
-        }).run();
-    }
 
-    public void threadWork(){
+    public void send(){
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
 
@@ -53,6 +45,8 @@ public class JsonSender {
         // get response
         try{
             Response response = okHttpClient.newCall(request).execute();
+            String data = response.body().string();
+            url = data;
             if(response.isSuccessful()){
                 //Log.i(TAG, "send_json: ok ");
                 // send message

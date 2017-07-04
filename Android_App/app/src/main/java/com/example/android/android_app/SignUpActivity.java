@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,7 +32,7 @@ import static com.baidu.location.d.j.U;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
-    private static final String url = "http://192.168.1.200:8080/track/rest/app/clientSignup";
+    private static final String url = "http://192.168.1.13:8088/track/rest/app/clientSignup";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,40 +255,37 @@ public class SignUpActivity extends AppCompatActivity {
             phone_num.setError("电话号码不可为空");
         }*/
 
-
-
-
         Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                EditText et_userName = (EditText) findViewById(R.id.et_userName);
-                EditText et_password = (EditText) findViewById(R.id.et_password);
-                EditText et_phone = (EditText) findViewById(R.id.et_phone);
-                final String userName = et_userName.getText().toString();
-                final String password = et_password.getText().toString();
-                final String phone = et_phone.getText().toString();
-                final JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("phone", phone);
-                    jsonObject.put("user_name", userName);
-                    jsonObject.put("password", password);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                final String jsonString = jsonObject.toString();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        signUp(jsonString);
-                    }
-                }).run();
+                signUp();
             }
         });
     }
 
-    private void signUp(String jsonString){
-        JsonSender sender = new JsonSender(jsonString, url,SIGNUP_OK, handler, getApplicationContext());
-        sender.send();
+    private void signUp(){
+        EditText et_userName = (EditText) findViewById(R.id.et_userName);
+        EditText et_password = (EditText) findViewById(R.id.et_password);
+        EditText et_phone = (EditText) findViewById(R.id.et_phone);
+        String userName = et_userName.getText().toString();
+        String password = et_password.getText().toString();
+        String phone = et_phone.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("phone", phone);
+            jsonObject.put("user_name", userName);
+            jsonObject.put("password", password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        final String jsonString = jsonObject.toString();
+        final JsonSender sender = new JsonSender(jsonString, url, SIGNUP_OK, handler, getApplicationContext());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                sender.send();
+            }
+        }).start();
     }
 
     private Handler handler = new Handler(){
@@ -297,7 +295,7 @@ public class SignUpActivity extends AppCompatActivity {
             int user_id = 0;
             switch (msg.what){
                 case SIGNUP_OK:
-                    Toast.makeText(getApplicationContext(), "signUp ok", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
                     // go back to home activity
                     Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
                     startActivity(intent);
