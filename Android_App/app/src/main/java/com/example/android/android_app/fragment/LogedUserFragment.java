@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.baidu.platform.comapi.map.B;
 import com.example.android.android_app.LogInActivity;
+import com.example.android.android_app.MyAlbumActivity;
 import com.example.android.android_app.PersonalPageActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SearchActivity;
@@ -57,6 +58,16 @@ public class LogedUserFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PersonalPageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // myAlbum button
+        LinearLayout myAlbum_btn = (LinearLayout) getActivity().findViewById(R.id.myAlbum_btn);
+        myAlbum_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyAlbumActivity.class);
                 startActivity(intent);
             }
         });
