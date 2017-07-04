@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity{
     private SearchView mSearchView;
     private LocationClient mLocationClient;
 
-    private boolean loged;
+    public boolean loged;
 
     public LocationClient getmLocationClient() {
         return mLocationClient;
