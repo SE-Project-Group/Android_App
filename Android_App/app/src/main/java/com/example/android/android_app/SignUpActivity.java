@@ -236,14 +236,7 @@ public class SignUpActivity extends AppCompatActivity {
         }*/
 
 
-        TextView LogIn_text = (TextView) findViewById(R.id.LogIn_text);
 
-        LogIn_text.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent intent = new Intent(SignUpActivity.this,LogInActivity.class);
-                startActivity(intent);
-            }
-        });
 
         Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
