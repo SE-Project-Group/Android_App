@@ -1,11 +1,15 @@
 package com.example.android.android_app;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -25,8 +29,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         TextView position_view;
         TextView feedText_view;
         ImageView picture_view;
-        Button like_btn;
-        Button comment_btn;
+        TextView like_number;
+        TextView comment_number;
+        TextView share_number;
+
+        LinearLayout share_layout;
+        LinearLayout like_layout;
+        LinearLayout comment_layout;
 
         public ViewHolder (View view){
             super(view);
@@ -36,8 +45,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             position_view = (TextView) view.findViewById(R.id.position);
             feedText_view = (TextView) view.findViewById(R.id.feed_text);
             picture_view = (ImageView) view.findViewById(R.id.picture1);
-            like_btn = (Button) view.findViewById(R.id.like_btn);
-            comment_btn = (Button) view.findViewById(R.id.comment_btn);
+            like_number = (TextView) view.findViewById(R.id.like_num);
+            share_number = (TextView) view.findViewById(R.id.share_num);
+            comment_number = (TextView) view.findViewById(R.id.comment_num);
+
+            like_layout = (LinearLayout) view.findViewById(R.id.like_btn);
+            share_layout = (LinearLayout) view.findViewById(R.id.share_btn);
+            comment_layout = (LinearLayout) view.findViewById(R.id.comment_btn);
+
         }
     }
 
@@ -58,9 +73,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         holder.feed_owner_view.setText(feed.getFeed_owner());
         holder.feedText_view.setText(feed.getText());
         String temp = String.valueOf(feed.getComment_cnt());
-        holder.comment_btn.setText(temp);
+        holder.comment_number.setText(temp);
         temp = String.valueOf(feed.getLike_cnt());
-        holder.like_btn.setText(temp);
+        holder.like_number.setText(temp);
+        temp = String.valueOf(feed.getShare_cnt());
+        holder.share_number.setText(temp);
         holder.position_view.setText(feed.getPosition());
         temp = feed.getTimestamp().toString();
         holder.timestamp_view.setText(temp);

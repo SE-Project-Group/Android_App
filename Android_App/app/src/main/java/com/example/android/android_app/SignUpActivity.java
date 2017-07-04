@@ -41,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.signUpToolBar);
         setSupportActionBar(toolbar);
+        final Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
 
         final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.phone_num);
         EditText phone_num = textInputLayout.getEditText();
@@ -50,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout.setError("手机号码不可为空");
                     textInputLayout.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
                 }
@@ -59,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout.setError("手机号码不可为空");
                     textInputLayout.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
                 }
@@ -68,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout.setError("手机号码不可为空");
                     textInputLayout.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
                 }
@@ -83,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length() == 0) {
                     textInputLayout2.setError("验证码不可为空");
                     textInputLayout2.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
                 }
@@ -91,6 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length()==0) {
                     textInputLayout2.setError("验证码不可为空");
+                    sign_up_btn.setEnabled(false);
                     textInputLayout2.setErrorEnabled(true);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
@@ -101,6 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout2.setError("验证码不可为空");
                     textInputLayout2.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
                 }
@@ -115,12 +122,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length() == 0) {
                     textInputLayout3.setError("用户名不可为空");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()<5){
                     textInputLayout3.setError("用户名不可少于5个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout3.setErrorEnabled(false);
@@ -131,12 +141,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout3.setError("用户名不可为空");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else if(s.length()<5){
                     textInputLayout3.setError("用户名不可少于5个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout3.setErrorEnabled(false);
@@ -147,12 +160,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout3.setError("用户名不可为空");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else if(s.length()<5){
                     textInputLayout3.setError("用户名不可少于5个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout3.setErrorEnabled(false);
                 }
@@ -167,12 +183,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length() == 0) {
                     textInputLayout4.setError("密码不可为空");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()<5){
                     textInputLayout4.setError("密码不可少于5个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout4.setErrorEnabled(false);
@@ -183,12 +202,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout4.setError("密码不可为空");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else if(s.length()<5){
                     textInputLayout4.setError("密码不可少于5个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
                 }
@@ -198,12 +220,15 @@ public class SignUpActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout4.setError("密码不可为空");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 } else if(s.length()<5){
                     textInputLayout4.setError("密码不可少于5个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
                 }
@@ -212,15 +237,19 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Password Confirm
 
-        /*final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
-        final EditText password_com = textInputLayout5.getEditText();
-        final EditText pass = textInputLayout4.getEditText();
+        final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
+        EditText password_com = textInputLayout5.getEditText();
+        final TextInputLayout textInputLayout6 = (TextInputLayout) findViewById(R.id.password);
+        final EditText password_final = textInputLayout6.getEditText();
 
         password_com.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
@@ -228,9 +257,12 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
@@ -238,15 +270,18 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
                 }
             }
-        });*/
+        });
 
 
         //android.support.design.widget.TextInputLayout phone_num = (android.support.design.widget.TextInputLayout) findViewById(R.id.phone_num);
@@ -255,7 +290,7 @@ public class SignUpActivity extends AppCompatActivity {
             phone_num.setError("电话号码不可为空");
         }*/
 
-        Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
+
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 signUp();

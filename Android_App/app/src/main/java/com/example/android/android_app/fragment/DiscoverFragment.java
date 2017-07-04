@@ -93,7 +93,7 @@ public class DiscoverFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("SJTU",0,"ROOT",time, "Today is my birthday",0,0,list,R.drawable.exp_portrait);
+        Feed exp = new Feed("SJTU",0,"ROOT",time, "Today is my birthday",0,0,0,list,R.drawable.exp_portrait);
         feedList.add(exp);
     }
 }
