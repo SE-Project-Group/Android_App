@@ -81,7 +81,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
 
-    private static final String url = "http://";
+    private static final String url = "http://192.168.1.13:8088/track/rest/app/NewFeed";
 
 
     // @ someone ids
@@ -197,13 +197,7 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
             jsonObject.put("latitude", latitude);
-            JSONArray location = new JSONArray();
-            JSONObject location_item = new JSONObject();
-            location_item.put("latitude", latitude);
-            location.put(0, location_item);
-            location_item.put("longtitude", longtitude);
-            location.put(1, location_item);
-            jsonObject.put("location", location);
+            jsonObject.put("longtitude", longtitude);
             jsonObject.put("shareArea", shareArea);
             jsonObject.put("mentionList", mentionList);
             // put picure id in it

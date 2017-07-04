@@ -31,8 +31,10 @@ public class Sign {
     }
     public boolean getToken(Context context){
         SharedPreferences pref = context.getSharedPreferences("logIn_data",Context.MODE_PRIVATE);
+        Boolean loged = pref.getBoolean("loged",false);
         token = pref.getString("token", "");
-        if(token.equals(""))
+        // have not loged in
+        if(loged == false || token.equals(""))
             return false;
         else
             return true;
