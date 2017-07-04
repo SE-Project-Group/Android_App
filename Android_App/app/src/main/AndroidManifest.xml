@@ -29,7 +29,8 @@
         <activity
             android:name=".LogInActivity"
             android:label="请登录" />
-        <activity android:name=".HomeActivity"
+        <activity
+            android:name=".HomeActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +61,7 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".PersonalPageActivity" />
         <activity android:name=".UserSercurityActivity" />
-        <activity android:name=".PersonalSettingActivity"></activity>
+        <activity android:name=".PersonalSettingActivity" />
     </application>
 
 </manifest>
