@@ -211,14 +211,17 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Password Confirm
 
-        /*final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
-        final EditText password_com = textInputLayout5.getEditText();
-        final EditText pass = textInputLayout4.getEditText();
+        final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
+        EditText password_com = textInputLayout5.getEditText();
+        final TextInputLayout textInputLayout6 = (TextInputLayout) findViewById(R.id.password);
+        final EditText password_final = textInputLayout6.getEditText();
 
         password_com.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
                 }
                 else {
@@ -227,8 +230,10 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
                 }
                 else {
@@ -237,15 +242,17 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                if (s != pass) {
-                    textInputLayout5.setError("确认密码与密码不相同");
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                final String fin_password = et_password.getText().toString();
+                if (!(s.toString().equals(fin_password))) {
+                    textInputLayout5.setError("两次输入密码不一致");
                     textInputLayout5.setErrorEnabled(true);
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
                 }
             }
-        });*/
+        });
 
 
         //android.support.design.widget.TextInputLayout phone_num = (android.support.design.widget.TextInputLayout) findViewById(R.id.phone_num);
