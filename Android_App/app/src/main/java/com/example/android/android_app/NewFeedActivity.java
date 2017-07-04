@@ -33,6 +33,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
+import com.example.android.android_app.Class.JsonSender;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +80,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String FRIEND = "friend";
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
+
+    private static final String url = "http://";
 
 
     // @ someone ids
@@ -217,32 +220,10 @@ public class NewFeedActivity extends AppCompatActivity {
     }
 
     // send  son to server, picture should be sent to cloud storage
+
     private void upload(String jsonString){
-        OkHttpClient okHttpClient = new OkHttpClient();
-        RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
-
-        Request request = new Request.Builder()
-                .url("http://")
-                .post(requestBody)
-                .build();
-
-        // get response
-        try{
-            Response response = okHttpClient.newCall(request).execute();
-            if(response.isSuccessful()){
-                //Log.i(TAG, "send_json: ok ");
-                // send message
-                Message message = new Message();
-                message.what = UPLOAD_OK;
-                handler.sendMessage(message);
-            }
-            else{
-               // Log.i(TAG, "send_json: error");
-                Toast.makeText(getApplicationContext(), "can't upload to server", Toast.LENGTH_SHORT).show();
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        JsonSender sender = new JsonSender(jsonString, url, UPLOAD_OK, handler, getApplicationContext());
+        sender.send();
     }
 
     // jedge if the user can add a picture, and let the user choose type

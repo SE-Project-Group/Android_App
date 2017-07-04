@@ -1,6 +1,8 @@
 package com.example.android.android_app;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +13,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.android.android_app.Class.JsonSender;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.baidu.location.d.j.U;
 
 public class SignUpActivity extends AppCompatActivity {
+    private static final int SIGNUP_OK = 0;
+    private static final String url = "http://";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,8 +267,52 @@ public class SignUpActivity extends AppCompatActivity {
         Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-
+                EditText et_userName = (EditText) findViewById(R.id.et_userName);
+                EditText et_password = (EditText) findViewById(R.id.et_password);
+                EditText et_phone = (EditText) findViewById(R.id.et_phone);
+                final String userName = et_userName.getText().toString();
+                final String password = et_password.getText().toString();
+                final String phone = et_phone.getText().toString();
+                final JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("phone", phone);
+                    jsonObject.put("user_name", userName);
+                    jsonObject.put("password", password);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                final String jsonString = jsonObject.toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        signUp(jsonString);
+                    }
+                }).run();
             }
         });
     }
+
+    private void signUp(String jsonString){
+        JsonSender sender = new JsonSender(jsonString, url,SIGNUP_OK, handler, getApplicationContext());
+        sender.send();
+    }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String token = "";
+            int user_id = 0;
+            switch (msg.what){
+                case SIGNUP_OK:
+                    Toast.makeText(getApplicationContext(), "signUp ok", Toast.LENGTH_SHORT).show();
+                    // go back to home activity
+                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 }
