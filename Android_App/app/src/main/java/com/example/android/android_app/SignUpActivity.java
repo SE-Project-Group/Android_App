@@ -31,7 +31,7 @@ import static com.baidu.location.d.j.U;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
-    private static final String url = "http://";
+    private static final String url = "http://192.168.1.200:8080/track/rest/app/clientSignup";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
