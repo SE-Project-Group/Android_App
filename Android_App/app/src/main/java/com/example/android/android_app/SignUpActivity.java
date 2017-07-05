@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.android_app.Class.JsonSender;
+import com.example.android.android_app.Class.RequestServer;
+import com.example.android.android_app.Class.RequestServerInterface;
 
 import org.json.JSONObject;
 
@@ -32,7 +34,7 @@ import static com.baidu.location.d.j.U;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
-    private static final String url = "http://192.168.1.13:8088/track/rest/app/clientSignup";
+    private static final int SIGNUP_FAILED = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,38 +292,14 @@ public class SignUpActivity extends AppCompatActivity {
             phone_num.setError("电话号码不可为空");
         }*/
 
-
+        final RequestServerInterface requestServer = new RequestServer(handler, SIGNUP_OK, SIGNUP_FAILED, this);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                signUp();
+                requestServer.signUp();
             }
         });
     }
 
-    private void signUp(){
-        EditText et_userName = (EditText) findViewById(R.id.et_userName);
-        EditText et_password = (EditText) findViewById(R.id.et_password);
-        EditText et_phone = (EditText) findViewById(R.id.et_phone);
-        String userName = et_userName.getText().toString();
-        String password = et_password.getText().toString();
-        String phone = et_phone.getText().toString();
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("phone", phone);
-            jsonObject.put("user_name", userName);
-            jsonObject.put("password", password);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        final String jsonString = jsonObject.toString();
-        final JsonSender sender = new JsonSender(jsonString, url, SIGNUP_OK, handler, getApplicationContext());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sender.send();
-            }
-        }).start();
-    }
 
     private Handler handler = new Handler(){
         @Override

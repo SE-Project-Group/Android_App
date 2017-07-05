@@ -48,7 +48,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             like_number = (TextView) view.findViewById(R.id.like_num);
             share_number = (TextView) view.findViewById(R.id.share_num);
             comment_number = (TextView) view.findViewById(R.id.comment_num);
-
             like_layout = (LinearLayout) view.findViewById(R.id.like_btn);
             share_layout = (LinearLayout) view.findViewById(R.id.share_btn);
             comment_layout = (LinearLayout) view.findViewById(R.id.comment_btn);

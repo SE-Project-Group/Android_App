@@ -196,8 +196,14 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("user_id",0);
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
-            jsonObject.put("latitude", latitude);
-            jsonObject.put("longtitude", longtitude);
+            JSONArray location = new JSONArray();
+            JSONObject latit = new JSONObject();
+            latit.put("latitude",latitude);
+            JSONObject longtit = new JSONObject();
+            longtit.put("longtitude", longtitude);
+            location.put(0, latit);
+            location.put(1,longtit);
+            jsonObject.put("location", location);
             jsonObject.put("shareArea", shareArea);
             jsonObject.put("mentionList", mentionList);
             // put picure id in it
