@@ -26,5 +26,23 @@ public class PersonalPageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        LinearLayout all_personal_feeds = (LinearLayout) findViewById(R.id.all_personal_feeds_layout);
+        all_personal_feeds.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(PersonalPageActivity.this,PersonalHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout my_feed = (LinearLayout)findViewById(R.id.my_feed_layout);
+        my_feed.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(PersonalPageActivity.this, PersonalHomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

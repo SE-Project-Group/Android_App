@@ -62,7 +62,8 @@
         <activity android:name=".PersonalPageActivity" />
         <activity android:name=".UserSercurityActivity" />
         <activity android:name=".PersonalSettingActivity" />
-        <activity android:name=".MyAlbumActivity"></activity>
+        <activity android:name=".MyAlbumActivity" />
+        <activity android:name=".PersonalHomeActivity"></activity>
     </application>
 
 </manifest>
