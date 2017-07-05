@@ -10,19 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.baidu.platform.comapi.map.B;
-import com.example.android.android_app.LogInActivity;
 import com.example.android.android_app.MyAlbumActivity;
 import com.example.android.android_app.PersonalPageActivity;
 import com.example.android.android_app.R;
-import com.example.android.android_app.SearchActivity;
 import com.example.android.android_app.SettingActivity;
 
-import static com.example.android.android_app.R.id.setting_btn;
 
 /**
  * Created by thor on 2017/6/29.

@@ -2,41 +2,26 @@ package com.example.android.android_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.android.android_app.Class.RequestServer;
+import com.example.android.android_app.Class.RequestServerInterface;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import static android.R.attr.button;
-import static android.R.id.message;
-import static com.baidu.location.d.j.H;
-import static com.baidu.location.d.j.v;
 
 public class LogInActivity extends AppCompatActivity {
     private static final int LOG_IN_OK = 0;
     private static final int LOG_IN_FAILED = 1;
     private ProgressDialog progressDialog;
-    private static final String uri = "http://192.168.1.13:8088/track/rest/app/clientLogin";
-
-    private String token;
-    private long user_id;
 
 
     @Override
@@ -50,6 +35,7 @@ public class LogInActivity extends AppCompatActivity {
         // set button listener
         // log in button
         Button button = (Button) findViewById(R.id.login_btn);
+        final RequestServerInterface requestServer = new RequestServer(handler, LOG_IN_OK, LOG_IN_FAILED, this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +48,7 @@ public class LogInActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        logInRequest();
+                        requestServer.logInRequest();
                     }
                 }).start();
 
@@ -80,56 +66,10 @@ public class LogInActivity extends AppCompatActivity {
         });
     }
 
-    private void logInRequest(){
-        String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
-        String password = ((EditText) findViewById(R.id.password)).getText().toString();
-        // send log in information to server
-        String url = uri + "?user_name="+user_name+"&password="+password ;
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url).build();
-        String token = "";
-        long user_id = 0;
-        String responseData = "";
-        try{
-            Response response = client.newCall(request).execute();
-            responseData = response.body().string();
-            JSONObject jsonObject = new JSONObject(responseData);
-            jsonObject.getString("token");
-            jsonObject.getLong("user_id");
-            //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        // if failed , send message to main thread
-        Message message = new Message();
-        if(responseData.equals("ERROR") || responseData.equals("")){
-            message.what = LOG_IN_FAILED;
-            handler.sendMessage(message);
-        }
-        // if success, send message to main thread
-        else{
-            // if success, store token
-            SharedPreferences.Editor editor = getSharedPreferences("login_data", MODE_PRIVATE).edit();
-            editor.putBoolean("loged",true);
-            editor.putString("token", token);
-            editor.putLong("user_id", user_id);
-            editor.apply();
-            // send message to main thread
-            message = new Message();
-            message.what = LOG_IN_OK;
-            message.arg1 = 1;   // token
-            handler.sendMessage(message);
-        }
-
-    }
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String token = "";
-            int user_id = 0;
             switch (msg.what){
                 case LOG_IN_OK:
                     // restart home activity, whose startup mode is singleTask
