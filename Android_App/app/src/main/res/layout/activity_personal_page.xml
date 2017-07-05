@@ -69,6 +69,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="5dp">
                     <LinearLayout
+                        android:id="@+id/my_feed_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -86,6 +87,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/my_following_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -103,6 +105,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/my_follower_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -182,6 +185,7 @@
         android:background="@drawable/layout_style"
         android:layout_marginTop="10dp">
         <LinearLayout
+            android:id="@+id/all_personal_feeds_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
