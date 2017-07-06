@@ -24,6 +24,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.android.android_app.Class.Permission;
 import com.example.android.android_app.fragment.DiscoverAroundFragment;
 import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
@@ -33,6 +34,8 @@ import com.example.android.android_app.fragment.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.baidu.location.d.j.P;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
@@ -90,8 +93,9 @@ public class HomeActivity extends AppCompatActivity{
         mLocationClient.registerLocationListener(new MyLocationListener());
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_home);
-        // get permissions
-        getPermissions();
+        // get permissons
+        Permission permission = new Permission(HomeActivity.this);
+        permission.getPermissions();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
         setBottomNavigator();
@@ -197,31 +201,6 @@ public class HomeActivity extends AppCompatActivity{
         });
     }
 
-
-    // deal with request permission
-    private void getPermissions(){
-        List<String> permissionList = new ArrayList<>();
-        // access fine location permission
-        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
-        permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        // access read phone state permission
-        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
-                permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        // access write external storage permission
-        if(ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.
-                permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        // check permission list
-        if(!permissionList.isEmpty()){
-            String [] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(HomeActivity.this, permissions, 1);
-        }
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -244,7 +223,5 @@ public class HomeActivity extends AppCompatActivity{
                 break;
         }
     }
-
-
 
 }
