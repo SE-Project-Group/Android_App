@@ -1,6 +1,7 @@
 package com.example.android.android_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,20 @@ public class PersonalPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(PersonalPageActivity.this, PersonalHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout logout_btn = (LinearLayout)findViewById(R.id.logout_btn);
+        logout_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                SharedPreferences.Editor editor = getSharedPreferences("login_data",MODE_PRIVATE).edit();
+                editor.putBoolean("loged",false);
+                editor.putString("token", "");
+                editor.putLong("user_id",0);
+                editor.apply();
+                Intent intent = new Intent(PersonalPageActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.android_app.Feed;
-import com.example.android.android_app.FeedAdapter;
+import com.example.android.android_app.Class.Feed;
+import com.example.android.android_app.Class.FeedAdapter;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("SJTU","ROOT",time, "Today is my birthday",0,0,0,list,R.drawable.exp_portrait);
+        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,list,R.drawable.exp_portrait);
         feedList.add(exp);
     }
 }

@@ -73,7 +73,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private int picture_cnt = 0;
     private boolean showLocation;
     private double latitude;
-    private double longtitude;
+    private double longitude;
     private String text;
     private String shareArea;
     private static final String PUBLIC = "public";
@@ -85,7 +85,7 @@ public class NewFeedActivity extends AppCompatActivity {
 
 
     // @ someone ids
-    private List<Long> mentionList = new ArrayList<>();
+    private JSONArray metionList = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +116,7 @@ public class NewFeedActivity extends AppCompatActivity {
         public void onReceiveLocation(BDLocation bdLocation) {
             // get postion
             latitude = bdLocation.getLatitude();
-            longtitude = bdLocation.getLongitude();
+            longitude = bdLocation.getLongitude();
             // set position easy to understand on screen
             String city = bdLocation.getCity();
             String district = bdLocation.getDistrict();
@@ -175,13 +175,13 @@ public class NewFeedActivity extends AppCompatActivity {
         RadioGroup shareArea_group = (RadioGroup) findViewById(R.id.shareArea_group);
         int selection = shareArea_group.getCheckedRadioButtonId();
         switch (selection){
-            case 0:
+            case 1:
                 shareArea = PUBLIC;
                 break;
-            case 1:
+            case 2:
                 shareArea = FRIEND;
                 break;
-            case 2:
+            case 3:
                 shareArea = PRIVATE;
         }
         CheckBox showLocation_btn = (CheckBox) findViewById(R.id.showLocation_btn);
@@ -196,22 +196,15 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("user_id",0);
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
-            JSONArray location = new JSONArray();
-            JSONObject latit = new JSONObject();
-            latit.put("latitude",latitude);
-            JSONObject longtit = new JSONObject();
-            longtit.put("longtitude", longtitude);
-            location.put(0, latit);
-            location.put(1,longtit);
+            JSONObject location = new JSONObject();
+            location.put("latitude", latitude);
+            location.put("longitude", longitude);
             jsonObject.put("location", location);
             jsonObject.put("shareArea", shareArea);
-            jsonObject.put("mentionList", mentionList);
+            jsonObject.put("metionList", metionList);
             // put picure id in it
-            JSONArray picId_array = new JSONArray();
-            JSONObject picId = new JSONObject();
-            picId.put("id",0);
-            picId_array.put(0,picId);
-            jsonObject.put("pictures", picId_array);
+            JSONArray picList = new JSONArray();
+            jsonObject.put("picList", picList);
         }catch (JSONException e){
             e.printStackTrace();
         }

@@ -1,7 +1,6 @@
 package com.example.android.android_app.Class;
 
 import com.baidu.location.BDLocation;
-import com.example.android.android_app.Feed;
 
 import java.util.List;
 

@@ -1,18 +1,14 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Class;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.android.android_app.R;
 
 import java.util.List;
 
@@ -25,7 +21,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
         TextView feed_owner_view;
-        TextView timestamp_view;
+        TextView date_view;
         TextView position_view;
         TextView feedText_view;
         ImageView picture_view;
@@ -41,7 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             super(view);
             portrait_view = (ImageView) view.findViewById(R.id.portrait);
             feed_owner_view = (TextView) view.findViewById(R.id.feed_owner);
-            timestamp_view = (TextView) view.findViewById(R.id.timestamp);
+            date_view = (TextView) view.findViewById(R.id.date);
             position_view = (TextView) view.findViewById(R.id.position);
             feedText_view = (TextView) view.findViewById(R.id.feed_text);
             picture_view = (ImageView) view.findViewById(R.id.picture1);
@@ -78,9 +74,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         temp = String.valueOf(feed.getShare_cnt());
         holder.share_number.setText(temp);
         holder.position_view.setText(feed.getPosition());
-        temp = feed.getTimestamp().toString();
-        holder.timestamp_view.setText(temp);
-        holder.portrait_view.setImageResource(feed.getPortrait_id());
+        temp = feed.getDate().toString();
+        holder.date_view.setText(temp);
+        holder.portrait_view.setImageResource((int)feed.getUser_ID());
         holder.picture_view.setImageResource((feed.getPic_id_list()).get(0));
     }
 
