@@ -63,7 +63,9 @@
         <activity android:name=".UserSercurityActivity" />
         <activity android:name=".PersonalSettingActivity" />
         <activity android:name=".MyAlbumActivity" />
-        <activity android:name=".PersonalHomeActivity"></activity>
+        <activity android:name=".PersonalHomeActivity" />
+        <activity android:name=".fragment.TalkingActivity" />
+        <activity android:name=".FollowingActivity"></activity>
     </application>
 
 </manifest>
