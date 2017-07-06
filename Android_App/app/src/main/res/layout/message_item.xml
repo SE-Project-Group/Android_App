@@ -24,26 +24,45 @@
                 android:layout_height="60dp"
                 android:id="@+id/portrait_image"/>
             <LinearLayout
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="UserName"
                     android:textSize="17dp"
                     android:id="@id/user_name_text"/>
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="blablablablabla"
-                    android:id="@+id/message_text"/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/left_quptes"
+                        android:layout_marginRight="10dp"/>
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="blablablablabla"
+                        android:id="@+id/message_text"
+                        />
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/right_quotes"/>
+                </LinearLayout>
+
             </LinearLayout>
             <ImageView
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/detail_right_back"/>

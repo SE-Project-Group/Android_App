@@ -56,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -66,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -76,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -92,6 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -102,6 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout2.setErrorEnabled(true);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -112,6 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 } else {
                     textInputLayout2.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
         });
@@ -136,6 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout3.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -155,6 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout3.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -173,6 +181,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout3.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
         });
@@ -197,6 +206,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout4.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -215,6 +225,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -233,6 +244,7 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
         });
@@ -255,6 +267,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -268,6 +281,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
 
@@ -281,6 +295,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 else {
                     textInputLayout5.setErrorEnabled(false);
+                    sign_up_btn.setEnabled(true);
                 }
             }
         });
