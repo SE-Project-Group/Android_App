@@ -1,7 +1,5 @@
 package com.example.android.android_app.fragment;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,16 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.android.android_app.Feed;
-import com.example.android.android_app.FeedAdapter;
+import com.example.android.android_app.Class.Feed;
+import com.example.android.android_app.Class.FeedAdapter;
 import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SearchActivity;
@@ -29,8 +24,6 @@ import com.example.android.android_app.SearchActivity;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by thor on 2017/6/28.
@@ -93,7 +86,7 @@ public class DiscoverFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("SJTU","ROOT",time, "Today is my birthday",0,0,0,list,R.drawable.exp_portrait);
+        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,list,R.drawable.exp_portrait);
         feedList.add(exp);
     }
 }

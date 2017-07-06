@@ -1,15 +1,12 @@
 package com.example.android.android_app.Class;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.baidu.location.BDLocation;
-import com.example.android.android_app.Feed;
 import com.example.android.android_app.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,23 +15,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.baidu.location.d.j.u;
-import static com.example.android.android_app.R.id.et_userName;
-import static com.example.android.android_app.R.id.user_name;
 
 /**
  * Created by thor on 2017/7/5.
  */
 
 public class RequestServer implements RequestServerInterface{
-    private String host;
+    private String host = "http://192.168.1.13:8088/track/rest/app/";
     private String jsonString;
     private Handler handler;
     private int success_msg;
@@ -107,26 +100,23 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public List<Feed> getAround(BDLocation location){
+        String resource = "feedAround";
         List<Feed> feedList = new ArrayList<>();
         String latitude_str = String.valueOf(location.getLatitude());
-        String longtitude_str = String.valueOf(location.getLongitude());
+        String longitude_str = String.valueOf(location.getLongitude());
         OkHttpClient client = new OkHttpClient();
+        String url = host+resource+"?latitude="+latitude_str+"&longitude="+longitude_str;
         Request request = new Request.Builder().
-                url("http://  ?latitude="+latitude_str+"&longtitude="+longtitude_str)
+                url(url)
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String respnseData  = response.body().string();
+            String responseData  = response.body().string();
             Gson gson = new Gson();
-            feedList = gson.fromJson(respnseData, new TypeToken<List<Feed>>(){}.getType());
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
         }catch (Exception e){
             e.printStackTrace();
         }
-        // send message to main thread
-        Message msg = new Message();
-        msg.what = success_msg;
-        handler.sendMessage(msg);
-
         return feedList;
     }
 
@@ -140,10 +130,10 @@ public class RequestServer implements RequestServerInterface{
         try {
             Response response = client.newCall(request).execute();
             String responseData = response.body().string();
-            Log.d("RESPONSE", "getMyFeeds: "+responseData);
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
         }catch (Exception e){
             e.printStackTrace();
-
         }
         return feedList;
     }

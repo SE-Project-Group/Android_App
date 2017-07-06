@@ -1,6 +1,5 @@
 package com.example.android.android_app.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,7 +33,7 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
-import com.example.android.android_app.Feed;
+import com.example.android.android_app.Class.Feed;
 import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.R;
 
@@ -45,7 +44,6 @@ import java.util.List;
 
 import static com.example.android.android_app.R.id.feed_owner;
 import static com.example.android.android_app.R.id.position;
-import static com.example.android.android_app.R.id.timestamp;
 
 /**
  * Created by thor on 2017/6/29.
@@ -114,6 +112,7 @@ public class DiscoverAroundFragment extends Fragment {
 
         //start
         ((HomeActivity) getActivity()).getmLocationClient().start();
+
     }
 
     // used by home activity
@@ -128,6 +127,26 @@ public class DiscoverAroundFragment extends Fragment {
                 baiduMap.animateMapStatus(update);
                 update = MapStatusUpdateFactory.zoomTo(19f);
                 baiduMap.animateMapStatus(update);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("latitude", location.getLatitude());
+                    jsonObject.put("longitude", location.getLongitude());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                String jsonString = jsonObject.toString();
+                final RequestServerInterface requestServer = new RequestServer(jsonString, handler, GET_AROUND_OK, GET_AROUND_FAILER, getActivity());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        feedList = requestServer.getAround(location);
+                        Message msg = new Message();
+                        msg.what = GET_AROUND_OK;
+                        handler.sendMessage(msg);
+                    }
+                }).start();
+
             }
             firstLocate = false;
         }
@@ -138,23 +157,8 @@ public class DiscoverAroundFragment extends Fragment {
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("latitude", location.getLatitude());
-            jsonObject.put("longtitude", location.getLongitude());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        String jsonString = jsonObject.toString();
-        final RequestServerInterface requestServer = new RequestServer(jsonString, handler, GET_AROUND_OK, GET_AROUND_FAILER, getActivity());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                feedList = requestServer.getAround(location);
-            }
-        }).start();
-
     }
+
 
     private void switch_frag(){
         FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
@@ -165,9 +169,9 @@ public class DiscoverAroundFragment extends Fragment {
     }
 
     private void show_around() {
-        for (Feed feed : feedList){
-            LatLng ll = new LatLng(feed.getLatitude(), feed.getLongtitude());
-        // 图标
+        for (Feed feed : feedList) {
+            LatLng ll = new LatLng(feed.getLatitude(), feed.getlongitude());
+            // 图标
             OverlayOptions overlayOptions = new MarkerOptions().position(ll)
                     .icon(mMarkerIcon)
                     .anchor(0.5f, 1f)//覆盖物的对齐点，0.5f,0.5f为覆盖物的中心点
@@ -178,13 +182,11 @@ public class DiscoverAroundFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable("detail", feed);
             marker.setExtraInfo(bundle);
-    }
-
+        }
 
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Toast.makeText(getActivity().getApplicationContext(),"show detail", Toast.LENGTH_SHORT).show();
                 popDetail(marker);
                 return true;
             }
@@ -198,7 +200,7 @@ public class DiscoverAroundFragment extends Fragment {
         {
             viewHolder = new ViewHolder();
             viewHolder.owner = (TextView) getActivity().findViewById(feed_owner);
-            viewHolder.timestamp = (TextView) getActivity().findViewById(timestamp);
+            viewHolder.date = (TextView) getActivity().findViewById(R.id.date);
             viewHolder.position = (TextView) getActivity().findViewById(position);
             viewHolder.feed_text = (TextView) getActivity().findViewById(R.id.feed_text);
             viewHolder.portrait = (ImageView) getActivity().findViewById(R.id.portrait);
@@ -213,7 +215,7 @@ public class DiscoverAroundFragment extends Fragment {
         }
         viewHolder = (ViewHolder) ll_detail.getTag();
         viewHolder.owner.setText(feed.getFeed_owner());
-        viewHolder.timestamp.setText(feed.getTimestamp().toString());
+        viewHolder.date.setText(feed.getDate().toString());
         viewHolder.portrait.setImageResource(R.drawable.exp_pic);
         viewHolder.position.setText(feed.getPosition());
         viewHolder.feed_text.setText(feed.getText());
@@ -224,11 +226,22 @@ public class DiscoverAroundFragment extends Fragment {
         ll_detail.setVisibility(View.VISIBLE);
     }
 
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_AROUND_OK:
+                   show_around();
+                    break;
+            }
+        }
+    };
+
     // use viewHolder to store layout
     private class ViewHolder {
         ImageView portrait;
         TextView owner;
-        TextView timestamp;
+        TextView date;
         TextView position;
         TextView feed_text;
         ImageView picture1;
@@ -240,7 +253,6 @@ public class DiscoverAroundFragment extends Fragment {
         TextView like_num;
 
     }
-
     // make good use of resource
     @Override
     public void onResume() {
@@ -261,16 +273,4 @@ public class DiscoverAroundFragment extends Fragment {
         ((HomeActivity) getActivity()).getmLocationClient().stop();
         baiduMap.setMyLocationEnabled(false);
     }
-
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case GET_AROUND_OK:
-                   show_around();
-                    break;
-            }
-        }
-    };
 }
