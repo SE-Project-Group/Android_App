@@ -271,13 +271,4 @@
                     android:src="@drawable/detail_right_back"/>
             </LinearLayout>
         </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登出"/>
-    </LinearLayout>
 </LinearLayout>
