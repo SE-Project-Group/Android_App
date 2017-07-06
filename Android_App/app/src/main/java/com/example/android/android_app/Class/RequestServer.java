@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.example.android.android_app.R;
@@ -143,9 +144,17 @@ public class RequestServer implements RequestServerInterface{
         EditText et_userName = (EditText) activityContext.findViewById(R.id.et_userName);
         EditText et_password = (EditText) activityContext.findViewById(R.id.et_password);
         EditText et_phone = (EditText) activityContext.findViewById(R.id.et_phone);
+        EditText et_password_confirm = (EditText) activityContext.findViewById(R.id.et_password_confirm);
         String userName = et_userName.getText().toString();
         String password = et_password.getText().toString();
         String phone = et_phone.getText().toString();
+        String password_confirm = et_password_confirm.getText().toString();
+
+        if(phone.equals("") || userName.equals("") || password.equals("") || !password.equals(password_confirm)) {
+            Toast.makeText(activityContext, "表单信息有误", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("phone", phone);

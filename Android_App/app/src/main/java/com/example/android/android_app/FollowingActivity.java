@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
+
+import com.example.android.android_app.Class.FollowingAdapter;
+import com.example.android.android_app.Class.User;
 
 import java.util.ArrayList;
 import java.util.List;

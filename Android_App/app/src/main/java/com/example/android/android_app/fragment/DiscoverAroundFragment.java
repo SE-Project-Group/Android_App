@@ -53,8 +53,7 @@ public class DiscoverAroundFragment extends Fragment {
     private MapView mapView;
     private BaiduMap baiduMap;
     private boolean firstLocate;
-    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.exp_pic);
-    private String url = "http://";
+    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_mark);
     private List<Feed> feedList;
     private static final int GET_AROUND_OK = 0;
     private static final int GET_AROUND_FAILER = 1;

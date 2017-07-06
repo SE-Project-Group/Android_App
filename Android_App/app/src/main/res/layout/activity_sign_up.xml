@@ -104,8 +104,8 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/et_password_confirm"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:hint="再次输入密码"
                 android:textSize="15dp"

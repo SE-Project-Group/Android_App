@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
     private static final int SIGNUP_FAILED = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -301,19 +302,14 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
-        //android.support.design.widget.TextInputLayout phone_num = (android.support.design.widget.TextInputLayout) findViewById(R.id.phone_num);
-        //EditText phone_num = (EditText)findViewById(R.id.phone_num);
-        /*if (phone_num.getEditText().toString().trim().equalsIgnoreCase("")) {
-            phone_num.setError("电话号码不可为空");
-        }*/
-
         final RequestServerInterface requestServer = new RequestServer(handler, SIGNUP_OK, SIGNUP_FAILED, this);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                requestServer.signUp();
+                    requestServer.signUp();
             }
         });
     }
+
 
 
     private Handler handler = new Handler(){
