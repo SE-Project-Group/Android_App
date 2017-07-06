@@ -140,6 +140,10 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("用户名不可包含空格");
+                    textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout3.setErrorEnabled(false);
@@ -158,6 +162,10 @@ public class SignUpActivity extends AppCompatActivity {
                     sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
+                    textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("用户名不可包含空格");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }
@@ -180,7 +188,12 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
-                }else {
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("用户名不可包含空格");
+                    textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
+                }
+                else {
                     textInputLayout3.setErrorEnabled(false);
                     sign_up_btn.setEnabled(true);
                 }
@@ -204,6 +217,10 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("密码不可包含空格");
+                    textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }
                 else {
                     textInputLayout4.setErrorEnabled(false);
@@ -224,6 +241,10 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("密码不可包含空格");
+                    textInputLayout3.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
                     sign_up_btn.setEnabled(true);
@@ -242,6 +263,10 @@ public class SignUpActivity extends AppCompatActivity {
                 }else if(s.length()>15){
                     textInputLayout4.setError("密码不可多于15个字符");
                     textInputLayout4.setErrorEnabled(true);
+                    sign_up_btn.setEnabled(false);
+                }else if(s.toString().contains(" ")){
+                    textInputLayout3.setError("密码不可包含空格");
+                    textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
