@@ -196,12 +196,9 @@ public class DiscoverAroundFragment extends Fragment {
             viewHolder.feed_text = (TextView) getActivity().findViewById(R.id.feed_text);
             viewHolder.portrait = (ImageView) getActivity().findViewById(R.id.portrait);
             viewHolder.picture1 = (ImageView) getActivity().findViewById(R.id.picture1);
-            viewHolder.share_btn = (LinearLayout) getActivity().findViewById(R.id.share_btn);
-            viewHolder.comment_btn = (LinearLayout) getActivity().findViewById(R.id.comment_btn);
-            viewHolder.like_btn = (LinearLayout) getActivity().findViewById(R.id.like_btn);
-            viewHolder.share_num = (TextView) getActivity().findViewById(R.id.share_num);
-            viewHolder.comment_num = (TextView) getActivity().findViewById(R.id.comment_num);
-            viewHolder.like_num = (TextView) getActivity().findViewById(R.id.like_num);
+            viewHolder.share_btn = (Button) getActivity().findViewById(R.id.share_btn);
+            viewHolder.comment_btn = (Button) getActivity().findViewById(R.id.comment_btn);
+            viewHolder.like_btn = (Button) getActivity().findViewById(R.id.like_btn);
             ll_detail.setTag(viewHolder);
         }
         viewHolder = (ViewHolder) ll_detail.getTag();
@@ -211,9 +208,9 @@ public class DiscoverAroundFragment extends Fragment {
         viewHolder.position.setText(feed.getPosition());
         viewHolder.feed_text.setText(feed.getText());
         viewHolder.picture1.setImageResource(R.drawable.exp_pic);
-        viewHolder.share_num.setText(String.valueOf(feed.getShare_cnt()));
-        viewHolder.comment_num.setText(String.valueOf(feed.getComment_cnt()));
-        viewHolder.like_num.setText(String.valueOf(feed.getLike_cnt()));
+        viewHolder.share_btn.setText(String.valueOf(feed.getShare_cnt()));
+        viewHolder.comment_btn.setText(String.valueOf(feed.getComment_cnt()));
+        viewHolder.like_btn.setText(String.valueOf(feed.getLike_cnt()));
         ll_detail.setVisibility(View.VISIBLE);
     }
 
@@ -236,12 +233,9 @@ public class DiscoverAroundFragment extends Fragment {
         TextView position;
         TextView feed_text;
         ImageView picture1;
-        LinearLayout share_btn;
-        LinearLayout comment_btn;
-        LinearLayout like_btn;
-        TextView share_num;
-        TextView comment_num;
-        TextView like_num;
+        Button share_btn;
+        Button comment_btn;
+        Button like_btn;
 
     }
     // make good use of resource

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/newFeedPage_root"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_style"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <EditText
+            android:gravity="top"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/comment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="30"
+            android:background="@drawable/add_text_bg"
+            android:hint="评论点什么吧..."
+            android:inputType="textMultiLine"
+            android:textColorHint="@color/gray"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>
