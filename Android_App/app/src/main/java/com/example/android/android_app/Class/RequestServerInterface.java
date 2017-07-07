@@ -16,4 +16,6 @@ public interface RequestServerInterface {
     public List<Feed> getMyFeed();
 
     public void signUp();
+
+    public void newFeed(String jsonString);
 }

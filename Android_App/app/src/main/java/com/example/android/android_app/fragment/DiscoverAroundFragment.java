@@ -127,15 +127,7 @@ public class DiscoverAroundFragment extends Fragment {
                 update = MapStatusUpdateFactory.zoomTo(19f);
                 baiduMap.animateMapStatus(update);
 
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("latitude", location.getLatitude());
-                    jsonObject.put("longitude", location.getLongitude());
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                String jsonString = jsonObject.toString();
-                final RequestServerInterface requestServer = new RequestServer(jsonString, handler, GET_AROUND_OK, GET_AROUND_FAILER, getActivity());
+                final RequestServerInterface requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILER, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

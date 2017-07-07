@@ -1,6 +1,7 @@
 package com.example.android.android_app.Class;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.R.attr.resource;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -29,11 +32,24 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RequestServer implements RequestServerInterface{
     private String host = "http://192.168.1.13:8088/track/rest/app/";
-    private String jsonString;
     private Handler handler;
     private int success_msg;
     private int fail_msg;
     private Activity activityContext;
+
+    private String generatePreUrl(String resource){
+        String sign = "";
+        Verify verify = new Verify(resource, activityContext);
+        try {
+            sign = verify.generateSign();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String user_id = verify.getUser_id();
+        String prefix_url = host+resource+"?user_ID="+user_id+"&sign="+sign;
+        return prefix_url;
+    }
+
 
     public RequestServer(Handler handler, int success_msg, int fail_msg, Activity activityContext) {
         this.handler = handler;
@@ -42,20 +58,10 @@ public class RequestServer implements RequestServerInterface{
         this.activityContext = activityContext;
     }
 
-    public RequestServer(String jsonString, Handler handler, int success_msg, int fail_msg, Activity activityContext) {
-        this.jsonString = jsonString;
-        this.handler = handler;
-        this.success_msg = success_msg;
-        this.fail_msg = fail_msg;
-        this.activityContext = activityContext;
-    }
-
-
-
     public void logInRequest(){
         String resource = "clientLogin";
         String token ="";
-        long user_id = 0;
+        int user_id = 0;
         String url = host + resource;
 
         String user_name = ((EditText) activityContext.findViewById(R.id.user_name)).getText().toString();
@@ -73,7 +79,7 @@ public class RequestServer implements RequestServerInterface{
             responseData = response.body().string();
             JSONObject jsonObject = new JSONObject(responseData);
             token = jsonObject.getString("token");
-            user_id = jsonObject.getLong("user_id");
+            user_id = jsonObject.getInt("user_id");
             //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             e.printStackTrace();
@@ -91,7 +97,7 @@ public class RequestServer implements RequestServerInterface{
             SharedPreferences.Editor editor =activityContext.getSharedPreferences("login_data", MODE_PRIVATE).edit();
             editor.putBoolean("loged",true);
             editor.putString("token", token);
-            editor.putLong("user_id", user_id);
+            editor.putInt("user_id", user_id);
             editor.apply();
             // send message to main thread
             message = new Message();
@@ -102,13 +108,15 @@ public class RequestServer implements RequestServerInterface{
 
     public List<Feed> getAround(BDLocation location){
         String resource = "feedAround";
+
         List<Feed> feedList = new ArrayList<>();
         String latitude_str = String.valueOf(location.getLatitude());
         String longitude_str = String.valueOf(location.getLongitude());
         OkHttpClient client = new OkHttpClient();
-        String url = host+resource+"?latitude="+latitude_str+"&longitude="+longitude_str;
-        Request request = new Request.Builder().
-                url(url)
+        String url = generatePreUrl(resource)
+                +"&latitude="+latitude_str+"&longitude="+longitude_str;
+        Request request = new Request.Builder()
+                .url(url)
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -165,12 +173,13 @@ public class RequestServer implements RequestServerInterface{
         }
         final String jsonString = jsonObject.toString();
         final JsonSender sender = new JsonSender(jsonString, host+resource, success_msg, handler, activityContext);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                sender.send();
-            }
-        }).start();
+        sender.send();
+    }
+
+    public void newFeed(String jsonString){
+        String resource = "NewFeed";
+        JsonSender sender = new JsonSender(jsonString, generatePreUrl(resource), success_msg, handler, activityContext);
+        sender.send();
     }
 
 }

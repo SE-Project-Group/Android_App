@@ -34,6 +34,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
 import com.example.android.android_app.Class.JsonSender;
+import com.example.android.android_app.Class.RequestServer;
+import com.example.android.android_app.Class.RequestServerInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,8 +82,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String FRIEND = "friend";
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
-
-    private static final String url = "http://192.168.1.13:8088/track/rest/app/NewFeed";
+    private static final int UPLOAD_FAILED = 4;
 
 
     // @ someone ids
@@ -157,10 +158,11 @@ public class NewFeedActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.send_btn:
                 final String jsonString = generateJsonString();
+                final RequestServerInterface requestServer = new RequestServer(handler, UPLOAD_OK, UPLOAD_FAILED,this);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        upload(jsonString);
+                        requestServer.newFeed(jsonString);
                     }
                 }).start();
         }
@@ -213,11 +215,6 @@ public class NewFeedActivity extends AppCompatActivity {
     }
 
     // send  son to server, picture should be sent to cloud storage
-
-    private void upload(String jsonString){
-        JsonSender sender = new JsonSender(jsonString, url, UPLOAD_OK, handler, getApplicationContext());
-        sender.send();
-    }
 
     // jedge if the user can add a picture, and let the user choose type
     // then descide which function to use ， takeNewPhoto or addFromAlbum
@@ -289,6 +286,7 @@ public class NewFeedActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, new_pic_uri);
         startActivityForResult(intent, TAKE_PHOTO);
     }
+
     private void selectFromAlbum(){
         // open album
         Intent intent = new Intent("android.intent.action.GET_CONTENT");

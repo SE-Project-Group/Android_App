@@ -251,12 +251,10 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         // Password Confirm
-
         final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
         EditText password_com = textInputLayout5.getEditText();
         final TextInputLayout textInputLayout6 = (TextInputLayout) findViewById(R.id.password);
         final EditText password_final = textInputLayout6.getEditText();
-
         password_com.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 EditText et_password = (EditText) findViewById(R.id.et_password);

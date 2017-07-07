@@ -53,7 +53,7 @@ public class PersonalPageActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getSharedPreferences("login_data",MODE_PRIVATE).edit();
                 editor.putBoolean("loged",false);
                 editor.putString("token", "");
-                editor.putLong("user_id",0);
+                editor.putInt("user_id",0);
                 editor.apply();
                 Intent intent = new Intent(PersonalPageActivity.this, HomeActivity.class);
                 startActivity(intent);
