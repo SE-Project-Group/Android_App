@@ -18,4 +18,6 @@ public interface RequestServerInterface {
     public void signUp();
 
     public void newFeed(String jsonString);
+
+    public void like (String feed_id);
 }

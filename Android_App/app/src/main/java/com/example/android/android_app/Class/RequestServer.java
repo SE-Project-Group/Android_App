@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class RequestServer implements RequestServerInterface{
-    private String host = "http://192.168.1.13:8088/track/rest/app/";
+    private String host = "http://192.168.1.200:8080/track/rest/app/";
     private Handler handler;
     private int success_msg;
     private int fail_msg;
@@ -50,8 +51,7 @@ public class RequestServer implements RequestServerInterface{
         return prefix_url;
     }
 
-
-    public RequestServer(Handler handler, int success_msg, int fail_msg, Activity activityContext) {
+    public RequestServer(Handler handler, int success_msg,int fail_msg, Activity activityContext) {
         this.handler = handler;
         this.success_msg = success_msg;
         this.fail_msg = fail_msg;
@@ -180,6 +180,10 @@ public class RequestServer implements RequestServerInterface{
         String resource = "NewFeed";
         JsonSender sender = new JsonSender(jsonString, generatePreUrl(resource), success_msg, handler, activityContext);
         sender.send();
+    }
+
+    public void like(String feed_id){
+
     }
 
 }

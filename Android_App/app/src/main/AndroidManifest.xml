@@ -63,7 +63,7 @@
         <activity android:name=".PersonalSettingActivity" />
         <activity android:name=".MyAlbumActivity" />
         <activity android:name=".PersonalHomeActivity" />
-        <activity android:name=".fragment.TalkingActivity" />
+        <activity android:name=".TalkingActivity" />
         <activity android:name=".FollowingActivity" />
         <activity android:name=".CommentActivity"></activity>
     </application>

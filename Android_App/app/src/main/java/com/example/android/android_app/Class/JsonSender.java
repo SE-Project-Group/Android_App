@@ -32,11 +32,9 @@ public class JsonSender {
         this.context = context;
     }
 
-
     public void send(){
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
-
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
@@ -46,9 +44,11 @@ public class JsonSender {
         try{
             Response response = okHttpClient.newCall(request).execute();
             String data = response.body().string();
-            url = data;
+            if(data.equals("Status wrong")) {
+                Toast.makeText(context, "登陆状态错误", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if(response.isSuccessful()){
-                //Log.i(TAG, "send_json: ok ");
                 // send message
                 Message message = new Message();
                 message.what = msg;

@@ -27,7 +27,6 @@ public class Verify {
         String token = getToken();
         if(token.equals(""))
             return "";
-
         MessageDigest md=MessageDigest.getInstance("MD5");
         byte[] bs = md.digest((prefix + resource + "?token=" + token).getBytes("UTF-8"));
         String rightSign = new String(bs,"UTF-8");

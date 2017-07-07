@@ -1,5 +1,6 @@
 package com.example.android.android_app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 
+import static com.baidu.location.d.j.O;
 import static com.example.android.android_app.R.id.feed_owner;
 import static com.example.android.android_app.R.id.position;
 
@@ -49,15 +51,17 @@ import static com.example.android.android_app.R.id.position;
  * Created by thor on 2017/6/29.
  */
 
-public class DiscoverAroundFragment extends Fragment {
+public class DiscoverAroundFragment extends Fragment implements View.OnClickListener{
     private MapView mapView;
     private BaiduMap baiduMap;
     private boolean firstLocate;
     private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_mark);
     private List<Feed> feedList;
     private static final int GET_AROUND_OK = 0;
-    private static final int GET_AROUND_FAILER = 1;
+    private static final int GET_AROUND_FAILED = 1;
     private LinearLayout ll_detail;
+    private static final int LIKE_OK = 2;
+    private static final int LIKE_FAILED = 3;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -127,7 +131,7 @@ public class DiscoverAroundFragment extends Fragment {
                 update = MapStatusUpdateFactory.zoomTo(19f);
                 baiduMap.animateMapStatus(update);
 
-                final RequestServerInterface requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILER, getActivity());
+                final RequestServerInterface requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILED, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -149,7 +153,6 @@ public class DiscoverAroundFragment extends Fragment {
         baiduMap.setMyLocationData(locationData);
 
     }
-
 
     private void switch_frag(){
         FragmentManager fragmentManager =getActivity().getSupportFragmentManager();
@@ -211,6 +214,7 @@ public class DiscoverAroundFragment extends Fragment {
         viewHolder.share_btn.setText(String.valueOf(feed.getShare_cnt()));
         viewHolder.comment_btn.setText(String.valueOf(feed.getComment_cnt()));
         viewHolder.like_btn.setText(String.valueOf(feed.getLike_cnt()));
+
         ll_detail.setVisibility(View.VISIBLE);
     }
 
@@ -239,6 +243,27 @@ public class DiscoverAroundFragment extends Fragment {
 
     }
     // make good use of resource
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.share_btn:
+                break;
+            case R.id.comment_btn:
+                break;
+            case R.id.like_btn:
+                final RequestServerInterface requestServer = new RequestServer(handler, LIKE_OK, LIKE_FAILED, getActivity());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestServer.like("");
+                    }
+                }).start();
+                break;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
