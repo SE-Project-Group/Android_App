@@ -40,7 +40,6 @@
         </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".UserInfoActivity" />
 
         <!-- register service -->
         <service
@@ -65,7 +64,8 @@
         <activity android:name=".MyAlbumActivity" />
         <activity android:name=".PersonalHomeActivity" />
         <activity android:name=".fragment.TalkingActivity" />
-        <activity android:name=".FollowingActivity"></activity>
+        <activity android:name=".FollowingActivity" />
+        <activity android:name=".CommentActivity"></activity>
     </application>
 
 </manifest>
