@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -214,6 +215,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         viewHolder.share_btn.setText(String.valueOf(feed.getShare_cnt()));
         viewHolder.comment_btn.setText(String.valueOf(feed.getComment_cnt()));
         viewHolder.like_btn.setText(String.valueOf(feed.getLike_cnt()));
+        viewHolder._id = ""; ////////////////////
 
         ll_detail.setVisibility(View.VISIBLE);
     }
@@ -231,6 +233,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
 
     // use viewHolder to store layout
     private class ViewHolder {
+        String _id;
         ImageView portrait;
         TextView owner;
         TextView date;
@@ -247,6 +250,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        final ViewHolder viewHolder = (ViewHolder) ll_detail.getTag();
         switch (v.getId()){
             case R.id.share_btn:
                 break;
@@ -257,7 +261,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        requestServer.like("");
+                        requestServer.like(viewHolder._id);
                     }
                 }).start();
                 break;

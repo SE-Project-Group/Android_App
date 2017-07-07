@@ -25,6 +25,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.R.attr.resource;
+import static android.R.id.message;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -183,6 +184,24 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public void like(String feed_id){
+        String resource = "";
+        String url = generatePreUrl(resource) + "?feed_id" + feed_id;
+        OkHttpClient client = new OkHttpClient();
+        Request requst = new Request.Builder()
+                .url(url)
+                .build();
+        try{
+            Response response = client.newCall(requst).execute();
+            String responseData = response.body().toString();
+
+            if(responseData.equals("")) {
+                Message message = new Message();
+                message.what = success_msg;
+                handler.sendMessage(message);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
