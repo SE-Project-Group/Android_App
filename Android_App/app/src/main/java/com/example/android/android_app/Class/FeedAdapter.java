@@ -1,5 +1,6 @@
 package com.example.android.android_app.Class;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.platform.comapi.map.B;
+import com.example.android.android_app.CommentActivity;
 import com.example.android.android_app.R;
 
 import java.util.List;
@@ -42,7 +44,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             share_btn = (Button)view.findViewById(R.id.share_btn);
             comment_btn = (Button)view.findViewById(R.id.comment_btn);
             like_btn = (Button)view.findViewById(R.id.like_btn);
-
         }
     }
 
