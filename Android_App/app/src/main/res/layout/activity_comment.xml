@@ -19,11 +19,12 @@
             android:id="@+id/comment_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="30"
+            android:minLines="10"
             android:background="@drawable/add_text_bg"
             android:hint="评论点什么吧..."
             android:inputType="textMultiLine"
             android:textColorHint="@color/gray"
             android:textSize="16dp" />
     </LinearLayout>
+
 </LinearLayout>
