@@ -34,6 +34,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
 import com.example.android.android_app.Class.JsonSender;
+import com.example.android.android_app.Class.OssInit;
+import com.example.android.android_app.Class.OssService;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
 
@@ -83,6 +85,11 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
     private static final int UPLOAD_FAILED = 4;
+    private static final int UPLOAD_PIC_OK = 5;
+
+    // used to upload picture
+    private OssService ossService;
+    private List<String> pathList = new ArrayList<>();
 
 
     // @ someone ids
@@ -301,7 +308,9 @@ public class NewFeedActivity extends AppCompatActivity {
         switch (requestCode){
             case TAKE_PHOTO :
                 if(resultCode == RESULT_OK){
-                    Bitmap bitmap = BitmapFactory.decodeFile(new_pic_uri.getPath(), options);
+                    String path = new_pic_uri.getPath();
+                    pathList.add(path);
+                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                     Bitmap scaled = scaleBitmap(bitmap, 300,300);
                     new_pic.setImageBitmap(scaled);
                     picture_cnt ++;
@@ -310,6 +319,7 @@ public class NewFeedActivity extends AppCompatActivity {
             case CHOOSE_PHOTO :
                 ImageUriParser imageUriParser = new ImageUriParser(this);
                 String path = imageUriParser.parse(data.getData());
+                pathList.add(path);
                 Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                 Bitmap scaled = scaleBitmap(bitmap, 300,300);
                 new_pic.setImageBitmap(scaled);
@@ -336,22 +346,39 @@ public class NewFeedActivity extends AppCompatActivity {
         return newBM;
     }
 
+    private void upload_pic(String feed_id){
+        ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
+        int count = picture_cnt;
+        for(int i = 0; i < count; i++){
+            ossService.asyncPutImage(feed_id+"_"+String.valueOf(i),pathList.get(i));
+        }
+    }
+
+
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String token = "";
             int user_id = 0;
+            int count = picture_cnt;
             switch (msg.what){
                 case UPLOAD_OK:
-                    Toast.makeText(getApplicationContext(), "upload ok", Toast.LENGTH_SHORT).show();
-                    // go back to home activity
-                    Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
-                    startActivity(intent);
+                    Bundle bundle = msg.getData();
+                    upload_pic(bundle.getString("feed_id"));
                     break;
                 case LOCATE_OK:
                     TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);
                     tv_currentPosition.setText(detailed_location);
+                    break;
+                case UPLOAD_PIC_OK:
+                    count --;
+                    if(count == 0){
+                        Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
+                        // go back to home activity
+                        Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }
                     break;
                 default:
                     break;

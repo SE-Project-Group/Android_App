@@ -3,6 +3,7 @@ package com.example.android.android_app.Class;
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -27,6 +28,8 @@ import okhttp3.Response;
 import static android.R.attr.resource;
 import static android.R.id.message;
 import static android.content.Context.MODE_PRIVATE;
+import static com.baidu.location.d.j.S;
+import static com.baidu.location.d.j.ac;
 
 /**
  * Created by thor on 2017/7/5.
@@ -42,12 +45,16 @@ public class RequestServer implements RequestServerInterface{
     private String generatePreUrl(String resource){
         String sign = "";
         Verify verify = new Verify(resource, activityContext);
+        String user_id = verify.getUser_id();
+        if(user_id.equals("-1"))
+            return null;
+
         try {
             sign = verify.generateSign();
         }catch (Exception e){
             e.printStackTrace();
         }
-        String user_id = verify.getUser_id();
+
         String prefix_url = host+resource+"?user_ID="+user_id+"&sign="+sign;
         return prefix_url;
     }
@@ -109,7 +116,7 @@ public class RequestServer implements RequestServerInterface{
 
     public List<Feed> getAround(BDLocation location){
         String resource = "feedAround";
-
+        // can not log in
         List<Feed> feedList = new ArrayList<>();
         String latitude_str = String.valueOf(location.getLatitude());
         String longitude_str = String.valueOf(location.getLongitude());
@@ -132,11 +139,17 @@ public class RequestServer implements RequestServerInterface{
 
     public List<Feed> getMyFeed(){
         String resource = "MyFeed";
-
         List<Feed> feedList = new ArrayList<>();
+        // check if loged in
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
+            return feedList;
+        }
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(host+resource).build();
+                .url(pre_url).build();
         try {
             Response response = client.newCall(request).execute();
             String responseData = response.body().string();
@@ -173,36 +186,90 @@ public class RequestServer implements RequestServerInterface{
             e.printStackTrace();
         }
         final String jsonString = jsonObject.toString();
-        final JsonSender sender = new JsonSender(jsonString, host+resource, success_msg, handler, activityContext);
-        sender.send();
+        final JsonSender sender = new JsonSender(jsonString, host+resource);
+        String response_data = sender.send();
+        if(response_data.equals("existing phone"))
+            Toast.makeText(activityContext, "手机号已经被注册", Toast.LENGTH_SHORT).show();
+        if(response_data.equals("existing user name"))
+            Toast.makeText(activityContext, "用户名已存在", Toast.LENGTH_SHORT).show();
+        if(response_data.equals("success")) {
+            Message message = new Message();
+            message.what = success_msg;
+            handler.sendMessage(message);
+        }
     }
 
     public void newFeed(String jsonString){
         String resource = "NewFeed";
-        JsonSender sender = new JsonSender(jsonString, generatePreUrl(resource), success_msg, handler, activityContext);
-        sender.send();
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JsonSender sender = new JsonSender(jsonString, pre_url);
+        String response = sender.send();
+        if(response.equals("status wrong"))
+            Toast.makeText(activityContext, "您尚未登录", Toast.LENGTH_SHORT).show();
+        else{
+            Message message = new Message();
+            message.what = success_msg;
+            Bundle bundle = new Bundle();
+            bundle.putString("feed_id", response);
+            message.setData(bundle);
+            handler.sendMessage(message);
+        }
     }
 
     public void like(String feed_id){
-        String resource = "";
-        String url = generatePreUrl(resource) + "?feed_id" + feed_id;
-        OkHttpClient client = new OkHttpClient();
-        Request requst = new Request.Builder()
-                .url(url)
-                .build();
-        try{
-            Response response = client.newCall(requst).execute();
-            String responseData = response.body().toString();
-
-            if(responseData.equals("")) {
-                Message message = new Message();
-                message.what = success_msg;
-                handler.sendMessage(message);
-            }
+        String resource = "IncLikeFeed";
+        // check if loged in
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // create json
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("_id", feed_id);
+            jsonObject.put("user_id", new Verify(resource, activityContext).getUser_id());
         }catch (Exception e){
             e.printStackTrace();
         }
+        JsonSender sender = new JsonSender(jsonObject.toString(), pre_url);
+        String response = sender.send();
+        if(response.equals("success")){
+            Message message = new Message();
+            message.what = success_msg;
+            handler.sendMessage(message);
+        }
+    }
 
+    public void comment(String text, String feed_id, int reply_id){
+        String resource = "NewComment";
+        // check if loged in
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        // create json
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("_id", feed_id);
+            jsonObject.put("user_id", new Verify(resource, activityContext).getUser_id());
+            jsonObject.put("text", text);
+            jsonObject.put("reply_id", reply_id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        JsonSender sender = new JsonSender(jsonObject.toString(), pre_url);
+        String response = sender.send();
+        if(response.equals("success")){
+            Message message = new Message();
+            message.what = success_msg;
+            handler.sendMessage(message);
+        }
     }
 
 }
