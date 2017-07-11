@@ -65,7 +65,8 @@
         <activity android:name=".PersonalHomeActivity" />
         <activity android:name=".TalkingActivity" />
         <activity android:name=".FollowingActivity" />
-        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".CommentListActivity"></activity>
     </application>
 
 </manifest>

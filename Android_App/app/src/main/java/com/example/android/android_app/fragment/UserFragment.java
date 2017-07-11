@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.android.android_app.CommentListActivity;
 import com.example.android.android_app.LogInActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SettingActivity;
@@ -49,6 +50,15 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_mycomment_btn);
+        mycomment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CommentListActivity.class);
                 startActivity(intent);
             }
         });
