@@ -31,6 +31,10 @@ public class FollowingActivity extends AppCompatActivity {
     private void initUsers(){
         User userA = new User("wangtao", "I love helping others",R.drawable.exp_portrait);
         userList.add(userA);
+        userList.add(userA);
+        userList.add(userA);
+        userList.add(userA);
+        userList.add(userA);
         User userB = new User("hhhhh","I love coding",R.drawable.exp_pic);
         userList.add(userB);
     }
