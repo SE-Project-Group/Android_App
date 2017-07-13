@@ -1,6 +1,5 @@
 package com.example.android.android_app.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
@@ -36,15 +33,12 @@ import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
 import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.HomeActivity;
+import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
 
-import static com.baidu.location.d.j.O;
 import static com.example.android.android_app.R.id.feed_owner;
 import static com.example.android.android_app.R.id.position;
 

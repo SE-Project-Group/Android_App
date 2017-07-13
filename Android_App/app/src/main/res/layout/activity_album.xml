@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.android_app.AlbumActivity">
+    tools:context="com.example.android.android_app.Activity.AlbumActivity">
 
 
 </android.support.constraint.ConstraintLayout>

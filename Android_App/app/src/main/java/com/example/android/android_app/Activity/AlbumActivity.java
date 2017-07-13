@@ -1,13 +1,15 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CommentActivity extends AppCompatActivity {
+import com.example.android.android_app.R;
+
+public class AlbumActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment);
+        setContentView(R.layout.activity_album);
     }
 }

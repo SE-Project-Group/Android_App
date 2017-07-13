@@ -13,12 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.android.android_app.AtMeRemindActivity;
+import com.example.android.android_app.Activity.AtMeRemindActivity;
 import com.example.android.android_app.Class.MessageAdapter;
 import com.example.android.android_app.Class.Message;
-import com.example.android.android_app.CommentRemindActivity;
-import com.example.android.android_app.FollowingActivity;
-import com.example.android.android_app.LikeRemindActivity;
+import com.example.android.android_app.Activity.CommentRemindActivity;
+import com.example.android.android_app.Activity.LikeRemindActivity;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
