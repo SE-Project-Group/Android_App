@@ -1,12 +1,10 @@
-package com.example.android.android_app.Activity;
+package com.example.android.android_app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.SearchView;
 import android.widget.Toast;
-
-import com.example.android.android_app.R;
 
 public class SearchActivity extends AppCompatActivity {
 

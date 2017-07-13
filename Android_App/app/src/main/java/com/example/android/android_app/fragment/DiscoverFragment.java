@@ -17,9 +17,9 @@ import android.widget.Button;
 
 import com.example.android.android_app.Class.Feed;
 import com.example.android.android_app.Class.FeedAdapter;
-import com.example.android.android_app.Activity.HomeActivity;
+import com.example.android.android_app.HomeActivity;
 import com.example.android.android_app.R;
-import com.example.android.android_app.Activity.SearchActivity;
+import com.example.android.android_app.SearchActivity;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

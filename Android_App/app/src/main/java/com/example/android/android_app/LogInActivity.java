@@ -1,4 +1,4 @@
-package com.example.android.android_app.Activity;
+package com.example.android.android_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
-import com.example.android.android_app.R;
 
 
 public class LogInActivity extends AppCompatActivity {
