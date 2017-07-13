@@ -356,6 +356,7 @@ public class NewFeedActivity extends AppCompatActivity {
             switch (msg.what){
                 case UPLOAD_OK:
                     Bundle bundle = msg.getData();
+
                     if(picture_cnt == 0){
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
@@ -372,10 +373,8 @@ public class NewFeedActivity extends AppCompatActivity {
                     if(count == 0){
                         Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
                         // go back to home activity
-                        Intent intent = new Intent();
-                        intent.putExtra("old_position", old_position);
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
+                        startActivity(intent);
                     }
                     break;
                 default:

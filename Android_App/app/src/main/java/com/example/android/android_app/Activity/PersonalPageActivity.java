@@ -53,6 +53,7 @@ public class PersonalPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 SharedPreferences.Editor editor = getSharedPreferences("logIn_data",MODE_PRIVATE).edit();
+
                 editor.putBoolean("loged",false);
                 editor.putString("token", "");
                 editor.putInt("user_id",0);

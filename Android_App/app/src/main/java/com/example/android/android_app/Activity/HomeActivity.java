@@ -29,6 +29,7 @@ import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
 import com.example.android.android_app.fragment.UserFragment;
 
+
 import static android.R.attr.data;
 import static com.baidu.location.d.j.p;
 
@@ -45,6 +46,7 @@ public class HomeActivity extends AppCompatActivity{
     private LocationClient mLocationClient;
 
     public boolean loged;
+
     private int old_postion = 0;
     private static final int NEW_FEED = 1;
 
@@ -96,6 +98,7 @@ public class HomeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
         setBottomNavigator();
+
         setDefaultFragment();
     }
 
@@ -123,6 +126,7 @@ public class HomeActivity extends AppCompatActivity{
         transaction.replace(R.id.fragment, discoverFragment);
         transaction.commit();
         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
+
     }
 
     // set bottom navigation bar
@@ -182,6 +186,7 @@ public class HomeActivity extends AppCompatActivity{
                                 userFragment = new UserFragment();
                             f = userFragment;
                         }
+
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     default:

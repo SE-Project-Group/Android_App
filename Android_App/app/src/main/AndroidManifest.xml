@@ -70,6 +70,8 @@
         <activity android:name=".Activity.CommentRemindActivity" />
         <activity android:name=".Activity.AtMeRemindActivity" />
         <activity android:name=".Activity.LikeRemindActivity" />
+
+        <activity android:name=".Activity.AlbumActivity"></activity>
         <activity android:name=".Activity.FansActivity"></activity>
 
 
