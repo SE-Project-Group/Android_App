@@ -54,7 +54,9 @@ public class Feed implements Serializable{
         this.user_ID = user_ID;
     }
 
-
+    public String get_id() {
+        return _id;
+    }
 
     public double getLatitude(){
         return latitude;

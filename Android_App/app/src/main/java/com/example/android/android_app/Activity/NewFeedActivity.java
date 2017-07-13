@@ -1,8 +1,6 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -15,15 +13,12 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +28,12 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Class.ImageUriParser;
-import com.example.android.android_app.Class.JsonSender;
 import com.example.android.android_app.Class.OssInit;
 import com.example.android.android_app.Class.OssService;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Class.Verify;
+import com.example.android.android_app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,17 +43,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import static android.R.attr.id;
-import static android.R.attr.name;
-import static com.baidu.location.d.j.m;
-import static com.baidu.location.d.j.t;
 
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
@@ -200,9 +185,10 @@ public class NewFeedActivity extends AppCompatActivity {
             showLocation = false;
 
         //create json
+        Verify verify = new Verify(this);
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("user_id",0);
+            jsonObject.put("userId" ,verify.getUser_id());
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
             JSONObject location = new JSONObject();

@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.android.android_app.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

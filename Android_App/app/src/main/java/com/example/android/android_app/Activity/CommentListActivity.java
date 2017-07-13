@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.android.android_app.R;
 
 public class CommentListActivity extends AppCompatActivity {
 

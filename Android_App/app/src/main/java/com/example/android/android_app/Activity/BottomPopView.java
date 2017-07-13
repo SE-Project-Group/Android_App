@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.view.WindowManager.LayoutParams;
+
+import com.example.android.android_app.R;
 
 import static com.baidu.location.d.j.W;
 

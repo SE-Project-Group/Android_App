@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.android.android_app.Class.FollowingAdapter;
 import com.example.android.android_app.Class.User;
+import com.example.android.android_app.R;
 
 import java.util.ArrayList;
 import java.util.List;

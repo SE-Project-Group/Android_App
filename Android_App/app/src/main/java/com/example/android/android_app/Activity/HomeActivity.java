@@ -1,16 +1,12 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -25,17 +21,13 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.android.android_app.Class.Permission;
+import com.example.android.android_app.R;
 import com.example.android.android_app.fragment.DiscoverAroundFragment;
 import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;
 import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
 import com.example.android.android_app.fragment.UserFragment;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.baidu.location.d.j.P;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
@@ -110,7 +102,7 @@ public class HomeActivity extends AppCompatActivity{
         bottomNavigationBar.selectTab(0);
 
         // get login info from file in onResume , so loged can change when come back from login activity
-        SharedPreferences pref = getSharedPreferences("login_data", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
         if(pref.getBoolean("loged",false) == false)
             loged = false;
         else
