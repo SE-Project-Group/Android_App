@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,13 +7,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.android.android_app.Class.Remind;
 import com.example.android.android_app.Class.RemindAdapter;
+import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtMeRemindActivity extends AppCompatActivity {
-
+public class LikeRemindActivity extends AppCompatActivity {
     private List<Remind> remindList = new ArrayList<>();
 
     @Override
@@ -31,7 +31,7 @@ public class AtMeRemindActivity extends AppCompatActivity {
 
     private void initReminds(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Remind remindA = new Remind("wangtao","xiezhentao",time.toString(),R.drawable.exp_portrait,R.drawable.user_albumn,"@了我","I love coding");
+        Remind remindA = new Remind("wangtao","xiezhentao",time.toString(),R.drawable.exp_portrait,R.drawable.user_albumn,"喜欢了我的动态","I love coding");
         remindList.add(remindA);
         remindList.add(remindA);
         remindList.add(remindA);

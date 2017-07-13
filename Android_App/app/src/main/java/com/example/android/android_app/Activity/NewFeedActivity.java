@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +33,7 @@ import com.example.android.android_app.Class.OssService;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
 import com.example.android.android_app.Class.Verify;
+import com.example.android.android_app.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.R;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;

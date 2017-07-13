@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +21,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.android.android_app.Class.Permission;
+import com.example.android.android_app.R;
 import com.example.android.android_app.fragment.DiscoverAroundFragment;
 import com.example.android.android_app.fragment.DiscoverFragment;
 import com.example.android.android_app.fragment.HomeFragment;

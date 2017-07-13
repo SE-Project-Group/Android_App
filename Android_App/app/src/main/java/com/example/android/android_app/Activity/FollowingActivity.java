@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.android.android_app.Class.FollowingAdapter;
 import com.example.android.android_app.Class.User;
+import com.example.android.android_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FansActivity extends AppCompatActivity {
+public class FollowingActivity extends AppCompatActivity {
+
     private List<User> userList = new ArrayList<>();
 
     @Override
@@ -28,7 +30,7 @@ public class FansActivity extends AppCompatActivity {
     }
 
     private void initUsers(){
-        User userA = new User("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOW");
+        User userA = new User("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOWING");
         userList.add(userA);
         userList.add(userA);
         userList.add(userA);
