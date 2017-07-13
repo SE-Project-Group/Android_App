@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.android.android_app.AtMeRemindActivity;
 import com.example.android.android_app.Class.MessageAdapter;
 import com.example.android.android_app.Class.Message;
 import com.example.android.android_app.CommentRemindActivity;
 import com.example.android.android_app.FollowingActivity;
+import com.example.android.android_app.LikeRemindActivity;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
@@ -55,6 +57,25 @@ public class MessageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),CommentRemindActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout at_me_btn = (LinearLayout) getActivity().findViewById(R.id.at_me_remind);
+        at_me_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),AtMeRemindActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout mylike_btn = (LinearLayout) getActivity().findViewById(R.id.like_remind);
+        mylike_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),LikeRemindActivity.class);
                 startActivity(intent);
             }
         });

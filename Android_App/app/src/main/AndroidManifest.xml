@@ -67,7 +67,10 @@
         <activity android:name=".FollowingActivity" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".CommentListActivity" />
-        <activity android:name=".CommentRemindActivity"></activity>
+        <activity android:name=".CommentRemindActivity" />
+        <activity android:name=".AtMeRemindActivity" />
+        <activity android:name=".LikeRemindActivity" />
+        <activity android:name=".FansActivity"></activity>
     </application>
 
 </manifest>
