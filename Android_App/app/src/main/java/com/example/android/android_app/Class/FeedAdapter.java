@@ -1,17 +1,13 @@
 package com.example.android.android_app.Class;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baidu.platform.comapi.map.B;
-import com.example.android.android_app.CommentActivity;
 import com.example.android.android_app.R;
 
 import java.util.List;

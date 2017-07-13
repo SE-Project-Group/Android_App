@@ -1,4 +1,4 @@
-package com.example.android.android_app;
+package com.example.android.android_app.Activity;
 
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +13,7 @@ import com.example.android.android_app.Class.Feed;
 import com.example.android.android_app.Class.FeedAdapter;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.R;
 
 import java.util.List;
 

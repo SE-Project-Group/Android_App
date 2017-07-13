@@ -1,6 +1,5 @@
 package com.example.android.android_app.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
@@ -36,15 +33,12 @@ import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
 import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.HomeActivity;
+import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
 
-import static com.baidu.location.d.j.O;
 import static com.example.android.android_app.R.id.feed_owner;
 import static com.example.android.android_app.R.id.position;
 
@@ -138,7 +132,10 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
                     public void run() {
                         feedList = requestServer.getAround(location);
                         Message msg = new Message();
-                        msg.what = GET_AROUND_OK;
+                        if(feedList == null)
+                            msg.what = GET_AROUND_FAILED;
+                        else
+                            msg.what = GET_AROUND_OK;
                         handler.sendMessage(msg);
                     }
                 }).start();
@@ -215,7 +212,12 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         viewHolder.share_btn.setText(String.valueOf(feed.getShare_cnt()));
         viewHolder.comment_btn.setText(String.valueOf(feed.getComment_cnt()));
         viewHolder.like_btn.setText(String.valueOf(feed.getLike_cnt()));
-        viewHolder._id = ""; ////////////////////
+        viewHolder._id = feed.get_id(); ////////////////////
+
+        // bind listener
+        viewHolder.like_btn.setOnClickListener(this);
+        viewHolder.comment_btn.setOnClickListener(this);
+        viewHolder.share_btn.setOnClickListener(this);
 
         ll_detail.setVisibility(View.VISIBLE);
     }
@@ -226,6 +228,8 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
             switch (msg.what){
                 case GET_AROUND_OK:
                    show_around();
+                    break;
+                case GET_AROUND_FAILED:
                     break;
             }
         }
@@ -246,7 +250,6 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
 
     }
     // make good use of resource
-
 
     @Override
     public void onClick(View v) {

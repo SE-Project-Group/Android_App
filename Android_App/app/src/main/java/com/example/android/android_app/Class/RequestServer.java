@@ -15,10 +15,12 @@ import com.example.android.android_app.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -30,6 +32,7 @@ import static android.R.id.message;
 import static android.content.Context.MODE_PRIVATE;
 import static com.baidu.location.d.j.S;
 import static com.baidu.location.d.j.ac;
+import static com.baidu.location.d.j.n;
 
 /**
  * Created by thor on 2017/7/5.
@@ -46,24 +49,28 @@ public class RequestServer implements RequestServerInterface{
         String sign = "";
         Verify verify = new Verify(resource, activityContext);
         String user_id = verify.getUser_id();
-        if(user_id.equals("-1"))
+        if(user_id.equals("-1") && !resource.equals("feedAround"))
             return null;
-
         try {
             sign = verify.generateSign();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        String prefix_url = host+resource+"?user_ID="+user_id+"&sign="+sign;
+        String prefix_url = host+resource+"?user_id="+user_id+"&sign="+sign;
         return prefix_url;
     }
 
+    // constructor
     public RequestServer(Handler handler, int success_msg,int fail_msg, Activity activityContext) {
         this.handler = handler;
         this.success_msg = success_msg;
         this.fail_msg = fail_msg;
         this.activityContext = activityContext;
+    }
+
+    // constructor with no argument
+    public RequestServer(){
     }
 
     public void logInRequest(){
@@ -77,7 +84,6 @@ public class RequestServer implements RequestServerInterface{
         // send log in information to server
         url = url + "?user_name="+user_name+"&password="+password ;
 
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url).build();
@@ -87,7 +93,7 @@ public class RequestServer implements RequestServerInterface{
             responseData = response.body().string();
             JSONObject jsonObject = new JSONObject(responseData);
             token = jsonObject.getString("token");
-            user_id = jsonObject.getInt("user_id");
+            user_id = jsonObject.getInt("userId");
             //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             e.printStackTrace();
@@ -102,7 +108,7 @@ public class RequestServer implements RequestServerInterface{
         // if success, send message to main thread
         else{
             // if success, store token
-            SharedPreferences.Editor editor =activityContext.getSharedPreferences("login_data", MODE_PRIVATE).edit();
+            SharedPreferences.Editor editor =activityContext.getSharedPreferences("logIn_data", MODE_PRIVATE).edit();
             editor.putBoolean("loged",true);
             editor.putString("token", token);
             editor.putInt("user_id", user_id);
@@ -116,12 +122,13 @@ public class RequestServer implements RequestServerInterface{
 
     public List<Feed> getAround(BDLocation location){
         String resource = "feedAround";
+        String pre_url = generatePreUrl(resource);
         // can not log in
         List<Feed> feedList = new ArrayList<>();
         String latitude_str = String.valueOf(location.getLatitude());
         String longitude_str = String.valueOf(location.getLongitude());
         OkHttpClient client = new OkHttpClient();
-        String url = generatePreUrl(resource)
+        String url = pre_url
                 +"&latitude="+latitude_str+"&longitude="+longitude_str;
         Request request = new Request.Builder()
                 .url(url)
@@ -138,7 +145,7 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public List<Feed> getMyFeed(){
-        String resource = "MyFeed";
+        String resource = "myFeed";
         List<Feed> feedList = new ArrayList<>();
         // check if loged in
         String pre_url = generatePreUrl(resource);
@@ -200,7 +207,7 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public void newFeed(String jsonString){
-        String resource = "NewFeed";
+        String resource = "newFeed";
         String pre_url = generatePreUrl(resource);
         if(pre_url == null){
             Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
@@ -221,7 +228,7 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public void like(String feed_id){
-        String resource = "IncLikeFeed";
+        String resource = "incLikeFeed";
         // check if loged in
         String pre_url = generatePreUrl(resource);
         if(pre_url == null){
@@ -246,7 +253,7 @@ public class RequestServer implements RequestServerInterface{
     }
 
     public void comment(String text, String feed_id, int reply_id){
-        String resource = "NewComment";
+        String resource = "newComment";
         // check if loged in
         String pre_url = generatePreUrl(resource);
         if(pre_url == null){
@@ -270,6 +277,40 @@ public class RequestServer implements RequestServerInterface{
             message.what = success_msg;
             handler.sendMessage(message);
         }
+    }
+
+    public List<Feed> publicPolling(Date last_update_time){
+        String resource = "";
+        String pre_url = generatePreUrl(resource);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().
+                url(pre_url + "?last_update_time" + last_update_time.toString())
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            responseData = response.body().string();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        // parse response
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(responseData);
+        }catch (JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+
+
+
+            return null;
+    }
+
+    public List<Feed> friendPolling(Date last_update_time){
+        return null;
     }
 
 }

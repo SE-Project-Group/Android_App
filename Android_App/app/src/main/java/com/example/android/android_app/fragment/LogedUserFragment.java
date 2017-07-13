@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.android.android_app.MyAlbumActivity;
-import com.example.android.android_app.PersonalPageActivity;
+import com.example.android.android_app.Activity.MyAlbumActivity;
+import com.example.android.android_app.Activity.PersonalPageActivity;
 import com.example.android.android_app.R;
-import com.example.android.android_app.SettingActivity;
+import com.example.android.android_app.Activity.SettingActivity;
 
 
 /**

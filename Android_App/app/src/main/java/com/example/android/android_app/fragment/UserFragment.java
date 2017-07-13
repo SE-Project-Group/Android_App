@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.example.android.android_app.CommentListActivity;
-import com.example.android.android_app.LogInActivity;
+import com.example.android.android_app.Activity.CommentListActivity;
+import com.example.android.android_app.Activity.LogInActivity;
 import com.example.android.android_app.R;
-import com.example.android.android_app.SettingActivity;
+import com.example.android.android_app.Activity.SettingActivity;
 
 /**
  * Created by thor on 2017/6/28.
