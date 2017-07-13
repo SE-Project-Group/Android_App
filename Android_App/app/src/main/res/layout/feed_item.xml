@@ -97,7 +97,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/user_share"
+                android:drawableLeft="@drawable/share_3"
                 android:text="number"/>
 
             <Button
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/user_comment"
+                android:drawableLeft="@drawable/comment"
                 android:text="number"/>
 
             <Button
@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/message_like"
+                android:drawableLeft="@drawable/like"
                 android:text="number"/>
             <!--<Button
                 android:layout_width="wrap_content"
