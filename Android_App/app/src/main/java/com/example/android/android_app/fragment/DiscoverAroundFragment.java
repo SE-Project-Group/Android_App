@@ -162,7 +162,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
 
     private void show_around() {
         for (Feed feed : feedList) {
-            LatLng ll = new LatLng(feed.getLatitude(), feed.getlongitude());
+            LatLng ll = new LatLng(feed.getLatitude(), feed.getLongitude());
             // 图标
             OverlayOptions overlayOptions = new MarkerOptions().position(ll)
                     .icon(mMarkerIcon)
@@ -196,7 +196,6 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
             viewHolder.position = (TextView) getActivity().findViewById(position);
             viewHolder.feed_text = (TextView) getActivity().findViewById(R.id.feed_text);
             viewHolder.portrait = (ImageView) getActivity().findViewById(R.id.portrait);
-            viewHolder.picture1 = (ImageView) getActivity().findViewById(R.id.picture1);
             viewHolder.share_btn = (Button) getActivity().findViewById(R.id.share_btn);
             viewHolder.comment_btn = (Button) getActivity().findViewById(R.id.comment_btn);
             viewHolder.like_btn = (Button) getActivity().findViewById(R.id.like_btn);

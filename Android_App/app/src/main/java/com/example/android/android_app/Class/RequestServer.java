@@ -39,7 +39,7 @@ import static com.baidu.location.d.j.n;
  */
 
 public class RequestServer implements RequestServerInterface{
-    private String host = "http://192.168.1.200:8080/track/rest/app/";
+    private String host = "http://106.15.188.135:8080/track/rest/app/";
     private Handler handler;
     private int success_msg;
     private int fail_msg;
@@ -217,7 +217,8 @@ public class RequestServer implements RequestServerInterface{
         String response = sender.send();
         if(response.equals("status wrong"))
             Toast.makeText(activityContext, "您尚未登录", Toast.LENGTH_SHORT).show();
-        else{
+
+        else if (!response.equals("failed")){
             Message message = new Message();
             message.what = success_msg;
             Bundle bundle = new Bundle();

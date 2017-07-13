@@ -15,7 +15,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 
 public class OssInit {
 
-    private static final String stsServer = "http://10.182.29.246:7080";
+    private static final String stsServer = "http://192.168.1.104:7080";
     private static final String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
     private static final String bucket = "sjtutest";
 

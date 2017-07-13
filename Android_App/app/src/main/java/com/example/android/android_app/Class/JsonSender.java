@@ -40,10 +40,13 @@ public class JsonSender {
         try{
             Response response = okHttpClient.newCall(request).execute();
             String data = response.body().string();
-            return data;
+            if(response.isSuccessful())
+                return data;
+            else
+                return "failed";
         }catch (IOException e){
             e.printStackTrace();
-            return null;
+            return "failed";
         }
     }
 }

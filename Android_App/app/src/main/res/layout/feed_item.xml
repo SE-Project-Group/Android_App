@@ -27,6 +27,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,17 +74,16 @@
             android:text="....."
             android:textColor="@color/black"
             android:textSize="17dp" />
-        <!-- pictures -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
 
-            <ImageView
-                android:id="@+id/picture1"
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-        </LinearLayout>
+        <com.jaeger.ninegridimageview.NineGridImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:id="@+id/nine_gridView"
+            android:layout_width="match_parent"
+            app:imgGap="4dp"
+            app:showStyle="fill"
+            app:singleImgSize="120dp"/>
 
         <!--comment or like button-->
         <LinearLayout
@@ -115,28 +115,6 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/like"
                 android:text="number"/>
-            <!--<Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="share"
-                android:layout_weight="1"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:id="@+id/comment_btn"
-                android:background="@drawable/btn_style"
-                android:text="commemt"/>
-            <Button
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/like_btn"
-                android:background="@drawable/btn_style"
-                android:text="like"/>-->
 
         </LinearLayout>
     </LinearLayout>

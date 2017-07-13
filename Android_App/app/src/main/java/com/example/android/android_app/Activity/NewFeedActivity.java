@@ -202,10 +202,8 @@ public class NewFeedActivity extends AppCompatActivity {
             location.put("longitude", longitude);
             jsonObject.put("location", location);
             jsonObject.put("shareArea", shareArea);
-            jsonObject.put("metionList", metionList);
-            // put picure id in it
-            JSONArray picList = new JSONArray();
-            jsonObject.put("picList", picList);
+            jsonObject.put("mentionList", metionList);
+            jsonObject.put("picCount", picture_cnt);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -350,19 +348,17 @@ public class NewFeedActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String token = "";
-            int user_id = 0;
             int count = picture_cnt;
             switch (msg.what){
                 case UPLOAD_OK:
                     Bundle bundle = msg.getData();
-
                     if(picture_cnt == 0){
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();
                     }
-                    upload_pic(bundle.getString("feed_id"));
+                    //upload_pic(bundle.getString("feed_id"));
+                    upload_pic("asdfasdgasdfasdfasd");
                     break;
                 case LOCATE_OK:
                     TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);

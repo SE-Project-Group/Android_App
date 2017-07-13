@@ -1,6 +1,8 @@
 package com.example.android.android_app.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+
 import com.example.android.android_app.Class.Feed;
 import com.example.android.android_app.Class.FeedAdapter;
 import com.example.android.android_app.Activity.HomeActivity;
@@ -24,6 +27,7 @@ import com.example.android.android_app.Activity.SearchActivity;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by thor on 2017/6/28.
@@ -68,6 +72,7 @@ public class DiscoverFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         FeedAdapter adapter = new FeedAdapter(feedList);
         recyclerView.setAdapter(adapter);
+
     }
 
     private void switch_frag(){
@@ -86,9 +91,10 @@ public class DiscoverFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,list,R.drawable.exp_portrait);
+        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,1,R.drawable.exp_portrait);
         feedList.add(exp);
     }
+
 }
 
 
