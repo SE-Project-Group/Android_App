@@ -55,16 +55,6 @@ public class LogedUserFragment extends Fragment{
             }
         });
 
-        // personal page button
-        LinearLayout personalPage_btn = (LinearLayout) getActivity().findViewById(R.id.personalPage_btn);
-        personalPage_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PersonalPageActivity.class);
-                startActivity(intent);
-            }
-        });
-
         // myAlbum button
         LinearLayout myAlbum_btn = (LinearLayout) getActivity().findViewById(R.id.myAlbum_btn);
         myAlbum_btn.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +92,7 @@ public class LogedUserFragment extends Fragment{
             }
         });
 
-        LinearLayout all_personal_feeds = (LinearLayout) getActivity().findViewById(R.id.all_personal_feeds_layout);
+        LinearLayout all_personal_feeds = (LinearLayout) getActivity().findViewById(R.id.my_feed_layout);
         all_personal_feeds.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
