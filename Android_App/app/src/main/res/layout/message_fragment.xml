@@ -20,6 +20,7 @@
         android:background="@drawable/layout_style"
         android:layout_marginBottom="10dp">
         <LinearLayout
+            android:id="@+id/at_me_remind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -103,6 +104,7 @@
         </View>
 
         <LinearLayout
+            android:id="@+id/like_remind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
