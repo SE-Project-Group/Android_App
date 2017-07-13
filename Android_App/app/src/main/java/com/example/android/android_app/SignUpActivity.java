@@ -203,8 +203,8 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else if(s.toString().contains(" ")){
-                    textInputLayout3.setError("密码不可包含空格");
-                    textInputLayout3.setErrorEnabled(true);
+                    textInputLayout4.setError("密码不可包含空格");
+                    textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }
                 else {
@@ -227,8 +227,8 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else if(s.toString().contains(" ")){
-                    textInputLayout3.setError("密码不可包含空格");
-                    textInputLayout3.setErrorEnabled(true);
+                    textInputLayout4.setError("密码不可包含空格");
+                    textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);
@@ -250,8 +250,8 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else if(s.toString().contains(" ")){
-                    textInputLayout3.setError("密码不可包含空格");
-                    textInputLayout3.setErrorEnabled(true);
+                    textInputLayout4.setError("密码不可包含空格");
+                    textInputLayout4.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else {
                     textInputLayout4.setErrorEnabled(false);

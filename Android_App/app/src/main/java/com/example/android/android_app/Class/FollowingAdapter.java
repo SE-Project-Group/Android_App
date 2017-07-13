@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,12 +24,14 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.View
         ImageView portrait;
         TextView user_name;
         TextView last_feed;
+        Button state;
 
         public ViewHolder(View view){
             super(view);
             portrait = (ImageView)view.findViewById(R.id.portrait);
             user_name = (TextView)view.findViewById(R.id.user_name_text);
             last_feed = (TextView)view.findViewById(R.id.last_feed_text);
+            state = (Button)view.findViewById(R.id.state_btn);
         }
     }
 
@@ -50,6 +53,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.View
         holder.portrait.setImageResource(user.getPortrait_id());
         holder.user_name.setText(user.getUser_name());
         holder.last_feed.setText(user.getLast_feed());
+        holder.state.setText(user.getState());
     }
 
     @Override
