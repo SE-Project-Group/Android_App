@@ -33,7 +33,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
 import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.HomeActivity;
+import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
 
 import java.util.List;
