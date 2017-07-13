@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.android.android_app.CommentListActivity;
+import com.example.android.android_app.FollowingActivity;
 import com.example.android.android_app.LogInActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.SettingActivity;
@@ -58,7 +59,7 @@ public class UserFragment extends Fragment {
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CommentListActivity.class);
+                Intent intent = new Intent(getActivity(), FollowingActivity.class);
                 startActivity(intent);
             }
         });

@@ -22,6 +22,7 @@ import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private List<Feed> mFeedList;
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
         TextView feed_owner_view;
