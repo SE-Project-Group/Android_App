@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.android.android_app.R;
+
 public class CommentListActivity extends AppCompatActivity {
 
     private ImageView comment;

@@ -71,6 +71,14 @@
         <activity android:name=".AtMeRemindActivity" />
         <activity android:name=".LikeRemindActivity" />
         <activity android:name=".FansActivity"></activity>
+
+        <service
+            android:name=".Service.PollingService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+
+
     </application>
 
 </manifest>

@@ -50,7 +50,7 @@ public class PersonalPageActivity extends AppCompatActivity {
         logout_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                SharedPreferences.Editor editor = getSharedPreferences("login_data",MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("logIn_data",MODE_PRIVATE).edit();
                 editor.putBoolean("loged",false);
                 editor.putString("token", "");
                 editor.putInt("user_id",0);

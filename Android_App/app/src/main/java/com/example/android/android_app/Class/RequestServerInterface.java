@@ -2,6 +2,7 @@ package com.example.android.android_app.Class;
 
 import com.baidu.location.BDLocation;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,4 +21,8 @@ public interface RequestServerInterface {
     public void newFeed(String jsonString);
 
     public void like (String feed_id);
+
+    public List<Feed> publicPolling(Date last_update_time);
+
+    public List<Feed> friendPolling(Date last_update_time);
 }

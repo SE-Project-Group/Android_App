@@ -3,7 +3,6 @@ package com.example.android.android_app;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.widget.SearchView;
 import android.widget.Toast;
 

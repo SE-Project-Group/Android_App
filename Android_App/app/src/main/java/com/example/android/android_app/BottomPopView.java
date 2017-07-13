@@ -13,6 +13,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.view.WindowManager.LayoutParams;
 
+import com.example.android.android_app.R;
+
 import static com.baidu.location.d.j.W;
 
 /**
