@@ -27,11 +27,13 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.platform.comapi.map.I;
 import com.example.android.android_app.Class.ImageUriParser;
 import com.example.android.android_app.Class.OssInit;
 import com.example.android.android_app.Class.OssService;
 import com.example.android.android_app.Class.RequestServer;
 import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Class.Verify;
 import com.example.android.android_app.R;
 
 import org.json.JSONArray;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewFeedActivity extends AppCompatActivity {
+    private int old_position;
     private BottomPopView bottomPopView;
     private LocationClient mLocationClient;
     private TextView tv_position;
@@ -82,6 +85,10 @@ public class NewFeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // get old position
+        Intent intent = getIntent();
+        old_position = intent.getIntExtra("old_position", 0);
+
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
         setContentView(R.layout.activity_new_feed);
@@ -184,9 +191,10 @@ public class NewFeedActivity extends AppCompatActivity {
             showLocation = false;
 
         //create json
+        Verify verify = new Verify(this);
         JSONObject jsonObject = new JSONObject();
         try{
-            jsonObject.put("user_id",0);
+            jsonObject.put("userId" ,verify.getUser_id());
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
             JSONObject location = new JSONObject();
@@ -339,7 +347,6 @@ public class NewFeedActivity extends AppCompatActivity {
     }
 
 
-
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -349,6 +356,12 @@ public class NewFeedActivity extends AppCompatActivity {
             switch (msg.what){
                 case UPLOAD_OK:
                     Bundle bundle = msg.getData();
+
+                    if(picture_cnt == 0){
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                     upload_pic(bundle.getString("feed_id"));
                     break;
                 case LOCATE_OK:

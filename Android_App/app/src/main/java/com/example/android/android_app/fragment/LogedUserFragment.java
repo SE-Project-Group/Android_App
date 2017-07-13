@@ -26,6 +26,7 @@ import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.R;
 
 
+
 /**
  * Created by thor on 2017/6/29.
  */

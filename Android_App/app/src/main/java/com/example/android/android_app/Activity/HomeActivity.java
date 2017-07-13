@@ -29,6 +29,10 @@ import com.example.android.android_app.fragment.LogedUserFragment;
 import com.example.android.android_app.fragment.MessageFragment;
 import com.example.android.android_app.fragment.UserFragment;
 
+
+import static android.R.attr.data;
+import static com.baidu.location.d.j.p;
+
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
     private HomeFragment homeFragment;
@@ -42,6 +46,9 @@ public class HomeActivity extends AppCompatActivity{
     private LocationClient mLocationClient;
 
     public boolean loged;
+
+    private int old_postion = 0;
+    private static final int NEW_FEED = 1;
 
     public LocationClient getmLocationClient() {
         return mLocationClient;
@@ -91,6 +98,8 @@ public class HomeActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
         setBottomNavigator();
+
+        setDefaultFragment();
     }
 
     // when come back from other avtivity, set default fragment and reset bottom navigation bar
@@ -98,15 +107,14 @@ public class HomeActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        setDefaultFragment();
-        bottomNavigationBar.selectTab(0);
-
         // get login info from file in onResume , so loged can change when come back from login activity
-        SharedPreferences pref = getSharedPreferences("login_data", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
         if(pref.getBoolean("loged",false) == false)
             loged = false;
         else
             loged = true;
+
+        bottomNavigationBar.selectTab(old_postion);
     }
 
     // set default fragment to discover fragment
@@ -117,6 +125,8 @@ public class HomeActivity extends AppCompatActivity{
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment, discoverFragment);
         transaction.commit();
+        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
+
     }
 
     // set bottom navigation bar
@@ -146,24 +156,23 @@ public class HomeActivity extends AppCompatActivity{
                 switch (position) {
                     case 0:
                         f = discoverFragment;
+                        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 1:
                         if(messageFragment == null)
                             messageFragment = new MessageFragment();
                         f = messageFragment;
+                        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 2:
-
-                       Intent intent = new Intent(HomeActivity.this, NewFeedActivity.class);
-                        // test http request with new feed activity
-                        //Intent intent = new Intent(Intent.ACTION_VIEW);
-                        //intent.setData(Uri.parse("http://1507c590.all123.net:8080/track/rest/app/clientLogin?user_name=565&password=44"));
+                        Intent intent = new Intent(HomeActivity.this, NewFeedActivity.class);
                         startActivity(intent);
                         break;
                     case 3:
                         if(homeFragment == null)
                             homeFragment = new HomeFragment();
                         f = homeFragment;
+                        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 4:
                         // check if the user has log in first
@@ -177,6 +186,8 @@ public class HomeActivity extends AppCompatActivity{
                                 userFragment = new UserFragment();
                             f = userFragment;
                         }
+
+                        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     default:
                         break;
