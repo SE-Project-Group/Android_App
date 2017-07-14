@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.FansActivity;
 import com.example.android.android_app.Activity.FollowingActivity;
 import com.example.android.android_app.Activity.HomeActivity;

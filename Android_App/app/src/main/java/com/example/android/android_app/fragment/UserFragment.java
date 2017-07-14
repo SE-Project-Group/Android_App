@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.FansActivity;
 import com.example.android.android_app.Activity.LogInActivity;
 import com.example.android.android_app.Activity.MyShareActivity;
@@ -59,7 +60,7 @@ public class UserFragment extends Fragment {
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyShareActivity.class);
+                Intent intent = new Intent(getActivity(), AlbumActivity.class);
                 startActivity(intent);
             }
         });
