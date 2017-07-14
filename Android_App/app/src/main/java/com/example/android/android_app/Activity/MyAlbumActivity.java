@@ -53,7 +53,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case GET_MY_FEED_OK:
-                    recyclerView.setAdapter(new FeedAdapter(feedList));
+                    recyclerView.setAdapter(new FeedAdapter(getApplicationContext(), feedList));
                     break;
                 case GET_MY_FEED_FAILED:
                     break;

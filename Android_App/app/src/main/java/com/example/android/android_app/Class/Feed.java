@@ -24,6 +24,7 @@ public class Feed implements Serializable{
     private String position;
     private double latitude;
     private double longitude;
+    private List<String> picUrls;
 
     // get around
     public Feed(long user_ID, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt, int pic_cnt, String position, double latitude, double longitude) {
@@ -42,8 +43,8 @@ public class Feed implements Serializable{
 
     // discover fragment
 
-
-    public Feed(String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt,int pic_cnt, long user_ID) {
+    public Feed(String _id, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt,int pic_cnt, long user_ID) {
+        this._id = _id;
         this.feed_owner = feed_owner;
         this.text = text;
         this.date = date;
@@ -97,6 +98,10 @@ public class Feed implements Serializable{
         return user_ID;
     }
 
+    public List<String> getPicUrls(){
+        return picUrls;
+    }
+
 
     public void set_id(String _id) {
         this._id = _id;
@@ -148,5 +153,9 @@ public class Feed implements Serializable{
 
     public void setPic_cnt(int pic_cnt) {
         this.pic_cnt = pic_cnt;
+    }
+
+    public void setPicUrls(List<String> picUrls){
+        this.picUrls = picUrls;
     }
 }

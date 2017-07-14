@@ -1,6 +1,5 @@
 package com.example.android.android_app.Class;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 
@@ -15,7 +14,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 
 public class OssInit {
 
-    private static final String stsServer = "http://192.168.1.104:7080";
+    private static final String stsServer = "http://192.168.1.115:7080";
     private static final String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
     private static final String bucket = "sjtutest";
 

@@ -314,4 +314,27 @@ public class RequestServer implements RequestServerInterface{
         return null;
     }
 
+    public String logOut(){
+        String resource = "clientLogout";
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
+            return "failed";
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(pre_url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return "failed";
+            responseData = response.body().string();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseData;
+    }
 }

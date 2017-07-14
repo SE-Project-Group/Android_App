@@ -9,12 +9,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.sdk.android.oss.ClientException;
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.R;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +25,7 @@ import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private List<Feed> mFeedList;
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
@@ -52,7 +53,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         }
     }
 
-    public FeedAdapter(List<Feed> feedList){
+    public FeedAdapter(Context context, List<Feed> feedList){
         mFeedList = feedList;
     }
 
@@ -99,14 +100,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         // download picture from oss server here
         holder.nineGridView.setAdapter(mNGIVAdapter);
-        List<String> list = new ArrayList<>();
-        SignedUrlFactory signedUrlFactory = new SignedUrlFactory();
-
-        // add urls into list
-        String url = signedUrlFactory.getSignedUrl(feed.get_id());
-        list.add(url);
-
-        holder.nineGridView.setImagesData(list);
+        holder.nineGridView.setImagesData(feed.getPicUrls());
     }
 
     @Override

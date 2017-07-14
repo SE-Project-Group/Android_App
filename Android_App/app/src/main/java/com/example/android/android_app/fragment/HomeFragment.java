@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.home_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(feedList);
+        FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
         recyclerView.setAdapter(adapter);
         // set toolbar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.homeToolBar);
@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,0,R.drawable.exp_portrait);
+        Feed exp = new Feed("","Root","Today is my birthday",time.toString(),0,0,0,0,R.drawable.exp_portrait);
         feedList.add(exp);
     }
 }

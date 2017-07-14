@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.FansActivity;
@@ -26,6 +27,8 @@ import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.PersonalPageActivity;
 import com.example.android.android_app.Activity.PersonalSettingActivity;
 import com.example.android.android_app.Activity.SettingActivity;
+import com.example.android.android_app.Class.RequestServer;
+import com.example.android.android_app.Class.RequestServerInterface;
 import com.example.android.android_app.R;
 
 
@@ -126,13 +129,19 @@ public class LogedUserFragment extends Fragment{
         logout_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
-                editor.putBoolean("loged",false);
-                editor.putString("token", "");
-                editor.putInt("user_id",0);
-                editor.apply();
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
-                startActivity(intent);
+                RequestServerInterface requestServer = new RequestServer();
+                String result = requestServer.logOut();
+                if(result.equals("success")) {
+                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
+                    editor.putBoolean("loged", false);
+                    editor.putString("token", "");
+                    editor.putInt("user_id", 0);
+                    editor.apply();
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
             }
         });
 
