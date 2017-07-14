@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,12 @@ import com.example.android.android_app.R;
  */
 
 public class LogedUserFragment extends Fragment{
+    private static final int LOG_OU_OK = 0;
+    private static final int LOG_OUT_FAIED = 1;
+
+
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)  {
@@ -98,8 +106,8 @@ public class LogedUserFragment extends Fragment{
             }
         });
 
-        LinearLayout all_personal_feeds = (LinearLayout) getActivity().findViewById(R.id.my_feed_layout);
-        all_personal_feeds.setOnClickListener(new View.OnClickListener(){
+        LinearLayout my_feeds = (LinearLayout) getActivity().findViewById(R.id.my_feed_layout);
+        my_feeds.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(),PersonalHomeActivity.class);
@@ -129,22 +137,43 @@ public class LogedUserFragment extends Fragment{
         logout_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                RequestServerInterface requestServer = new RequestServer();
-                String result = requestServer.logOut();
-                if(result.equals("success")) {
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
-                    editor.putBoolean("loged", false);
-                    editor.putString("token", "");
-                    editor.putInt("user_id", 0);
-                    editor.apply();
-                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                    startActivity(intent);
-                }
-                else
-                    Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RequestServerInterface requestServer = new RequestServer(handler,LOG_OU_OK,LOG_OUT_FAIED, getActivity());
+                        requestServer.logOut();
+                    }
+                }).start();
+
+
+
             }
         });
 
+    }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case LOG_OU_OK:
+                    delete_token();
+                    break;
+                case LOG_OUT_FAIED:
+                    Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    private void delete_token(){
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
+        editor.putBoolean("loged", false);
+        editor.putString("token", "");
+        editor.putInt("user_id", 0);
+        editor.apply();
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
     }
 
 

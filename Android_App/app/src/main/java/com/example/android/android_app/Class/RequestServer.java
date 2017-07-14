@@ -305,8 +305,6 @@ public class RequestServer implements RequestServerInterface{
             return null;
         }
 
-
-
             return null;
     }
 
@@ -314,12 +312,12 @@ public class RequestServer implements RequestServerInterface{
         return null;
     }
 
-    public String logOut(){
+    public void logOut(){
         String resource = "clientLogout";
+
         String pre_url = generatePreUrl(resource);
         if(pre_url == null){
-            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
-            return "failed";
+            return;
         }
 
         OkHttpClient client = new OkHttpClient();
@@ -329,12 +327,24 @@ public class RequestServer implements RequestServerInterface{
         String responseData = "";
         try{
             Response response = client.newCall(request).execute();
-            if(!response.isSuccessful())
-                return "failed";
+            if(!response.isSuccessful()){
+                return;
+            }
+
             responseData = response.body().string();
         }catch (Exception e){
             e.printStackTrace();
         }
-        return responseData;
+
+        Message message = new Message();
+        if(responseData.equals("success"))
+            message.what = success_msg;
+
+
+        else
+            message.what = fail_msg;
+
+        handler.sendMessage(message);
     }
+
 }
