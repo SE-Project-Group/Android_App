@@ -14,6 +14,7 @@ import com.example.android.android_app.R;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,20 +97,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             }
         };
 
+        // download picture from oss server here
         holder.nineGridView.setAdapter(mNGIVAdapter);
         List<String> list = new ArrayList<>();
-        String url = "http://sjtutest.oss-cn-shanghai.aliyuncs.com/example.jpg?Expires=1499965472&OSSAccessKeyId=TMP.AQEBZ1G9oXVo3NDsdp8KS2MF3DRQZfKzIhubMoWA4bVCJ2nLcfZpsv6BAAoAAAAwLAIUMpRgyaIrhm3RBdPicSUslAv-yiECFFaMEolCx2q4YYWNW80PHsVa2EuF&Signature=5%2FD3YmIOjEt0akldIhupCPuBZus%3D";
+        SignedUrlFactory signedUrlFactory = new SignedUrlFactory();
+
+        // add urls into list
+        String url = signedUrlFactory.getSignedUrl(feed.get_id());
         list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
-        list.add(url);
+
         holder.nineGridView.setImagesData(list);
-        // download picture from oss server here
     }
 
     @Override
