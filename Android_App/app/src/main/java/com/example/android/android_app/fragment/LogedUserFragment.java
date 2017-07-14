@@ -15,10 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.FansActivity;
 import com.example.android.android_app.Activity.FollowingActivity;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.MyAlbumActivity;
+import com.example.android.android_app.Activity.MyLikeActivity;
+import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.PersonalPageActivity;
 import com.example.android.android_app.Activity.PersonalSettingActivity;
@@ -97,6 +100,24 @@ public class LogedUserFragment extends Fragment{
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(),PersonalHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout my_like = (LinearLayout) getActivity().findViewById(R.id.my_like_btn);
+        my_like.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(),MyLikeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout my_share = (LinearLayout) getActivity().findViewById(R.id.my_share_btn);
+        my_share.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(),MyShareActivity.class);
                 startActivity(intent);
             }
         });
