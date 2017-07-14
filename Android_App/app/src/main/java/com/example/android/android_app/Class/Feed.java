@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Feed implements Serializable{
     private String _id;
-    private long user_ID;
+    private int user_ID;
     private String feed_owner;
     private String text;
     private String date;
@@ -27,7 +27,7 @@ public class Feed implements Serializable{
     private List<String> picUrls;
 
     // get around
-    public Feed(long user_ID, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt, int pic_cnt, String position, double latitude, double longitude) {
+    public Feed(int user_ID, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt, int pic_cnt, String position, double latitude, double longitude) {
         this.user_ID = user_ID;
         this.feed_owner = feed_owner;
         this.text = text;
@@ -43,7 +43,7 @@ public class Feed implements Serializable{
 
     // discover fragment
 
-    public Feed(String _id, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt,int pic_cnt, long user_ID) {
+    public Feed(String _id, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt,int pic_cnt, int user_ID) {
         this._id = _id;
         this.feed_owner = feed_owner;
         this.text = text;
@@ -94,7 +94,7 @@ public class Feed implements Serializable{
         return position;
     }
 
-    public long getUser_ID(){
+    public int getUser_ID(){
         return user_ID;
     }
 
@@ -107,7 +107,7 @@ public class Feed implements Serializable{
         this._id = _id;
     }
 
-    public void setUser_ID(long user_ID) {
+    public void setUser_ID(int user_ID) {
         this.user_ID = user_ID;
     }
 

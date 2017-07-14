@@ -27,4 +27,5 @@ public interface RequestServerInterface {
     public List<Feed> friendPolling(Date last_update_time);
 
     public void logOut();
+
 }

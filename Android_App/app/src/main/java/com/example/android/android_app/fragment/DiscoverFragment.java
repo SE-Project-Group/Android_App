@@ -1,8 +1,6 @@
-package com.example.android.android_app.fragment;
+package com.example.android.android_app.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,8 +19,8 @@ import android.widget.Button;
 import com.example.android.android_app.Class.Feed;
 import com.example.android.android_app.Class.FeedAdapter;
 import com.example.android.android_app.Activity.HomeActivity;
-import com.example.android.android_app.R;
 import com.example.android.android_app.Activity.SearchActivity;
+import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

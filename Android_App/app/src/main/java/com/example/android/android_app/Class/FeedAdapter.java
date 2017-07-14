@@ -1,6 +1,7 @@
 package com.example.android.android_app.Class;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.sdk.android.oss.ClientException;
 import com.bumptech.glide.Glide;
+import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.R;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
@@ -23,7 +25,7 @@ import java.util.List;
  * Created by thor on 2017/6/28.
  */
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
+public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private List<Feed> mFeedList;
     private Context context;
 
@@ -57,10 +59,57 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         mFeedList = feedList;
     }
 
+    private void toHomePage(int user_id){
+        // navigate to other user's home page
+        Intent intent = new Intent(context, PersonalHomeActivity.class);
+        intent.putExtra("user_ud", user_id);
+        context.startActivity(intent);
+    }
+
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.feed_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        // bind click listener for views
+
+        // portrait and the name of feed will navigate to their home page
+        holder.portrait_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Feed feed = mFeedList.get(position);
+                toHomePage(feed.getUser_ID());
+            }
+        });
+        holder.feed_owner_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Feed feed = mFeedList.get(position);
+                toHomePage(feed.getUser_ID());
+            }
+        });
+
+        // buttons will trig some action
+        holder.share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.comment_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.like_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return holder;
     }
 
@@ -107,6 +156,5 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public int getItemCount() {
         return mFeedList.size();
     }
-
 
 }

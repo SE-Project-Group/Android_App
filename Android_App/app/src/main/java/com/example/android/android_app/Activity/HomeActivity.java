@@ -22,16 +22,12 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.android.android_app.Class.Permission;
 import com.example.android.android_app.R;
-import com.example.android.android_app.fragment.DiscoverAroundFragment;
-import com.example.android.android_app.fragment.DiscoverFragment;
-import com.example.android.android_app.fragment.HomeFragment;
-import com.example.android.android_app.fragment.LogedUserFragment;
-import com.example.android.android_app.fragment.MessageFragment;
-import com.example.android.android_app.fragment.UserFragment;
-
-
-import static android.R.attr.data;
-import static com.baidu.location.d.j.p;
+import com.example.android.android_app.Fragment.DiscoverAroundFragment;
+import com.example.android.android_app.Fragment.DiscoverFragment;
+import com.example.android.android_app.Fragment.HomeFragment;
+import com.example.android.android_app.Fragment.LogedUserFragment;
+import com.example.android.android_app.Fragment.MessageFragment;
+import com.example.android.android_app.Fragment.UserFragment;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
