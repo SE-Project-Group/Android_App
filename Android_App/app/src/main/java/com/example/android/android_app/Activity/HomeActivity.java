@@ -20,7 +20,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
-import com.example.android.android_app.Class.Permission;
+import com.example.android.android_app.Util.Permission;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Fragment.DiscoverAroundFragment;
 import com.example.android.android_app.Fragment.DiscoverFragment;

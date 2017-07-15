@@ -2,13 +2,12 @@ package com.example.android.android_app.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.example.android.android_app.Class.AlbumAdapter;
+import com.example.android.android_app.Adapter.AlbumAdapter;
 
-import com.example.android.android_app.Class.Album;
+import com.example.android.android_app.Model.Album;
 import com.example.android.android_app.R;
 
 import java.util.ArrayList;

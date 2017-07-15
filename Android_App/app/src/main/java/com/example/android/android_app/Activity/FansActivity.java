@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.android_app.Class.FollowingAdapter;
+import com.example.android.android_app.Adapter.FollowingAdapter;
 import com.example.android.android_app.Class.User;
 import com.example.android.android_app.R;
 

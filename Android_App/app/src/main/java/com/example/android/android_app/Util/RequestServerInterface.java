@@ -1,9 +1,9 @@
-package com.example.android.android_app.Class;
+package com.example.android.android_app.Util;
 
 import com.baidu.location.BDLocation;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.Model.UserInfo;
-
-import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
@@ -31,16 +31,14 @@ public interface RequestServerInterface {
 
     public void logOut();
 
-
-
     public UserInfo queryUserInfo();
-    // have not implemented
+
     public String modifyUserInfo(String jsonStr);
 
     public String removeFeed(String feed_id);
 
-    public List<String> getFollowing();
+    public List<Follow> getFollowing(int user);
 
-    public List<String> getFollower();
+    public List<Follow> getFollower(int user);
 
 }

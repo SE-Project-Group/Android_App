@@ -30,9 +30,9 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.example.android.android_app.Class.RequestServer;
-import com.example.android.android_app.Class.RequestServerInterface;
-import com.example.android.android_app.Class.Feed;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.RequestServerInterface;
+import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
 

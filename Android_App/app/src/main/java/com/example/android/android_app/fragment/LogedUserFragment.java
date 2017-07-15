@@ -18,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.FansActivity;
 import com.example.android.android_app.Activity.FollowingActivity;
 import com.example.android.android_app.Activity.HomeActivity;
@@ -26,11 +25,10 @@ import com.example.android.android_app.Activity.MyAlbumActivity;
 import com.example.android.android_app.Activity.MyLikeActivity;
 import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
-import com.example.android.android_app.Activity.PersonalPageActivity;
 import com.example.android.android_app.Activity.PersonalSettingActivity;
 import com.example.android.android_app.Activity.SettingActivity;
-import com.example.android.android_app.Class.RequestServer;
-import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 

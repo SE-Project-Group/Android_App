@@ -6,13 +6,11 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.Class.FeedAdapter;
-import com.example.android.android_app.Class.RequestServer;
-import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Adapter.FeedAdapter;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 import java.util.ArrayList;

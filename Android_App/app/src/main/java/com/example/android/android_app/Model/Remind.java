@@ -1,4 +1,4 @@
-package com.example.android.android_app.Class;
+package com.example.android.android_app.Model;
 
 /**
  * Created by jarvis on 2017/7/12.

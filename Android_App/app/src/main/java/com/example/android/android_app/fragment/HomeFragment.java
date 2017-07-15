@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.Class.FeedAdapter;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.android_app.Class.Remind;
-import com.example.android.android_app.Class.RemindAdapter;
+import com.example.android.android_app.Model.Remind;
+import com.example.android.android_app.Adapter.RemindAdapter;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;

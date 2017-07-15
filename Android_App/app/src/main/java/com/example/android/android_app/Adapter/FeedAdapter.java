@@ -1,4 +1,4 @@
-package com.example.android.android_app.Class;
+package com.example.android.android_app.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.sdk.android.oss.ClientException;
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
+import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

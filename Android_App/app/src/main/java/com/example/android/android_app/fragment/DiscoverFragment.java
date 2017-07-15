@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.Class.FeedAdapter;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.SearchActivity;
 import com.example.android.android_app.R;

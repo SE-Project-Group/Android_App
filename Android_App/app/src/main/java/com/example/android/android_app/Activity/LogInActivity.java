@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.android.android_app.Class.RequestServer;
-import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 

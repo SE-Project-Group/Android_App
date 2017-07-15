@@ -1,7 +1,5 @@
 package com.example.android.android_app.Model;
 
-import com.example.android.android_app.Class.Feed;
-
 import java.util.List;
 
 /**

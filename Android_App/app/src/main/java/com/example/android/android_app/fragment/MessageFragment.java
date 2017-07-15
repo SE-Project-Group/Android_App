@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.android.android_app.Activity.AtMeRemindActivity;
-import com.example.android.android_app.Class.MessageAdapter;
-import com.example.android.android_app.Class.Message;
+import com.example.android.android_app.Adapter.MessageAdapter;
+import com.example.android.android_app.Model.Message;
 import com.example.android.android_app.Activity.CommentRemindActivity;
 import com.example.android.android_app.Activity.LikeRemindActivity;
 import com.example.android.android_app.R;
