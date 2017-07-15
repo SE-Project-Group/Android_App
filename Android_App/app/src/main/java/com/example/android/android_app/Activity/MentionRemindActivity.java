@@ -1,26 +1,27 @@
 package com.example.android.android_app.Activity;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.android_app.Model.Remind;
 import com.example.android.android_app.Adapter.RemindAdapter;
+import com.example.android.android_app.Model.Remind;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtMeRemindActivity extends AppCompatActivity {
+public class MentionRemindActivity extends AppCompatActivity {
 
     private List<Remind> remindList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_at_me_remind);
+        setContentView(R.layout.activity_mention_remind);
 
         initReminds();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);

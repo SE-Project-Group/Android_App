@@ -19,7 +19,7 @@ public class LikeRemindActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_at_me_remind);
+        setContentView(R.layout.activity_mention_remind);
 
         initReminds();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);

@@ -20,6 +20,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.android.android_app.Fragment.UnlogUserFragment;
 import com.example.android.android_app.Util.Permission;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Fragment.DiscoverAroundFragment;
@@ -27,7 +28,6 @@ import com.example.android.android_app.Fragment.DiscoverFragment;
 import com.example.android.android_app.Fragment.HomeFragment;
 import com.example.android.android_app.Fragment.LogedUserFragment;
 import com.example.android.android_app.Fragment.MessageFragment;
-import com.example.android.android_app.Fragment.UserFragment;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity{
     private DiscoverFragment discoverFragment;
     private DiscoverAroundFragment discoverAroundFragment;
     private LogedUserFragment logedUserFragment;
-    private UserFragment userFragment;
+    private UnlogUserFragment unlogUserFragment;
     private BottomNavigationBar bottomNavigationBar;
     private SearchView mSearchView;
     private LocationClient mLocationClient;
@@ -178,9 +178,9 @@ public class HomeActivity extends AppCompatActivity{
                             f = logedUserFragment;
                         }
                         else{
-                            if(userFragment == null)
-                                userFragment = new UserFragment();
-                            f = userFragment;
+                            if(unlogUserFragment == null)
+                                unlogUserFragment = new UnlogUserFragment();
+                            f = unlogUserFragment;
                         }
 
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();

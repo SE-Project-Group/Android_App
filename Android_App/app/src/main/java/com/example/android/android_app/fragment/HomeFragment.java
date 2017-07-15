@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_fragment,container,false);
+        View view = inflater.inflate(R.layout.fragment_circle,container,false);
         return view;
     }
 

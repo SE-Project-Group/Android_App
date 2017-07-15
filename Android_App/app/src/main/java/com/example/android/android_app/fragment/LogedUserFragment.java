@@ -18,15 +18,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.android.android_app.Activity.FansActivity;
+import com.example.android.android_app.Activity.FollowerActivity;
 import com.example.android.android_app.Activity.FollowingActivity;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.MyAlbumActivity;
 import com.example.android.android_app.Activity.MyLikeActivity;
 import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
-import com.example.android.android_app.Activity.PersonalSettingActivity;
 import com.example.android.android_app.Activity.SettingActivity;
+import com.example.android.android_app.Activity.UserInfoActivity;
+import com.example.android.android_app.Model.UserInfo;
 import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
@@ -39,7 +40,7 @@ import com.example.android.android_app.R;
 
 public class LogedUserFragment extends Fragment{
     private static final int LOG_OU_OK = 0;
-    private static final int LOG_OUT_FAIED = 1;
+    private static final int LOG_OUT_FAILED = 1;
 
 
 
@@ -90,7 +91,7 @@ public class LogedUserFragment extends Fragment{
         myFollower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FansActivity.class);
+                Intent intent = new Intent(getActivity(), FollowerActivity.class);
                 startActivity(intent);
             }
         });
@@ -99,7 +100,7 @@ public class LogedUserFragment extends Fragment{
         personal_setting.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(getActivity(),PersonalSettingActivity.class);
+                Intent intent = new Intent(getActivity(),UserInfoActivity.class);
                 startActivity(intent);
             }
         });
@@ -138,7 +139,7 @@ public class LogedUserFragment extends Fragment{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestServerInterface requestServer = new RequestServer(handler,LOG_OU_OK,LOG_OUT_FAIED, getActivity());
+                        RequestServerInterface requestServer = new RequestServer(handler,LOG_OU_OK,LOG_OUT_FAILED, getActivity());
                         requestServer.logOut();
                     }
                 }).start();
@@ -157,7 +158,7 @@ public class LogedUserFragment extends Fragment{
                 case LOG_OU_OK:
                     delete_token();
                     break;
-                case LOG_OUT_FAIED:
+                case LOG_OUT_FAILED:
                     Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
                     break;
             }

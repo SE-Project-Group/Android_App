@@ -17,7 +17,7 @@ import com.example.android.android_app.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class PersonalSettingActivity extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity {
     private Spinner spYear;
     private Spinner spMonth;
     private Spinner spDay;
@@ -31,9 +31,8 @@ public class PersonalSettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_setting);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.personalPageToolBar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_user_info);
+
 
         final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.user_name);
         EditText user_name = textInputLayout.getEditText();
@@ -97,7 +96,7 @@ public class PersonalSettingActivity extends AppCompatActivity {
         for (int i = 0; i < 40; i++) {
             dataYear.add("" + (cal.get(Calendar.YEAR) - 20 + i));
         }
-        adapterSpYear = new ArrayAdapter<String>(this, R.layout.spinner_item, dataYear);
+        adapterSpYear = new ArrayAdapter<String>(this, R.layout.item_spinner, dataYear);
         adapterSpYear.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spYear.setAdapter(adapterSpYear);
         spYear.setSelection(20);// 默认选中今年
@@ -106,11 +105,11 @@ public class PersonalSettingActivity extends AppCompatActivity {
         for (int i = 1; i <= 12; i++) {
             dataMonth.add("" + (i < 10 ? "0" + i : i));
         }
-        adapterSpMonth = new ArrayAdapter<String>(this, R.layout.spinner_item, dataMonth);
+        adapterSpMonth = new ArrayAdapter<String>(this, R.layout.item_spinner, dataMonth);
         adapterSpMonth.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spMonth.setAdapter(adapterSpMonth);
 
-        adapterSpDay = new ArrayAdapter<String>(this, R.layout.spinner_item, dataDay);
+        adapterSpDay = new ArrayAdapter<String>(this, R.layout.item_spinner, dataDay);
         adapterSpDay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDay.setAdapter(adapterSpDay);
 
@@ -138,3 +137,4 @@ public class PersonalSettingActivity extends AppCompatActivity {
 
     }
 }
+

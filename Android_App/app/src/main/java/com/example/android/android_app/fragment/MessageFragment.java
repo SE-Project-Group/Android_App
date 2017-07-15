@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.android.android_app.Activity.AtMeRemindActivity;
+import com.example.android.android_app.Activity.MentionRemindActivity;
 import com.example.android.android_app.Adapter.MessageAdapter;
 import com.example.android.android_app.Model.Message;
 import com.example.android.android_app.Activity.CommentRemindActivity;
@@ -34,7 +34,7 @@ public class MessageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
         return view;
     }
 
@@ -65,7 +65,7 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AtMeRemindActivity.class);
+                Intent intent = new Intent(getActivity(), MentionRemindActivity.class);
                 startActivity(intent);
             }
         });

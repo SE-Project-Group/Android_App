@@ -13,9 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.android.android_app.Activity.AlbumActivity;
-import com.example.android.android_app.Activity.FansActivity;
 import com.example.android.android_app.Activity.LogInActivity;
-import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Activity.SettingActivity;
 
@@ -23,11 +21,11 @@ import com.example.android.android_app.Activity.SettingActivity;
  * Created by thor on 2017/6/28.
  */
 
-public class UserFragment extends Fragment {
+public class UnlogUserFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_unlog_user, container, false);
         return view;
     }
 

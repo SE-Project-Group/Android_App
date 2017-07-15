@@ -5,37 +5,34 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.baidu.platform.comapi.map.F;
 import com.example.android.android_app.Adapter.FollowingAdapter;
-import com.example.android.android_app.Class.User;
+import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FansActivity extends AppCompatActivity {
-    private List<User> userList = new ArrayList<>();
+public class FollowerActivity extends AppCompatActivity {
+    private List<Follow> FollowList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
 
-        initUsers();
+        initFollows();
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.follwing_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FollowingAdapter adapter = new FollowingAdapter(userList);
+        FollowingAdapter adapter = new FollowingAdapter(FollowList);
         recyclerView.setAdapter(adapter);
     }
 
-    private void initUsers(){
-        User userA = new User("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOW");
-        userList.add(userA);
-        userList.add(userA);
-        userList.add(userA);
-        userList.add(userA);
-        userList.add(userA);
-        User userB = new User("hhhhh","I love coding",R.drawable.exp_pic,"FRIEND");
-        userList.add(userB);
+    private void initFollows(){
+        Follow FollowA = new Follow("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOW");
+        FollowList.add(FollowA);
+        Follow FollowB = new Follow("hhhhh","I love coding",R.drawable.exp_pic,"FRIEND");
+        FollowList.add(FollowB);
     }
 }

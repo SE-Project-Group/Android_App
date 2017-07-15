@@ -27,6 +27,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.example.android.android_app.Util.BottomPopView;
 import com.example.android.android_app.Util.ImageUriParser;
 import com.example.android.android_app.Util.OssInit;
 import com.example.android.android_app.Util.OssService;
