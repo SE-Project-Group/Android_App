@@ -23,7 +23,7 @@ import static com.baidu.location.d.j.U;
  * Created by jarvis on 2017/7/6.
  */
 
-public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.ViewHolder>{
+public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder>{
     private List<Follow> mUserList;
     private Context context;
 
@@ -40,7 +40,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<FollowingAdapter.View
         }
     }
 
-    public FollowingAdapter(List<Follow> userList){
+    public FollowAdapter(List<Follow> userList){
         mUserList = userList;
     }
 

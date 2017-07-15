@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.android_app.Adapter.FollowingAdapter;
+import com.example.android.android_app.Adapter.FollowAdapter;
 import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.R;
 
@@ -25,7 +25,7 @@ public class FollowingActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.follwing_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FollowingAdapter adapter = new FollowingAdapter(followList);
+        FollowAdapter adapter = new FollowAdapter(followList);
         recyclerView.setAdapter(adapter);
     }
 
