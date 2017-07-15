@@ -1,5 +1,6 @@
 package com.example.android.android_app.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.android_app.Model.Message;
 import com.example.android.android_app.R;
 
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>{
     private List<Message> mMessageList;
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait;
@@ -34,8 +37,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
-    public MessageAdapter(List<Message> messageList){
+    public MessageAdapter(List<Message> messageList, Context cxt){
         mMessageList = messageList;
+        context = cxt;
     }
 
     @Override
@@ -50,8 +54,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Message message = mMessageList.get(position);
         holder.user_name.setText(message.getUser_name());
         holder.message_text.setText(message.getMessage_text());
-        holder.date.setText(message.getDate());
-        holder.portrait.setImageResource(message.getPortrait_id());
+        holder.date.setText(message.getDate().toString());
+        // load the picture use glide
+        Glide.with(context)
+                .load(message.getPortrait_url())
+                .placeholder(R.drawable.exp_pic)
+                .into(holder.portrait);
+
 
     }
 

@@ -1,12 +1,15 @@
 package com.example.android.android_app.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.android_app.Model.Remind;
 import com.example.android.android_app.R;
 
@@ -18,30 +21,34 @@ import java.util.List;
 
 public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder>{
     private List<Remind> mRemindList;
+    private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView user_portrait;
-        ImageView author_portrait;
+        ImageView first_pic;
         TextView time;
         TextView user_name;
         TextView remind_text;
         TextView author_text;
         TextView author_name;
+        Button response_btn;
 
         public ViewHolder(View view){
             super(view);
             user_portrait = (ImageView)view.findViewById(R.id.user_portrait);
-            author_portrait = (ImageView)view.findViewById(R.id.author_portrait);
+            first_pic = (ImageView) view.findViewById(R.id.first_pic);
             user_name = (TextView)view.findViewById(R.id.user_name);
             time = (TextView)view.findViewById(R.id.time);
             remind_text = (TextView)view.findViewById(R.id.remind_text);
             author_text = (TextView)view.findViewById(R.id.author_text);
             author_name = (TextView)view.findViewById(R.id.author_name);
+            response_btn = (Button) view.findViewById(R.id.response_btn);
         }
     }
 
-    public RemindAdapter(List<Remind> remindList){
+    public RemindAdapter(List<Remind> remindList, Context cxt){
         mRemindList = remindList;
+        context = cxt;
     }
 
     @Override
@@ -55,13 +62,33 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     @Override
     public void onBindViewHolder(RemindAdapter.ViewHolder holder, int position){
         Remind remind = mRemindList.get(position);
-        holder.user_portrait.setImageResource(remind.getUser_portrait());
+        holder.user_name.setText(remind.getUser_name());
+        String type = remind.getType();
+        // remind text
+        if(type.equals("like"))
+            holder.remind_text.setText("赞了我");
+        if(type.equals("comment"))
+            holder.remind_text.setText("评论了我");
+
+        if(type.equals("share"))
+            holder.remind_text.setText("分享了");
+
+        holder.time.setText(remind.getTime().toString());
+
+        // load the user portrait use glide
+        Glide.with(context)
+                .load(remind.getUser_portrait_url())
+                .placeholder(R.drawable.exp_pic)
+                .into(holder.user_portrait);
+
         holder.author_name.setText(remind.getAuthor_name());
         holder.author_text.setText(remind.getAuthor_text());
-        holder.author_portrait.setImageResource(remind.getAuthor_portrait());
-        holder.user_name.setText(remind.getUser_name());
-        holder.remind_text.setText(remind.getRemind_text());
-        holder.time.setText(remind.getTime());
+
+        // load first pic with glide
+        Glide.with(context)
+                .load(remind.getFirst_pic_url())
+                .placeholder(R.drawable.exp_pic)
+                .into(holder.first_pic);
     }
 
     @Override
