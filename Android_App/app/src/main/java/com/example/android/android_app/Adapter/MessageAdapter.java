@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
+        LinearLayout entry_btn;
         ImageView portrait;
         TextView user_name;
         TextView date;
@@ -30,6 +32,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         public ViewHolder(View view){
             super(view);
+            entry_btn = (LinearLayout) view.findViewById(R.id.entry_btn);
             portrait = (ImageView)view.findViewById(R.id.portrait_image);
             user_name = (TextView)view.findViewById(R.id.user_name_text);
             date = (TextView)view.findViewById(R.id.date);
