@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
+import com.example.android.android_app.Model.UserInfo;
 import com.example.android.android_app.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -346,5 +347,42 @@ public class RequestServer implements RequestServerInterface{
 
         handler.sendMessage(message);
     }
+
+    public UserInfo queryUserInfo(){
+        String resource = "queryPersonalInfo";
+        String pre_url = generatePreUrl(resource);
+        if(pre_url == null){
+            return null;
+        }
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(pre_url)
+                .build();
+
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData  = response.body().string();
+            if(responseData.equals("failed"))
+                return null;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        UserInfo result = gson.fromJson(responseData, new TypeToken<UserInfo>(){}.getType());
+
+        return result;
+    }
+
+    public String modifyUserInfo(String jsonStr);
+
+    public String removeFeed(String feed_id);
+
+    public List<String> getFollowing();
+
+    public List<String> getFollower();
 
 }
