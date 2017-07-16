@@ -48,7 +48,7 @@ public class MessageFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        MessageAdapter adapter = new MessageAdapter(messagesList);
+        MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
         recyclerView.setAdapter(adapter);
 
         LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.comment_remind);
@@ -82,7 +82,7 @@ public class MessageFragment extends Fragment {
 
     private void initMessages(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Message messageA = new Message("wangtao","I love coding",time.toString(),R.drawable.exp_pic);
+        Message messageA = new Message();
         messagesList.add(messageA);
         messagesList.add(messageA);
         messagesList.add(messageA);

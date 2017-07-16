@@ -27,13 +27,13 @@ public class MentionRemindActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RemindAdapter adapter = new RemindAdapter(remindList);
+        RemindAdapter adapter = new RemindAdapter(remindList, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
     private void initReminds(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Remind remindA = new Remind("wangtao","xiezhentao",time.toString(),R.drawable.exp_portrait,R.drawable.user_albumn,"@了我","I love coding");
+        Remind remindA = new Remind();
         remindList.add(remindA);
         remindList.add(remindA);
         remindList.add(remindA);

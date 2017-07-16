@@ -40,8 +40,9 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
         }
     }
 
-    public FollowAdapter(List<Follow> userList){
+    public FollowAdapter(List<Follow> userList, Context cxt){
         mUserList = userList;
+        context = cxt;
     }
 
     @Override

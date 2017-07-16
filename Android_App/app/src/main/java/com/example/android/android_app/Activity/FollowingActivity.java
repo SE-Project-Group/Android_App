@@ -25,7 +25,7 @@ public class FollowingActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.follwing_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FollowAdapter adapter = new FollowAdapter(followList);
+        FollowAdapter adapter = new FollowAdapter(followList, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
