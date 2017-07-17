@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.id.message;
+
 public class NewFeedActivity extends AppCompatActivity {
     private int old_position;
     private BottomPopView bottomPopView;
@@ -154,12 +156,24 @@ public class NewFeedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.send_btn:
+                Verify verify = new Verify(this);
+                if(!verify.getLoged()){
+                    Toast.makeText(NewFeedActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 final String jsonString = generateJsonString();
-                final RequestServer requestServer = new RequestServer(handler, UPLOAD_OK, UPLOAD_FAILED,this);
+                final RequestServer requestServer = new RequestServer();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        requestServer.newFeed(jsonString);
+                        String result = requestServer.newFeed(jsonString);
+                        Message message = new Message();
+                        if(result.equals("failed"))
+                            message.what = UPLOAD_FAILED;
+                        else
+                            message.what = UPLOAD_OK;
+                        handler.sendMessage(message);
+
                     }
                 }).start();
         }
@@ -356,8 +370,8 @@ public class NewFeedActivity extends AppCompatActivity {
                         setResult(RESULT_OK, intent);
                         finish();
                     }
-                    //upload_pic(bundle.getString("feed_id"));
-                    upload_pic("asdfasdgasdfasdfasd");
+                    upload_pic(bundle.getString("feed_id"));
+                    //upload_pic("asdfasdgasdfasdfasd");
                     break;
                 case LOCATE_OK:
                     TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);

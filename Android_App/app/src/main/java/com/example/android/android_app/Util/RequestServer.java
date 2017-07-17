@@ -182,37 +182,16 @@ public class RequestServer{
 
 
 
-    public void newFeed(String jsonString){
+    public String newFeed(String jsonString){
         String resource = "newFeed";
-        String pre_url = generatePreUrl(resource);
-        if(pre_url == null){
-            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        JsonSender sender = new JsonSender(jsonString, pre_url);
+        String url = generatePreUrl(resource);
+        JsonSender sender = new JsonSender(jsonString, url);
         String response = sender.send();
-        if(response.equals("status wrong"))
-            Toast.makeText(activityContext, "您尚未登录", Toast.LENGTH_SHORT).show();
 
-        else if (!response.equals("failed")){
-            Message message = new Message();
-            message.what = success_msg;
-            Bundle bundle = new Bundle();
-            bundle.putString("feed_id", response);
-            message.setData(bundle);
-            handler.sendMessage(message);
-        }
+        return response;
     }
 
-
-
-
-
-
-
-
-
-
+    
 
     // new begin
 
