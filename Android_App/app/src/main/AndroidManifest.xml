@@ -79,7 +79,8 @@
             android:exported="true" />
 
         <activity android:name=".Activity.MyLikeActivity" />
-        <activity android:name=".Activity.MyShareActivity"></activity>
+        <activity android:name=".Activity.MyShareActivity" />
+
     </application>
 
 </manifest>
