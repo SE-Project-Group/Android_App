@@ -9,6 +9,7 @@ import java.util.List;
 public class UserInfo {
     private int user_id;
     private String name;
+    private String portrait_url;
     private int follow_cnt;
     private int follower_cnt;
     private int like_cnt;
@@ -78,5 +79,13 @@ public class UserInfo {
 
     public void setRecent_feeds(List<Feed> recent_feeds) {
         this.recent_feeds = recent_feeds;
+    }
+
+    public String getPortrait_url() {
+        return portrait_url;
+    }
+
+    public void setPortrait_url(String portrait_url) {
+        this.portrait_url = portrait_url;
     }
 }
