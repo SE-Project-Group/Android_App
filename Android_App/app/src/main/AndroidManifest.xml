@@ -64,7 +64,6 @@
         <activity android:name=".Activity.TalkingActivity" />
         <activity android:name=".Activity.FollowingActivity" />
         <activity android:name=".Activity.CommentActivity" />
-        <activity android:name=".Activity.CommentListActivity" />
         <activity android:name=".Activity.CommentRemindActivity" />
         <activity android:name=".Activity.LikeRemindActivity" />
         <activity android:name=".Activity.AlbumActivity" />
