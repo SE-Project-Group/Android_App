@@ -148,18 +148,10 @@ public class RequestServer implements  RequestServerInterface{
         return feedList;
     }
 
-    public void signUp(){
+    public void signUp(String user_name,String password,String phone,String password_confirm){
         String resource = "clientSignup";
-        EditText et_userName = (EditText) activityContext.findViewById(R.id.et_userName);
-        EditText et_password = (EditText) activityContext.findViewById(R.id.et_password);
-        EditText et_phone = (EditText) activityContext.findViewById(R.id.et_phone);
-        EditText et_password_confirm = (EditText) activityContext.findViewById(R.id.et_password_confirm);
-        String userName = et_userName.getText().toString();
-        String password = et_password.getText().toString();
-        String phone = et_phone.getText().toString();
-        String password_confirm = et_password_confirm.getText().toString();
 
-        if(phone.equals("") || userName.equals("") || password.equals("") || !password.equals(password_confirm)) {
+        if(phone.equals("") || user_name.equals("") || password.equals("") || !password.equals(password_confirm)) {
             Toast.makeText(activityContext, "表单信息有误", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -167,7 +159,7 @@ public class RequestServer implements  RequestServerInterface{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("phone", phone);
-            jsonObject.put("user_name", userName);
+            jsonObject.put("user_name", user_name);
             jsonObject.put("password", password);
         }catch (Exception e){
             e.printStackTrace();

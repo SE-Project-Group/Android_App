@@ -310,11 +310,18 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
+        EditText et_userName = (EditText) findViewById(R.id.et_userName);
+        EditText et_password = (EditText) findViewById(R.id.et_password);
+        EditText et_phone = (EditText) findViewById(R.id.et_phone);
+        EditText et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
+        final String user_name_ed = et_userName.getText().toString();
+        final String password_ed = et_password.getText().toString();
+        final String phone_ed = et_phone.getText().toString();
+        final String password_confirm_ed = et_password_confirm.getText().toString();
         final RequestServerInterface requestServer = new RequestServer(handler, SIGNUP_OK, SIGNUP_FAILED, this);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                    requestServer.signUp();
+                    requestServer.signUp(user_name_ed,password_ed,phone_ed,password_confirm_ed);
             }
         });
     }
