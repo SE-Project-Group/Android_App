@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.android_app.Class.Remind;
-import com.example.android.android_app.Class.RemindAdapter;
+import com.example.android.android_app.Model.Remind;
+import com.example.android.android_app.Adapter.RemindAdapter;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
@@ -25,12 +25,12 @@ public class CommentRemindActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.remind_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RemindAdapter adapter = new RemindAdapter(remindList);
+        RemindAdapter adapter = new RemindAdapter(remindList, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
     private void initReminds(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Remind remindA = new Remind("wangtao","xiezhentao",time.toString(),R.drawable.exp_portrait,R.drawable.user_albumn,"hhhhhhh","I love coding");
+        Remind remindA = new Remind();
         remindList.add(remindA);
         remindList.add(remindA);
         remindList.add(remindA);

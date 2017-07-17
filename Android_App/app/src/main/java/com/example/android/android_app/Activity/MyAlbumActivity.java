@@ -9,10 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ProgressBar;
 
-import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.Class.FeedAdapter;
-import com.example.android.android_app.Class.RequestServer;
-import com.example.android.android_app.Class.RequestServerInterface;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Adapter.FeedAdapter;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case GET_MY_FEED_OK:
-                    recyclerView.setAdapter(new FeedAdapter(feedList));
+                    recyclerView.setAdapter(new FeedAdapter(getApplicationContext(), feedList));
                     break;
                 case GET_MY_FEED_FAILED:
                     break;

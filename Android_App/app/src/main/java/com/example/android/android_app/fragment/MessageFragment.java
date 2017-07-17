@@ -1,4 +1,4 @@
-package com.example.android.android_app.fragment;
+package com.example.android.android_app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.android.android_app.Activity.AtMeRemindActivity;
-import com.example.android.android_app.Class.MessageAdapter;
-import com.example.android.android_app.Class.Message;
+import com.example.android.android_app.Activity.MentionRemindActivity;
+import com.example.android.android_app.Adapter.MessageAdapter;
+import com.example.android.android_app.Model.Message;
 import com.example.android.android_app.Activity.CommentRemindActivity;
 import com.example.android.android_app.Activity.LikeRemindActivity;
 import com.example.android.android_app.R;
@@ -34,7 +34,7 @@ public class MessageFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
         return view;
     }
 
@@ -48,7 +48,7 @@ public class MessageFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        MessageAdapter adapter = new MessageAdapter(messagesList);
+        MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
         recyclerView.setAdapter(adapter);
 
         LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.comment_remind);
@@ -65,7 +65,7 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AtMeRemindActivity.class);
+                Intent intent = new Intent(getActivity(), MentionRemindActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,7 +82,7 @@ public class MessageFragment extends Fragment {
 
     private void initMessages(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Message messageA = new Message("wangtao","I love coding",time.toString(),R.drawable.exp_pic);
+        Message messageA = new Message();
         messagesList.add(messageA);
         messagesList.add(messageA);
         messagesList.add(messageA);

@@ -65,7 +65,7 @@
             android:visibility="gone"
             android:orientation="vertical"
             android:layout_alignParentBottom="true">
-            <include layout="@layout/feed_item"/>
+            <include layout="@layout/item_feed"/>
         </LinearLayout>
     </RelativeLayout>
 

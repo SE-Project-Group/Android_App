@@ -1,8 +1,6 @@
-package com.example.android.android_app.fragment;
+package com.example.android.android_app.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-import com.example.android.android_app.Class.Feed;
-import com.example.android.android_app.Class.FeedAdapter;
+import com.example.android.android_app.Model.Feed;
+import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Activity.HomeActivity;
-import com.example.android.android_app.R;
 import com.example.android.android_app.Activity.SearchActivity;
+import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -70,7 +68,7 @@ public class DiscoverFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(feedList);
+        FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
         recyclerView.setAdapter(adapter);
 
     }
@@ -91,7 +89,7 @@ public class DiscoverFragment extends Fragment {
         List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("Root","Today is my birthday",time.toString(),0,0,0,1,R.drawable.exp_portrait);
+        Feed exp = new Feed("5966e9fde9266510d4d7ecc3","Root","Today is my birthday",time.toString(),0,0,0,1,R.drawable.exp_portrait);
         feedList.add(exp);
     }
 

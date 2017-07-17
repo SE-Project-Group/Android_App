@@ -12,9 +12,8 @@ import com.example.android.android_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FollowingActivity extends AppCompatActivity {
-
-    private List<Follow> followList = new ArrayList<>();
+public class FollowerActivity extends AppCompatActivity {
+    private List<Follow> FollowList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,18 +24,14 @@ public class FollowingActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.follwing_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FollowAdapter adapter = new FollowAdapter(followList, getApplicationContext());
+        FollowAdapter adapter = new FollowAdapter(FollowList, getApplicationContext());
         recyclerView.setAdapter(adapter);
     }
 
     private void initFollows(){
-        Follow FollowA = new Follow("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOWING");
-        followList.add(FollowA);
-        followList.add(FollowA);
-        followList.add(FollowA);
-        followList.add(FollowA);
-        followList.add(FollowA);
+        Follow FollowA = new Follow("wangtao", "I love helping others",R.drawable.exp_portrait,"FOLLOW");
+        FollowList.add(FollowA);
         Follow FollowB = new Follow("hhhhh","I love coding",R.drawable.exp_pic,"FRIEND");
-        followList.add(FollowB);
+        FollowList.add(FollowB);
     }
 }

@@ -58,9 +58,7 @@
             </intent-filter>
         -->
         <activity android:name=".Activity.SettingActivity" />
-        <activity android:name=".Activity.PersonalPageActivity" />
         <activity android:name=".Activity.UserSercurityActivity" />
-        <activity android:name=".Activity.PersonalSettingActivity" />
         <activity android:name=".Activity.MyAlbumActivity" />
         <activity android:name=".Activity.PersonalHomeActivity" />
         <activity android:name=".Activity.TalkingActivity" />
@@ -68,10 +66,8 @@
         <activity android:name=".Activity.CommentActivity" />
         <activity android:name=".Activity.CommentListActivity" />
         <activity android:name=".Activity.CommentRemindActivity" />
-        <activity android:name=".Activity.AtMeRemindActivity" />
         <activity android:name=".Activity.LikeRemindActivity" />
         <activity android:name=".Activity.AlbumActivity" />
-        <activity android:name=".Activity.FansActivity" />
 
         <service
             android:name=".Service.PollingService"
@@ -80,7 +76,11 @@
 
         <activity android:name=".Activity.MyLikeActivity" />
         <activity android:name=".Activity.MyShareActivity" />
-
+        <activity android:name=".Activity.FollowerActivity" />
+        <activity android:name=".Activity.MentionMeRemindActivity" />
+        <activity android:name=".Activity.CircleActivity" />
+        <activity android:name=".Activity.MentionRemindActivity" />
+        <activity android:name=".Activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>
