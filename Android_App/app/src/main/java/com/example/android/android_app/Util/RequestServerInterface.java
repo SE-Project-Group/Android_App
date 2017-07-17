@@ -19,7 +19,7 @@ public interface RequestServerInterface {
 
     public List<Feed> getMyFeed();
 
-    public void signUp();
+    public void signUp(String user_name,String password,String phone,String password_confirm);
 
     public void newFeed(String jsonString);
 
