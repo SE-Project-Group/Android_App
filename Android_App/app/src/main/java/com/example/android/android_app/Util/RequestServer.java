@@ -286,7 +286,7 @@ public class RequestServer{
         }
     }
 
-    public UserInfo queryUserInfo(){
+    public UserInfo getUserInfo(int user_id){
         String resource = "queryPersonalInfo";
         String pre_url = generatePreUrl(resource);
         if(pre_url == null){

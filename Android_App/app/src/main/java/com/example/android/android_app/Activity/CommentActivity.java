@@ -39,9 +39,11 @@ public class CommentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_list);
+        setContentView(R.layout.activity_comment);
         Intent intent = getIntent();
         feed_id = intent.getStringExtra("feed_id");
+        if(verify == null)
+            verify = new Verify(this);
         initView();
     }
 
