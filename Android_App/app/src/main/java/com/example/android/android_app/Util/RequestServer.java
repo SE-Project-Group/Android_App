@@ -76,11 +76,6 @@ public class RequestServer{
     public void signUp(String user_name,String password,String phone,String password_confirm){
         String resource = "clientSignup";
 
-        if(phone.equals("") || user_name.equals("") || password.equals("") || !password.equals(password_confirm)) {
-            Toast.makeText(activityContext, "表单信息有误", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("phone", phone);

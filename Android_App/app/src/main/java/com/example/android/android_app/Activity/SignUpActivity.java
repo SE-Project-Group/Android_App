@@ -262,7 +262,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Password Confirm
         final TextInputLayout textInputLayout5 = (TextInputLayout) findViewById(R.id.password_com);
-        EditText password_com = textInputLayout5.getEditText();
+        final EditText password_com = textInputLayout5.getEditText();
         final TextInputLayout textInputLayout6 = (TextInputLayout) findViewById(R.id.password);
         final EditText password_final = textInputLayout6.getEditText();
         password_com.addTextChangedListener(new TextWatcher() {
@@ -320,7 +320,11 @@ public class SignUpActivity extends AppCompatActivity {
         final RequestServer requestServer = new RequestServer(handler, SIGNUP_OK, SIGNUP_FAILED, this);
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                    requestServer.signUp(user_name_ed,password_ed,phone_ed,password_confirm_ed);
+                if(phone_ed.equals("") || user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
+                    Toast.makeText(SignUpActivity.this, "表单信息有误", Toast.LENGTH_SHORT).show();
+                }else {
+                    requestServer.signUp(user_name_ed, password_ed, phone_ed, password_confirm_ed);
+                }
             }
         });
     }

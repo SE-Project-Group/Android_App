@@ -73,7 +73,7 @@ public class CommentListActivity extends AppCompatActivity {
         comment_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                final String comment_text = ((EditText)findViewById(R.id.comment_content)).getText().toString();
             }
         });
     }
