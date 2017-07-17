@@ -157,6 +157,7 @@ public class NewFeedActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.send_btn:
                 Verify verify = new Verify(this);
+                // check log status
                 if(!verify.getLoged()){
                     Toast.makeText(NewFeedActivity.this, "not log in", Toast.LENGTH_SHORT).show();
                     break;

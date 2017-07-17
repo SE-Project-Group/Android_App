@@ -20,25 +20,24 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.android.android_app.Fragment.CircleFragment;
 import com.example.android.android_app.Fragment.UnlogUserFragment;
 import com.example.android.android_app.Util.Permission;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Fragment.DiscoverAroundFragment;
 import com.example.android.android_app.Fragment.DiscoverFragment;
-import com.example.android.android_app.Fragment.HomeFragment;
 import com.example.android.android_app.Fragment.LogedUserFragment;
 import com.example.android.android_app.Fragment.MessageFragment;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
-    private HomeFragment homeFragment;
+    private CircleFragment circleFragment;
     private MessageFragment messageFragment;
     private DiscoverFragment discoverFragment;
     private DiscoverAroundFragment discoverAroundFragment;
     private LogedUserFragment logedUserFragment;
     private UnlogUserFragment unlogUserFragment;
     private BottomNavigationBar bottomNavigationBar;
-    private SearchView mSearchView;
     private LocationClient mLocationClient;
 
     public boolean loged;
@@ -165,9 +164,9 @@ public class HomeActivity extends AppCompatActivity{
                         startActivity(intent);
                         break;
                     case 3:
-                        if(homeFragment == null)
-                            homeFragment = new HomeFragment();
-                        f = homeFragment;
+                        if(circleFragment == null)
+                            circleFragment = new CircleFragment();
+                        f = circleFragment;
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 4:

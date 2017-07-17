@@ -1,4 +1,5 @@
 package com.example.android.android_app.Fragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,19 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
+import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * Created by thor on 2017/6/27.
  */
 
-public class HomeFragment extends Fragment {
+public class CircleFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
