@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ import java.util.List;
 
 public class DiscoverFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefresh;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class DiscoverFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        // set tool bar
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         Button search_btn = (Button) getActivity().findViewById(R.id.search_toolBar_btn);
@@ -71,6 +74,17 @@ public class DiscoverFragment extends Fragment {
         FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
         recyclerView.setAdapter(adapter);
 
+        // set refresh layout
+        swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh_feed();
+            }
+        });
+
+
     }
 
     private void switch_frag(){
@@ -93,6 +107,10 @@ public class DiscoverFragment extends Fragment {
         feedList.add(exp);
     }
 
+
+    private void refresh_feed(){
+        return;
+    }
 }
 
 
