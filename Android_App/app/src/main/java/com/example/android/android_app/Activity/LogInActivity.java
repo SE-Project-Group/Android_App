@@ -15,11 +15,7 @@ import android.widget.Toast;
 
 
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
-
-import static android.R.id.message;
-import static com.baidu.location.d.j.v;
 
 
 public class LogInActivity extends AppCompatActivity {
