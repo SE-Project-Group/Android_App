@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Activity.CommentActivity;
+import com.example.android.android_app.Activity.CommentListActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
@@ -178,7 +179,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     }
 
     private void comment() {
-        Intent intent = new Intent(context, CommentActivity.class);
+        Intent intent = new Intent(context, CommentListActivity.class);
         context.startActivity(intent);
     }
 
