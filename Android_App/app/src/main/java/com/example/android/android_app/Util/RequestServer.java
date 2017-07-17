@@ -72,82 +72,7 @@ public class RequestServer implements  RequestServerInterface{
     public RequestServer(){
     }
 
-    public String logInRequest(String user_name,String password){
-        String resource = "clientLogin";
-        // create url
-        String url = host + resource;
-        url = url + "?user_name="+user_name+"&password="+password ;
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url).build();
-
-        String token ="";
-        int user_id = 0;
-        try{
-            Response response = client.newCall(request).execute();
-            String responseData = response.body().string();
-            JSONObject jsonObject = new JSONObject(responseData);
-            token = jsonObject.getString("token");
-            user_id = jsonObject.getInt("userId");
-            //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            e.printStackTrace();
-            return "failed";
-        }
-        verify.storeToken(token, user_id);
-        return "success";
-
-    }
-
-    public List<Feed> getAround(BDLocation location){
-        String resource = "feedAround";
-        String pre_url = generatePreUrl(resource);
-        // can not log in
-        List<Feed> feedList = new ArrayList<>();
-        String latitude_str = String.valueOf(location.getLatitude());
-        String longitude_str = String.valueOf(location.getLongitude());
-        OkHttpClient client = new OkHttpClient();
-        String url = pre_url
-                +"&latitude="+latitude_str+"&longitude="+longitude_str;
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            String responseData  = response.body().string();
-            Gson gson = new Gson();
-            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return feedList;
-    }
-
-    public List<Feed> getMyFeed(){
-        String resource = "myFeed";
-        List<Feed> feedList = new ArrayList<>();
-        // check if loged in
-        String pre_url = generatePreUrl(resource);
-        if(pre_url == null){
-            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
-            return feedList;
-        }
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(pre_url).build();
-        try {
-            Response response = client.newCall(request).execute();
-            String responseData = response.body().string();
-            Gson gson = new Gson();
-            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return feedList;
-    }
-
+    // sign up
     public void signUp(String user_name,String password,String phone,String password_confirm){
         String resource = "clientSignup";
 
@@ -177,6 +102,85 @@ public class RequestServer implements  RequestServerInterface{
             handler.sendMessage(message);
         }
     }
+
+    // log in
+    public String logInRequest(String user_name,String password){
+        String resource = "clientLogin";
+        // create url
+        String url = host + resource;
+        url = url + "?user_name="+user_name+"&password="+password ;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url).build();
+
+        String token ="";
+        int user_id = 0;
+        try{
+            Response response = client.newCall(request).execute();
+            String responseData = response.body().string();
+            JSONObject jsonObject = new JSONObject(responseData);
+            token = jsonObject.getString("token");
+            user_id = jsonObject.getInt("userId");
+            //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            e.printStackTrace();
+            return "failed";
+        }
+        verify.storeToken(token, user_id);
+        return "success";
+
+    }
+
+
+    public List<Feed> getAround(BDLocation location){
+        String resource = "feedAround";
+        String pre_url = generatePreUrl(resource);
+        // can not log in
+        List<Feed> feedList;
+        String latitude_str = String.valueOf(location.getLatitude());
+        String longitude_str = String.valueOf(location.getLongitude());
+        OkHttpClient client = new OkHttpClient();
+        String url = pre_url
+                +"&latitude="+latitude_str+"&longitude="+longitude_str;
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String responseData  = response.body().string();
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return feedList;
+    }
+
+
+    public List<Feed> getMyFeed(){
+        String resource = "myFeed";
+        List<Feed> feedList = new ArrayList<>();
+        // check if loged in
+        String url = generatePreUrl(resource);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            String responseData = response.body().string();
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return feedList;
+    }
+
+
 
     public void newFeed(String jsonString){
         String resource = "newFeed";
