@@ -11,14 +11,11 @@ import android.widget.Toast;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.message;
 
 public class PersonalHomeActivity extends AppCompatActivity {
     private List<Feed> myfeeds = new ArrayList<>();
@@ -33,7 +30,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_home);
         Intent intent = getIntent();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final RequestServerInterface requestServer = new RequestServer(handler, GET_FEEDS_OK, -1, this);
+        final RequestServer requestServer = new RequestServer(handler, GET_FEEDS_OK, -1, this);
         Verify verify = new Verify(this);
         if(! verify.getLoged()){
             Toast.makeText(PersonalHomeActivity.this, "not log in", Toast.LENGTH_SHORT).show();

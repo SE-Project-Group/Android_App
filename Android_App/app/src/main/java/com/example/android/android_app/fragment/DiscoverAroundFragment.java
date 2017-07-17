@@ -31,7 +31,6 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
@@ -126,7 +125,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
                 update = MapStatusUpdateFactory.zoomTo(19f);
                 baiduMap.animateMapStatus(update);
 
-                final RequestServerInterface requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILED, getActivity());
+                final RequestServer requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILED, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -259,7 +258,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
             case R.id.comment_btn:
                 break;
             case R.id.like_btn:
-                final RequestServerInterface requestServer = new RequestServer(handler, LIKE_OK, LIKE_FAILED, getActivity());
+                final RequestServer requestServer = new RequestServer(handler, LIKE_OK, LIKE_FAILED, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

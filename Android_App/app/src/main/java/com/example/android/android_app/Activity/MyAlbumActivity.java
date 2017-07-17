@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.myAlbum_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        final RequestServerInterface requestServer = new RequestServer(handler, GET_MY_FEED_OK, GET_MY_FEED_FAILED, this);
+        final RequestServer requestServer = new RequestServer(handler, GET_MY_FEED_OK, GET_MY_FEED_FAILED, this);
         new Thread(new Runnable() {
             @Override
             public void run() {
