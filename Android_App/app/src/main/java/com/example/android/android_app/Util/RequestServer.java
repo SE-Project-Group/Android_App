@@ -41,10 +41,12 @@ public class RequestServer implements  RequestServerInterface{
     private int success_msg;
     private int fail_msg;
     private Activity activityContext;
+    private Verify verify;
 
     private String generatePreUrl(String resource){
         String sign = "";
-        Verify verify = new Verify(resource, activityContext);
+        if(verify == null)
+            verify = new Verify(resource, activityContext);
         String user_id = verify.getUser_id();
         if(user_id.equals("-1") && !resource.equals("feedAround"))
             return null;
@@ -70,7 +72,7 @@ public class RequestServer implements  RequestServerInterface{
     public RequestServer(){
     }
 
-    public void logInRequest(){
+    public String logInRequest(){
         String resource = "clientLogin";
         String token ="";
         int user_id = 0;
@@ -84,37 +86,20 @@ public class RequestServer implements  RequestServerInterface{
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url).build();
-        String responseData = "";
         try{
             Response response = client.newCall(request).execute();
-            responseData = response.body().string();
+            String responseData = response.body().string();
             JSONObject jsonObject = new JSONObject(responseData);
             token = jsonObject.getString("token");
             user_id = jsonObject.getInt("userId");
             //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             e.printStackTrace();
+            return "failed";
         }
+        verify.storeToken(token, user_id);
+        return "success";
 
-        // if failed , send message to main thread
-        Message message = new Message();
-        if(responseData.equals("ERROR") || responseData.equals("")){
-            message.what = fail_msg;
-            handler.sendMessage(message);
-        }
-        // if success, send message to main thread
-        else{
-            // if success, store token
-            SharedPreferences.Editor editor =activityContext.getSharedPreferences("logIn_data", MODE_PRIVATE).edit();
-            editor.putBoolean("loged",true);
-            editor.putString("token", token);
-            editor.putInt("user_id", user_id);
-            editor.apply();
-            // send message to main thread
-            message = new Message();
-            message.what = success_msg;
-            handler.sendMessage(message);
-        }
     }
 
     public List<Feed> getAround(BDLocation location){

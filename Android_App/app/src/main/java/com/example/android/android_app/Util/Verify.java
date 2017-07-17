@@ -17,6 +17,7 @@ import java.util.Set;
 import sun.misc.BASE64Encoder;
 
 import static android.R.attr.value;
+import static android.content.Context.MODE_PRIVATE;
 import static com.baidu.location.d.j.H;
 import static com.baidu.location.d.j.S;
 
@@ -62,14 +63,14 @@ public class Verify {
     }
 
     private String getToken(){
-        SharedPreferences pref = context.getSharedPreferences("logIn_data", Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
         Boolean loged = pref.getBoolean("loged",false);
         String token = pref.getString("token", "");
         return token;
     }
 
     public String getUser_id(){
-        SharedPreferences pref = context.getSharedPreferences("logIn_data",Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
         Boolean loged = pref.getBoolean("loged",false);
         int user_id = pref.getInt("user_id", -1);
         String str = String.valueOf(user_id);
@@ -77,12 +78,16 @@ public class Verify {
     }
 
     public boolean getLoged(){
-        SharedPreferences pref = context.getSharedPreferences("logIn_data",Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
         Boolean loged = pref.getBoolean("loged",false);
         return loged;
     }
 
-    public String storeToken(){
-        return null;
+    public void storeToken(String token, int user_id){
+        SharedPreferences.Editor editor = context.getSharedPreferences("logIn_data", MODE_PRIVATE).edit();
+        editor.putBoolean("loged",true);
+        editor.putString("token", token);
+        editor.putInt("user_id", user_id);
+        editor.apply();
     }
 }

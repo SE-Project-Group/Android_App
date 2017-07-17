@@ -18,6 +18,9 @@ import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
+import static android.R.id.message;
+import static com.baidu.location.d.j.v;
+
 
 public class LogInActivity extends AppCompatActivity {
     private static final int LOG_IN_OK = 0;
@@ -36,7 +39,6 @@ public class LogInActivity extends AppCompatActivity {
         // set button listener
         // log in button
         Button button = (Button) findViewById(R.id.login_btn);
-        final RequestServerInterface requestServer = new RequestServer(handler, LOG_IN_OK, LOG_IN_FAILED, this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,12 +48,7 @@ public class LogInActivity extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 // create a new Thread to log in
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        requestServer.logInRequest();
-                    }
-                }).start();
+                logIn();
 
             }
         });
@@ -65,6 +62,26 @@ public class LogInActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    private void logIn(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer();
+                String result = requestServer.logInRequest();
+                Message message = new Message();
+                // if failed
+                if(result.equals("ERROR"))
+                    message.what = LOG_IN_FAILED;
+
+                else
+                    message.what = LOG_IN_OK;
+
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 
 
