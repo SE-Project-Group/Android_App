@@ -16,13 +16,10 @@ import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
 import java.util.List;
-
-import static com.baidu.location.d.j.n;
 
 
 /**
@@ -174,7 +171,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServerInterface requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer();
                 String response = requestServer.like(feed_id);
             }
         }).start();

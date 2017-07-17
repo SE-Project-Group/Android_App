@@ -32,7 +32,6 @@ import com.example.android.android_app.Util.ImageUriParser;
 import com.example.android.android_app.Util.OssInit;
 import com.example.android.android_app.Util.OssService;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.Util.Verify;
 import com.example.android.android_app.R;
 
@@ -156,7 +155,7 @@ public class NewFeedActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.send_btn:
                 final String jsonString = generateJsonString();
-                final RequestServerInterface requestServer = new RequestServer(handler, UPLOAD_OK, UPLOAD_FAILED,this);
+                final RequestServer requestServer = new RequestServer(handler, UPLOAD_OK, UPLOAD_FAILED,this);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

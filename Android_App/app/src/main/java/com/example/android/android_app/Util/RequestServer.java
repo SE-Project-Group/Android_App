@@ -35,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thor on 2017/7/5.
  */
 
-public class RequestServer implements  RequestServerInterface{
+public class RequestServer {
     private String host = "http://106.15.188.135:8080/track/rest/app/";
     private Handler handler;
     private int success_msg;

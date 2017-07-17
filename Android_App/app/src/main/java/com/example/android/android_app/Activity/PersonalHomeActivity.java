@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_home);
         Intent intent = getIntent();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        final RequestServerInterface requestServer = new RequestServer(handler, GET_FEEDS_OK, -1, this);
+        final RequestServer requestServer = new RequestServer(handler, GET_FEEDS_OK, -1, this);
         new Thread(new Runnable() {
             @Override
             public void run() {

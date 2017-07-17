@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 
 import com.example.android.android_app.Util.RequestServer;
-import com.example.android.android_app.Util.RequestServerInterface;
 import com.example.android.android_app.R;
 
 
@@ -36,7 +35,7 @@ public class LogInActivity extends AppCompatActivity {
         // set button listener
         // log in button
         Button button = (Button) findViewById(R.id.login_btn);
-        final RequestServerInterface requestServer = new RequestServer(handler, LOG_IN_OK, LOG_IN_FAILED, this);
+        final RequestServer requestServer = new RequestServer(handler, LOG_IN_OK, LOG_IN_FAILED, this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
