@@ -77,8 +77,6 @@
         <activity android:name=".Activity.MyLikeActivity" />
         <activity android:name=".Activity.MyShareActivity" />
         <activity android:name=".Activity.FollowerActivity" />
-        <activity android:name=".Activity.MentionMeRemindActivity" />
-        <activity android:name=".Activity.CircleActivity" />
         <activity android:name=".Activity.MentionRemindActivity" />
         <activity android:name=".Activity.UserInfoActivity"></activity>
     </application>

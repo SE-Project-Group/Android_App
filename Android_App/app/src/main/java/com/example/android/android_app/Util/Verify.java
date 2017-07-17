@@ -75,4 +75,14 @@ public class Verify {
         String str = String.valueOf(user_id);
         return str;
     }
+
+    public boolean getLoged(){
+        SharedPreferences pref = context.getSharedPreferences("logIn_data",Context.MODE_PRIVATE);
+        Boolean loged = pref.getBoolean("loged",false);
+        return loged;
+    }
+
+    public String storeToken(){
+        return null;
+    }
 }

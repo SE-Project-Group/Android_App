@@ -23,7 +23,7 @@ public interface RequestServerInterface {
 
     public void newFeed(String jsonString);
 
-    public void like (String feed_id);
+    public String like (String feed_id);
 
     public List<Feed> publicPolling(Date last_update_time);
 

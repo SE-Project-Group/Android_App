@@ -35,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by thor on 2017/7/5.
  */
 
-public class RequestServer implements RequestServerInterface{
+public class RequestServer implements  RequestServerInterface{
     private String host = "http://106.15.188.135:8080/track/rest/app/";
     private Handler handler;
     private int success_msg;
@@ -225,14 +225,22 @@ public class RequestServer implements RequestServerInterface{
         }
     }
 
-    public void like(String feed_id){
+
+
+
+
+
+
+
+
+
+
+    // new begin
+
+    public String like(String feed_id){
         String resource = "incLikeFeed";
         // check if loged in
-        String pre_url = generatePreUrl(resource);
-        if(pre_url == null){
-            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        String url = generatePreUrl(resource);
         // create json
         JSONObject jsonObject = new JSONObject();
         try {
@@ -241,23 +249,17 @@ public class RequestServer implements RequestServerInterface{
         }catch (Exception e){
             e.printStackTrace();
         }
-        JsonSender sender = new JsonSender(jsonObject.toString(), pre_url);
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
         String response = sender.send();
-        if(response.equals("success")){
-            Message message = new Message();
-            message.what = success_msg;
-            handler.sendMessage(message);
-        }
+        return response;
     }
 
-    public void comment(String text, String feed_id, int reply_id){
+
+
+    public String comment(String text, String feed_id, int reply_id){
         String resource = "newComment";
         // check if loged in
-        String pre_url = generatePreUrl(resource);
-        if(pre_url == null){
-            Toast.makeText(activityContext, "您尚未登陆", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        String url = generatePreUrl(resource);
         // create json
         JSONObject jsonObject = new JSONObject();
         try {
@@ -268,14 +270,11 @@ public class RequestServer implements RequestServerInterface{
         }catch (Exception e){
             e.printStackTrace();
         }
-        JsonSender sender = new JsonSender(jsonObject.toString(), pre_url);
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
         String response = sender.send();
-        if(response.equals("success")){
-            Message message = new Message();
-            message.what = success_msg;
-            handler.sendMessage(message);
-        }
+        return response;
     }
+
 
     public List<Feed> publicPolling(Date last_update_time){
         String resource = "";
@@ -302,7 +301,7 @@ public class RequestServer implements RequestServerInterface{
             return null;
         }
 
-            return null;
+        return null;
     }
 
     public List<Feed> friendPolling(Date last_update_time){
@@ -332,16 +331,6 @@ public class RequestServer implements RequestServerInterface{
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        Message message = new Message();
-        if(responseData.equals("success"))
-            message.what = success_msg;
-
-
-        else
-            message.what = fail_msg;
-
-        handler.sendMessage(message);
     }
 
     public UserInfo queryUserInfo(){
