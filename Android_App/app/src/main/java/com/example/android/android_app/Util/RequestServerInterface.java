@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public interface RequestServerInterface {
-    public String logInRequest();
+    public String logInRequest(String a, String b);
 
     public List<Feed> getAround(BDLocation location);
 

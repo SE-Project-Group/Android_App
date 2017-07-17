@@ -72,20 +72,18 @@ public class RequestServer implements  RequestServerInterface{
     public RequestServer(){
     }
 
-    public String logInRequest(){
+    public String logInRequest(String user_name,String password){
         String resource = "clientLogin";
-        String token ="";
-        int user_id = 0;
+        // create url
         String url = host + resource;
-
-        String user_name = ((EditText) activityContext.findViewById(R.id.user_name)).getText().toString();
-        String password = ((EditText) activityContext.findViewById(R.id.password)).getText().toString();
-        // send log in information to server
         url = url + "?user_name="+user_name+"&password="+password ;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url).build();
+
+        String token ="";
+        int user_id = 0;
         try{
             Response response = client.newCall(request).execute();
             String responseData = response.body().string();

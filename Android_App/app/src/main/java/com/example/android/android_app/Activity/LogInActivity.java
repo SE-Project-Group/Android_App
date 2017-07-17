@@ -48,7 +48,9 @@ public class LogInActivity extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 // create a new Thread to log in
-                logIn();
+                String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
+                logIn(user_name, password);
 
             }
         });
@@ -65,12 +67,12 @@ public class LogInActivity extends AppCompatActivity {
     }
 
 
-    private void logIn(){
+    private void logIn(final String user_name, final String password){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 RequestServer requestServer = new RequestServer();
-                String result = requestServer.logInRequest();
+                String result = requestServer.logInRequest(user_name, password);
                 Message message = new Message();
                 // if failed
                 if(result.equals("ERROR"))
