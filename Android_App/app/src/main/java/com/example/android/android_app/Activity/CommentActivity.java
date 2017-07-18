@@ -45,7 +45,7 @@ public class CommentActivity extends AppCompatActivity {
         feed_id = intent.getStringExtra("feed_id");
         if(verify == null)
             verify = new Verify(this);
-        //initComment();
+        initComment();
         initView();
     }
 
@@ -81,7 +81,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!verify.getLoged()){
-                    Toast.makeText(CommentActivity.this, "ont log in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentActivity.this, "not log in", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // send comment
