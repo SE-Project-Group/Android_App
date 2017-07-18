@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.Verify;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ public class CircleFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initFeeds();
+        getFeeds();
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.home_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -47,11 +49,13 @@ public class CircleFragment extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
-    private void initFeeds(){
-    /*    List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.exp_pic);
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-
-        feedList.add(exp);*/
+    private void getFeeds(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer(new Verify(getActivity()));
+                /*feedList = requestServer.get*/
+            }
+        }).start();
     }
 }

@@ -43,18 +43,24 @@ public class RequestServer{
     private Activity activityContext;
     private Verify verify;
 
-    private String generatePreUrl(String resource){
-        String sign = "";
-        String user_id = verify.getUser_id();
-        if(user_id.equals("-1") && !resource.equals("feedAround"))
-            return null;
-        try {
-            sign = verify.generateSign();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private String generatePreUrl(String resource, Boolean needLogIn){
+        String prefix_url;
+        if(needLogIn) {
+            String sign = "";
+            String user_id = verify.getUser_id();
+            if (user_id.equals("-1") && !resource.equals("feedAround"))
+                return null;
+            try {
+                sign = verify.generateSign();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        String prefix_url = host+resource+"?user_id="+user_id+"&sign="+sign;
+            prefix_url = host + resource + "?user_id=" + user_id + "&sign=" + sign;
+        }
+        else
+            prefix_url = host + resource;
+
         return prefix_url;
     }
 
@@ -129,7 +135,7 @@ public class RequestServer{
 
     public List<Feed> getAround(BDLocation location){
         String resource = "feedAround";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, true);
         // can not log in
         List<Feed> feedList;
         String latitude_str = String.valueOf(location.getLatitude());
@@ -154,7 +160,7 @@ public class RequestServer{
 
     public List<Feed> getHotFeed(){
         String resource = "getFeedFromTime";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, false);
         String url = pre_url + "&time=" + "2016-01-01 10:00:00";
 
         OkHttpClient client = new OkHttpClient();
@@ -186,7 +192,7 @@ public class RequestServer{
         String resource = "myFeed";
         List<Feed> feedList = new ArrayList<>();
         // check if loged in
-        String url = generatePreUrl(resource);
+        String url = generatePreUrl(resource, true);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -203,11 +209,15 @@ public class RequestServer{
         return feedList;
     }
 
+/*    public List<Feed> getCircleFeed(){
+        String resource =
+    }*/
+
 
 
     public String newFeed(String jsonString){
         String resource = "newFeed";
-        String url = generatePreUrl(resource);
+        String url = generatePreUrl(resource, true);
         JsonSender sender = new JsonSender(jsonString, url);
         String response = sender.send();
 
@@ -221,7 +231,7 @@ public class RequestServer{
     public String like(String feed_id){
         String resource = "incLikeFeed";
         // check if loged in
-        String url = generatePreUrl(resource);
+        String url = generatePreUrl(resource, true);
         // create json
         JSONObject jsonObject = new JSONObject();
         try {
@@ -240,7 +250,7 @@ public class RequestServer{
     public String comment(String text, String feed_id, int reply_id){
         String resource = "newComment";
         // check if loged in
-        String url = generatePreUrl(resource);
+        String url = generatePreUrl(resource, true);
         // create json
         JSONObject jsonObject = new JSONObject();
         try {
@@ -259,7 +269,7 @@ public class RequestServer{
 
     public List<Feed> publicPolling(Date last_update_time){
         String resource = "";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, false);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().
@@ -292,7 +302,7 @@ public class RequestServer{
     public void logOut(){
         String resource = "clientLogout";
 
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, true);
         if(pre_url == null){
             return;
         }
@@ -316,7 +326,7 @@ public class RequestServer{
 
     public UserInfo getUserInfo(int user_id){
         String resource = "queryPersonalInfo";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, false);
         if(pre_url == null){
             return null;
         }
@@ -345,7 +355,7 @@ public class RequestServer{
 
     public String modifyUserInfo(String jsonStr){
         String resource =  "modifyPersonalInfo";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, true);
         if(pre_url == null){
             return null;
         }
@@ -360,7 +370,7 @@ public class RequestServer{
 
     public String removeFeed(String feed_id){
         String resource = "removeFeed";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, true);
         if(pre_url == null){
             return null;
         }
@@ -388,7 +398,7 @@ public class RequestServer{
 
     public List<Follow> getFollowing(int user) {
         String resource = "getFollowing";
-        String pre_url = generatePreUrl(resource);
+        String pre_url = generatePreUrl(resource, true);
         if (pre_url == null)
             return null;
 
