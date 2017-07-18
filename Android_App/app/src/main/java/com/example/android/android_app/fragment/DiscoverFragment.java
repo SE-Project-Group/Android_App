@@ -122,6 +122,8 @@ public class DiscoverFragment extends Fragment {
                     message.what = GET_FEED_FAILED;
                 else
                     message.what = GET_FEED_OK;
+
+                handler.sendMessage(message);
             }
         }).start();
     }

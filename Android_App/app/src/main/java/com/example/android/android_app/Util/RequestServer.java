@@ -154,7 +154,7 @@ public class RequestServer{
     public List<Feed> getHotFeed(){
         String resource = "getFeedFromTime";
         String pre_url = generatePreUrl(resource, false);
-        String url = pre_url + "&time=" + "2016-01-01 10:00:00";
+        String url = pre_url + "?time=" + "2016-01-01 10:00:00";
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
