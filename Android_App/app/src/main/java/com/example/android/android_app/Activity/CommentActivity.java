@@ -13,18 +13,17 @@ import android.widget.Toast;
 
 
 import com.example.android.android_app.Adapter.CommentAdapter;
-import com.example.android.android_app.Adapter.FeedAdapter;
+import com.example.android.android_app.Model.Comment;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Util.Verify;
 
-import org.w3c.dom.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.mapapi.BMapManager.getContext;
 import static com.example.android.android_app.R.id.comment_send;
-import static com.example.android.android_app.R.id.recyclerView;
+
 
 public class CommentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -34,7 +33,7 @@ public class CommentActivity extends AppCompatActivity {
     private String feed_id;
 
     private Verify verify;
-    private List<com.example.android.android_app.Model.Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +49,7 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void initComment(){
-        com.example.android.android_app.Model.Comment comment1 =
-                new com.example.android.android_app.Model.Comment(R.drawable.exp_pic,"wangtao","I love coding!!");
+        Comment comment1 = new Comment(R.drawable.exp_pic,"wangtao","I love coding!!");
         commentList.add(comment1);
         commentList.add(comment1);
         commentList.add(comment1);

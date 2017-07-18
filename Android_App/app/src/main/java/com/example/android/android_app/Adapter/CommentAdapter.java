@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.android_app.Model.Comment;
 import com.example.android.android_app.R;
-
-import org.w3c.dom.Comment;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
     private Context context;
-    private List<com.example.android.android_app.Model.Comment> commentList;
+    private List<Comment> commentList;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -36,7 +35,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 
-    public CommentAdapter(List<com.example.android.android_app.Model.Comment> commentList, Context context){
+    public CommentAdapter(List<Comment> commentList, Context context){
         this.commentList = commentList;
         this.context = context;
     }
@@ -52,7 +51,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        com.example.android.android_app.Model.Comment comment = commentList.get(position);
+        Comment comment = commentList.get(position);
         holder.portrait.setImageResource(comment.getPortrait_id());
         holder.comment_text.setText(comment.getComment_text());
         holder.user_name.setText(comment.getUser_name());
