@@ -13,7 +13,6 @@ public class UserInfo {
     private int follow_cnt;
     private int follower_cnt;
     private int like_cnt;
-    private int comment_cnt;
     private int share_cnt;
     private List<Feed> recent_feeds;
 
@@ -55,14 +54,6 @@ public class UserInfo {
 
     public void setLike_cnt(int like_cnt) {
         this.like_cnt = like_cnt;
-    }
-
-    public int getComment_cnt() {
-        return comment_cnt;
-    }
-
-    public void setComment_cnt(int comment_cnt) {
-        this.comment_cnt = comment_cnt;
     }
 
     public int getShare_cnt() {

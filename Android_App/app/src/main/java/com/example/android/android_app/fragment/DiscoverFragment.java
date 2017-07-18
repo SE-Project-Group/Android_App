@@ -2,6 +2,8 @@ package com.example.android.android_app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.android.android_app.Model.Feed;
@@ -22,10 +25,11 @@ import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.SearchActivity;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.RequestServer;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -35,6 +39,8 @@ import java.util.List;
 public class DiscoverFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
+    private final static int GET_FEED_OK = 0;
+    private final static int GET_FEED_FAILED = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,12 +73,7 @@ public class DiscoverFragment extends Fragment {
         });
 
         // set Recycle View
-        initFeeds();
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
-        recyclerView.setAdapter(adapter);
+        getFeeds();
 
         // set refresh layout
         swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
@@ -99,18 +100,51 @@ public class DiscoverFragment extends Fragment {
         transaction.commit();
     }
 
-    private void initFeeds(){
-        List<Integer> list = new ArrayList<>();
-        list.add(R.drawable.exp_pic);
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("5966e9fde9266510d4d7ecc3","Root","Today is my birthday",time.toString(),0,0,0,1,R.drawable.exp_portrait);
-        feedList.add(exp);
+    // use feedlist to initialize recycleView
+    private void initRecycleView(){
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private void getFeeds(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer();
+                feedList = requestServer.getHotFeed();
+                Message message = new Message();
+
+                if(feedList == null)
+                    message.what = GET_FEED_FAILED;
+                else
+                    message.what = GET_FEED_OK;
+
+            }
+        }).start();
     }
 
 
     private void refresh_feed(){
         return;
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_FEED_OK:
+                    initRecycleView();
+                    break;
+                case GET_FEED_FAILED:
+                    Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }
 
 

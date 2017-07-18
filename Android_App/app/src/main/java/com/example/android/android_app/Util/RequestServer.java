@@ -153,6 +153,33 @@ public class RequestServer{
         return feedList;
     }
 
+    public List<Feed> getHotFeed(){
+        String resource = "GetFeedFromTime";
+        String pre_url = generatePreUrl(resource);
+        String url = pre_url + "&time" + "2016-01-01";
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        List<Feed> feedList;
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            String responseData = response.body().string();
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return feedList;
+
+    }
+
 
     public List<Feed> getMyFeed(){
         String resource = "myFeed";
