@@ -26,6 +26,7 @@ import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.SearchActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,15 +115,13 @@ public class DiscoverFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer(new Verify(getActivity()));
                 feedList = requestServer.getHotFeed();
                 Message message = new Message();
-
                 if(feedList == null)
                     message.what = GET_FEED_FAILED;
                 else
                     message.what = GET_FEED_OK;
-
             }
         }).start();
     }

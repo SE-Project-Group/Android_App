@@ -44,13 +44,21 @@ public class MessageFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.messageToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        setClickListener();
+
         initMessages();
+
+        // init recyclerView
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
         recyclerView.setAdapter(adapter);
 
+    }
+
+    private void setClickListener(){
         LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.comment_remind);
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,11 +88,15 @@ public class MessageFragment extends Fragment {
         });
     }
 
+    // get storages from SQLite
     private void initMessages(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message messageA = new Message();
-        messagesList.add(messageA);
-        messagesList.add(messageA);
+        messageA.setDate(time);
+        messageA.setMessage_text("hahaha");
+        messageA.setPortrait_url("");
+        messageA.setUser_id(0);
+        messageA.setUser_name("Root");
         messagesList.add(messageA);
     }
 }

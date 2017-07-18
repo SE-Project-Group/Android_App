@@ -48,10 +48,10 @@ public class CircleFragment extends Fragment {
     }
 
     private void initFeeds(){
-        List<Integer> list = new ArrayList<>();
+    /*    List<Integer> list = new ArrayList<>();
         list.add(R.drawable.exp_pic);
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Feed exp = new Feed("","Root","Today is my birthday",time.toString(),0,0,0,0,R.drawable.exp_portrait);
-        feedList.add(exp);
+
+        feedList.add(exp);*/
     }
 }

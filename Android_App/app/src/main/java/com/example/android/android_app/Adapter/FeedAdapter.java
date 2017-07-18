@@ -1,5 +1,6 @@
 package com.example.android.android_app.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.Verify;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
@@ -28,7 +30,7 @@ import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private List<Feed> mFeedList;
-    private Context context;
+    private Activity context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
@@ -80,7 +82,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Feed feed = mFeedList.get(position);
-                toHomePage(feed.getUser_ID());
+                toHomePage(feed.getOwner_id());
             }
         });
         holder.feed_owner_view.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +90,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 Feed feed = mFeedList.get(position);
-                toHomePage(feed.getUser_ID());
+                toHomePage(feed.getOwner_id());
             }
         });
 
@@ -98,7 +100,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                like(feed.get_id());
+                like(feed.getFeed_id());
             }
         });
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +108,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                comment(feed.get_id());
+                comment(feed.getFeed_id());
             }
         });
         holder.like_btn.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +116,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                share(feed.get_id());
+                share(feed.getFeed_id());
             }
         });
         return holder;
@@ -123,7 +125,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = mFeedList.get(position);
-        holder.feed_owner_view.setText(feed.getFeed_owner());
+        holder.feed_owner_view.setText(feed.getOwner_name());
         holder.feedText_view.setText(feed.getText());
         String temp = String.valueOf(feed.getComment_cnt());
         holder.comment_btn.setText(temp);
@@ -171,7 +173,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer(new Verify(context));
                 String response = requestServer.like(feed_id);
             }
         }).start();

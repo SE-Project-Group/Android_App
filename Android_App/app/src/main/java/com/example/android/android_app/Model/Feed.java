@@ -11,10 +11,11 @@ import java.util.List;
  * Created by thor on 2017/6/28.
  */
 
-public class Feed implements Serializable{
-    private String _id;
-    private int user_ID;
-    private String feed_owner;
+public class Feed implements Serializable {
+    private String feed_id;
+    private int owner_id;
+    private String portrait_url;
+    private String owner_name;
     private String text;
     private String date;
     private int like_cnt;
@@ -26,125 +27,76 @@ public class Feed implements Serializable{
     private double longitude;
     private List<String> picUrls;
 
-    // get around
-    public Feed(int user_ID, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt, int pic_cnt, String position, double latitude, double longitude) {
-        this.user_ID = user_ID;
-        this.feed_owner = feed_owner;
-        this.text = text;
-        this.date = date;
-        this.like_cnt = like_cnt;
-        this.share_cnt = share_cnt;
-        this.comment_cnt = comment_cnt;
-        this.pic_cnt = pic_cnt;
-        this.position = position;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public String getFeed_id() {
+        return feed_id;
     }
 
-    // discover fragment
-
-    public Feed(String _id, String feed_owner, String text, String date, int like_cnt, int share_cnt, int comment_cnt,int pic_cnt, int user_ID) {
-        this._id = _id;
-        this.feed_owner = feed_owner;
-        this.text = text;
-        this.date = date;
-        this.like_cnt = like_cnt;
-        this.share_cnt = share_cnt;
-        this.comment_cnt = comment_cnt;
-        this.pic_cnt = pic_cnt;
-        this.user_ID = user_ID;
+    public void setFeed_id(String feed_id) {
+        this.feed_id = feed_id;
     }
 
-    public String get_id() {
-        return _id;
+    public int getOwner_id() {
+        return owner_id;
     }
 
-    public double getLatitude(){
-        return latitude;
-    }
-    public double getLongitude(){
-        return longitude;
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
-    public String getFeed_owner() {
-        return feed_owner;
+    public String getPortrait_url() {
+        return portrait_url;
     }
 
-    public String getDate() {
-        return date;
+    public void setPortrait_url(String portrait_url) {
+        this.portrait_url = portrait_url;
+    }
+
+    public String getOwner_name() {
+        return owner_name;
+    }
+
+    public void setOwner_name(String owner_name) {
+        this.owner_name = owner_name;
     }
 
     public String getText() {
         return text;
     }
 
-    public int getLike_cnt() {
-        return like_cnt;
-    }
-
-    public int getShare_cnt() {
-        return share_cnt;
-    }
-
-    public int getComment_cnt() {
-        return comment_cnt;
-    }
-
-    public String getPosition(){
-        return position;
-    }
-
-    public int getUser_ID(){
-        return user_ID;
-    }
-
-    public List<String> getPicUrls(){
-        return picUrls;
-    }
-
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public void setUser_ID(int user_ID) {
-        this.user_ID = user_ID;
-    }
-
-    public void setFeed_owner(String feed_owner) {
-        this.feed_owner = feed_owner;
-    }
-
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setDate(String date) {
         this.date = date;
     }
 
+    public int getLike_cnt() {
+        return like_cnt;
+    }
+
     public void setLike_cnt(int like_cnt) {
         this.like_cnt = like_cnt;
+    }
+
+    public int getShare_cnt() {
+        return share_cnt;
     }
 
     public void setShare_cnt(int share_cnt) {
         this.share_cnt = share_cnt;
     }
 
+    public int getComment_cnt() {
+        return comment_cnt;
+    }
+
     public void setComment_cnt(int comment_cnt) {
         this.comment_cnt = comment_cnt;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public int getPic_cnt() {
@@ -155,7 +107,35 @@ public class Feed implements Serializable{
         this.pic_cnt = pic_cnt;
     }
 
-    public void setPicUrls(List<String> picUrls){
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public List<String> getPicUrls() {
+        return picUrls;
+    }
+
+    public void setPicUrls(List<String> picUrls) {
         this.picUrls = picUrls;
     }
 }

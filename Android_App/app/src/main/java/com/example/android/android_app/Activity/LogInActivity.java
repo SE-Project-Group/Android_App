@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.Verify;
 
 
 public class LogInActivity extends AppCompatActivity {
@@ -67,7 +68,7 @@ public class LogInActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer(new Verify(LogInActivity.this));
                 String result = requestServer.logInRequest(user_name, password);
                 Message message = new Message();
                 // if failed

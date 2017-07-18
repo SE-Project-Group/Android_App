@@ -163,7 +163,7 @@ public class NewFeedActivity extends AppCompatActivity {
                     break;
                 }
                 final String jsonString = generateJsonString();
-                final RequestServer requestServer = new RequestServer();
+                final RequestServer requestServer = new RequestServer(new Verify(NewFeedActivity.this));
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

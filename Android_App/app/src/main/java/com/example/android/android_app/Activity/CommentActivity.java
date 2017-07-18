@@ -75,7 +75,7 @@ public class CommentActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestServer requestServer = new RequestServer();
+                        RequestServer requestServer = new RequestServer(verify);
                         String result = requestServer.comment(comment, feed_id, 0); // 0 for comment feed
                     }
                 }).start();

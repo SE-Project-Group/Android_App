@@ -62,7 +62,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
                 Message message = new Message();
                 feeds = requestServer.getMyFeed();
                 if(feeds == null)
@@ -79,7 +79,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer();
+                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
                 userInfo = requestServer.getUserInfo(user_id);
                 Message message = new Message();
                 if(userInfo == null)

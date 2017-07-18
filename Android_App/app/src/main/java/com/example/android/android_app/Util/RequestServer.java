@@ -36,7 +36,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class RequestServer{
-    private String host = "http://106.15.188.135:8080/track/rest/app/";
+    private String host = "http://192.168.1.200:8080/track/rest/app/";
     private Handler handler;
     private int success_msg;
     private int fail_msg;
@@ -45,8 +45,6 @@ public class RequestServer{
 
     private String generatePreUrl(String resource){
         String sign = "";
-        if(verify == null)
-            verify = new Verify(resource, activityContext);
         String user_id = verify.getUser_id();
         if(user_id.equals("-1") && !resource.equals("feedAround"))
             return null;
@@ -69,7 +67,8 @@ public class RequestServer{
     }
 
     // constructor with no argument
-    public RequestServer(){
+    public RequestServer(Verify verify){
+        this.verify = verify;
     }
 
     // sign up
@@ -154,9 +153,9 @@ public class RequestServer{
     }
 
     public List<Feed> getHotFeed(){
-        String resource = "GetFeedFromTime";
+        String resource = "getFeedFromTime";
         String pre_url = generatePreUrl(resource);
-        String url = pre_url + "&time" + "2016-01-01";
+        String url = pre_url + "&time=" + "2016-01-01 10:00:00";
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -171,6 +170,8 @@ public class RequestServer{
             String responseData = response.body().string();
             Gson gson = new Gson();
             feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+            if(feedList.size() == 0)
+                return null;
         }catch (Exception e){
             e.printStackTrace();
             return null;

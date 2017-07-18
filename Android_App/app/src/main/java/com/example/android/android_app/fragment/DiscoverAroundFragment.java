@@ -201,7 +201,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
             ll_detail.setTag(viewHolder);
         }
         viewHolder = (ViewHolder) ll_detail.getTag();
-        viewHolder.owner.setText(feed.getFeed_owner());
+        viewHolder.owner.setText(feed.getOwner_name());
         viewHolder.date.setText(feed.getDate().toString());
         viewHolder.portrait.setImageResource(R.drawable.exp_pic);
         viewHolder.position.setText(feed.getPosition());
@@ -210,7 +210,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         viewHolder.share_btn.setText(String.valueOf(feed.getShare_cnt()));
         viewHolder.comment_btn.setText(String.valueOf(feed.getComment_cnt()));
         viewHolder.like_btn.setText(String.valueOf(feed.getLike_cnt()));
-        viewHolder._id = feed.get_id(); ////////////////////
+        viewHolder._id = feed.getFeed_id(); ////////////////////
 
         // bind listener
         viewHolder.like_btn.setOnClickListener(this);

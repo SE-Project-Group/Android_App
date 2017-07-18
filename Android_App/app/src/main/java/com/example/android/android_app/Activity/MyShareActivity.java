@@ -30,10 +30,10 @@ public class MyShareActivity extends AppCompatActivity {
     }
 
     private void initFeeds(){
-        Timestamp time = new Timestamp(System.currentTimeMillis());
+       /* Timestamp time = new Timestamp(System.currentTimeMillis());
         Feed exp = new Feed("","Root","Today is my birthday",time.toString(),0,0,0,1,R.drawable.exp_portrait);
         feedList.add(exp);
         feedList.add(exp);
-        feedList.add(exp);
+        feedList.add(exp);*/
     }
 }
