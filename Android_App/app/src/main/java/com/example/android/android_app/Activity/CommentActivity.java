@@ -34,17 +34,31 @@ public class CommentActivity extends AppCompatActivity {
     private String feed_id;
 
     private Verify verify;
-    private List<Comment> commentList;
+    private List<com.example.android.android_app.Model.Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+
         Intent intent = getIntent();
         feed_id = intent.getStringExtra("feed_id");
         if(verify == null)
             verify = new Verify(this);
+        //initComment();
         initView();
+    }
+
+    private void initComment(){
+        com.example.android.android_app.Model.Comment comment1 =
+                new com.example.android.android_app.Model.Comment(R.drawable.exp_pic,"wangtao","I love coding!!");
+        commentList.add(comment1);
+        commentList.add(comment1);
+        commentList.add(comment1);
+        commentList.add(comment1);
+        commentList.add(comment1);
+        commentList.add(comment1);
+        commentList.add(comment1);
     }
 
     private void initView() {
