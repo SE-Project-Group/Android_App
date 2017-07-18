@@ -22,7 +22,7 @@ import com.example.android.android_app.Util.Verify;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.android.android_app.R.id.comment_send;
+//import static com.example.android.android_app.R.id.comment_send;
 
 
 public class CommentActivity extends AppCompatActivity {
@@ -44,6 +44,7 @@ public class CommentActivity extends AppCompatActivity {
         feed_id = intent.getStringExtra("feed_id");
         if(verify == null)
             verify = new Verify(this);
+
         initComment();
         initView();
     }
@@ -69,7 +70,7 @@ public class CommentActivity extends AppCompatActivity {
 
         // inti bottom comment part
         comment_content = (EditText) findViewById(R.id.comment_content);
-        send_btn = (Button) findViewById(comment_send);
+        send_btn = (Button) findViewById(R.id.comment_send);
         rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
         setListener();
     }

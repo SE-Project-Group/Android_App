@@ -1,6 +1,6 @@
 package com.example.android.android_app.Adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
-    private Context context;
+    private Activity context;
     private List<Comment> commentList;
 
 
@@ -35,7 +35,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 
-    public CommentAdapter(List<Comment> commentList, Context context){
+    public CommentAdapter(List<Comment> commentList, Activity context){
         this.commentList = commentList;
         this.context = context;
     }
@@ -45,7 +45,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_comment,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
         return holder;
     }
 
@@ -59,6 +59,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 0;
+        return commentList.size();
     }
 }
