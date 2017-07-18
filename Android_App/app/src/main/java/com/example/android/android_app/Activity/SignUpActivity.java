@@ -16,11 +16,17 @@ import android.widget.Toast;
 
 import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.Verify;
+
+import static com.example.android.android_app.R.id.cancel_action;
+import static com.example.android.android_app.R.id.phone_num;
+import static com.example.android.android_app.R.id.sign_up_btn;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
-    private static final int SIGNUP_FAILED = 1;
-
+    private static final int EXIST_PHONE = 1;
+    private static final int EXIST_USER_NAME = 2;
+    private Button sign_up_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +35,90 @@ public class SignUpActivity extends AppCompatActivity {
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.signUpToolBar);
         setSupportActionBar(toolbar);
-        final Button sign_up_btn = (Button)findViewById(R.id.sign_up_btn);
+
+        setCheckListener();
+
+        // get form
+        EditText et_userName = (EditText) findViewById(R.id.et_userName);
+        EditText et_password = (EditText) findViewById(R.id.et_password);
+        EditText et_phone = (EditText) findViewById(R.id.et_phone);
+        EditText et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
+        
+        final String user_name_ed = et_userName.getText().toString();
+        final String password_ed = et_password.getText().toString();
+        final String phone_ed = et_phone.getText().toString();
+        final String password_confirm_ed = et_password_confirm.getText().toString();
+        
+        sign_up_btn = (Button) findViewById(R.id.sign_up_btn); 
+        
+        sign_up_btn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                if(phone_ed.equals("") || user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
+                    Toast.makeText(SignUpActivity.this, "表单信息有误", Toast.LENGTH_SHORT).show();
+                }else {
+                    // create a new Thread to send sign up request
+                    signUp(user_name_ed, password_ed, phone_ed);
+                }
+            }
+        });
+    }
+    
+    
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String token = "";
+            int user_id = 0;
+            switch (msg.what){
+                case SIGNUP_OK:
+                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                    // go back to home activity
+                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    break;
+                case EXIST_PHONE:
+                    Toast.makeText(SignUpActivity.this, "手机号已经被注册", Toast.LENGTH_SHORT).show();
+                    break;
+                case EXIST_USER_NAME:
+                    Toast.makeText(SignUpActivity.this, "用户名已存在", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    
+    private void signUp(final String name, final String pwd, final String phone){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer(new Verify(SignUpActivity.this));
+                String response_data = requestServer.signUp(name, pwd, phone);
+
+                Message message = new Message();
+                if(response_data.equals("existing phone"))
+                    message.what = EXIST_PHONE;
+                if(response_data.equals("existing user name"))
+                    message.what = EXIST_USER_NAME;
+                if(response_data.equals("success")) {
+                    message.what = SIGNUP_OK;
+
+                    handler.sendMessage(message);
+                }
+                
+            }
+        }).start();
+        
+        
+    }
+
+
+    // check the form
+    private void setCheckListener(){
 
         final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.phone_num);
         EditText phone_num = textInputLayout.getEditText();
-
         phone_num.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length()==0) {
@@ -308,45 +393,5 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-        EditText et_userName = (EditText) findViewById(R.id.et_userName);
-        EditText et_password = (EditText) findViewById(R.id.et_password);
-        EditText et_phone = (EditText) findViewById(R.id.et_phone);
-        EditText et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
-        final String user_name_ed = et_userName.getText().toString();
-        final String password_ed = et_password.getText().toString();
-        final String phone_ed = et_phone.getText().toString();
-        final String password_confirm_ed = et_password_confirm.getText().toString();
-        final RequestServer requestServer = new RequestServer(handler, SIGNUP_OK, SIGNUP_FAILED, this);
-        sign_up_btn.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                if(phone_ed.equals("") || user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
-                    Toast.makeText(SignUpActivity.this, "表单信息有误", Toast.LENGTH_SHORT).show();
-                }else {
-                    requestServer.signUp(user_name_ed, password_ed, phone_ed, password_confirm_ed);
-                }
-            }
-        });
     }
-
-
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String token = "";
-            int user_id = 0;
-            switch (msg.what){
-                case SIGNUP_OK:
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
-                    // go back to home activity
-                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
 }

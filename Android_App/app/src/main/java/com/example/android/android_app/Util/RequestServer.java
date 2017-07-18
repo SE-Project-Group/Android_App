@@ -29,6 +29,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.baidu.location.d.j.r;
 
 
 /**
@@ -78,7 +79,7 @@ public class RequestServer{
     }
 
     // sign up
-    public void signUp(String user_name,String password,String phone,String password_confirm){
+    public String signUp(String user_name,String password,String phone) {
         String resource = "clientSignup";
 
         JSONObject jsonObject = new JSONObject();
@@ -86,22 +87,14 @@ public class RequestServer{
             jsonObject.put("phone", phone);
             jsonObject.put("user_name", user_name);
             jsonObject.put("password", password);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         final String jsonString = jsonObject.toString();
-        final JsonSender sender = new JsonSender(jsonString, host+resource);
-        String response_data = sender.send();
-        if(response_data.equals("existing phone"))
-            Toast.makeText(activityContext, "手机号已经被注册", Toast.LENGTH_SHORT).show();
-        if(response_data.equals("existing user name"))
-            Toast.makeText(activityContext, "用户名已存在", Toast.LENGTH_SHORT).show();
-        if(response_data.equals("success")) {
-            Message message = new Message();
-            message.what = success_msg;
-            handler.sendMessage(message);
-        }
+        final JsonSender sender = new JsonSender(jsonString, host + resource);
+        return sender.send();
     }
+
 
     // log in
     public String logInRequest(String user_name,String password){
@@ -190,7 +183,7 @@ public class RequestServer{
 
     public List<Feed> getMyFeed(){
         String resource = "myFeed";
-        List<Feed> feedList = new ArrayList<>();
+        List<Feed> feedList;
         // check if loged in
         String url = generatePreUrl(resource, true);
 
@@ -209,9 +202,28 @@ public class RequestServer{
         return feedList;
     }
 
-/*    public List<Feed> getCircleFeed(){
-        String resource =
-    }*/
+    public List<Feed> getCircleFeed(){
+        String resource = "";
+        String url = generatePreUrl(resource, true);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        List<Feed> feedList;
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            String responseData = response.body().string();
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        }catch (Exception e){
+            e.printStackTrace();;
+            return null;
+        }
+        return feedList;
+    }
 
 
 
