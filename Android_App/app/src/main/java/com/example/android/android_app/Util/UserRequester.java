@@ -1,5 +1,6 @@
 package com.example.android.android_app.Util;
 
+import com.example.android.android_app.Application.MyApplication;
 import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.Model.UserInfo;
 import com.google.gson.Gson;
@@ -19,14 +20,10 @@ import okhttp3.Response;
  */
 
 public class UserRequester {
-    private final static String host = "http://192.168.217.1:8080/track/rest/app/";
-    private Verify verify;
+    private final static String host = "http://192.168.1.100:8080/track/rest/app/user/";
+    private Verify verify = new Verify();
 
     // constructor with no argument
-    public UserRequester(Verify verify){
-        this.verify = verify;
-    }
-
     public UserRequester(){}
 
     private String generatePreUrl(String resource, Boolean needLogIn){

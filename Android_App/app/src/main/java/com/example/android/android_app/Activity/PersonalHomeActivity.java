@@ -53,7 +53,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         user_id = intent.getIntExtra("user_id", 0);
         // check if myself
-        Verify verify = new Verify(PersonalHomeActivity.this);
+        Verify verify = new Verify();
         if (user_id == Integer.valueOf(verify.getUser_id()))
             ME = true;
 
@@ -82,7 +82,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FeedRequester requestServer = new FeedRequester(new Verify(PersonalHomeActivity.this));
+                FeedRequester requestServer = new FeedRequester();
                 Message message = new Message();
                 feeds = requestServer.loggedGetOnePersonFeeds(user_id);
                 if(feeds == null)

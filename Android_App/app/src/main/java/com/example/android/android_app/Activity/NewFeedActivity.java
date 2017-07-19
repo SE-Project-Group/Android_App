@@ -156,14 +156,14 @@ public class NewFeedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.send_btn:
-                Verify verify = new Verify(this);
+                Verify verify = new Verify();
                 // check log status
                 if(!verify.getLoged()){
                     Toast.makeText(NewFeedActivity.this, "not log in", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 final String jsonString = generateJsonString();
-                final FeedRequester requester = new FeedRequester(new Verify(NewFeedActivity.this));
+                final FeedRequester requester = new FeedRequester();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -205,7 +205,7 @@ public class NewFeedActivity extends AppCompatActivity {
             showLocation = false;
 
         //create json
-        Verify verify = new Verify(this);
+        Verify verify = new Verify();
         JSONObject jsonObject = new JSONObject();
         try{
             jsonObject.put("userId" ,verify.getUser_id());

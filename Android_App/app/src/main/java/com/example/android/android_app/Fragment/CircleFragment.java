@@ -59,14 +59,14 @@ public class CircleFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Verify verify = new Verify(getActivity());
+                Verify verify = new Verify();
                 if(!verify.getLoged()){
                     Message message = new Message();
                     message.what = NOT_LOG_IN;
                     handler.sendMessage(message);
                     return;
                 }
-                FeedRequester requester = new FeedRequester(new Verify(getActivity()));
+                FeedRequester requester = new FeedRequester();
                 feedList = requester.getCircleFeed();
                 Message message = new Message();
                 if(feedList == null)

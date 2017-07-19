@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 import com.baidu.platform.comapi.map.B;
+import com.example.android.android_app.Application.MyApplication;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -26,12 +27,11 @@ import static com.baidu.location.d.j.S;
  */
 
 public class Verify {
-    Activity context;
+    Context context = MyApplication.getContext();
     String prefix = "/track/rest/app/";
 
 
-    public Verify(Activity context){
-        this.context = context;
+    public Verify(){
     }
 
     public String generateSign(String resource) throws NoSuchAlgorithmException, UnsupportedEncodingException {

@@ -2,6 +2,7 @@ package com.example.android.android_app.Util;
 
 
 import com.baidu.location.BDLocation;
+import com.example.android.android_app.Application.MyApplication;
 import com.example.android.android_app.Model.Feed;
 
 import com.google.gson.Gson;
@@ -24,8 +25,8 @@ import okhttp3.Response;
  */
 
 public class FeedRequester{
-    private final static String host = "http://192.168.217.1:8080/track/rest/app/feed/";
-    private Verify verify;
+    private final static String host = "http://192.168.1.100:8080/track/rest/app/feed/";
+    private Verify verify = new Verify();
 
     private String generatePreUrl(String resource, Boolean needLogIn){
         String prefix_url;
@@ -49,10 +50,6 @@ public class FeedRequester{
 
 
     // constructor with no argument
-    public FeedRequester(Verify verify){
-        this.verify = verify;
-    }
-
     public FeedRequester(){
 
     }

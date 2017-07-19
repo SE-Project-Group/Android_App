@@ -137,7 +137,7 @@ public class LogedUserFragment extends Fragment{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        UserRequester requester = new UserRequester(new Verify(getActivity()));
+                        UserRequester requester = new UserRequester();
                         requester.logOut();
                     }
                 }).start();

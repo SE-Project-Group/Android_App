@@ -63,7 +63,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     public FeedAdapter(Activity context, List<Feed> feedList){
         this.context = context;
         mFeedList = feedList;
-        requester = new FeedRequester(new Verify(context));
+        requester = new FeedRequester();
     }
 
     private void toHomePage(int user_id){

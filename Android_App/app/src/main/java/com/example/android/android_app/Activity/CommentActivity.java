@@ -43,7 +43,7 @@ public class CommentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         feed_id = intent.getStringExtra("feed_id");
         if(verify == null)
-            verify = new Verify(this);
+            verify = new Verify();
 
         initComment();
         initView();
@@ -53,7 +53,7 @@ public class CommentActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FeedRequester requester = new FeedRequester(new Verify(CommentActivity.this));
+                FeedRequester requester = new FeedRequester();
             }
         }).start();
     }
@@ -86,7 +86,7 @@ public class CommentActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        FeedRequester requester = new FeedRequester(new Verify(CommentActivity.this));
+                        FeedRequester requester = new FeedRequester();
                         String result = requester.comment(comment, feed_id, 0); // 0 for comment feed
                     }
                 }).start();

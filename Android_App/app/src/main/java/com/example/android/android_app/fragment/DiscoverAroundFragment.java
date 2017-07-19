@@ -78,10 +78,10 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        Verify verify = new Verify(getActivity());
+        Verify verify = new Verify();
         if(verify.getLoged()) {
             loggedIn = true;
-            requester = new FeedRequester(verify);
+            requester = new FeedRequester();
         }
         else {  // not log in , can not use like comment and share button
             requester = new FeedRequester();
