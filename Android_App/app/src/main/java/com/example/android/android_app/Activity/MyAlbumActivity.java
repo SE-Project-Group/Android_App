@@ -39,7 +39,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                feedList = requestServer.getMyFeed();
+                //feedList = requestServer.getMyFeed();
                 // send message to main thread
                 Message msg = new Message();
                 msg.what = GET_MY_FEED_OK;
@@ -53,7 +53,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case GET_MY_FEED_OK:
-                    recyclerView.setAdapter(new FeedAdapter(getApplicationContext(), feedList));
+                    recyclerView.setAdapter(new FeedAdapter(MyAlbumActivity.this, feedList));
                     break;
                 case GET_MY_FEED_FAILED:
                     break;

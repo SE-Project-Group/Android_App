@@ -28,7 +28,7 @@ import okhttp3.Response;
  */
 
 public class RequestServer{
-    private String host = "http://192.168.1.200:8080/track/rest/app/";
+    private String host = "http://106.15.188.135:8080/track/rest/app/";
     private Verify verify;
 
     private String generatePreUrl(String resource, Boolean needLogIn){
@@ -207,7 +207,7 @@ public class RequestServer{
 
 
     public List<Feed> getCircleFeed(){
-        String resource = "";
+        String resource = "getFollowingFeedList";
         String url = generatePreUrl(resource, true);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -341,14 +341,14 @@ public class RequestServer{
     }
 
     public UserInfo getUserInfo(int user_id){
-        String resource = "queryPersonalInfo";
+        String resource = "getInfo";
         String pre_url = generatePreUrl(resource, false);
         if(pre_url == null){
             return null;
         }
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(pre_url)
+                .url(pre_url + "?user_id="+ user_id)
                 .build();
 
         String responseData = "";

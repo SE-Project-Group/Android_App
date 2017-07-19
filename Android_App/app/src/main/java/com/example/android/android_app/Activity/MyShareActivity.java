@@ -25,7 +25,7 @@ public class MyShareActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_share_View);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(getApplicationContext(), feedList);
+        FeedAdapter adapter = new FeedAdapter(MyShareActivity.this, feedList);
         recyclerView.setAdapter(adapter);
     }
 

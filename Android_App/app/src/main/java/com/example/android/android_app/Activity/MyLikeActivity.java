@@ -26,7 +26,7 @@ public class MyLikeActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_like_View);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(getApplicationContext(),feedList);
+        FeedAdapter adapter = new FeedAdapter(MyLikeActivity.this,feedList);
         recyclerView.setAdapter(adapter);
     }
 

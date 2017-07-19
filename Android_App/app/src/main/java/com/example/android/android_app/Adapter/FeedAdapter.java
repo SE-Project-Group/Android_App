@@ -3,6 +3,7 @@ package com.example.android.android_app.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.List;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private List<Feed> mFeedList;
     private Activity context;
+    private Verify verify;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
@@ -59,7 +61,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         }
     }
 
-    public FeedAdapter(Context context, List<Feed> feedList){
+    public FeedAdapter(Activity context, List<Feed> feedList){
+        this.context = context;
         mFeedList = feedList;
     }
 

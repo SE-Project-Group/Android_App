@@ -31,6 +31,7 @@ import com.example.android.android_app.Util.Verify;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.android_app.R.id.recyclerView;
 
 
 /**
@@ -39,7 +40,10 @@ import java.util.List;
 
 public class DiscoverFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
+
+
     private final static int GET_FEED_OK = 0;
     private final static int GET_FEED_FAILED = 1;
     @Nullable
@@ -103,7 +107,7 @@ public class DiscoverFragment extends Fragment {
 
     // use feedlist to initialize recycleView
     private void initRecycleView(){
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         FeedAdapter adapter = new FeedAdapter(getActivity(), feedList);
