@@ -27,8 +27,8 @@ import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.Activity.UserInfoActivity;
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.UserRequester;
 import com.example.android.android_app.Util.Verify;
 
 
@@ -137,8 +137,8 @@ public class LogedUserFragment extends Fragment{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestServer requestServer = new RequestServer(new Verify(getActivity()));
-                        requestServer.logOut();
+                        UserRequester requester = new UserRequester(new Verify(getActivity()));
+                        requester.logOut();
                     }
                 }).start();
 

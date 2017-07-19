@@ -28,10 +28,10 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.android_app.Util.BottomPopView;
+import com.example.android.android_app.Util.FeedRequester;
 import com.example.android.android_app.Util.ImageUriParser;
 import com.example.android.android_app.Util.OssInit;
 import com.example.android.android_app.Util.OssService;
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Util.Verify;
 import com.example.android.android_app.R;
 
@@ -163,11 +163,11 @@ public class NewFeedActivity extends AppCompatActivity {
                     break;
                 }
                 final String jsonString = generateJsonString();
-                final RequestServer requestServer = new RequestServer(new Verify(NewFeedActivity.this));
+                final FeedRequester requester = new FeedRequester(new Verify(NewFeedActivity.this));
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String result = requestServer.newFeed(jsonString);
+                        String result = requester.newFeed(jsonString);
                         Message message = new Message();
                         if(result.equals("failed"))
                             message.what = UPLOAD_FAILED;

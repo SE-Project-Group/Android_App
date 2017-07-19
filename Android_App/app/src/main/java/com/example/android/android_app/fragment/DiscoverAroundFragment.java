@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
@@ -30,19 +31,17 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.FeedRequester;
 import com.example.android.android_app.Util.Verify;
 
 import java.util.List;
 
 
 import static com.example.android.android_app.R.id.feed_owner;
-import static com.example.android.android_app.R.id.hot_btn;
 import static com.example.android.android_app.R.id.position;
-import static com.example.android.android_app.R.id.recyclerView;
 
 /**
  * Created by thor on 2017/6/29.
@@ -60,7 +59,9 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
     private static final int LIKE_OK = 2;
     private static final int LIKE_FAILED = 3;
 
-    RequestServer requestServer;
+    private boolean loggedIn = false;
+
+    FeedRequester requester;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,8 +78,14 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        requestServer = new RequestServer(new Verify(getActivity()));
-
+        Verify verify = new Verify(getActivity());
+        if(verify.getLoged()) {
+            loggedIn = true;
+            requester = new FeedRequester(verify);
+        }
+        else {  // not log in , can not use like comment and share button
+            requester = new FeedRequester();
+        }
         // set top select button listener
         Button hot_btn = (Button) getActivity().findViewById(R.id.hot_btn);
         hot_btn.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +142,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        feedList = requestServer.getAround(location);
+                        feedList = requester.getAround(location);
                         Message msg = new Message();
                         if(feedList == null)
                             msg.what = GET_AROUND_FAILED;
@@ -260,14 +267,26 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         final ViewHolder viewHolder = (ViewHolder) ll_detail.getTag();
         switch (v.getId()){
             case R.id.share_btn:
+                if(!loggedIn){
+                    Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
             case R.id.comment_btn:
+                if(!loggedIn){
+                    Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 break;
             case R.id.like_btn:
+                if(!loggedIn){
+                    Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        requestServer.like(viewHolder._id);
+                        requester.like(viewHolder._id);
                     }
                 }).start();
                 break;

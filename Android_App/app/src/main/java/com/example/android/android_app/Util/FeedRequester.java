@@ -1,20 +1,16 @@
 package com.example.android.android_app.Util;
 
-import android.app.Activity;
-
-import android.os.Handler;
 
 import com.baidu.location.BDLocation;
 import com.example.android.android_app.Model.Feed;
-import com.example.android.android_app.Model.Follow;
-import com.example.android.android_app.Model.UserInfo;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +23,8 @@ import okhttp3.Response;
  * Created by thor on 2017/7/5.
  */
 
-public class RequestServer{
-    private String host = "http://106.15.188.135:8080/track/rest/app/";
+public class FeedRequester{
+    private final static String host = "http://192.168.1.13:8088/track/rest/app/feed";
     private Verify verify;
 
     private String generatePreUrl(String resource, Boolean needLogIn){
@@ -53,58 +49,17 @@ public class RequestServer{
 
 
     // constructor with no argument
-    public RequestServer(Verify verify){
+    public FeedRequester(Verify verify){
         this.verify = verify;
     }
 
-    // sign up
-    public String signUp(String user_name,String password,String phone) {
-        String resource = "clientSignup";
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("phone", phone);
-            jsonObject.put("user_name", user_name);
-            jsonObject.put("password", password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        final String jsonString = jsonObject.toString();
-        final JsonSender sender = new JsonSender(jsonString, host + resource);
-        return sender.send();
-    }
-
-
-    // log in
-    public String logInRequest(String user_name,String password){
-        String resource = "clientLogin";
-        // create url
-        String url = host + resource;
-        url = url + "?user_name="+user_name+"&password="+password ;
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url).build();
-
-        String token ="";
-        int user_id = 0;
-        try{
-            Response response = client.newCall(request).execute();
-            String responseData = response.body().string();
-            JSONObject jsonObject = new JSONObject(responseData);
-            token = jsonObject.getString("token");
-            user_id = jsonObject.getInt("userId");
-            //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            e.printStackTrace();
-            return "failed";
-        }
-        verify.storeToken(token, user_id);
-        return "success";
+    public FeedRequester(){
 
     }
 
 
+
+    // get aroud feed and show on map
     public List<Feed> getAround(BDLocation location){
         String resource = "feedAround";
         String pre_url = generatePreUrl(resource, true);
@@ -129,6 +84,7 @@ public class RequestServer{
         }
         return feedList;
     }
+
 
     public List<Feed> getHotFeed(){
         String resource = "getFeedFromTime";
@@ -242,47 +198,6 @@ public class RequestServer{
 
 
 
-    // new begin
-
-    public String like(String feed_id){
-        String resource = "incLikeFeed";
-        // check if loged in
-        String url = generatePreUrl(resource, true);
-        // create json
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("_id", feed_id);
-            jsonObject.put("user_id", verify.getUser_id());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        String response = sender.send();
-        return response;
-    }
-
-
-
-    public String comment(String text, String feed_id, int reply_id){
-        String resource = "newComment";
-        // check if loged in
-        String url = generatePreUrl(resource, true);
-        // create json
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("_id", feed_id);
-            jsonObject.put("user_id", verify.getUser_id());
-            jsonObject.put("text", text);
-            jsonObject.put("reply_id", reply_id);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        String response = sender.send();
-        return response;
-    }
-
-
     public List<Feed> publicPolling(Date last_update_time){
         String resource = "";
         String pre_url = generatePreUrl(resource, false);
@@ -311,78 +226,11 @@ public class RequestServer{
         return null;
     }
 
+
     public List<Feed> friendPolling(Date last_update_time){
         return null;
     }
 
-    public void logOut(){
-        String resource = "clientLogout";
-
-        String pre_url = generatePreUrl(resource, true);
-        if(pre_url == null){
-            return;
-        }
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(pre_url)
-                .build();
-        String responseData = "";
-        try{
-            Response response = client.newCall(request).execute();
-            if(!response.isSuccessful()){
-                return;
-            }
-
-            responseData = response.body().string();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public UserInfo getUserInfo(int user_id){
-        String resource = "getInfo";
-        String pre_url = generatePreUrl(resource, false);
-        if(pre_url == null){
-            return null;
-        }
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(pre_url + "?user_id="+ user_id)
-                .build();
-
-        String responseData = "";
-        try{
-            Response response = client.newCall(request).execute();
-            if(!response.isSuccessful())
-                return null;
-            responseData  = response.body().string();
-            if(responseData.equals("failed"))
-                return null;
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        Gson gson = new Gson();
-        UserInfo result = gson.fromJson(responseData, new TypeToken<UserInfo>(){}.getType());
-
-        return result;
-    }
-
-    public String modifyUserInfo(String jsonStr){
-        String resource =  "modifyPersonalInfo";
-        String pre_url = generatePreUrl(resource, true);
-        if(pre_url == null){
-            return null;
-        }
-        JsonSender sender = new JsonSender(jsonStr, pre_url);
-        String response = sender.send();
-        if(response.equals("success")){
-            return "success";
-        }
-        else
-            return "failed";
-    }
 
     public String removeFeed(String feed_id){
         String resource = "removeFeed";
@@ -412,41 +260,48 @@ public class RequestServer{
             return "failed";
     }
 
-    public List<Follow> getFollowing(int user) {
-        String resource = "getFollowing";
-        String pre_url = generatePreUrl(resource, true);
-        if (pre_url == null)
-            return null;
 
-        // build request
-        String url = pre_url + "&user=" + String.valueOf(user);
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        // get response
-        String responseData = "";
+    // like
+    public String like(String feed_id){
+        String resource = "incLikeFeed";
+        // check if loged in
+        String url = generatePreUrl(resource, true);
+        // create json
+        JSONObject jsonObject = new JSONObject();
         try {
-            Response response = client.newCall(request).execute();
-            if (!response.isSuccessful()) {
-                return null;
-            }
-            responseData = response.body().string();
-        } catch (IOException e) {
+            jsonObject.put("_id", feed_id);
+            jsonObject.put("user_id", verify.getUser_id());
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-        // handle response
-        Gson gson = new Gson();
-        List<Follow> followings = gson.fromJson(responseData, new TypeToken<List<Follow>>() {}.getType());
-
-        return followings;
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        String response = sender.send();
+        return response;
     }
 
-    public List<Follow> getFollower(int user){
-        // just as same as getFollowing
-        return null;
+
+    // comment
+    public String comment(String text, String feed_id, int reply_id){
+        String resource = "newComment";
+        // check if loged in
+        String url = generatePreUrl(resource, true);
+        // create json
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("_id", feed_id);
+            jsonObject.put("user_id", verify.getUser_id());
+            jsonObject.put("text", text);
+            jsonObject.put("reply_id", reply_id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        String response = sender.send();
+        return response;
     }
+
+
+
+
 
 }

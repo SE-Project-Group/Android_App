@@ -17,7 +17,7 @@ import com.example.android.android_app.Activity.CommentActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
-import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.FeedRequester;
 import com.example.android.android_app.Util.Verify;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
@@ -32,7 +32,7 @@ import java.util.List;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private List<Feed> mFeedList;
     private Activity context;
-    private Verify verify;
+    private FeedRequester requester;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView portrait_view;
@@ -63,6 +63,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     public FeedAdapter(Activity context, List<Feed> feedList){
         this.context = context;
         mFeedList = feedList;
+        requester = new FeedRequester(new Verify(context));
     }
 
     private void toHomePage(int user_id){
@@ -176,8 +177,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(context));
-                String response = requestServer.like(feed_id);
+                String response = requester.like(feed_id);
             }
         }).start();
     }

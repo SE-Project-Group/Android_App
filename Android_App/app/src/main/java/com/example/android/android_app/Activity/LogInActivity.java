@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.UserRequester;
 import com.example.android.android_app.Util.Verify;
 
 
@@ -68,8 +68,8 @@ public class LogInActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(LogInActivity.this));
-                String result = requestServer.logInRequest(user_name, password);
+                UserRequester requester = new UserRequester();
+                String result = requester.logInRequest(user_name, password);
                 Message message = new Message();
                 // if failed
                 if(result.equals("ERROR"))

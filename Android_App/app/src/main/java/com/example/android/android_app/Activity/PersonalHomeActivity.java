@@ -11,25 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.baidu.mapapi.map.Text;
-import com.baidu.platform.comapi.map.B;
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Model.UserInfo;
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.FeedRequester;
+import com.example.android.android_app.Util.UserRequester;
 import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.baidu.location.d.j.v;
-import static com.example.android.android_app.R.drawable.like;
 
 public class PersonalHomeActivity extends AppCompatActivity {
+
     private List<Feed> feeds = new ArrayList<>();
     private final static int GET_FEEDS_OK = 1;
     private final static int GET_FEEDS_FAILED = 2;
@@ -86,7 +82,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
+                FeedRequester requestServer = new FeedRequester(new Verify(PersonalHomeActivity.this));
                 Message message = new Message();
                 feeds = requestServer.loggedGetOnePersonFeeds(user_id);
                 if(feeds == null)
@@ -104,9 +100,9 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
+                FeedRequester requester = new FeedRequester();
                 Message message = new Message();
-                feeds = requestServer.unLoggedGetOnePersonFeeds(user_id);
+                feeds = requester.unLoggedGetOnePersonFeeds(user_id);
                 if(feeds == null)
                     message.what = GET_FEEDS_FAILED;
                 else
@@ -121,8 +117,8 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
-                userInfo = requestServer.getUserInfo(user_id);
+                UserRequester requester = new UserRequester();
+                userInfo = requester.getUserInfo(user_id);
                 Message message = new Message();
                 if(userInfo == null)
                     message.what = GET_INFO_FAILED;

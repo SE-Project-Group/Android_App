@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.android.android_app.Adapter.FeedAdapter;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
-import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.FeedRequester;
 import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
@@ -66,8 +66,8 @@ public class CircleFragment extends Fragment {
                     handler.sendMessage(message);
                     return;
                 }
-                RequestServer requestServer = new RequestServer(new Verify(getActivity()));
-                feedList = requestServer.getCircleFeed();
+                FeedRequester requester = new FeedRequester(new Verify(getActivity()));
+                feedList = requester.getCircleFeed();
                 Message message = new Message();
                 if(feedList == null)
                     message.what = GET_FEED_FAILED;

@@ -14,13 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.UserRequester;
 import com.example.android.android_app.Util.Verify;
 
-import static com.example.android.android_app.R.id.cancel_action;
-import static com.example.android.android_app.R.id.phone_num;
-import static com.example.android.android_app.R.id.sign_up_btn;
+
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
@@ -93,8 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(SignUpActivity.this));
-                String response_data = requestServer.signUp(name, pwd, phone);
+                UserRequester requester = new UserRequester();
+                String response_data = requester.signUp(name, pwd, phone);
 
                 Message message = new Message();
                 if(response_data.equals("existing phone"))

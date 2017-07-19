@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.android.android_app.Adapter.CommentAdapter;
 import com.example.android.android_app.Model.Comment;
 import com.example.android.android_app.R;
-import com.example.android.android_app.Util.RequestServer;
+import com.example.android.android_app.Util.FeedRequester;
 import com.example.android.android_app.Util.Verify;
 
 
@@ -53,7 +53,7 @@ public class CommentActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                RequestServer requestServer = new RequestServer(new Verify(CommentActivity.this));
+                FeedRequester requester = new FeedRequester(new Verify(CommentActivity.this));
             }
         }).start();
     }
@@ -86,8 +86,8 @@ public class CommentActivity extends AppCompatActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestServer requestServer = new RequestServer(verify);
-                        String result = requestServer.comment(comment, feed_id, 0); // 0 for comment feed
+                        FeedRequester requester = new FeedRequester(new Verify(CommentActivity.this));
+                        String result = requester.comment(comment, feed_id, 0); // 0 for comment feed
                     }
                 }).start();
             }
