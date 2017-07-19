@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/userInfo_root">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,12 +18,18 @@
         android:background="@drawable/layout_style"
         android:orientation="vertical"
         android:paddingBottom="20dp">
+
+        <!--portrait -->
+
         <ImageView
+            android:id="@+id/portrait_view"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/exp_pic"/>
+
+
         <LinearLayout
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -26,6 +41,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:orientation="vertical">
+
+        <!--user name-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +67,8 @@
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
+            <!-- gender -->
             <LinearLayout
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
@@ -60,19 +79,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/personal_setting_sex"/>
-                <RadioButton
-                    android:layout_marginLeft="10dp"
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="男"
-                    android:textSize="17dp" />
-                <RadioButton
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="女"
-                    android:textSize="17dp"/>
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="男"
+                        android:textSize="17dp" />
+                    <RadioButton
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="女"
+                        android:textSize="17dp"/>
+                </RadioGroup>
             </LinearLayout>
+
+            <!--birthday-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,67 +109,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/personal_setting_birthday"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/birthday_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Spinner
-                            android:id="@+id/year"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-                        <TextView
-                            android:layout_marginTop="3dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="年"
-                            android:textSize="17dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Spinner
-                            android:id="@+id/month"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_marginTop="3dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="月"
-                            android:textSize="17dp"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <Spinner
-                            android:id="@+id/day"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_marginTop="3dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="日"
-                            android:textSize="17dp"/>
-                    </LinearLayout>
-                </LinearLayout>
+                    android:text="默认日期"/>
+                <Button
+                    android:id="@+id/edit_birthday_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="edit"/>
             </LinearLayout>
+
+
+
+
         </LinearLayout>
     </LinearLayout>
-
-
-
 </LinearLayout>

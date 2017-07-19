@@ -27,9 +27,9 @@ import com.example.android.android_app.Activity.MyShareActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.Activity.UserInfoActivity;
+import com.example.android.android_app.Model.UserInfo;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.UserRequester;
-import com.example.android.android_app.Util.Verify;
 
 
 /**
@@ -56,6 +56,11 @@ public class LogedUserFragment extends Fragment{
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.logedUserToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        setClickListener();
+    }
+
+
+    private void setClickListener(){
         // setting button
         LinearLayout setting_btn = (LinearLayout) getActivity().findViewById(R.id.setting_btn);
         setting_btn.setOnClickListener(new View.OnClickListener() {
@@ -76,41 +81,7 @@ public class LogedUserFragment extends Fragment{
             }
         });
 
-        LinearLayout myFollowing = (LinearLayout) getActivity().findViewById(R.id.my_following_layout);
-        myFollowing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FollowingActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        LinearLayout myFollower = (LinearLayout) getActivity().findViewById(R.id.my_follower_layout);
-        myFollower.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FollowerActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageButton personal_setting = (ImageButton) getActivity().findViewById(R.id.personal_setting);
-        personal_setting.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(),UserInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        LinearLayout my_feeds = (LinearLayout) getActivity().findViewById(R.id.my_feed_layout);
-        my_feeds.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getActivity(),PersonalHomeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         LinearLayout my_like = (LinearLayout) getActivity().findViewById(R.id.my_like_btn);
         my_like.setOnClickListener(new View.OnClickListener(){
@@ -142,12 +113,20 @@ public class LogedUserFragment extends Fragment{
                     }
                 }).start();
 
-
-
             }
         });
 
+        LinearLayout edit_info_btn = (LinearLayout) getActivity().findViewById(R.id.edit_info_btn);
+        edit_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     private Handler handler = new Handler(){
         @Override
