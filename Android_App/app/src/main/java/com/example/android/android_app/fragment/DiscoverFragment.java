@@ -106,7 +106,7 @@ public class DiscoverFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(getContext(), feedList);
+        FeedAdapter adapter = new FeedAdapter(getActivity(), feedList);
         recyclerView.setAdapter(adapter);
     }
 

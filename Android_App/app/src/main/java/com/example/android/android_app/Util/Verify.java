@@ -27,19 +27,14 @@ import static com.baidu.location.d.j.S;
 
 public class Verify {
     Activity context;
-    String resource;
-    String prefix = "track/rest/app/";
+    String prefix = "/track/rest/app/";
 
-    public Verify(String resource, Activity context) {
-        this.resource = resource;
-        this.context = context;
-    }
 
     public Verify(Activity context){
         this.context = context;
     }
 
-    public String generateSign() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public String generateSign(String resource) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String token = getToken();
         if(token.equals(""))
             return "";

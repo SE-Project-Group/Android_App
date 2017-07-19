@@ -29,7 +29,7 @@ import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.Activity.UserInfoActivity;
 import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.R;
-
+import com.example.android.android_app.Util.Verify;
 
 
 /**
@@ -137,7 +137,7 @@ public class LogedUserFragment extends Fragment{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        RequestServer requestServer = new RequestServer(handler,LOG_OU_OK,LOG_OUT_FAILED, getActivity());
+                        RequestServer requestServer = new RequestServer(new Verify(getActivity()));
                         requestServer.logOut();
                     }
                 }).start();

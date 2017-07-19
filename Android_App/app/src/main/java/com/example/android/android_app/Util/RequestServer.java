@@ -1,18 +1,13 @@
 package com.example.android.android_app.Util;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.os.Bundle;
+
 import android.os.Handler;
-import android.os.Message;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.Model.UserInfo;
-import com.example.android.android_app.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -20,16 +15,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.baidu.location.d.j.r;
 
 
 /**
@@ -38,10 +29,6 @@ import static com.baidu.location.d.j.r;
 
 public class RequestServer{
     private String host = "http://192.168.1.200:8080/track/rest/app/";
-    private Handler handler;
-    private int success_msg;
-    private int fail_msg;
-    private Activity activityContext;
     private Verify verify;
 
     private String generatePreUrl(String resource, Boolean needLogIn){
@@ -49,10 +36,8 @@ public class RequestServer{
         if(needLogIn) {
             String sign = "";
             String user_id = verify.getUser_id();
-            if (user_id.equals("-1") && !resource.equals("feedAround"))
-                return null;
             try {
-                sign = verify.generateSign();
+                sign = verify.generateSign(resource);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,13 +50,7 @@ public class RequestServer{
         return prefix_url;
     }
 
-    // constructor
-    public RequestServer(Handler handler, int success_msg,int fail_msg, Activity activityContext) {
-        this.handler = handler;
-        this.success_msg = success_msg;
-        this.fail_msg = fail_msg;
-        this.activityContext = activityContext;
-    }
+
 
     // constructor with no argument
     public RequestServer(Verify verify){
@@ -181,12 +160,13 @@ public class RequestServer{
     }
 
 
-    public List<Feed> getMyFeed(){
-        String resource = "myFeed";
+    // need log in
+    public List<Feed> loggedGetOnePersonFeeds(int who){
+        String resource = "getFeedsLoggedIn";
         List<Feed> feedList;
-        // check if loged in
-        String url = generatePreUrl(resource, true);
+        String pre_url = generatePreUrl(resource, true);
 
+        String url = pre_url + "&who=" + who;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url).build();
@@ -201,6 +181,30 @@ public class RequestServer{
         }
         return feedList;
     }
+
+
+    // do not need log in
+    public List<Feed> unLoggedGetOnePersonFeeds(int who){
+        String resource = "getFeedsNotLoggedIn";
+        List<Feed> feedList;
+        String pre_url = generatePreUrl(resource, false);
+
+        String url = pre_url + "?who=" + who;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url).build();
+        try {
+            Response response = client.newCall(request).execute();
+            String responseData = response.body().string();
+            Gson gson = new Gson();
+            feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return feedList;
+    }
+
 
     public List<Feed> getCircleFeed(){
         String resource = "";
@@ -248,7 +252,7 @@ public class RequestServer{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("_id", feed_id);
-            jsonObject.put("user_id", new Verify(resource, activityContext).getUser_id());
+            jsonObject.put("user_id", verify.getUser_id());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -267,7 +271,7 @@ public class RequestServer{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("_id", feed_id);
-            jsonObject.put("user_id", new Verify(resource, activityContext).getUser_id());
+            jsonObject.put("user_id", verify.getUser_id());
             jsonObject.put("text", text);
             jsonObject.put("reply_id", reply_id);
         }catch (Exception e){

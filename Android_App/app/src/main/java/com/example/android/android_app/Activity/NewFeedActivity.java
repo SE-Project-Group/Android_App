@@ -72,7 +72,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final String FRIEND = "friend";
     private static final String PRIVATE = "private";
     private static final int UPLOAD_OK = 3;
-    private static final int UPLOAD_FAILED = 4;
+    private static final int UPLOAD_FAILED = 6;
     private static final int UPLOAD_PIC_OK = 5;
 
     // used to upload picture
@@ -373,6 +373,9 @@ public class NewFeedActivity extends AppCompatActivity {
                     }
                     upload_pic(bundle.getString("feed_id"));
                     //upload_pic("asdfasdgasdfasdfasd");
+                    break;
+                case UPLOAD_FAILED:
+                    Toast.makeText(NewFeedActivity.this, "failed", Toast.LENGTH_SHORT).show();
                     break;
                 case LOCATE_OK:
                     TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);

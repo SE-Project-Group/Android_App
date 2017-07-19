@@ -34,12 +34,15 @@ import com.example.android.android_app.Util.RequestServer;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.R;
+import com.example.android.android_app.Util.Verify;
 
 import java.util.List;
 
 
 import static com.example.android.android_app.R.id.feed_owner;
+import static com.example.android.android_app.R.id.hot_btn;
 import static com.example.android.android_app.R.id.position;
+import static com.example.android.android_app.R.id.recyclerView;
 
 /**
  * Created by thor on 2017/6/29.
@@ -56,6 +59,8 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
     private LinearLayout ll_detail;
     private static final int LIKE_OK = 2;
     private static final int LIKE_FAILED = 3;
+
+    RequestServer requestServer;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
         // set toolBar
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        requestServer = new RequestServer(new Verify(getActivity()));
 
         // set top select button listener
         Button hot_btn = (Button) getActivity().findViewById(R.id.hot_btn);
@@ -125,7 +132,6 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
                 update = MapStatusUpdateFactory.zoomTo(19f);
                 baiduMap.animateMapStatus(update);
 
-                final RequestServer requestServer = new RequestServer( handler, GET_AROUND_OK, GET_AROUND_FAILED, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -258,7 +264,6 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
             case R.id.comment_btn:
                 break;
             case R.id.like_btn:
-                final RequestServer requestServer = new RequestServer(handler, LIKE_OK, LIKE_FAILED, getActivity());
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

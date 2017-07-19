@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.map.Text;
+import com.baidu.platform.comapi.map.B;
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
@@ -24,6 +25,7 @@ import com.example.android.android_app.Util.Verify;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baidu.location.d.j.v;
 import static com.example.android.android_app.R.drawable.like;
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -36,6 +38,8 @@ public class PersonalHomeActivity extends AppCompatActivity {
     private UserInfo userInfo;
     private RecyclerView recyclerView;
     private int user_id;
+
+    private Boolean ME = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +55,57 @@ public class PersonalHomeActivity extends AppCompatActivity {
         // get who's home
         Intent intent = getIntent();
         user_id = intent.getIntExtra("user_id", 0);
+        // check if myself
+        Verify verify = new Verify(PersonalHomeActivity.this);
+        if (user_id == Integer.valueOf(verify.getUser_id()))
+            ME = true;
+
+
         getUserInfo();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        getFeeds();
+        // decide which interface to user depend on my identification now
+        // not me
+        if(!ME){
+            if (verify.getLoged())
+                logedGetOthersFeeds();
+            else
+                unLogedGetOthersFeeds();
+        }
+        // it's me
+        else{
+            logedGetOthersFeeds();       // all of my feed
+        }
+
 
     }
 
-    private void getFeeds(){
+    // need verify
+    private void logedGetOthersFeeds(){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
                 Message message = new Message();
-                feeds = requestServer.getMyFeed();
+                feeds = requestServer.loggedGetOnePersonFeeds(user_id);
+                if(feeds == null)
+                    message.what = GET_FEEDS_FAILED;
+                else
+                    message.what = GET_FEEDS_OK;
+                handler.sendMessage(message);
+
+            }
+        }).start();
+    }
+
+
+    private void unLogedGetOthersFeeds(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer(new Verify(PersonalHomeActivity.this));
+                Message message = new Message();
+                feeds = requestServer.unLoggedGetOnePersonFeeds(user_id);
                 if(feeds == null)
                     message.what = GET_FEEDS_FAILED;
                 else
