@@ -39,7 +39,7 @@ public class MyAlbumActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                feedList = requestServer.getMyFeed();
+                //feedList = requestServer.getMyFeed();
                 // send message to main thread
                 Message msg = new Message();
                 msg.what = GET_MY_FEED_OK;
