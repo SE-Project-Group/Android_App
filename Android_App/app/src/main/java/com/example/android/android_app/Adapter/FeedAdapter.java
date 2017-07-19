@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Activity.CommentActivity;
-import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.R;
@@ -69,7 +68,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private void toHomePage(int user_id){
         // navigate to other user's home page
         Intent intent = new Intent(context, PersonalHomeActivity.class);
-        intent.putExtra("user_id", user_id);
+        intent.putExtra("user_ud", user_id);
         context.startActivity(intent);
     }
 
@@ -179,9 +178,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void run() {
                 RequestServer requestServer = new RequestServer(new Verify(context));
                 String response = requestServer.like(feed_id);
-                if(response.equals("success")){
-
-                }
             }
         }).start();
     }

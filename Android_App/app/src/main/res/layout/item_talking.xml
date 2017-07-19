@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <!-- send -->
+    <LinearLayout
+        android:id="@+id/send_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_talking_send"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_gravity="right">
+        <TextView
+            android:id="@+id/talking_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I am talking!"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <!-- receive -->
+    <LinearLayout
+        android:id="@+id/receive_layout"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_talking_receive"
+        android:layout_gravity="left">
+        <TextView
+            android:id="@+id/talking_receive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I am talking too!"
+            android:textSize="15dp"/>
+    </LinearLayout>
+</LinearLayout>
