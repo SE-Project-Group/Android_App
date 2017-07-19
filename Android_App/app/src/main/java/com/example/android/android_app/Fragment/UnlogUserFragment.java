@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import com.example.android.android_app.Activity.AlbumActivity;
 import com.example.android.android_app.Activity.CommentActivity;
 import com.example.android.android_app.Activity.LogInActivity;
+import com.example.android.android_app.Activity.TalkingActivity;
+import com.example.android.android_app.Model.Talking;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Activity.SettingActivity;
 
@@ -59,7 +61,7 @@ public class UnlogUserFragment extends Fragment {
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                Intent intent = new Intent(getActivity(), TalkingActivity.class);
                 startActivity(intent);
             }
         });
