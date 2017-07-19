@@ -50,14 +50,12 @@ public class CommentActivity extends AppCompatActivity {
     }
 
     private void initComment(){
-        Comment comment1 = new Comment(R.drawable.exp_pic,"wangtao","I love coding!!");
-        commentList.add(comment1);
-        commentList.add(comment1);
-        commentList.add(comment1);
-        commentList.add(comment1);
-        commentList.add(comment1);
-        commentList.add(comment1);
-        commentList.add(comment1);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RequestServer requestServer = new RequestServer(new Verify(CommentActivity.this));
+            }
+        }).start();
     }
 
     private void initView() {
