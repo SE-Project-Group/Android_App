@@ -24,7 +24,7 @@ import okhttp3.Response;
  */
 
 public class FeedRequester{
-    private final static String host = "http://192.168.1.13:8088/track/rest/app/feed";
+    private final static String host = "http://192.168.217.1:8080/track/rest/app/feed/";
     private Verify verify;
 
     private String generatePreUrl(String resource, Boolean needLogIn){

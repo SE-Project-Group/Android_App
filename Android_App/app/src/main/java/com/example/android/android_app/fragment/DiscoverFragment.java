@@ -27,7 +27,6 @@ import com.example.android.android_app.Activity.SearchActivity;
 import com.example.android.android_app.R;
 
 import com.example.android.android_app.Util.FeedRequester;
-import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +175,7 @@ public class DiscoverFragment extends Fragment {
 
 
     private void getFeeds(){
+        Thread newThread =
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -189,7 +189,8 @@ public class DiscoverFragment extends Fragment {
 
                 handler.sendMessage(message);
             }
-        }).start();
+        });
+        newThread.start();
     }
 
     private void continueGetFeeds(){
@@ -220,7 +221,12 @@ public class DiscoverFragment extends Fragment {
                     initRecycleView();
                     break;
                 case GET_FEED_FAILED:
-                    Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
+                    // very importtant, if the fragment have already switch to other fragment,
+                    // and the http request thread is still run, when handler get a message and handle it
+                    // get Activity() will receive a null point,
+
+                    if(getActivity() != null)
+                        Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
                     break;
                 case CON_GET_FEED_OK:
                     updateRecyclerView(DOWN);

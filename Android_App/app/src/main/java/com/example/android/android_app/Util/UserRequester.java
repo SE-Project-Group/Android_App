@@ -19,7 +19,7 @@ import okhttp3.Response;
  */
 
 public class UserRequester {
-    private final static String host = "http://192.168.1.13:8088/track/rest/app/user";
+    private final static String host = "http://192.168.217.1:8080/track/rest/app/";
     private Verify verify;
 
     // constructor with no argument
@@ -77,7 +77,8 @@ public class UserRequester {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url).build();
+                .url(url)
+                .build();
 
         String token ="";
         int user_id = 0;
