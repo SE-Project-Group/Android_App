@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.example.android.android_app.Model.Feed;
 import com.example.android.android_app.Adapter.FeedAdapter;
@@ -22,6 +26,8 @@ import com.example.android.android_app.Util.Verify;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -37,6 +43,24 @@ public class PersonalHomeActivity extends AppCompatActivity {
     private int user_id;
 
     private Boolean ME = false;
+    private Boolean LOGGED = false;
+
+    //view
+    private Button add_follow_btn;
+    private Button cancel_follow_btn;
+    private Button also_follow_btn;
+    private Button cancel_frient_btn;
+
+    //requester
+    private UserRequester userRequester = new UserRequester();
+
+    //message
+    private final static int FOLLOW_ACTION_FAILED = 5;
+    private final static int CANCEL_FOLLOW_SUCCESS = 6;
+    private final static int ADD_FOLLOW_SUCCESS = 7;
+    private final static int ALSO_FOLLOW_SUCCESS = 8;
+    private final static int CANCEL_FRIEND_SUCCESS = 9;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +81,17 @@ public class PersonalHomeActivity extends AppCompatActivity {
         if (user_id == Integer.valueOf(verify.getUser_id()))
             ME = true;
 
-
         getUserInfo();
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         // decide which interface to user depend on my identification now
         // not me
         if(!ME){
-            if (verify.getLoged())
+            if (verify.getLoged()) {
+                LOGGED = true;
                 loggedGetOthersFeeds();
+            }
             else
                 unLoggedGetOthersFeeds();
         }
@@ -76,6 +102,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
 
 
     }
+
 
     // need verify
     private void loggedGetOthersFeeds(){
@@ -117,8 +144,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserRequester requester = new UserRequester();
-                userInfo = requester.getUserInfo(user_id);
+                userInfo = userRequester.getUserInfo(user_id);
                 Message message = new Message();
                 if(userInfo == null)
                     message.what = GET_INFO_FAILED;
@@ -161,8 +187,120 @@ public class PersonalHomeActivity extends AppCompatActivity {
         like_cnt_view.setText(String.valueOf(temp));
         temp = userInfo.getShare_cnt();
         share_cnt_view.setText(String.valueOf(temp));
+
+
+        // if it's not my own home page, then set follow function button and chat button
+        if(!ME)
+            initInteractButton();
     }
 
+    // if it's not my own home page, then set follow function button and chat button
+    // to visible and set click listener for them
+    private void initInteractButton(){
+        // set correct follow button
+        add_follow_btn = (Button) findViewById(R.id.add_follow_btn);
+        cancel_follow_btn = (Button) findViewById(R.id.cancel_follow_btn);
+        also_follow_btn = (Button) findViewById(R.id.also_follow_btn);
+        cancel_frient_btn = (Button) findViewById(R.id.cancel_friend_btn);
+        String relationship = userInfo.getRelationship();
+        if(relationship.equals("stranger"))
+            add_follow_btn.setVisibility(View.VISIBLE);
+        if(relationship.equals("following"))
+            cancel_follow_btn.setVisibility(View.VISIBLE);
+        if(relationship.equals("followed"))
+            also_follow_btn.setVisibility(View.VISIBLE);
+        if(relationship.equals("friend"))
+            cancel_frient_btn.setVisibility(View.VISIBLE);
+
+        add_follow_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                follow(userInfo.getUser_id(), "stranger");
+            }
+        });
+        also_follow_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                follow(userInfo.getUser_id(), "followed");
+            }
+        });
+        cancel_follow_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelFollow(userInfo.getUser_id(), "following");
+            }
+        });
+        cancel_frient_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelFollow(userInfo.getUser_id(), "friend");
+            }
+        });
+
+
+        // chat button
+        Button chat_btn = (Button) findViewById(R.id.chat_btn);
+        chat_btn.setVisibility(View.VISIBLE);
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, TalkingActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    // follow
+    private void follow(final int who, final String relationship){
+        if(!LOGGED){
+            Toast.makeText(PersonalHomeActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String result = userRequester.follow(who);
+                Message message = new Message();
+                if(result.equals("success")){
+                    if(relationship.equals("stranger"))
+                        message.what = ADD_FOLLOW_SUCCESS;
+                    else
+                        message.what = ALSO_FOLLOW_SUCCESS;
+                }
+                else
+                    message.what = FOLLOW_ACTION_FAILED;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
+
+    // cancel follow
+    private void cancelFollow(final int who, final String relationship){
+        if(!LOGGED){
+            Toast.makeText(PersonalHomeActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String result = userRequester.cancel_follow(who);
+                Message message = new Message();
+                if(result.equals("success")) {
+                    if(relationship.equals("friend"))
+                        message.what = CANCEL_FRIEND_SUCCESS;
+                    else
+                        message.what = CANCEL_FOLLOW_SUCCESS;
+                }
+                else
+                    message.what = FOLLOW_ACTION_FAILED;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
+    // handler
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -172,6 +310,26 @@ public class PersonalHomeActivity extends AppCompatActivity {
                     break;
                 case GET_INFO_OK:
                     displayUserInfo();
+                    break;
+                case FOLLOW_ACTION_FAILED:
+                    Toast.makeText(PersonalHomeActivity.this, "follow action failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case CANCEL_FOLLOW_SUCCESS:
+                    cancel_follow_btn.setVisibility(View.GONE);
+                    add_follow_btn.setVisibility(View.VISIBLE);
+                    break;
+                case CANCEL_FRIEND_SUCCESS:
+                    cancel_frient_btn.setVisibility(View.GONE);
+                    also_follow_btn.setVisibility(View.VISIBLE);
+                    break;
+                case ADD_FOLLOW_SUCCESS:
+                    add_follow_btn.setVisibility(View.GONE);
+                    cancel_follow_btn.setVisibility(View.VISIBLE);
+                    break;
+                case ALSO_FOLLOW_SUCCESS:
+                    also_follow_btn.setVisibility(View.GONE);
+                    cancel_frient_btn.setVisibility(View.VISIBLE);
+
             }
         }
     };

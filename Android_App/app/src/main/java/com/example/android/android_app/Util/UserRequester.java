@@ -6,6 +6,7 @@ import com.example.android.android_app.Model.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -173,8 +174,6 @@ public class UserRequester {
     public List<Follow> getFollowing(int user) {
         String resource = "getFollowing";
         String pre_url = generatePreUrl(resource, true);
-        if (pre_url == null)
-            return null;
 
         // build request
         String url = pre_url + "&user=" + String.valueOf(user);
@@ -207,6 +206,34 @@ public class UserRequester {
     public List<Follow> getFollower(int user){
         // just as same as getFollowing
         return null;
+    }
+
+    public String follow(int who_id){
+        String resource = "newFollow";
+        String url = generatePreUrl(resource, true);
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("followId", who_id);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        return sender.send();
+    }
+
+    public String cancel_follow(int who_id){
+        String resource = "deleteFollow";
+        String url = generatePreUrl(resource, true);
+        JSONObject jsonObject = new JSONObject();
+        try{
+            jsonObject.put("followId", who_id);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        return sender.send();
     }
 
 }
