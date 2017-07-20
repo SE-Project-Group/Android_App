@@ -28,10 +28,14 @@ import static com.baidu.location.d.j.S;
 
 public class Verify {
     Context context = MyApplication.getContext();
-    String prefix = "/track/rest/app/";
+    String prefix;
 
 
     public Verify(){
+    }
+
+    public Verify(String prefix){
+        this.prefix = prefix;
     }
 
     public String generateSign(String resource) throws NoSuchAlgorithmException, UnsupportedEncodingException {
