@@ -49,21 +49,11 @@
             android:process=":remote" />
 
         <activity android:name=".Activity.NewFeedActivity" />
-
-        <!--
-             test http request
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="http" />
-            </intent-filter>
-        -->
         <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.UserSercurityActivity" />
         <activity android:name=".Activity.MyAlbumActivity" />
         <activity android:name=".Activity.PersonalHomeActivity" />
         <activity android:name=".Activity.TalkingActivity" />
-        <activity android:name=".Activity.FollowingActivity" />
         <activity android:name=".Activity.CommentActivity" />
         <activity android:name=".Activity.CommentRemindActivity" />
         <activity android:name=".Activity.LikeRemindActivity" />
@@ -76,9 +66,9 @@
 
         <activity android:name=".Activity.MyLikeActivity" />
         <activity android:name=".Activity.MyShareActivity" />
-        <activity android:name=".Activity.FollowerActivity" />
         <activity android:name=".Activity.MentionRemindActivity" />
-        <activity android:name=".Activity.UserInfoActivity"></activity>
+        <activity android:name=".Activity.UserInfoActivity" />
+        <activity android:name=".Activity.FollowActivity"></activity>
     </application>
 
 </manifest>

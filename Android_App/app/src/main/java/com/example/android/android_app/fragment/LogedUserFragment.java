@@ -14,20 +14,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.android.android_app.Activity.FollowerActivity;
-import com.example.android.android_app.Activity.FollowingActivity;
 import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.MyAlbumActivity;
 import com.example.android.android_app.Activity.MyLikeActivity;
 import com.example.android.android_app.Activity.MyShareActivity;
-import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.Activity.UserInfoActivity;
-import com.example.android.android_app.Model.UserInfo;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.UserRequester;
 
