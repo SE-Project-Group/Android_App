@@ -82,9 +82,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
             ME = true;
 
         getUserInfo();
-
-
-
+        setFollowActivityButton();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         // decide which interface to user depend on my identification now
@@ -103,6 +101,30 @@ public class PersonalHomeActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void setFollowActivityButton(){
+        TextView his_following_btn = (TextView) findViewById(R.id.his_following_btn);
+        TextView his_follower_btn = (TextView) findViewById(R.id.his_follower_btn);
+        his_following_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, FollowActivity.class);
+                intent.putExtra("relationship", "following");
+                intent.putExtra("who", user_id);
+                startActivity(intent);
+            }
+        });
+
+        his_follower_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, FollowActivity.class);
+                intent.putExtra("relationship", "follower");
+                intent.putExtra("who", user_id);
+                startActivity(intent);
+            }
+        });
     }
 
 
