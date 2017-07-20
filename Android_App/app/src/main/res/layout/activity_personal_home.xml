@@ -2,7 +2,6 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -167,22 +166,54 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center">
                     <Button
-                        android:id="@+id/follow_btn"
+                        android:id="@+id/cancel_friend_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:text="follow"
+                        android:text="friend"
                         android:background="@drawable/item_talking_receive"
                         android:textColor="@color/gray"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"/>
                     />
                     <Button
-                        android:id="@+id/chart"
+                        android:id="@+id/add_follow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="add_follow1"
+                        android:background="@drawable/item_talking_receive"
+                        android:textColor="@color/gray"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"/>
+                    />
+                    <Button
+                        android:id="@+id/also_follow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="follow2"
+                        android:background="@drawable/item_talking_receive"
+                        android:textColor="@color/gray"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"/>
+                    />
+                    <Button
+                        android:id="@+id/cancel_follow_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="follow3"
+                        android:background="@drawable/item_talking_receive"
+                        android:textColor="@color/gray"
+                        android:layout_marginRight="5dp"
+                        android:visibility="gone"/>
+                    />
+                    <Button
+                        android:id="@+id/chat_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:text="chart"
                         android:background="@drawable/item_talking_receive"
                         android:textColor="@color/gray"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginLeft="5dp"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -202,7 +233,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
