@@ -14,7 +14,7 @@ public class UserInfo {
     private int follower_cnt;
     private int like_cnt;
     private int share_cnt;
-    private List<Feed> recent_feeds;
+    private String relationship;
 
     public int getUser_id() {
         return user_id;
@@ -64,13 +64,6 @@ public class UserInfo {
         this.share_cnt = share_cnt;
     }
 
-    public List<Feed> getRecent_feeds() {
-        return recent_feeds;
-    }
-
-    public void setRecent_feeds(List<Feed> recent_feeds) {
-        this.recent_feeds = recent_feeds;
-    }
 
     public String getPortrait_url() {
         return portrait_url;
@@ -78,5 +71,13 @@ public class UserInfo {
 
     public void setPortrait_url(String portrait_url) {
         this.portrait_url = portrait_url;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }
