@@ -69,7 +69,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private void toHomePage(int user_id){
         // navigate to other user's home page
         Intent intent = new Intent(context, PersonalHomeActivity.class);
-        intent.putExtra("user_ud", user_id);
+        intent.putExtra("user_id", user_id);
         context.startActivity(intent);
     }
 

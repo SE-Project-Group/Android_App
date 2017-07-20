@@ -65,20 +65,20 @@ public class PersonalHomeActivity extends AppCompatActivity {
         // not me
         if(!ME){
             if (verify.getLoged())
-                logedGetOthersFeeds();
+                loggedGetOthersFeeds();
             else
-                unLogedGetOthersFeeds();
+                unLoggedGetOthersFeeds();
         }
         // it's me
         else{
-            logedGetOthersFeeds();       // all of my feed
+            loggedGetOthersFeeds();       // all of my feed
         }
 
 
     }
 
     // need verify
-    private void logedGetOthersFeeds(){
+    private void loggedGetOthersFeeds(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -96,7 +96,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
     }
 
 
-    private void unLogedGetOthersFeeds(){
+    private void unLoggedGetOthersFeeds(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -144,7 +144,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         TextView user_name_view = (TextView) findViewById(R.id.user_name);
         TextView following_cnt_view = (TextView) findViewById(R.id.following_cnt);
         TextView follower_cnt_view = (TextView) findViewById(R.id.follower_cnt);
-        TextView like_cnt_view = (TextView) findViewById(R.id.like_btn);
+        TextView like_cnt_view = (TextView) findViewById(R.id.like_cnt);
         TextView share_cnt_view = (TextView) findViewById(R.id.share_cnt);
 
         // load
@@ -153,10 +153,14 @@ public class PersonalHomeActivity extends AppCompatActivity {
                 .placeholder(R.drawable.exp_pic)
                 .into(portrait_view);
         user_name_view.setText(userInfo.getName());
-        following_cnt_view.setText(userInfo.getFollow_cnt());
-        follower_cnt_view.setText(userInfo.getFollower_cnt());
-        like_cnt_view.setText(userInfo.getLike_cnt());
-        share_cnt_view.setText(userInfo.getShare_cnt());
+        int temp = userInfo.getFollow_cnt();
+        following_cnt_view.setText(String.valueOf(temp));
+        temp = userInfo.getFollower_cnt();
+        follower_cnt_view.setText(String.valueOf(temp));
+        temp = userInfo.getLike_cnt();
+        like_cnt_view.setText(String.valueOf(temp));
+        temp = userInfo.getShare_cnt();
+        share_cnt_view.setText(String.valueOf(temp));
     }
 
     private Handler handler = new Handler(){
