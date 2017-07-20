@@ -1,6 +1,7 @@
 package com.example.android.android_app.Util;
 
 import com.example.android.android_app.Application.MyApplication;
+import com.example.android.android_app.Model.ClientInfo;
 import com.example.android.android_app.Model.Follow;
 import com.example.android.android_app.Model.UserInfo;
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.ClientInfoStatus;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -155,22 +157,6 @@ public class UserRequester {
     }
 
 
-
-    public String modifyUserInfo(String jsonStr){
-        String resource =  "modifyPersonalInfo";
-        String pre_url = generatePreUrl(resource, true);
-        if(pre_url == null){
-            return null;
-        }
-        JsonSender sender = new JsonSender(jsonStr, pre_url);
-        String response = sender.post();
-        if(response.equals("success")){
-            return "success";
-        }
-        else
-            return "failed";
-    }
-
     // get list of users following some one
     public List<Follow> getFollowing(int user) {
         String resource = "getFollowing";
@@ -261,6 +247,46 @@ public class UserRequester {
         String jsonString = jsonObject.toString();
         JsonSender sender = new JsonSender(jsonString,url);
         return sender.delete();
+    }
+
+    // get client info , include user name, id , gender, birthday and email
+    public ClientInfo getClientInfo(int who){
+        String resource = "";
+        String pre_url = generatePreUrl(resource, false);
+        String url = pre_url + "?who=" + who;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            responseData = response.body().string();
+            if(!response.isSuccessful())
+                return null;
+            responseData  = response.body().string();
+            if(responseData.equals("failed"))
+                return null;
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        Gson gson = new Gson();
+        return gson.fromJson(responseData, new TypeToken<ClientInfo>() {}.getType());
+    }
+
+    // modify client info
+    public String modifyClientInfo(String jsonStr){
+        String resource =  "";
+        String pre_url = generatePreUrl(resource, true);
+        JsonSender sender = new JsonSender(jsonStr, pre_url);
+        String response = sender.post();
+        if(response.equals("success")){
+            return "success";
+        }
+        else
+            return "failed";
     }
 
 }

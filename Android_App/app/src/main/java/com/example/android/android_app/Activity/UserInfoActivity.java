@@ -8,14 +8,19 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.Button;
@@ -23,11 +28,22 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.android.android_app.Model.ClientInfo;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.BottomPopView;
 import com.example.android.android_app.Util.ImageUriParser;
+import com.example.android.android_app.Util.OssInit;
+import com.example.android.android_app.Util.OssService;
+import com.example.android.android_app.Util.UserRequester;
+import com.example.android.android_app.Util.Verify;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,15 +57,38 @@ public class UserInfoActivity extends AppCompatActivity {
     private ImageView portrait_view;
     private BottomPopView bottomPopView;
     private TextView birthday_tv;
+    private EditText user_name_et;
+    private RadioGroup gender_group;
+    private EditText email_et;
 
 
     private final static int TAKE_PHOTO = 0;
     private final static int CHOOSE_PHOTO = 1;
     private int mYear, mMonth, mDay;
-    private static final int DATE_DIALOG = 1;
+    private static final int DATE_DIALOG = 2;
 
-    private Uri new_pic_uri;
+    private Uri new_portrait_uri;
 
+    private UserRequester requester = new UserRequester();
+    private ClientInfo clientInfo;
+
+    private final static int GET_INFO_OK = 3;
+    private final static int GET_INFO_FAILED = 4;
+    private final static int UPLOAD_INFO_OK = 5;
+    private final static int UPLOAD_INFO_FAILED = 6;
+    private final static int UPLOAD_PIC_OK = 7;
+
+
+    // record if has changed
+    //private Boolean infoChanged = false; do not check info , upload anyway
+    private Boolean portraitChanged = false;
+
+    // set toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_info_toolbar,menu);  // need modify
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +97,13 @@ public class UserInfoActivity extends AppCompatActivity {
         // set tool bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+        // set retur button
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_send);        // need modify
+        }
+        initUserInfo();
 
         //portrait
         portrait_view = (ImageView) findViewById(R.id.portrait_view);
@@ -77,7 +123,6 @@ public class UserInfoActivity extends AppCompatActivity {
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
-        birthday_tv = (TextView) findViewById(R.id.birthday_tv);
         Button date_picker_btn = (Button) findViewById(R.id.edit_birthday_btn);
         date_picker_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +134,95 @@ public class UserInfoActivity extends AppCompatActivity {
 
     }
 
+    // set button listener for tool bar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                break;
+            case R.id.upload_btn:
+                upload();
+                break;
+        }
+        return true;
+    }
+
+    private void initUserInfo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Verify verify = new Verify();
+                int who = Integer.valueOf(verify.getUser_id());
+                clientInfo = requester.getClientInfo(who);
+                Message message = new Message();
+                if(clientInfo == null)
+                    message.what = GET_INFO_FAILED;
+                else
+                    message.what = GET_INFO_OK;
+            }
+        }).start();
+    }
+
+    private void setInfo(){
+/*        String user_name = clientInfo.getUser_name();
+        String birth
+        user_name_et = (EditText) findViewById(R.id.)
+        birthday_tv = (TextView) findViewById(R.id.birthday_tv);
+        gender_group = (RadioGroup) findViewById(R);
+        email_et = (EditText) findViewById(R.id.e);
+
+        user_name_et.setText();
+        birthday_tv.setText();
+        gender_group.check();
+        email_et.setText();
+
+        // load portrait
+        Glide.with(this)
+                .load("")
+                .placeholder(R.drawable.exp_pic);*/
+    }
+
+    private void upload() {
+        // upload info
+        String user_name = user_name_et.getText().toString();
+        int gender = gender_group.getCheckedRadioButtonId();
+        String birthday = birthday_tv.getText().toString();
+        String email = email_et.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_name", user_name);
+            jsonObject.put("gender", gender);
+            jsonObject.put("birthday", birthday);
+            jsonObject.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String jsonString = jsonObject.toString();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String result = requester.modifyClientInfo(jsonString);
+                Message message = new Message();
+                if (result.equals("failed"))
+                    message.what = UPLOAD_INFO_FAILED;
+                else
+                    message.what = UPLOAD_INFO_OK;
+                handler.sendMessage(message);
+            }
+        }).start();
+
+
+        // upload new portrait
+        if (portraitChanged) {
+            OssService ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
+            Verify verify = new Verify();
+            String user_id = verify.getUser_id();
+            ossService.asyncPutImage(user_id + "_portrait", new_portrait_uri.getPath());
+
+        }
+    }
+
+    
     // set PopView and get ready for the select click
     private void setPopView(){
         bottomPopView = new BottomPopView(this, findViewById(R.id.userInfo_root)) {
@@ -123,14 +257,14 @@ public class UserInfoActivity extends AppCompatActivity {
         }
         // create image URI
         if(Build.VERSION.SDK_INT >= 24){ // lower than Android 7.0
-            new_pic_uri = FileProvider.getUriForFile(UserInfoActivity.this, "com.example.android.Android_app.fileProvider", outputImage);
+            new_portrait_uri = FileProvider.getUriForFile(UserInfoActivity.this, "com.example.android.Android_app.fileProvider", outputImage);
         }else{
-            new_pic_uri = Uri.fromFile(outputImage);
+            new_portrait_uri = Uri.fromFile(outputImage);
         }
 
         // turn on camera
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, new_pic_uri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, new_portrait_uri);
         startActivityForResult(intent, TAKE_PHOTO);
     }
 
@@ -165,7 +299,7 @@ public class UserInfoActivity extends AppCompatActivity {
         switch (requestCode){
             case TAKE_PHOTO :
                 if(resultCode == RESULT_OK){
-                    String path = new_pic_uri.getPath();
+                    String path = new_portrait_uri.getPath();
                     Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                     Bitmap scaled = scaleBitmap(bitmap, 300,300);
                     portrait_view.setImageBitmap(scaled);
@@ -181,9 +315,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 break;
         }
     }
-
-
-
 
 
     // check user name spell
@@ -241,6 +372,7 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
 
+
     // birthday date picker
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -258,7 +390,45 @@ public class UserInfoActivity extends AppCompatActivity {
             mMonth = monthOfYear;
             mDay = dayOfMonth;
             // set text view
-            birthday_tv.setText(new StringBuffer().append(mMonth + 1).append("-").append(mDay).append("-").append(mYear).append(" "));
+            birthday_tv.setText(new StringBuffer().append(mYear).append(" ").append(mMonth + 1).append("-").append(mDay).append("-"));
+        }
+    };
+
+
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            int need_success_cnt;
+            if(portraitChanged == true)
+                need_success_cnt = 2;
+            else
+                need_success_cnt = 1;
+            
+            switch(msg.what){
+                case GET_INFO_FAILED:
+                    Toast.makeText(UserInfoActivity.this, "GET INFO failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case GET_INFO_OK:
+                    setInfo();
+                    break;
+                case UPLOAD_INFO_OK:
+                    Toast.makeText(UserInfoActivity.this, "edit success", Toast.LENGTH_SHORT).show();
+                    need_success_cnt --;
+                    if(need_success_cnt == 0)
+                        finish();
+                    break;
+                case UPLOAD_INFO_FAILED:
+                    Toast.makeText(UserInfoActivity.this, "edit failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case UPLOAD_PIC_OK:
+                    Toast.makeText(UserInfoActivity.this, "upload pic ok", Toast.LENGTH_SHORT).show();
+                    need_success_cnt --;
+                    if(need_success_cnt == 0)
+                        finish();
+
+
+            }
         }
     };
 
