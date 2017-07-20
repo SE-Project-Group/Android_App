@@ -21,10 +21,14 @@ import com.example.android.android_app.Activity.HomeActivity;
 import com.example.android.android_app.Activity.MyAlbumActivity;
 import com.example.android.android_app.Activity.MyLikeActivity;
 import com.example.android.android_app.Activity.MyShareActivity;
+import com.example.android.android_app.Activity.PersonalHomeActivity;
 import com.example.android.android_app.Activity.SettingActivity;
 import com.example.android.android_app.Activity.UserInfoActivity;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.UserRequester;
+import com.example.android.android_app.Util.Verify;
+
+import static com.example.android.android_app.R.id.setting_btn;
 
 
 /**
@@ -56,6 +60,20 @@ public class LogedUserFragment extends Fragment{
 
 
     private void setClickListener(){
+        // personal home button
+        LinearLayout personal_home_btn = (LinearLayout) getActivity().findViewById(R.id.personal_home_btn);
+        personal_home_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PersonalHomeActivity.class);
+                Verify verify = new Verify();
+                int user_id = Integer.valueOf(verify.getUser_id());
+                intent.putExtra("user_id", user_id);
+                startActivity(intent);
+            }
+        });
+
+
         // setting button
         LinearLayout setting_btn = (LinearLayout) getActivity().findViewById(R.id.setting_btn);
         setting_btn.setOnClickListener(new View.OnClickListener() {

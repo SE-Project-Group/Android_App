@@ -404,7 +404,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 need_success_cnt = 2;
             else
                 need_success_cnt = 1;
-            
+
             switch(msg.what){
                 case GET_INFO_FAILED:
                     Toast.makeText(UserInfoActivity.this, "GET INFO failed", Toast.LENGTH_SHORT).show();
