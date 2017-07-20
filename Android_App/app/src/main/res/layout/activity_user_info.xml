@@ -117,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:text="默认日期"/>
                 <Button
+                    android:background="@drawable/item_talking_receive"
                     android:id="@+id/edit_birthday_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
