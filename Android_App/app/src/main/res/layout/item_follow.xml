@@ -43,10 +43,32 @@
 
             <Button
                 android:layout_marginTop="4dp"
-                android:id="@+id/state_btn"
+                android:id="@+id/add_follow_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:text="关注"
+                android:visibility="gone"/>
+            <Button
+                android:layout_marginTop="4dp"
+                android:id="@+id/cancel_follow_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消关注"
+                android:visibility="gone"/>
+            <Button
+                android:layout_marginTop="4dp"
+                android:id="@+id/cancel_friend_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="互为好友"
+                android:visibility="gone"/>
+            <Button
+                android:layout_marginTop="4dp"
+                android:id="@+id/also_follow_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="也关注"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>

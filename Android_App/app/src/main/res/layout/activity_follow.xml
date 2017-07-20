@@ -13,30 +13,10 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:weightSum="1">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="15dp">
-
-            <Button
-                android:id="@+id/search_toolBar_btn"
-                android:layout_width="match_parent"
-                android:layout_height="70px"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/search_button"
-                android:drawableLeft="@drawable/discover_search"
-                android:gravity="center_vertical"
-                android:text="搜索更多精彩内容"
-                android:textColor="@color/black" />
-        </LinearLayout>
-
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/follwing_recyclerView"
+        android:id="@+id/follow_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
