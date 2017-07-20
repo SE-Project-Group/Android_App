@@ -49,7 +49,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
     private Button add_follow_btn;
     private Button cancel_follow_btn;
     private Button also_follow_btn;
-    private Button cancel_frient_btn;
+    private Button cancel_friend_btn;
 
     //requester
     private UserRequester userRequester = new UserRequester();
@@ -82,7 +82,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
             ME = true;
 
         getUserInfo();
-
+        setFollowActivityButton();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         // decide which interface to user depend on my identification now
@@ -101,6 +101,30 @@ public class PersonalHomeActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void setFollowActivityButton(){
+        TextView his_following_btn = (TextView) findViewById(R.id.his_following_btn);
+        TextView his_follower_btn = (TextView) findViewById(R.id.his_follower_btn);
+        his_following_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, FollowActivity.class);
+                intent.putExtra("relationship", "following");
+                intent.putExtra("who", user_id);
+                startActivity(intent);
+            }
+        });
+
+        his_follower_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, FollowActivity.class);
+                intent.putExtra("relationship", "follower");
+                intent.putExtra("who", user_id);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -201,7 +225,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         add_follow_btn = (Button) findViewById(R.id.add_follow_btn);
         cancel_follow_btn = (Button) findViewById(R.id.cancel_follow_btn);
         also_follow_btn = (Button) findViewById(R.id.also_follow_btn);
-        cancel_frient_btn = (Button) findViewById(R.id.cancel_friend_btn);
+        cancel_friend_btn = (Button) findViewById(R.id.cancel_friend_btn);
         String relationship = userInfo.getRelationship();
         if(relationship.equals("stranger"))
             add_follow_btn.setVisibility(View.VISIBLE);
@@ -210,7 +234,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         if(relationship.equals("followed"))
             also_follow_btn.setVisibility(View.VISIBLE);
         if(relationship.equals("friend"))
-            cancel_frient_btn.setVisibility(View.VISIBLE);
+            cancel_friend_btn.setVisibility(View.VISIBLE);
 
         add_follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +254,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
                 cancelFollow(userInfo.getUser_id(), "following");
             }
         });
-        cancel_frient_btn.setOnClickListener(new View.OnClickListener() {
+        cancel_friend_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cancelFollow(userInfo.getUser_id(), "friend");
@@ -319,7 +343,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
                     add_follow_btn.setVisibility(View.VISIBLE);
                     break;
                 case CANCEL_FRIEND_SUCCESS:
-                    cancel_frient_btn.setVisibility(View.GONE);
+                    cancel_friend_btn.setVisibility(View.GONE);
                     also_follow_btn.setVisibility(View.VISIBLE);
                     break;
                 case ADD_FOLLOW_SUCCESS:
@@ -328,7 +352,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
                     break;
                 case ALSO_FOLLOW_SUCCESS:
                     also_follow_btn.setVisibility(View.GONE);
-                    cancel_frient_btn.setVisibility(View.VISIBLE);
+                    cancel_friend_btn.setVisibility(View.VISIBLE);
 
             }
         }

@@ -13,6 +13,7 @@ public class Follow {
     public final String FRIEND = "friend";
     public final String FOLLOW = "following";
     public final String FOLLOWER = "follower";
+    public final String STRANGER = "stranger";
 
     public Follow(String user_name, String portrait_url, int user_id, String state){
         this.user_id = user_id;
