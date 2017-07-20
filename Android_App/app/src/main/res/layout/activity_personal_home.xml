@@ -30,6 +30,7 @@
                     android:layout_height="60dp"
                     android:layout_marginBottom="10dp"/>
                 <TextView
+                    android:textColor="@color/gray"
                     android:id="@+id/user_name"
                     android:textSize="17dp"
                     android:layout_width="wrap_content"
@@ -39,23 +40,33 @@
                     android:layout_marginBottom="10dp"/>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
-                    <TextView
-                        android:textSize="15dp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="关注他的人"/>
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="right">
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:textSize="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="关注他的人"/>
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:id="@+id/following_cnt"
+                            android:textSize="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="number"/>
+                    </LinearLayout>
+
                     <TextView
-                        android:id="@+id/following_cnt"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="number"/>
-                    <TextView
+                        android:textColor="@color/gray"
                         android:textSize="17dp"
                         android:textAlignment="center"
                         android:layout_marginLeft="10dp"
@@ -63,39 +74,59 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="|"/>
-                    <TextView
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="他关注的人"/>
 
-                    <TextView
-                        android:id="@+id/follower_cnt"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="5dp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="number" />
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:textSize="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="他关注的人"/>
+
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:id="@+id/follower_cnt"
+                            android:textSize="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="number" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:gravity="right"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="like"/>
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:textSize="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="like"/>
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:id="@+id/like_cnt"
+                            android:textSize="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="number"/>
+                    </LinearLayout>
                     <TextView
-                        android:id="@+id/like_cnt"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="number"/>
-                    <TextView
+                        android:textColor="@color/gray"
                         android:textSize="17dp"
                         android:textAlignment="center"
                         android:layout_marginLeft="10dp"
@@ -103,20 +134,54 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="|"/>
-                    <TextView
-                        android:textSize="15dp"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="share"/>
+                        android:layout_weight="1"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:textSize="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="share"/>
 
-                    <TextView
-                        android:id="@+id/share_cnt"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="5dp"
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:id="@+id/share_cnt"
+                            android:textSize="15dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="number" />
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center">
+                    <Button
+                        android:id="@+id/follow_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="number" />
-
+                        android:layout_height="25dp"
+                        android:text="follow"
+                        android:background="@drawable/item_talking_receive"
+                        android:textColor="@color/gray"
+                        android:layout_marginRight="5dp"/>
+                    />
+                    <Button
+                        android:id="@+id/chart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:text="chart"
+                        android:background="@drawable/item_talking_receive"
+                        android:textColor="@color/gray"
+                        android:layout_marginLeft="5dp"/>
                 </LinearLayout>
             </LinearLayout>
 
