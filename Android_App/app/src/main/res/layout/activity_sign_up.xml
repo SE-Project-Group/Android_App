@@ -48,6 +48,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:background="@drawable/item_talking_receive"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="发送验证码"

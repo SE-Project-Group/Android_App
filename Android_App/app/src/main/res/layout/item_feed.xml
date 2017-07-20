@@ -10,7 +10,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"
@@ -93,27 +92,52 @@
             android:orientation="horizontal">
 
             <Button
+                android:layout_marginLeft="10dp"
+                android:background="@color/white"
                 android:id="@+id/share_btn"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/share_3"
+                android:drawableLeft="@drawable/feed_item_share"
+                android:textColor="@color/gray"
                 android:text="number"/>
 
+            <View
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="0.1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                />
+
             <Button
+                android:layout_marginLeft="10dp"
                 android:id="@+id/comment_btn"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/comment"
+                android:drawableLeft="@drawable/feed_item_comment"
+                android:textColor="@color/gray"
+                android:background="@color/white"
                 android:text="number"/>
 
+            <View
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="0.1px"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                />
+
             <Button
+                android:layout_marginLeft="10dp"
                 android:id="@+id/like_btn"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/like"
+                android:drawableLeft="@drawable/feed_item_like"
+                android:textColor="@color/gray"
+                android:background="@color/white"
                 android:text="number"/>
 
         </LinearLayout>
