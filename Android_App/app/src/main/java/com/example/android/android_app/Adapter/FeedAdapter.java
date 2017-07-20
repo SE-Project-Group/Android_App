@@ -104,7 +104,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                like(feed.getFeed_id());
+                share(feed.getFeed_id());
             }
         });
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +120,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                share(feed.getFeed_id());
+                like(feed.getFeed_id());
             }
         });
         return holder;

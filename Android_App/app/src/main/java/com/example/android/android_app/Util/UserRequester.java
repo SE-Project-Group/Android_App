@@ -12,8 +12,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -21,7 +23,7 @@ import okhttp3.Response;
  */
 
 public class UserRequester {
-    private final static String host = "http://192.168.1.200:8080/track/rest/app/user/";
+    private final static String host = "http://106.15.188.135:8080/track/rest/app/user/";
     private Verify verify = new Verify("/track/rest/app/user/");
 
     // constructor with no argument
@@ -62,7 +64,7 @@ public class UserRequester {
         }
         final String jsonString = jsonObject.toString();
         final JsonSender sender = new JsonSender(jsonString, host + resource);
-        return sender.send();
+        return sender.post();
     }
 
 
@@ -124,15 +126,14 @@ public class UserRequester {
     }
 
     // get someone's user info show on personal home
-    public UserInfo getUserInfo(int user_id){
+    public UserInfo getUserInfo(int who){
         String resource = "getInfo";
         String pre_url = generatePreUrl(resource, false);
-        if(pre_url == null){
-            return null;
-        }
+
+        String url = pre_url + "?user_id=" + verify.getUser_id() + "&who=" + who;
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(pre_url + "?user_id="+ user_id)
+                .url(url)
                 .build();
 
         String responseData = "";
@@ -162,7 +163,7 @@ public class UserRequester {
             return null;
         }
         JsonSender sender = new JsonSender(jsonStr, pre_url);
-        String response = sender.send();
+        String response = sender.post();
         if(response.equals("success")){
             return "success";
         }
@@ -176,7 +177,7 @@ public class UserRequester {
         String pre_url = generatePreUrl(resource, true);
 
         // build request
-        String url = pre_url + "&user=" + String.valueOf(user);
+        String url = pre_url + "&who=" + String.valueOf(user);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -204,8 +205,33 @@ public class UserRequester {
 
     // get someone's follower
     public List<Follow> getFollower(int user){
-        // just as same as getFollowing
-        return null;
+        String resource = "getFollower";
+        String pre_url = generatePreUrl(resource, true);
+
+        // build request
+        String url = pre_url + "&who=" + String.valueOf(user);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        // get response
+        String responseData = "";
+        try {
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                return null;
+            }
+            responseData = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // handle response
+        Gson gson = new Gson();
+        List<Follow> followers = gson.fromJson(responseData, new TypeToken<List<Follow>>() {}.getType());
+
+        return followers;
     }
 
     public String follow(int who_id){
@@ -219,8 +245,9 @@ public class UserRequester {
         }
 
         JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        return sender.send();
+        return sender.post();
     }
+
 
     public String cancel_follow(int who_id){
         String resource = "deleteFollow";
@@ -231,9 +258,9 @@ public class UserRequester {
         }catch (JSONException e){
             e.printStackTrace();
         }
-
-        JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        return sender.send();
+        String jsonString = jsonObject.toString();
+        JsonSender sender = new JsonSender(jsonString,url);
+        return sender.delete();
     }
 
 }

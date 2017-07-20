@@ -13,6 +13,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.baidu.location.d.j.t;
+
 /**
  * Created by thor on 2017/7/4.
  */
@@ -28,25 +30,80 @@ public class JsonSender {
 
     }
 
-    public String send(){
+    public String post(){
         OkHttpClient okHttpClient = new OkHttpClient();
         RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
+        String result = "";
 
         // get response
         try{
             Response response = okHttpClient.newCall(request).execute();
             String data = response.body().string();
             if(response.isSuccessful())
-                return data;
+                result = data;
             else
-                return "failed";
+                result = "failed";
         }catch (IOException e){
             e.printStackTrace();
-            return "failed";
+            result = "failed";
         }
+        return result;
+
     }
+
+
+    public String delete(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(requestBody)
+                .build();
+        String result = "";
+
+        // get response
+        try{
+            Response response = okHttpClient.newCall(request).execute();
+            String data = response.body().string();
+            if(response.isSuccessful())
+                result = data;
+            else
+                result = "failed";
+        }catch (IOException e){
+            e.printStackTrace();
+            result = "failed";
+        }
+        return result;
+
+    }
+
+
+    public String put(){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody =RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonString);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+        String result = "";
+
+        // get response
+        try{
+            Response response = okHttpClient.newCall(request).execute();
+            String data = response.body().string();
+            if(response.isSuccessful())
+                result = data;
+            else
+                result = "failed";
+        }catch (IOException e){
+            e.printStackTrace();
+            result = "failed";
+        }
+        return result;
+    }
+
 }

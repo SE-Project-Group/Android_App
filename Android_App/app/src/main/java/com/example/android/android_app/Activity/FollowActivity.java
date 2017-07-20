@@ -46,11 +46,6 @@ public class FollowActivity extends AppCompatActivity {
         if(relationship.equals("follower"))
             initFollowers();
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.follow_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        FollowAdapter adapter = new FollowAdapter(followList, getApplicationContext());
-        recyclerView.setAdapter(adapter);
     }
 
     private void initFollowings(){

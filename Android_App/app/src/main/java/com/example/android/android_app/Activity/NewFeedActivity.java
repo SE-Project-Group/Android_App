@@ -123,7 +123,12 @@ public class NewFeedActivity extends AppCompatActivity {
             String street = bdLocation.getStreet();
             String building = bdLocation.getBuildingName();
             StringBuilder currentPosition = new StringBuilder();
-            currentPosition.append(city).append(district).append(street).append("(").append(building).append(")");
+            // if has building name , display it
+            if(building != null)
+                currentPosition.append(city).append(district).append(street).append("(").append(building).append(")");
+            else
+                currentPosition.append(city).append(district).append(street);
+
             detailed_location = currentPosition.toString();
             mLocationClient.stop();
             Message msg = new Message();
@@ -171,8 +176,14 @@ public class NewFeedActivity extends AppCompatActivity {
                         Message message = new Message();
                         if(result.equals("failed"))
                             message.what = UPLOAD_FAILED;
-                        else
+
+                        // if success, new feed interface will return the feed_id of the new feed
+                        else {
                             message.what = UPLOAD_OK;
+                            Bundle bundle = new Bundle();
+                            bundle.putString("feed_id", result);
+                            message.setData(bundle);
+                        }
                         handler.sendMessage(message);
 
                     }
@@ -211,13 +222,16 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("userId" ,verify.getUser_id());
             jsonObject.put("text", text);
             jsonObject.put("showLocation", showLocation);
+            // loaction json object
             JSONObject location = new JSONObject();
             location.put("latitude", latitude);
             location.put("longitude", longitude);
             jsonObject.put("location", location);
+
             jsonObject.put("shareArea", shareArea);
             jsonObject.put("mentionList", metionList);
             jsonObject.put("picCount", picture_cnt);
+            jsonObject.put("position", detailed_location);
         }catch (JSONException e){
             e.printStackTrace();
         }
