@@ -51,7 +51,7 @@
                         android:layout_weight="1"
                         android:gravity="right">
                         <TextView
-                            android:id="@+id/his_following_btn"
+                            android:id="@+id/his_follower_btn"
                             android:textColor="@color/gray"
                             android:textSize="15dp"
                             android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                             android:text="关注他的人"/>
                         <TextView
                             android:textColor="@color/gray"
-                            android:id="@+id/following_cnt"
+                            android:id="@+id/follower_cnt"
                             android:textSize="15dp"
                             android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                         android:orientation="horizontal"
                         android:layout_weight="1">
                         <TextView
-                            android:id="@+id/his_follower_btn"
+                            android:id="@+id/his_following_btn"
                             android:textColor="@color/gray"
                             android:textSize="15dp"
                             android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
 
                         <TextView
                             android:textColor="@color/gray"
-                            android:id="@+id/follower_cnt"
+                            android:id="@+id/following_cnt"
                             android:textSize="15dp"
                             android:layout_marginLeft="5dp"
                             android:layout_width="wrap_content"

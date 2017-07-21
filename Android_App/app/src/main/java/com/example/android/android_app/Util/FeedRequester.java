@@ -2,6 +2,7 @@ package com.example.android.android_app.Util;
 
 
 import com.baidu.location.BDLocation;
+import com.example.android.android_app.Model.Comment;
 import com.example.android.android_app.Model.Feed;
 
 import com.google.gson.Gson;
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import okhttp3.Response;
  */
 
 public class FeedRequester{
-    private final static String host = "http://106.15.188.135:8080/track/rest/app/feed/";
+    private final static String host = "http://192.168.1.200:8080/track/rest/app/feed/";
     private Verify verify = new Verify("/track/rest/app/feed/");
 
     private String generatePreUrl(String resource, Boolean needLogIn){
@@ -271,7 +273,24 @@ public class FeedRequester{
             e.printStackTrace();
         }
         JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        String response = sender.post();
+        String response = sender.put();
+        return response;
+    }
+
+    // cancel like
+    public String cancelLike(String feed_id){
+        String resource = "";
+        String url = generatePreUrl(resource, true);
+        // create json
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("_id", feed_id);
+            jsonObject.put("user_id", verify.getUser_id());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        String response = sender.put();
         return response;
     }
 
@@ -292,11 +311,34 @@ public class FeedRequester{
             e.printStackTrace();
         }
         JsonSender sender = new JsonSender(jsonObject.toString(), url);
-        String response = sender.post();
+        String response = sender.put();
         return response;
     }
 
+    // getCommentList
+    public List<Comment> getCommentList(String feed_id){
+        String resource = "commentList";
+        String pre_url = generatePreUrl(resource, false);
+        String url = pre_url + "?feed_id=" + feed_id;
 
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(responseData, new TypeToken<List<Comment>>(){}.getType());
+
+    }
 
 
 

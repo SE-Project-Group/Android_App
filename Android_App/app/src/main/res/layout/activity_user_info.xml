@@ -60,6 +60,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/user_name_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="用户名"
@@ -81,16 +82,19 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/personal_setting_sex"/>
                 <RadioGroup
+                    android:id="@+id/gender_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/male"
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="男"
                         android:textSize="17dp" />
                     <RadioButton
+                        android:id="@+id/female"
                         android:layout_marginLeft="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -143,6 +147,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/email_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="邮箱"

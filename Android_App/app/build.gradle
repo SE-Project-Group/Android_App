@@ -10,6 +10,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // jpush
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "8961ddfedc47973e6ca6b9b2", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -25,12 +37,6 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    // direct use ali sdk will cause build conflict error
-/*    compile 'com.aliyun.oss:aliyun-sdk-oss:2.2.0'
-    configurations {
-        all*.exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-        all*.exclude group: 'commons-logging', module: 'commons-logging'
-    }*/
 
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -43,5 +49,7 @@ dependencies {
     compile 'com.jaeger.ninegridimageview:library:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:25.3.0'
+    compile 'cn.jiguang.sdk:jpush:3.0.3'  // 此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.1'  // 此处以JCore 1.1.1 版本为例。
     testCompile 'junit:junit:4.12'
 }

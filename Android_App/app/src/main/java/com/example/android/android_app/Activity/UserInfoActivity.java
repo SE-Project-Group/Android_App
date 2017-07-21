@@ -139,6 +139,7 @@ public class UserInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                finish();
                 break;
             case R.id.upload_btn:
                 upload();
@@ -152,40 +153,48 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Verify verify = new Verify();
-                int who = Integer.valueOf(verify.getUser_id());
-                clientInfo = requester.getClientInfo(who);
+                int user_id = Integer.valueOf(verify.getUser_id());
+                clientInfo = requester.getClientInfo(user_id);
                 Message message = new Message();
                 if(clientInfo == null)
                     message.what = GET_INFO_FAILED;
                 else
                     message.what = GET_INFO_OK;
+                handler.sendMessage(message);
             }
         }).start();
     }
 
     private void setInfo(){
-/*        String user_name = clientInfo.getUser_name();
-        String birth
-        user_name_et = (EditText) findViewById(R.id.)
+        String user_name = clientInfo.getUser_name();
+        String birthday = clientInfo.getBirthday();
+        String gender = clientInfo.getGender();
+        String email = clientInfo.getEmail();
+        user_name_et = (EditText) findViewById(R.id.user_name_et);
         birthday_tv = (TextView) findViewById(R.id.birthday_tv);
-        gender_group = (RadioGroup) findViewById(R);
-        email_et = (EditText) findViewById(R.id.e);
+        gender_group = (RadioGroup) findViewById(R.id.gender_group);
+        email_et = (EditText) findViewById(R.id.email_et);
 
-        user_name_et.setText();
-        birthday_tv.setText();
-        gender_group.check();
-        email_et.setText();
+        user_name_et.setText(user_name);
+        birthday_tv.setText(birthday);
+        if(gender.equals("male"))
+            gender_group.check(R.id.male);
+        else
+            gender_group.check(R.id.female);
+        email_et.setText(email);
 
         // load portrait
         Glide.with(this)
                 .load("")
-                .placeholder(R.drawable.exp_pic);*/
+                .placeholder(R.drawable.exp_pic);
     }
 
     private void upload() {
         // upload info
         String user_name = user_name_et.getText().toString();
-        int gender = gender_group.getCheckedRadioButtonId();
+        String gender = "male";
+        if(gender_group.getCheckedRadioButtonId()==R.id.female)
+            gender = "female";
         String birthday = birthday_tv.getText().toString();
         String email = email_et.getText().toString();
         JSONObject jsonObject = new JSONObject();
@@ -304,6 +313,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     Bitmap scaled = scaleBitmap(bitmap, 300,300);
                     portrait_view.setImageBitmap(scaled);
                 }
+                portraitChanged = true;
                 break;
             case CHOOSE_PHOTO :
                 ImageUriParser imageUriParser = new ImageUriParser(this);
@@ -311,6 +321,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                 Bitmap scaled = scaleBitmap(bitmap, 300,300);
                 portrait_view.setImageBitmap(scaled);
+                portraitChanged = true;
+                break;
             default:
                 break;
         }
@@ -326,9 +338,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 if (s.length() == 0) {
                     textInputLayout.setError("用户名不可为空");
                     textInputLayout.setErrorEnabled(true);
-                }else if(s.length()<5){
-                    textInputLayout.setError("用户名不可少于5个字符");
-                    textInputLayout.setErrorEnabled(true);
                 }else if(s.length()>15){
                     textInputLayout.setError("用户名不可多于15个字符");
                     textInputLayout.setErrorEnabled(true);
@@ -342,10 +351,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 if (s.length()==0) {
                     textInputLayout.setError("用户名不可为空");
                     textInputLayout.setErrorEnabled(true);
-                } else if(s.length()<5){
-                    textInputLayout.setError("用户名不可少于5个字符");
-                    textInputLayout.setErrorEnabled(true);
-                }else if(s.length()>15){
+                }
+                else if(s.length()>15){
                     textInputLayout.setError("用户名不可多于15个字符");
                     textInputLayout.setErrorEnabled(true);
                 }
@@ -357,9 +364,6 @@ public class UserInfoActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length()==0) {
                     textInputLayout.setError("用户名不可为空");
-                    textInputLayout.setErrorEnabled(true);
-                } else if(s.length()<5){
-                    textInputLayout.setError("用户名不可少于5个字符");
                     textInputLayout.setErrorEnabled(true);
                 }else if(s.length()>15){
                     textInputLayout.setError("用户名不可多于15个字符");
@@ -426,8 +430,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     need_success_cnt --;
                     if(need_success_cnt == 0)
                         finish();
-
-
+                    break;
             }
         }
     };

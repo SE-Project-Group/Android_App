@@ -26,6 +26,7 @@ public class Feed implements Serializable {
     private double latitude;
     private double longitude;
     private List<String> picUrls;
+    private Boolean liked;
 
     public String getFeed_id() {
         return feed_id;
@@ -137,5 +138,13 @@ public class Feed implements Serializable {
 
     public void setPicUrls(List<String> picUrls) {
         this.picUrls = picUrls;
+    }
+
+    public Boolean getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Boolean liked) {
+        this.liked = liked;
     }
 }

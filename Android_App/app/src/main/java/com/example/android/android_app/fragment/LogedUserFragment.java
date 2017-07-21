@@ -122,7 +122,13 @@ public class LogedUserFragment extends Fragment{
                     @Override
                     public void run() {
                         UserRequester requester = new UserRequester();
-                        requester.logOut();
+                        String result = requester.logOut();
+                        Message message = new Message();
+                        if(result.equals("success"))
+                            message.what = LOG_OU_OK;
+                        else
+                            message.what = LOG_OUT_FAILED;
+                        handler.sendMessage(message);
                     }
                 }).start();
 

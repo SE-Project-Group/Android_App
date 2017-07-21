@@ -25,7 +25,7 @@ import okhttp3.Response;
  */
 
 public class UserRequester {
-    private final static String host = "http://106.15.188.135:8080/track/rest/app/user/";
+    private final static String host = "http://192.168.1.200:8080/track/rest/app/user/";
     private Verify verify = new Verify("/track/rest/app/user/");
 
     // constructor with no argument
@@ -102,34 +102,33 @@ public class UserRequester {
 
 
     // log out
-    public void logOut(){
+    public String logOut(){
         String resource = "clientLogout";
 
-        String pre_url = generatePreUrl(resource, true);
-        if(pre_url == null){
-            return;
-        }
+        String url = generatePreUrl(resource, true);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(pre_url)
+                .url(url)
                 .build();
         String responseData = "";
         try{
             Response response = client.newCall(request).execute();
             if(!response.isSuccessful()){
-                return;
+                return "failed";
             }
-
             responseData = response.body().string();
         }catch (Exception e){
             e.printStackTrace();
         }
+        return responseData;
     }
 
+
+
     // get someone's user info show on personal home
-    public UserInfo getUserInfo(int who){
-        String resource = "getInfo";
+    public UserInfo getHomeInfo(int who){
+        String resource = "getHomeInfo";
         String pre_url = generatePreUrl(resource, false);
 
         String url = pre_url + "?user_id=" + verify.getUser_id() + "&who=" + who;
@@ -250,10 +249,10 @@ public class UserRequester {
     }
 
     // get client info , include user name, id , gender, birthday and email
-    public ClientInfo getClientInfo(int who){
-        String resource = "";
+    public ClientInfo getClientInfo(int user_id){
+        String resource = "queryPersonalInfo";
         String pre_url = generatePreUrl(resource, false);
-        String url = pre_url + "?who=" + who;
+        String url = pre_url + "?user_id=" + user_id;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -265,7 +264,6 @@ public class UserRequester {
             responseData = response.body().string();
             if(!response.isSuccessful())
                 return null;
-            responseData  = response.body().string();
             if(responseData.equals("failed"))
                 return null;
         }catch (IOException e){
@@ -278,10 +276,10 @@ public class UserRequester {
 
     // modify client info
     public String modifyClientInfo(String jsonStr){
-        String resource =  "";
+        String resource = "modifyPersonalInfo";
         String pre_url = generatePreUrl(resource, true);
         JsonSender sender = new JsonSender(jsonStr, pre_url);
-        String response = sender.post();
+        String response = sender.put();
         if(response.equals("success")){
             return "success";
         }

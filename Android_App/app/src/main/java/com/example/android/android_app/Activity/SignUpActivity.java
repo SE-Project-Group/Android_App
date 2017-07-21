@@ -200,11 +200,8 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout3.setError("用户名不可为空");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
-                }else if(s.length()<5){
-                    textInputLayout3.setError("用户名不可少于5个字符");
-                    textInputLayout3.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                }else if(s.length()>15){
+                }
+                else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
@@ -224,11 +221,7 @@ public class SignUpActivity extends AppCompatActivity {
                     textInputLayout3.setError("用户名不可为空");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
-                } else if(s.length()<5){
-                    textInputLayout3.setError("用户名不可少于5个字符");
-                    textInputLayout3.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                }else if(s.length()>15){
+                } else if(s.length()>15){
                     textInputLayout3.setError("用户名不可多于15个字符");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
@@ -246,10 +239,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length()==0) {
                     textInputLayout3.setError("用户名不可为空");
-                    textInputLayout3.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else if(s.length()<5){
-                    textInputLayout3.setError("用户名不可少于5个字符");
                     textInputLayout3.setErrorEnabled(true);
                     sign_up_btn.setEnabled(false);
                 }else if(s.length()>15){
