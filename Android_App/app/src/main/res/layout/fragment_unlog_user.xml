@@ -38,9 +38,11 @@
                 />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:id="@+id/sign_btn"
                 android:text="注册/登录"
+                android:textSize="15dp"
+                android:textColor="@color/colorPrimaryDark"
                 android:background="@drawable/btn_style"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
@@ -72,7 +74,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_albumn"
+                android:src="@drawable/user_album"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginTop="7dp"

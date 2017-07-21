@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     >
 
     <android.support.v7.widget.Toolbar
@@ -48,11 +49,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:background="@drawable/item_talking_receive"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="发送验证码"
-                android:textSize="15dp"/>
+                android:textSize="15dp"
+                android:textColor="@color/gray"
+                android:background="@drawable/btn_style"/>
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout

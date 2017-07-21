@@ -332,7 +332,7 @@ public class UserInfoActivity extends AppCompatActivity {
     // check user name spell
     private void setUserNameChecker(final TextInputLayout textInputLayout){
         EditText user_name_et = textInputLayout.getEditText();
-        user_name_et.setHint("User name");
+        //user_name_et.setHint("User name");
         user_name_et.addTextChangedListener(new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if (s.length() == 0) {
