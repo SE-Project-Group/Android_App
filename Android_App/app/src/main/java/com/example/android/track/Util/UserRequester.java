@@ -1,5 +1,6 @@
 package com.example.android.track.Util;
 
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.Model.Follow;
 import com.example.android.track.Model.UserInfo;
@@ -12,6 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -91,7 +93,9 @@ public class UserRequester {
             e.printStackTrace();
             return "failed";
         }
+
         verify.storeToken(token, user_id);
+
         return "success";
 
     }

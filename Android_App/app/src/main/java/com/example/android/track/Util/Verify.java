@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import cn.jpush.android.api.JPushInterface;
 import sun.misc.BASE64Encoder;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -79,5 +80,21 @@ public class Verify {
         editor.putString("token", token);
         editor.putInt("user_id", user_id);
         editor.apply();
+
+        // set Alias
+        JPushInterface.setAlias(MyApplication.getContext(),String.valueOf(user_id), null);
+    }
+
+
+    public void delete_token(){
+        SharedPreferences.Editor editor = context.getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
+        editor.putBoolean("loged", false);
+        editor.putString("token", "");
+        editor.putInt("user_id", 0);
+        editor.apply();
+
+        //delete alias
+        JPushInterface.setAlias(context, "", null);
+
     }
 }
