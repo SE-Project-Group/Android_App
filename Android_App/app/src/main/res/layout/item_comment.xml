@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         android:paddingLeft="10dp">
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/portrait_image"
                 android:layout_width="40dp"
@@ -23,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp">
             <TextView
                 android:id="@+id/user_name_text"
@@ -35,14 +37,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Comment Text"/>
-            <TextView
-                android:id="@+id/comment_detail_btn"
-                android:layout_marginTop="10dp"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:text="查看对话"/>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2017-7.21 "/>
+                <Button
+                    android:id="@+id/conversation_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="conversation"/>
+                <Button
+                    android:id="@+id/reply_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="reply"/>
+            </LinearLayout>
         </LinearLayout>
+
+
+
     </LinearLayout>
 
 

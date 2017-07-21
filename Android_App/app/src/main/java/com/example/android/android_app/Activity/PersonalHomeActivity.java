@@ -81,7 +81,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         if (user_id == Integer.valueOf(verify.getUser_id()))
             ME = true;
 
-        getUserInfo();
+        initHomeInfo();
         setFollowActivityButton();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -164,11 +164,11 @@ public class PersonalHomeActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void getUserInfo(){
+    private void initHomeInfo(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                userInfo = userRequester.getUserInfo(user_id);
+                userInfo = userRequester.getHomeInfo(user_id);
                 Message message = new Message();
                 if(userInfo == null)
                     message.what = GET_INFO_FAILED;

@@ -368,7 +368,7 @@ public class NewFeedActivity extends AppCompatActivity {
         ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
         int count = picture_cnt;
         for(int i = 0; i < count; i++){
-            ossService.asyncPutImage(feed_id+"_"+String.valueOf(i),pathList.get(i));
+            ossService.asyncPutImage(feed_id+"_"+String.valueOf(i+1),pathList.get(i));
         }
     }
 
@@ -386,7 +386,6 @@ public class NewFeedActivity extends AppCompatActivity {
                         finish();
                     }
                     upload_pic(bundle.getString("feed_id"));
-                    //upload_pic("asdfasdgasdfasdfasd");
                     break;
                 case UPLOAD_FAILED:
                     Toast.makeText(NewFeedActivity.this, "failed", Toast.LENGTH_SHORT).show();

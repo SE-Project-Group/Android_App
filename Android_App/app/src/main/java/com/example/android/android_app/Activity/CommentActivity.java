@@ -1,6 +1,8 @@
 package com.example.android.android_app.Activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 
 import com.example.android.android_app.Adapter.CommentAdapter;
+import com.example.android.android_app.Application.MyApplication;
 import com.example.android.android_app.Model.Comment;
 import com.example.android.android_app.R;
 import com.example.android.android_app.Util.FeedRequester;
@@ -33,7 +36,11 @@ public class CommentActivity extends AppCompatActivity {
     private String feed_id;
 
     private Verify verify;
-    private List<Comment> commentList = new ArrayList<>();
+    private List<Comment> commentList;
+
+    // message
+    private final static int GET_COMMENTS_OK = 0;
+    private final static int GET_COMMENTS_FAILED = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,13 @@ public class CommentActivity extends AppCompatActivity {
         if(verify == null)
             verify = new Verify();
 
+        // inti bottom comment part
+        comment_content = (EditText) findViewById(R.id.comment_content);
+        send_btn = (Button) findViewById(R.id.comment_send);
+        rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
+        setListener();
+
         initComment();
-        initView();
     }
 
     private void initComment(){
@@ -54,24 +66,26 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 FeedRequester requester = new FeedRequester();
+                commentList = requester.getCommentList(feed_id);
+                Message message = new Message();
+                if(commentList == null)
+                    message.what = GET_COMMENTS_FAILED;
+                else
+                    message.what = GET_COMMENTS_OK;
+                handler.sendMessage(message);
             }
         }).start();
     }
 
-    private void initView() {
+    private void setCommentList(){
         // init comment list
         recyclerView = (RecyclerView) findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         CommentAdapter adapter = new CommentAdapter(commentList, this);
         recyclerView.setAdapter(adapter);
-
-        // inti bottom comment part
-        comment_content = (EditText) findViewById(R.id.comment_content);
-        send_btn = (Button) findViewById(R.id.comment_send);
-        rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
-        setListener();
     }
+
 
     public void setListener(){
         send_btn.setOnClickListener(new View.OnClickListener() {
@@ -93,4 +107,18 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_COMMENTS_OK:
+                    setCommentList();
+                    break;
+                case GET_COMMENTS_FAILED:
+                    Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }
