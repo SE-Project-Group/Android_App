@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.android_app">
+    package="com.example.android.track">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".Application.MyApplication"
+        android:name="com.example.android.track.Application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,10 +28,10 @@
             android:value="WkHea5Yq5dAD44rRyjmz1sz5lEHKwxQU" />
 
         <activity
-            android:name=".Activity.LogInActivity"
+            android:name="com.example.android.track.Activity.LogInActivity"
             android:label="请登录" />
         <activity
-            android:name=".Activity.HomeActivity"
+            android:name="com.example.android.track.Activity.HomeActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,8 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.SignUpActivity" />
-        <activity android:name=".Activity.SearchActivity" />
+        <activity android:name="com.example.android.track.Activity.SignUpActivity" />
+        <activity android:name="com.example.android.track.Activity.SearchActivity" />
 
         <!-- register service -->
         <service
@@ -48,27 +48,27 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <activity android:name=".Activity.NewFeedActivity" />
-        <activity android:name=".Activity.SettingActivity" />
-        <activity android:name=".Activity.UserSercurityActivity" />
-        <activity android:name=".Activity.MyAlbumActivity" />
-        <activity android:name=".Activity.PersonalHomeActivity" />
-        <activity android:name=".Activity.TalkingActivity" />
-        <activity android:name=".Activity.CommentActivity" />
-        <activity android:name=".Activity.CommentRemindActivity" />
-        <activity android:name=".Activity.LikeRemindActivity" />
-        <activity android:name=".Activity.AlbumActivity" />
+        <activity android:name="com.example.android.track.Activity.NewFeedActivity" />
+        <activity android:name="com.example.android.track.Activity.SettingActivity" />
+        <activity android:name="com.example.android.track.Activity.UserSercurityActivity" />
+        <activity android:name="com.example.android.track.Activity.MyAlbumActivity" />
+        <activity android:name="com.example.android.track.Activity.PersonalHomeActivity" />
+        <activity android:name="com.example.android.track.Activity.TalkingActivity" />
+        <activity android:name="com.example.android.track.Activity.CommentActivity" />
+        <activity android:name="com.example.android.track.Activity.CommentRemindActivity" />
+        <activity android:name="com.example.android.track.Activity.LikeRemindActivity" />
+        <activity android:name="com.example.android.track.Activity.AlbumActivity" />
 
         <service
-            android:name=".Service.PollingService"
+            android:name="com.example.android.track.Service.PollingService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activity.MyLikeActivity" />
-        <activity android:name=".Activity.MyShareActivity" />
-        <activity android:name=".Activity.MentionRemindActivity" />
-        <activity android:name=".Activity.UserInfoActivity" />
-        <activity android:name=".Activity.FollowActivity"></activity>
+        <activity android:name="com.example.android.track.Activity.MyLikeActivity" />
+        <activity android:name="com.example.android.track.Activity.MyShareActivity" />
+        <activity android:name="com.example.android.track.Activity.MentionRemindActivity" />
+        <activity android:name="com.example.android.track.Activity.UserInfoActivity" />
+        <activity android:name="com.example.android.track.Activity.FollowActivity"></activity>
     </application>
 
 </manifest>

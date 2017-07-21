@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.android.android_app"
+        applicationId "com.example.android.track"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -19,7 +19,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "8961ddfedc47973e6ca6b9b2", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "44e21f0a606fd0182958de50", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
     }

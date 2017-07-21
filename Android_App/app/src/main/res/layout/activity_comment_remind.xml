@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.android_app.Activity.CommentRemindActivity">
+    tools:context="com.example.android.track.Activity.CommentRemindActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/remind_recyclerView"
         android:layout_width="match_parent"
