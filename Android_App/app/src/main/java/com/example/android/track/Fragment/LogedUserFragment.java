@@ -24,9 +24,12 @@ import com.example.android.track.Activity.MyShareActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Activity.SettingActivity;
 import com.example.android.track.Activity.UserInfoActivity;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -34,7 +37,7 @@ import com.example.android.track.Util.Verify;
  */
 
 public class LogedUserFragment extends Fragment{
-    private static final int LOG_OU_OK = 0;
+    private static final int LOG_OUT_OK = 0;
     private static final int LOG_OUT_FAILED = 1;
 
 
@@ -123,7 +126,7 @@ public class LogedUserFragment extends Fragment{
                         String result = requester.logOut();
                         Message message = new Message();
                         if(result.equals("success"))
-                            message.what = LOG_OU_OK;
+                            message.what = LOG_OUT_OK;
                         else
                             message.what = LOG_OUT_FAILED;
                         handler.sendMessage(message);
@@ -149,8 +152,10 @@ public class LogedUserFragment extends Fragment{
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case LOG_OU_OK:
-                    delete_token();
+                case LOG_OUT_OK:
+                    new Verify().delete_token();
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    startActivity(intent);
                     break;
                 case LOG_OUT_FAILED:
                     Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
@@ -159,15 +164,7 @@ public class LogedUserFragment extends Fragment{
         }
     };
 
-    private void delete_token(){
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences("logIn_data", Context.MODE_PRIVATE).edit();
-        editor.putBoolean("loged", false);
-        editor.putString("token", "");
-        editor.putInt("user_id", 0);
-        editor.apply();
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
-    }
+
 
 
 }

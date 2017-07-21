@@ -54,12 +54,6 @@
                         android:layout_weight="1"
                         android:text="time:           " />
 
-                    <TextView
-                        android:id="@+id/position"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="from:" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -83,6 +77,14 @@
             app:imgGap="4dp"
             app:showStyle="fill"
             app:singleImgSize="120dp"/>
+
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="from:"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <!--comment or like button-->
         <LinearLayout
