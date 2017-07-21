@@ -14,8 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
 import com.example.android.track.Util.UserRequester;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 public class LogInActivity extends AppCompatActivity {
