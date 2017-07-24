@@ -7,17 +7,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.android.track.Model.Talking;
 import com.example.android.track.R;
 
 import java.util.List;
+
+import cn.jpush.im.android.api.enums.MessageDirect;
+import cn.jpush.im.android.api.model.Message;
 
 /**ta
  * Created by jarvis on 2017/7/19.
  */
 
 public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHolder>{
-    private List<Talking> mTalkingList;
+    private List<Message> mMessageList;
     static class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout send_layout;
         LinearLayout receive_layout;
@@ -33,8 +35,8 @@ public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHold
         }
     }
 
-    public TalkingAdapter(List<Talking> talkingList){
-        mTalkingList = talkingList;
+    public TalkingAdapter(List<Message> talkingList){
+        mMessageList = talkingList;
     }
 
     @Override
@@ -46,22 +48,22 @@ public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
-        Talking talking = mTalkingList.get(position);
-        if(talking.getType() == Talking.TYPE_RECEIVED){
+        Message message = mMessageList.get(position);
+        if(message.getDirect() == MessageDirect.receive){
             //if it is receive
             holder.receive_layout.setVisibility(View.VISIBLE);
             holder.send_layout.setVisibility(View.GONE);
-            holder.receive_text.setText(talking.getContent());
+            holder.receive_text.setText(message.getContent().toString());
         }else{
             //if it is send
             holder.send_layout.setVisibility(View.VISIBLE);
             holder.receive_layout.setVisibility(View.GONE);
-            holder.send_text.setText(talking.getContent());
+            holder.send_text.setText(message.getContent().toString());
         }
     }
 
     @Override
     public int getItemCount(){
-        return mTalkingList.size();
+        return mMessageList.size();
     }
 }

@@ -14,8 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
 import com.example.android.track.Util.UserRequester;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -23,6 +27,12 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int EXIST_PHONE = 1;
     private static final int EXIST_USER_NAME = 2;
     private Button sign_up_btn;
+
+    //view
+    private EditText et_userName;
+    private EditText et_password;
+    private EditText et_phone;
+    private EditText et_password_confirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +44,21 @@ public class SignUpActivity extends AppCompatActivity {
 
         setCheckListener();
 
-        // get form
-        EditText et_userName = (EditText) findViewById(R.id.et_userName);
-        EditText et_password = (EditText) findViewById(R.id.et_password);
-        EditText et_phone = (EditText) findViewById(R.id.et_phone);
-        EditText et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
-        
-        final String user_name_ed = et_userName.getText().toString();
-        final String password_ed = et_password.getText().toString();
-        final String phone_ed = et_phone.getText().toString();
-        final String password_confirm_ed = et_password_confirm.getText().toString();
+        // get EditText et_password_confirmform
+        et_userName = (EditText) findViewById(R.id.et_userName);
+        et_password = (EditText) findViewById(R.id.et_password);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
         
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn); 
         
         sign_up_btn.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                String user_name_ed = et_userName.getText().toString();
+                String password_ed = et_password.getText().toString();
+                String phone_ed = et_phone.getText().toString();
+                String password_confirm_ed = et_password_confirm.getText().toString();
+
                 if(phone_ed.equals("") || user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
                     Toast.makeText(SignUpActivity.this, "表单信息有误", Toast.LENGTH_SHORT).show();
                 }else {
@@ -63,13 +73,24 @@ public class SignUpActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            String token = "";
-            int user_id = 0;
             switch (msg.what){
                 case SIGNUP_OK:
-                    Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_SHORT).show();
+                    // sign up Jmessage client
+                    Toast.makeText(MyApplication.getContext(), "account注册成功", Toast.LENGTH_SHORT).show();
+                    String user_id = msg.getData().getString("user_id");
+                    JMessageClient.register(user_id, user_id, new BasicCallback() {
+                        @Override
+                        public void gotResult(int i, String s) {
+                            if(i == 0){
+                                Toast.makeText(MyApplication.getContext(), "JMessage注册成功", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(MyApplication.getContext(), s, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     // go back to home activity
-                    Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                     startActivity(intent);
                     break;
                 case EXIST_PHONE:
@@ -97,9 +118,11 @@ public class SignUpActivity extends AppCompatActivity {
                     message.what = EXIST_PHONE;
                 if(response_data.equals("existing user name"))
                     message.what = EXIST_USER_NAME;
-                if(response_data.equals("success")) {
+                else{
+                    String user_id = response_data;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", user_id);
                     message.what = SIGNUP_OK;
-
                     handler.sendMessage(message);
                 }
                 

@@ -23,7 +23,7 @@ import okhttp3.Response;
  */
 
 public class UserRequester {
-    private final static String host = "http://192.168.1.200:8080/track/rest/app/user/";
+    private final static String host = "http://106.15.188.135:8080/track/rest/app/user/";
     private Verify verify = new Verify("/track/rest/app/user/");
 
     // constructor with no argument
