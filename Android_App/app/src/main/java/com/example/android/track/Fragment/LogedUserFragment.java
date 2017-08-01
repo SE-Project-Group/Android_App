@@ -31,6 +31,8 @@ import com.example.android.track.Util.Verify;
 
 import cn.jpush.android.api.JPushInterface;
 
+import static com.example.android.track.Application.MyApplication.logOut;
+
 
 /**
  * Created by thor on 2017/6/29.
@@ -122,8 +124,7 @@ public class LogedUserFragment extends Fragment{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        UserRequester requester = new UserRequester();
-                        String result = requester.logOut();
+                        String result = MyApplication.logOut();
                         Message message = new Message();
                         if(result.equals("success"))
                             message.what = LOG_OUT_OK;

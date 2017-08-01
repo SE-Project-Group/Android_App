@@ -20,6 +20,8 @@ import com.example.android.track.Util.UserRequester;
 
 import cn.jpush.android.api.JPushInterface;
 
+import static android.R.id.message;
+
 
 public class LogInActivity extends AppCompatActivity {
     private static final int LOG_IN_OK = 0;
@@ -70,8 +72,7 @@ public class LogInActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserRequester requester = new UserRequester();
-                String result = requester.logInRequest(user_name, password);
+                String result = MyApplication.logIn(user_name, password);
                 Message message = new Message();
                 // if failed
                 if(result.equals("ERROR"))
@@ -79,7 +80,6 @@ public class LogInActivity extends AppCompatActivity {
 
                 else
                     message.what = LOG_IN_OK;
-
                 handler.sendMessage(message);
             }
         }).start();
