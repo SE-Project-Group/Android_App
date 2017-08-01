@@ -62,7 +62,7 @@ public class ImageUriParser {
         String path = null;
         Cursor cursor = context.getContentResolver()
                 .query(uri, null, selection, null, null);
-        if(cursor == null ){
+        if(cursor != null ){
             if(cursor.moveToFirst()){
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             }

@@ -25,12 +25,12 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:background="@drawable/layout_style"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -46,26 +46,21 @@
                         android:textColorHint="@color/gray"
                         android:textSize="16dp" />
 
-
-                    <!--pircture group-->
-                    <LinearLayout
-                        android:layout_marginTop="30px"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp">
-                        <ImageView
-                            android:id="@+id/new_pic_0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                        <ImageView
-
-                            android:id="@+id/add_pic_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src ="@drawable/ic_add_pic"/>
-                    </LinearLayout>
+                    <com.example.android.track.Util.MyGridView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/gridview"
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:numColumns="3"
+                        android:verticalSpacing="2dp"
+                        android:horizontalSpacing="5dp"
+                        android:columnWidth="300dp"
+                        android:stretchMode="columnWidth"
+                        android:gravity="center" />
 
                 </LinearLayout>
+
                 <View
                     android:layout_height="1px"
                     android:background="#e0e0e0"

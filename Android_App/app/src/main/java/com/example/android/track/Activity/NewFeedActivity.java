@@ -1,5 +1,6 @@
 package com.example.android.track.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -18,22 +20,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adobe.creativesdk.aviary.AdobeImageIntent;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.bumptech.glide.Glide;
+import com.example.android.track.Adapter.GridViewAdapter;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Util.BottomPopView;
 import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.ImageUriParser;
+import com.example.android.track.Util.MyGridView;
 import com.example.android.track.Util.OssInit;
 import com.example.android.track.Util.OssService;
 import com.example.android.track.Util.Verify;
 import com.example.android.track.R;
+import com.jaeger.ninegridimageview.NineGridImageView;
+import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,34 +51,44 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+import static android.R.attr.path;
+import static android.R.id.list;
+import static com.baidu.location.d.j.A;
+import static com.baidu.location.d.j.n;
+import static com.baidu.location.d.j.v;
+
+
 public class NewFeedActivity extends AppCompatActivity {
-    private int old_position;
     private BottomPopView bottomPopView;
     private LocationClient mLocationClient;
     private TextView tv_position;
+    private MyGridView gridView;
 
-    private ImageView picture_0;
-    private ImageView new_pic;
-    private Uri new_pic_uri;
-    private static final int TAKE_PHOTO = 1;
-    private static final int CHOOSE_PHOTO = 2;
+    private static final int ADD_PHOTO = 1;
+    private static final int EDIT_PHOTO = 2;
     private String detailed_location;
     private static final int LOCATE_OK = 4;
 
     // used to send to server
     // select show area
-    private int picture_cnt = 0;
     private boolean showLocation;
     private double latitude;
     private double longitude;
     private String text;
     private String shareArea;
+
     private static final String PUBLIC = "public";
     private static final String FRIEND = "friend";
     private static final String PRIVATE = "private";
+
     private static final int UPLOAD_OK = 3;
     private static final int UPLOAD_FAILED = 6;
     private static final int UPLOAD_PIC_OK = 5;
@@ -77,16 +97,14 @@ public class NewFeedActivity extends AppCompatActivity {
     private OssService ossService;
     private List<String> pathList = new ArrayList<>();
 
+    private int replace_position;
 
     // @ someone ids
-    private JSONArray metionList = new JSONArray();
+    private JSONArray mentionList = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // get old position
-        Intent intent = getIntent();
-        old_position = intent.getIntExtra("old_position", 0);
 
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
@@ -95,17 +113,16 @@ public class NewFeedActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.newFeedToolBar);
         setSupportActionBar(toolbar);
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
+        gridView=(MyGridView) findViewById(R.id.gridview);
+        refreshGridView();
+
         // get location
         locate();
-        // add picture function
-        ImageView add_btn = (ImageView) findViewById(R.id.add_pic_btn);
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                add_pic();
-            }
-        });
+    }
 
+    private void refreshGridView(){
+        GridViewAdapter pictureAdapter = new GridViewAdapter(pathList, this);
+        gridView.setAdapter(pictureAdapter);
     }
 
     // location receive listener
@@ -190,6 +207,7 @@ public class NewFeedActivity extends AppCompatActivity {
         return true;
     }
 
+
     // get and check information form page
     private String generateJsonString(){
         EditText edit_text = (EditText) findViewById(R.id.edit_text);
@@ -227,8 +245,8 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("location", location);
 
             jsonObject.put("shareArea", shareArea);
-            jsonObject.put("mentionList", metionList);
-            jsonObject.put("picCount", picture_cnt);
+            jsonObject.put("mentionList", mentionList);
+            jsonObject.put("picCount", pathList.size());
             jsonObject.put("position", detailed_location);
         }catch (JSONException e){
             e.printStackTrace();
@@ -237,134 +255,70 @@ public class NewFeedActivity extends AppCompatActivity {
 
     }
 
-    // send  son to server, picture should be sent to cloud storage
-
-    // jedge if the user can add a picture, and let the user choose type
-    // then descide which function to use ， takeNewPhoto or addFromAlbum
-    private void add_pic(){
-        int full = 0;
-        switch (picture_cnt){
-            case 0:
-                picture_0  = (ImageView) findViewById(R.id.new_pic_0);
-                new_pic = picture_0;
-                break;
-            case 1:
-                Toast.makeText(NewFeedActivity.this, "达到图片数量上限", Toast.LENGTH_SHORT).show();
-
-                full = 1;
-                break;
-            default:
-                break;
-        }
-        // if the number of picture has already reach the limitation
-        if(full != 0)
-            return;
-        setPopView();
-    }
-
 
     // set PopView and get ready for the select click
-    private void setPopView(){
+    public void setPopView(int position){
         bottomPopView = new BottomPopView(this, findViewById(R.id.newFeedPage_root)) {
             @Override
             public void onTopButtonClick() {
                 bottomPopView.dismiss();
-                takeNewPhoto();
+                editPhoto(position);
             }
             @Override
             public void onBottomButtonClick() {
-
-                //choosePhoto();
                 bottomPopView.dismiss();
-                selectFromAlbum();
+                deletePhoto(position);
             }
         };
-        bottomPopView.setTopText("拍照");
-        bottomPopView.setBottomText("选择照片");
+        bottomPopView.setTopText("美化");
+        bottomPopView.setBottomText("删除");
         // 显示底部菜单
         bottomPopView.show();
     }
 
-    // select
-    private void takeNewPhoto(){
-        // get ready for storage photo
-        File outputImage = new File(getExternalCacheDir(), "new_taken_photo.png");
-        try{
-            if(outputImage.exists()){
-                outputImage.delete();
-            }
-            outputImage.createNewFile();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        // create image URI
-        if(Build.VERSION.SDK_INT >= 24){ // lower than Android 7.0
-            new_pic_uri = FileProvider.getUriForFile(NewFeedActivity.this, "com.example.android.Android_app.fileProvider", outputImage);
-        }else{
-            new_pic_uri = Uri.fromFile(outputImage);
-        }
-
-        // turn on camera
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, new_pic_uri);
-        startActivityForResult(intent, TAKE_PHOTO);
+    private void editPhoto(int position){
+        Uri imageUri = Uri.parse(pathList.get(position));
+        Intent imageEditorIntent = new AdobeImageIntent.Builder(this)
+                .setData(imageUri)
+                .build();
+        replace_position = position;
+        startActivityForResult(imageEditorIntent, EDIT_PHOTO);
     }
 
-    private void selectFromAlbum(){
-        // open album
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
-        startActivityForResult(intent, CHOOSE_PHOTO);
+    private void deletePhoto(int position){
+        pathList.remove(position);
+        refreshGridView();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 2;
         switch (requestCode){
-            case TAKE_PHOTO :
-                if(resultCode == RESULT_OK){
-                    String path = new_pic_uri.getPath();
-                    pathList.add(path);
-                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-                    Bitmap scaled = scaleBitmap(bitmap, 300,300);
-                    new_pic.setImageBitmap(scaled);
-                    picture_cnt ++;
-                }
+            case ADD_PHOTO:
+                List<String> newPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                pathList = newPathList;
+                refreshGridView();
                 break;
-            case CHOOSE_PHOTO :
-                ImageUriParser imageUriParser = new ImageUriParser(this);
-                String path = imageUriParser.parse(data.getData());
-                pathList.add(path);
-                Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-                Bitmap scaled = scaleBitmap(bitmap, 300,300);
-                new_pic.setImageBitmap(scaled);
-                picture_cnt ++;
+            case EDIT_PHOTO:
+                Uri editedImageUri = data.getParcelableExtra(AdobeImageIntent.EXTRA_OUTPUT_URI);
+                if(editedImageUri==null)
+                    break;
+                else {
+                    String newPath = new ImageUriParser(NewFeedActivity.this).parse(editedImageUri);
+                    pathList.remove(replace_position);
+                    pathList.add(replace_position, newPath);
+                    refreshGridView();
+                    break;
+                }
             default:
                 break;
         }
     }
 
-    private Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight){
-        if (origin == null) {
-            return null;
-        }
-        int height = origin.getHeight();
-        int width = origin.getWidth();
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        Matrix matrix = new Matrix();
-        matrix.postScale(scaleWidth, scaleHeight);// 使用后乘
-        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
-        if (!origin.isRecycled()) {
-            origin.recycle();
-        }
-        return newBM;
-    }
 
     private void upload_pic(String feed_id){
         ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
-        int count = picture_cnt;
+        int count = pathList.size();
         for(int i = 0; i < count; i++){
             ossService.asyncPutImage(feed_id+"_"+String.valueOf(i+1),pathList.get(i));
         }
@@ -374,11 +328,11 @@ public class NewFeedActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            int count = picture_cnt;
+            int count = pathList.size();
             switch (msg.what){
                 case UPLOAD_OK:
                     Bundle bundle = msg.getData();
-                    if(picture_cnt == 0){
+                    if(count == 0){     // no picture need to be upload
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();
@@ -406,4 +360,5 @@ public class NewFeedActivity extends AppCompatActivity {
             }
         }
     };
+
 }
