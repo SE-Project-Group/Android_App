@@ -26,6 +26,14 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="WkHea5Yq5dAD44rRyjmz1sz5lEHKwxQU" />
+        <receiver
+            android:name=".Receiver.MyReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <category android:name="com.example.android.track" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name="com.example.android.track.Activity.LogInActivity"
