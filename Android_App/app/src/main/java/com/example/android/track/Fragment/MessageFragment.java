@@ -57,6 +57,9 @@ public class MessageFragment extends Fragment {
     //一倍滚动量
     private int one;
 
+    private View notification_view;
+    private View chat_view;
+
 
 
     private List<Message> messagesList = new ArrayList<>();
@@ -70,20 +73,19 @@ public class MessageFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.messageToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
         setViewPager();
-
     }
 
-    private void setUnReadRemind(){
-        RemindView likeRemindView = (RemindView) getActivity().findViewById(R.id.ic_like);
-        RemindView commentRemindView = (RemindView) getActivity().findViewById(R.id.ic_comment);
-        RemindView shareRemindView = (RemindView) getActivity().findViewById(R.id.ic_share);
-        RemindView mentionRemindView = (RemindView) getActivity().findViewById(R.id.ic_mention);
+
+
+    private void setUnReadRemind(View parentView){
+        RemindView likeRemindView = (RemindView) parentView.findViewById(R.id.ic_like);
+        RemindView commentRemindView = (RemindView) parentView.findViewById(R.id.ic_comment);
+        RemindView shareRemindView = (RemindView) parentView.findViewById(R.id.ic_share);
+        RemindView mentionRemindView = (RemindView) parentView.findViewById(R.id.ic_mention);
 
         likeRemindView.setBackground(R.drawable.feed_item_like);
         commentRemindView.setBackground(R.drawable.user_comment);
@@ -96,8 +98,8 @@ public class MessageFragment extends Fragment {
         mentionRemindView.setMessageCount(MyApplication.getUnReadMentionCnt());
     }
 
-    private void setClickListener(){
-        LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.comment_remind);
+    private void setClickListener(View parentView){
+        LinearLayout mycomment_btn = (LinearLayout) parentView.findViewById(R.id.comment_remind);
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +108,7 @@ public class MessageFragment extends Fragment {
             }
         });
 
-        LinearLayout at_me_btn = (LinearLayout) getActivity().findViewById(R.id.at_me_remind);
+        LinearLayout at_me_btn = (LinearLayout) parentView.findViewById(R.id.at_me_remind);
         at_me_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,7 +118,7 @@ public class MessageFragment extends Fragment {
             }
         });
 
-        LinearLayout mylike_btn = (LinearLayout) getActivity().findViewById(R.id.like_remind);
+        LinearLayout mylike_btn = (LinearLayout) parentView.findViewById(R.id.like_remind);
         mylike_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +129,7 @@ public class MessageFragment extends Fragment {
     }
 
     // get storages from SQLite
-    private void initRecyclerView(){
+    private void initRecyclerView(View parentView){
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message messageA = new Message();
         messageA.setDate(time);
@@ -138,7 +140,7 @@ public class MessageFragment extends Fragment {
         messagesList.add(messageA);
 
         // init recyclerView
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
+        RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
@@ -149,8 +151,8 @@ public class MessageFragment extends Fragment {
         viewPager = (ViewPager) getActivity().findViewById(R.id.viewPager);
         //查找布局文件用LayoutInflater.inflate
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View notification_view = inflater.inflate(R.layout.view_pager_notification, null);
-        View chat_view = inflater.inflate(R.layout.view_pager_chat, null);
+        notification_view = inflater.inflate(R.layout.view_pager_notification, null);
+        chat_view = inflater.inflate(R.layout.view_pager_chat, null);
         notification_tv = (TextView)getActivity().findViewById(R.id.videoLayout);
         chat_tv = (TextView)getActivity().findViewById(R.id.musicLayout);
         scrollbar = (ImageView)getActivity().findViewById(R.id.scrollbar);
@@ -159,15 +161,15 @@ public class MessageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0);
-                setUnReadRemind();
-                setClickListener();
+                setUnReadRemind(notification_view);
+                setClickListener(notification_view);
             }
         });
         chat_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(1);
-                initRecyclerView();
+                initRecyclerView(chat_view);
             }
         });
 
@@ -206,6 +208,8 @@ public class MessageFragment extends Fragment {
         viewPager.setAdapter(mPagerAdapter);
         //设置viewPager的初始界面为第一个界面
         viewPager.setCurrentItem(0);
+        setUnReadRemind(notification_view);
+        setClickListener(notification_view);
         //添加切换界面的监听器
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
         // 获取滚动条的宽度
@@ -241,9 +245,12 @@ public class MessageFragment extends Fragment {
                      * float toYDelta 动画开始的点离当前View Y坐标上的差值
                      **/
                     animation = new TranslateAnimation(one, 0, 0, 0);
+                    setUnReadRemind(notification_view);
+                    setClickListener(notification_view);
                     break;
                 case 1:
                     animation = new TranslateAnimation(offset, one, 0, 0);
+                    initRecyclerView(chat_view);
                     break;
             }
             //arg0为切换到的页的编码
@@ -251,7 +258,7 @@ public class MessageFragment extends Fragment {
             // 将此属性设置为true可以使得图片停在动画结束时的位置
             animation.setFillAfter(true);
             //动画持续时间，单位为毫秒
-            animation.setDuration(200);
+            animation.setDuration(150);
             //滚动条开始动画
             scrollbar.startAnimation(animation);
         }

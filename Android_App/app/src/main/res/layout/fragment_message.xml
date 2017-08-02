@@ -13,53 +13,59 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:weightSum="1">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp">
 
-                <TextView
-                    android:id="@+id/videoLayout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:gravity="center"
-                    android:text="通知"
-                    android:textColor="#000000"
-                    android:textSize="20dip" />
+                    android:layout_weight="1.0">
+                    <TextView
+                        android:id="@+id/videoLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="通知"
+                        android:gravity="center"/>
+                </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0">
                 <TextView
                     android:id="@+id/musicLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:gravity="center"
-                    android:text="私聊"
-                    android:textColor="#000000"
-                    android:textSize="20dip" />
+                    android:text="私聊" />
+            </LinearLayout>
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_below="@id/linearLayout"
-                android:id="@+id/scrollbar"
-                android:scaleType="matrix"
-                android:src="@drawable/scrollbar"/>
-        </RelativeLayout>
-
     </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:id="@+id/scrollbar"
+            android:scaleType="matrix"
+            android:src="@drawable/scrollbar"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/scrollbar">
+        android:layout_height="wrap_content">
     </android.support.v4.view.ViewPager>
 
 </LinearLayout>
