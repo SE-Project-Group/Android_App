@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 
 import com.example.android.track.Activity.MentionRemindActivity;
 import com.example.android.track.Adapter.MessageAdapter;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Message;
 import com.example.android.track.Activity.CommentRemindActivity;
 import com.example.android.track.Activity.LikeRemindActivity;
 import com.example.android.track.R;
+import com.example.android.track.Util.RemindView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -45,17 +47,27 @@ public class MessageFragment extends Fragment {
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.messageToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        setUnReadRemind();
         setClickListener();
+        initRecyclerView();
 
-        initMessages();
+    }
 
-        // init recyclerView
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
-        recyclerView.setAdapter(adapter);
+    private void setUnReadRemind(){
+        RemindView likeRemindView = (RemindView) getActivity().findViewById(R.id.ic_like);
+        RemindView commentRemindView = (RemindView) getActivity().findViewById(R.id.ic_comment);
+        RemindView shareRemindView = (RemindView) getActivity().findViewById(R.id.ic_share);
+        RemindView mentionRemindView = (RemindView) getActivity().findViewById(R.id.ic_mention);
 
+        likeRemindView.setBackground(R.drawable.feed_item_like);
+        commentRemindView.setBackground(R.drawable.user_comment);
+        shareRemindView.setBackground(R.drawable.share_1);
+        mentionRemindView.setBackground(R.drawable.new_feed_at);
+
+        likeRemindView.setMessageCount(MyApplication.getUnReadLikenCnt());
+        commentRemindView.setMessageCount(MyApplication.getUnReadCommentCnt());
+        shareRemindView.setMessageCount(MyApplication.getUnReadShareCnt());
+        mentionRemindView.setMessageCount(MyApplication.getUnReadMentionCnt());
     }
 
     private void setClickListener(){
@@ -89,7 +101,7 @@ public class MessageFragment extends Fragment {
     }
 
     // get storages from SQLite
-    private void initMessages(){
+    private void initRecyclerView(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Message messageA = new Message();
         messageA.setDate(time);
@@ -98,5 +110,12 @@ public class MessageFragment extends Fragment {
         messageA.setUser_id(0);
         messageA.setUser_name("Root");
         messagesList.add(messageA);
+
+        // init recyclerView
+        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.message_recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
+        recyclerView.setAdapter(adapter);
     }
 }

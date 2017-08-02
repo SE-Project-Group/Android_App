@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<litepal>
+    <dbname value="track" ></dbname>
+    <version value="1"></version>
+
+    <list>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.LikeMeRecord"></mapping>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.CommentMeRecord"></mapping>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.ShareMeRecord"></mapping>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.MentionMeRecord"></mapping>
+    </list>
+</litepal>

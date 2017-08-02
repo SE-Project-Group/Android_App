@@ -20,21 +20,22 @@ public class LikeRemindActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mention_remind);
+        initRecyclerView();
 
-        initReminds();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        RemindAdapter adapter = new RemindAdapter(remindList, getApplicationContext());
-        recyclerView.setAdapter(adapter);
     }
 
-    private void initReminds(){
+    private void initRecyclerView(){
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Remind remindA = new Remind();
         remindList.add(remindA);
         remindList.add(remindA);
         remindList.add(remindA);
         remindList.add(remindA);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        RemindAdapter adapter = new RemindAdapter(remindList, getApplicationContext());
+        recyclerView.setAdapter(adapter);
     }
 }

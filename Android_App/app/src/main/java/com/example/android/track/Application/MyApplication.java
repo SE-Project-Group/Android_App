@@ -10,6 +10,8 @@ import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 
+import org.litepal.LitePal;
+
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -18,7 +20,8 @@ import cn.jpush.im.api.BasicCallback;
  * Created by thor on 2017/7/19.
  */
 
-public class MyApplication extends Application implements IAdobeAuthClientCredentials {
+public class MyApplication extends Application implements IAdobeAuthClientCredentials{
+
     /* Be sure to fill in the two strings below. */
     private static final String CREATIVE_SDK_CLIENT_ID      = "5c7de475a1a449d2b3c366259a71ccd9";
     private static final String CREATIVE_SDK_CLIENT_SECRET  = "3762c36d-2b5a-46ac-9281-266e037d0ed1";
@@ -28,8 +31,12 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
     private static Context context;
     private static int unReadMsgCnt;
+    private static int unReadLikenCnt;
+    private static int unReadCommentCnt;
+    private static int unReadShareCnt;
+    private static int unReadMentionCnt;
     private static int unReadChatMsgCnt;
-    private static int unReadNotificationCnt;
+    private static boolean newFollowFeed = false;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -42,6 +49,10 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
         super.onCreate();
         // adobe creative sdk initialize
         AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
+        // initialize Litepal
+        LitePal.initialize(this);
+        // need
+        LitePal.getDatabase();
 
         // set context
         context = getApplicationContext();
@@ -102,6 +113,8 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
                 });
 
             }
+            // then create SQLite tables
+            LitePal.getDatabase();
         }
         return result;
     }
@@ -115,38 +128,59 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
         return result;
     }
 
-    public static int getUnReadMsgCnt(){
+    public static int getUnReadMsgCnt() {
         return unReadMsgCnt;
     }
 
-    public static int getUnReadNotificationCnt(){
-        return unReadNotificationCnt;
+    public static void setUnReadMsgCnt(int unReadMsgCnt) {
+        MyApplication.unReadMsgCnt = unReadMsgCnt;
     }
 
-    public static int getUnReadChatMsgCnt(){
+    public static int getUnReadLikenCnt() {
+        return unReadLikenCnt;
+    }
+
+    public static void setUnReadLikenCnt(int unReadLikenCnt) {
+        MyApplication.unReadLikenCnt = unReadLikenCnt;
+    }
+
+    public static int getUnReadCommentCnt() {
+        return unReadCommentCnt;
+    }
+
+    public static void setUnReadCommentCnt(int unReadCommentCnt) {
+        MyApplication.unReadCommentCnt = unReadCommentCnt;
+    }
+
+    public static int getUnReadShareCnt() {
+        return unReadShareCnt;
+    }
+
+    public static void setUnReadShareCnt(int unReadShareCnt) {
+        MyApplication.unReadShareCnt = unReadShareCnt;
+    }
+
+    public static int getUnReadMentionCnt() {
+        return unReadMentionCnt;
+    }
+
+    public static void setUnReadMentionCnt(int unReadMentionCnt) {
+        MyApplication.unReadMentionCnt = unReadMentionCnt;
+    }
+
+    public static int getUnReadChatMsgCnt() {
         return unReadChatMsgCnt;
     }
 
-    public static void addUnReadMsgCnt(int cnt){
-        unReadMsgCnt++;
+    public static void setUnReadChatMsgCnt(int unReadChatMsgCnt) {
+        MyApplication.unReadChatMsgCnt = unReadChatMsgCnt;
     }
 
-    public static void addUnReadChatMsgCnt(int cnt){
-        unReadChatMsgCnt++;
-    }
-    public static void addUnReadNotificationCnt(int cnt){
-        unReadNotificationCnt++;
+    public static boolean hasNewFollowFeed() {
+        return newFollowFeed;
     }
 
-    public static void clearUnReadMsgCnt(){
-        unReadMsgCnt = 0;
+    public static void setNewFollowFeed(boolean newFollowFeed) {
+        MyApplication.newFollowFeed = newFollowFeed;
     }
-    public static void clearUnReadNotificationCnt(){
-        unReadNotificationCnt = 0;
-    }
-
-    public static void minusUnReadChatMsgCnt(int minus){
-        unReadChatMsgCnt -= minus;
-    }
-
 }
