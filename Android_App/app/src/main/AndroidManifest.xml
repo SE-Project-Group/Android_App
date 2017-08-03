@@ -35,9 +35,17 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="com.example.android.track.Activity.LogInActivity"
-            android:label="请登录" />
+        <!-- register service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <service
+            android:name="com.example.android.track.Service.PollingService"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name="com.example.android.track.Activity.HomeActivity"
             android:launchMode="singleTask">
@@ -47,14 +55,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--Image Selector Entry-->
+        <activity
+            android:configChanges="orientation|screenSize"
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+        <activity
+            android:name="com.example.android.track.Activity.LogInActivity"
+            android:label="请登录" />
         <activity android:name="com.example.android.track.Activity.SignUpActivity" />
         <activity android:name="com.example.android.track.Activity.SearchActivity" />
 
-        <!-- register service -->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
 
         <activity android:name="com.example.android.track.Activity.NewFeedActivity" />
         <activity android:name="com.example.android.track.Activity.SettingActivity" />
@@ -64,21 +74,11 @@
         <activity android:name="com.example.android.track.Activity.TalkingActivity" />
         <activity android:name="com.example.android.track.Activity.CommentActivity" />
         <activity android:name="com.example.android.track.Activity.AlbumActivity" />
-
-        <service
-            android:name="com.example.android.track.Service.PollingService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity android:name="com.example.android.track.Activity.MyLikeActivity" />
         <activity android:name="com.example.android.track.Activity.MyShareActivity" />
         <activity android:name="com.example.android.track.Activity.UserInfoActivity" />
-        <activity android:name="com.example.android.track.Activity.FollowActivity"></activity>
-
-        <!--Image Selector Entry-->
-        <activity
-            android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+        <activity android:name="com.example.android.track.Activity.FollowActivity"/>
+        <activity android:name="com.example.android.track.Activity.RemindActivity"/>
     </application>
 
 </manifest>

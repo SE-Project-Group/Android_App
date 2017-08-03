@@ -60,6 +60,7 @@
                 android:textSize="17dp"
                 />
             <LinearLayout
+                android:id="@+id/feed_abstract"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

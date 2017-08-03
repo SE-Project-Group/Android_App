@@ -33,7 +33,7 @@ public class RemindActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mention_remind);
+        setContentView(R.layout.activity_remind);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,6 +73,7 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setUser_name(record.getUser_name());
                 remind.setTime(record.getTime());
                 remind.setComment_text(record.getComment_text());
+                remind.setReply_id(record.getReply_id());
                 remind.setFeed_id(record.getFeed_id());
                 List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
                 MyFeed myFeed = myFeeds.get(0);

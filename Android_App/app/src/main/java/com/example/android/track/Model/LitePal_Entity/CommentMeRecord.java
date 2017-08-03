@@ -14,6 +14,7 @@ public class CommentMeRecord extends DataSupport {
     private Date time;
     private String comment_text;
     private String feed_id;
+    private int reply_id;
 
     private String status;
 
@@ -65,4 +66,11 @@ public class CommentMeRecord extends DataSupport {
         this.status = status;
     }
 
+    public int getReply_id() {
+        return reply_id;
+    }
+
+    public void setReply_id(int reply_id) {
+        this.reply_id = reply_id;
+    }
 }

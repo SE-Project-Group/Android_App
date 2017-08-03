@@ -20,17 +20,24 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.android.track.Activity.RemindActivity;
 import com.example.android.track.Adapter.MessageAdapter;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Message;
+import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.RemindView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.string.no;
+import static com.baidu.location.d.j.o;
+import static com.example.android.track.R.id.comment_btn;
 
 /**
  * Created by thor on 2017/6/28.
@@ -41,6 +48,9 @@ public class MessageFragment extends Fragment {
     private ArrayList<View> pageview;
     private TextView notification_tv;
     private TextView chat_tv;
+
+    private RelativeLayout notification_layout;
+    private RelativeLayout chat_layout;
     // 滚动条图片
     private ImageView scrollbar;
     // 滚动条初始偏移量
@@ -70,9 +80,10 @@ public class MessageFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.messageToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        setViewPager();
-    }
 
+        setViewPager();
+        notification_layout.performClick();
+    }
 
 
     private void setUnReadRemind(View parentView){
@@ -93,45 +104,50 @@ public class MessageFragment extends Fragment {
     }
 
     private void setClickListener(View parentView){
-        LinearLayout mycomment_btn = (LinearLayout) parentView.findViewById(R.id.comment_remind);
-        mycomment_btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout commentMe_btn = (LinearLayout) parentView.findViewById(R.id.comment_remind);
+        commentMe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CommentRemindActivity.class);
+                Intent intent = new Intent(getActivity(),RemindActivity.class);
+                intent.putExtra("type", "comment");
                 startActivity(intent);
             }
         });
 
-        LinearLayout at_me_btn = (LinearLayout) parentView.findViewById(R.id.at_me_remind);
-        at_me_btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout mentionMe_btn = (LinearLayout) parentView.findViewById(R.id.mention_remind);
+        mentionMe_btn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MentionRemindActivity.class);
+                Intent intent = new Intent(getActivity(), RemindActivity.class);
+                intent.putExtra("type", "mention");
                 startActivity(intent);
             }
         });
 
-        LinearLayout mylike_btn = (LinearLayout) parentView.findViewById(R.id.like_remind);
-        mylike_btn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout likeMe_btn = (LinearLayout) parentView.findViewById(R.id.like_remind);
+        likeMe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),LikeRemindActivity.class);
+                Intent intent = new Intent(getActivity(),RemindActivity.class);
+                intent.putExtra("type", "like");
+                startActivity(intent);
+            }
+        });
+        LinearLayout shareMe_btn = (LinearLayout) parentView.findViewById(R.id.share_remind);
+        shareMe_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),RemindActivity.class);
+                intent.putExtra("type", "share");
                 startActivity(intent);
             }
         });
     }
 
-    // get storages from SQLite
-    private void initRecyclerView(View parentView){
-        Timestamp time = new Timestamp(System.currentTimeMillis());
-        Message messageA = new Message();
-        messageA.setDate(time);
-        messageA.setMessage_text("hahaha");
-        messageA.setPortrait_url("");
-        messageA.setUser_id(0);
-        messageA.setUser_name("Root");
-        messagesList.add(messageA);
+
+    private void initChatRecord(View parentView){
+        
 
         // init recyclerView
         RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);
@@ -142,30 +158,26 @@ public class MessageFragment extends Fragment {
     }
 
     private void setViewPager(){
+        // set Icon
+
+        RemindView notification_ic = (RemindView) getActivity().findViewById(R.id.ic_notification);
+        RemindView chat_ic = (RemindView) getActivity().findViewById(R.id.ic_chat);
+        //notification_ic.setBackground(R);
+
+        notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
+        chat_ic.setMessageCount(MyApplication.getUnReadChatMsgCnt());
+
+        // set view pager
+
         viewPager = (ViewPager) getActivity().findViewById(R.id.viewPager);
         //查找布局文件用LayoutInflater.inflate
         LayoutInflater inflater = getActivity().getLayoutInflater();
         notification_view = inflater.inflate(R.layout.view_pager_notification, null);
         chat_view = inflater.inflate(R.layout.view_pager_chat, null);
-        notification_tv = (TextView)getActivity().findViewById(R.id.videoLayout);
-        chat_tv = (TextView)getActivity().findViewById(R.id.musicLayout);
+        notification_tv = (TextView)getActivity().findViewById(R.id.notification_tv);
+        chat_tv = (TextView)getActivity().findViewById(R.id.chat_tv);
         scrollbar = (ImageView)getActivity().findViewById(R.id.scrollbar);
 
-        notification_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0);
-                setUnReadRemind(notification_view);
-                setClickListener(notification_view);
-            }
-        });
-        chat_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(1);
-                initRecyclerView(chat_view);
-            }
-        });
 
         pageview =new ArrayList<View>();
         //添加想要切换的界面
@@ -200,10 +212,6 @@ public class MessageFragment extends Fragment {
         };
         //绑定适配器
         viewPager.setAdapter(mPagerAdapter);
-        //设置viewPager的初始界面为第一个界面
-        viewPager.setCurrentItem(0);
-        setUnReadRemind(notification_view);
-        setClickListener(notification_view);
         //添加切换界面的监听器
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
         // 获取滚动条的宽度
@@ -222,6 +230,23 @@ public class MessageFragment extends Fragment {
         matrix.postTranslate(offset, 0);
         //将滚动条的初始位置设置成与左边界间隔一个offset
         scrollbar.setImageMatrix(matrix);
+
+
+        // set Listener
+        notification_layout = (RelativeLayout) getActivity().findViewById(R.id.notification_layout);
+        chat_layout = (RelativeLayout) getActivity().findViewById(R.id.chat_layout);
+        notification_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0);
+            }
+        });
+        chat_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
+            }
+        });
     }
 
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
@@ -239,12 +264,18 @@ public class MessageFragment extends Fragment {
                      * float toYDelta 动画开始的点离当前View Y坐标上的差值
                      **/
                     animation = new TranslateAnimation(one, 0, 0, 0);
+                    // change color
+                    //notification_ic.setBackground();
+                    notification_tv.setTextColor(getResources().getColor(R.color.orange));
                     setUnReadRemind(notification_view);
                     setClickListener(notification_view);
                     break;
                 case 1:
                     animation = new TranslateAnimation(offset, one, 0, 0);
-                    initRecyclerView(chat_view);
+                    // change color
+                    //chat_ic.setBackground();
+                    chat_tv.setTextColor(getResources().getColor(R.color.orange));
+                    initChatRecord(chat_view);
                     break;
             }
             //arg0为切换到的页的编码

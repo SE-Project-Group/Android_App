@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,17 +48,18 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         TextView author_text;
         TextView author_name;
         Button response_btn;
+        LinearLayout feed_abstract;
 
         public ViewHolder(View view){
             super(view);
             user_portrait = (ImageView)view.findViewById(R.id.user_portrait);
-            first_pic = (ImageView) view.findViewById(R.id.first_pic);
             user_name = (TextView)view.findViewById(R.id.user_name);
             time = (TextView)view.findViewById(R.id.time);
             remind_text = (TextView)view.findViewById(R.id.remind_text);
             author_text = (TextView)view.findViewById(R.id.author_text);
             author_name = (TextView)view.findViewById(R.id.author_name);
             response_btn = (Button) view.findViewById(R.id.response_btn);
+            feed_abstract = (LinearLayout) view.findViewById(R.id.feed_abstract);
         }
     }
 
@@ -107,6 +109,12 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
             }
         });
 
+        holder.feed_abstract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return holder;
     }
@@ -181,7 +189,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
                 dialog.dismiss();
             }
         });
-        
+
         commentDialog.create().show();
     }
 
