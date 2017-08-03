@@ -147,7 +147,7 @@ public class MessageFragment extends Fragment {
 
 
     private void initChatRecord(View parentView){
-        
+
 
         // init recyclerView
         RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);
