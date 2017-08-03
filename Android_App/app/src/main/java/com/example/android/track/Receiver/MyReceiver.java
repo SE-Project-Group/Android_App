@@ -4,18 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.constraint.solver.Goal;
-import android.util.Log;
 
 import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Model.Comment;
 import com.example.android.track.Model.LitePal_Entity.CommentMeRecord;
 import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
-import com.example.android.track.Model.LitePal_Entity.Portrait;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.LitePal_Entity.ShareMeRecord;
-import com.example.android.track.Model.UserInfo;
 import com.example.android.track.Util.UserRequester;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,20 +18,15 @@ import com.google.gson.reflect.TypeToken;
 import org.litepal.crud.DataSupport;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
-
-import static com.baidu.location.d.j.S;
 
 /**
  * Created by thor on 2017/7/21.
@@ -99,8 +89,8 @@ public class MyReceiver extends BroadcastReceiver {
     }
 
     private void  savePortrait(int user_id){
-        List<Portrait> portraits = DataSupport.select("*").where("user_id = ?", String.valueOf(user_id)).find(Portrait.class);
-        if(portraits.size() == 0){      // have no save
+        List<Acquaintance> acquaintances = DataSupport.select("*").where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
+        if(acquaintances.size() == 0){      // have no save
             String urlString = new UserRequester().getPortraitUrl(user_id);
             byte[] result = null;
             try {

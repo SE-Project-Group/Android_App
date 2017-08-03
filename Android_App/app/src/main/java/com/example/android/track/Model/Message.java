@@ -10,7 +10,7 @@ public class Message {
     private int user_id;
     private String user_name;
     private String message_text;
-    private String portrait_url;
+    private byte[] portrait;
     private Date date;
 
     public int getUser_id() {
@@ -37,19 +37,19 @@ public class Message {
         this.message_text = message_text;
     }
 
-    public String getPortrait_url() {
-        return portrait_url;
-    }
-
-    public void setPortrait_url(String portrait_url) {
-        this.portrait_url = portrait_url;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public byte[] getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(byte[] portrait) {
+        this.portrait = portrait;
     }
 }

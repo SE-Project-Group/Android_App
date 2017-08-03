@@ -22,22 +22,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.track.Activity.RemindActivity;
-import com.example.android.track.Adapter.MessageAdapter;
+import com.example.android.track.Adapter.ConversationAdapter;
 import com.example.android.track.Application.MyApplication;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Message;
-import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.RemindView;
 
-import java.sql.Timestamp;
+import org.litepal.crud.DataSupport;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static android.R.string.no;
-import static com.baidu.location.d.j.o;
-import static com.example.android.track.R.id.comment_btn;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.Conversation;
 
 /**
  * Created by thor on 2017/6/28.
@@ -147,13 +150,35 @@ public class MessageFragment extends Fragment {
 
 
     private void initChatRecord(View parentView){
+        List<Conversation> conversationList = JMessageClient.getConversationList();
+        if (conversationList == null) {
+            Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT);
+            return;
+        }
 
+        for(Conversation conversation : conversationList){
+            Message message = new Message();
+            //SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date(conversation.getLastMsgDate() * 1000);
+            //String str = sdf.format(date);
+            message.setDate(date);
+            message.setMessage_text(conversation.getLatestText());
+            int user_id = Integer.valueOf(conversation.getTargetId());
+            message.setUser_id(user_id);
+            List<Acquaintance> acquaintances = DataSupport.select("portrait", "user_name")
+                    .where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
 
+            Acquaintance acquaintance = acquaintances.get(0);
+            message.setUser_name(acquaintance.getUser_name());
+            message.setPortrait(acquaintance.getPortrait());
+
+            messagesList.add(message);
+        }
         // init recyclerView
         RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        MessageAdapter adapter = new MessageAdapter(messagesList, getContext());
+        ConversationAdapter adapter = new ConversationAdapter(messagesList, getContext());
         recyclerView.setAdapter(adapter);
     }
 
@@ -214,6 +239,9 @@ public class MessageFragment extends Fragment {
         viewPager.setAdapter(mPagerAdapter);
         //添加切换界面的监听器
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
+
+        viewPager.setCurrentItem(1);
+
         // 获取滚动条的宽度
         bmpW = BitmapFactory.decodeResource(getResources(), R.drawable.scrollbar).getWidth();
         //为了获取屏幕宽度，新建一个DisplayMetrics对象
@@ -266,7 +294,9 @@ public class MessageFragment extends Fragment {
                     animation = new TranslateAnimation(one, 0, 0, 0);
                     // change color
                     //notification_ic.setBackground();
+                    //chat_ic.setBackground();
                     notification_tv.setTextColor(getResources().getColor(R.color.orange));
+                    chat_tv.setTextColor(getResources().getColor(R.color.white));
                     setUnReadRemind(notification_view);
                     setClickListener(notification_view);
                     break;
@@ -274,7 +304,9 @@ public class MessageFragment extends Fragment {
                     animation = new TranslateAnimation(offset, one, 0, 0);
                     // change color
                     //chat_ic.setBackground();
+                    //notification_ic.setBackground();
                     chat_tv.setTextColor(getResources().getColor(R.color.orange));
+                    notification_tv.setTextColor(getResources().getColor(R.color.white));
                     initChatRecord(chat_view);
                     break;
             }

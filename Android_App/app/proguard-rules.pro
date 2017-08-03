@@ -39,3 +39,16 @@
 
 -dontwarn cn.jiguang.**
 -keep class cn.jiguang.** { *; }
+
+# jmessage
+-keepattributes  EnclosingMethod,Signature
+ -keepclassmembers class ** {
+     public void onEvent*(**);
+ }
+
+#========================gson================================
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+
+#========================protobuf================================
+-keep class com.google.protobuf.** {*;}

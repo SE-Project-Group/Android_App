@@ -2,13 +2,17 @@ package com.example.android.track.Model.LitePal_Entity;
 
 import org.litepal.crud.DataSupport;
 
+import java.util.Date;
+
 /**
  * Created by thor on 2017/8/3.
  */
 
-public class Portrait extends DataSupport {
+public class Acquaintance extends DataSupport {
     private int user_id;
     private byte[] portrait;
+    private String user_name;
+    private String relationship;
 
     public int getUser_id() {
         return user_id;
@@ -24,5 +28,21 @@ public class Portrait extends DataSupport {
 
     public void setPortrait(byte[] portrait) {
         this.portrait = portrait;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }

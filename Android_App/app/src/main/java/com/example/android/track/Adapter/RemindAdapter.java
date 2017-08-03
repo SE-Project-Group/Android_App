@@ -1,6 +1,5 @@
 package com.example.android.track.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,13 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.StringLoader;
 import com.example.android.track.Activity.PersonalHomeActivity;
-import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Model.LitePal_Entity.Portrait;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
@@ -28,8 +24,6 @@ import com.example.android.track.Util.FeedRequester;
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
-
-import static com.baidu.location.d.j.P;
 
 /**
  * Created by jarvis on 2017/7/12.
@@ -145,9 +139,9 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
             holder.response_btn.setVisibility(View.VISIBLE);
 
         // load the user portrait use glide
-        List<Portrait> portraits = DataSupport.select("portrait").where("user_id = ?", String.valueOf(remind.getUser_id())).find(Portrait.class);
+        List<Acquaintance> acquaintances = DataSupport.select("portrait").where("user_id = ?", String.valueOf(remind.getUser_id())).find(Acquaintance.class);
         Glide.with(context)
-                .load(portraits.get(0).getPortrait())
+                .load(acquaintances.get(0).getPortrait())
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.user_portrait);
 
