@@ -8,5 +8,7 @@
         <mapping class="com.example.android.track.Model.LitePal_Entity.CommentMeRecord"></mapping>
         <mapping class="com.example.android.track.Model.LitePal_Entity.ShareMeRecord"></mapping>
         <mapping class="com.example.android.track.Model.LitePal_Entity.MentionMeRecord"></mapping>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.MyFeed"></mapping>
+        <mapping class="com.example.android.track.Model.LitePal_Entity.Portrait"></mapping>
     </list>
 </litepal>

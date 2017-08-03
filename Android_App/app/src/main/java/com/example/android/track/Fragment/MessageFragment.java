@@ -22,20 +22,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.android.track.Activity.MentionRemindActivity;
 import com.example.android.track.Adapter.MessageAdapter;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Message;
-import com.example.android.track.Activity.CommentRemindActivity;
-import com.example.android.track.Activity.LikeRemindActivity;
 import com.example.android.track.R;
 import com.example.android.track.Util.RemindView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.baidu.location.d.j.O;
 
 /**
  * Created by thor on 2017/6/28.
@@ -59,7 +54,6 @@ public class MessageFragment extends Fragment {
 
     private View notification_view;
     private View chat_view;
-
 
 
     private List<Message> messagesList = new ArrayList<>();

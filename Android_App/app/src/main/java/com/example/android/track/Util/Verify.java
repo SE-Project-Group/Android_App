@@ -74,11 +74,13 @@ public class Verify {
         return loged;
     }
 
-    public void storeToken(String token, int user_id){
+    public void storeToken(String token, int user_id, String user_name, String password){
         SharedPreferences.Editor editor = context.getSharedPreferences("logIn_data", MODE_PRIVATE).edit();
         editor.putBoolean("loged",true);
         editor.putString("token", token);
         editor.putInt("user_id", user_id);
+        editor.putString("user_name", user_name);
+        editor.putString("password", password);
         editor.apply();
 
         // set Alias

@@ -11,13 +11,14 @@ public class Remind {
     private int user_id;
     private String user_name;
     private String user_portrait_url;
-    private String author_name;
     private Date time;
+    private String comment_text;
+    private String author_name;
     private String author_text;
     private String feed_id;
-    private String type; // comment, like, share
+    private String type; // comment, like, share, mention
 
-    private String first_pic_url;
+    private int reply_id;
 
     public int getUser_id() {
         return user_id;
@@ -83,11 +84,20 @@ public class Remind {
         this.type = type;
     }
 
-    public String getFirst_pic_url() {
-        return first_pic_url;
+
+    public String getComment_text() {
+        return comment_text;
     }
 
-    public void setFirst_pic_url(String first_pic_url) {
-        this.first_pic_url = first_pic_url;
+    public void setComment_text(String comment_text) {
+        this.comment_text = comment_text;
+    }
+
+    public int getReply_id() {
+        return reply_id;
+    }
+
+    public void setReply_id(int reply_id) {
+        this.reply_id = reply_id;
     }
 }

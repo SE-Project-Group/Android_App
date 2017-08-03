@@ -63,8 +63,6 @@
         <activity android:name="com.example.android.track.Activity.PersonalHomeActivity" />
         <activity android:name="com.example.android.track.Activity.TalkingActivity" />
         <activity android:name="com.example.android.track.Activity.CommentActivity" />
-        <activity android:name="com.example.android.track.Activity.CommentRemindActivity" />
-        <activity android:name="com.example.android.track.Activity.LikeRemindActivity" />
         <activity android:name="com.example.android.track.Activity.AlbumActivity" />
 
         <service
@@ -74,7 +72,6 @@
 
         <activity android:name="com.example.android.track.Activity.MyLikeActivity" />
         <activity android:name="com.example.android.track.Activity.MyShareActivity" />
-        <activity android:name="com.example.android.track.Activity.MentionRemindActivity" />
         <activity android:name="com.example.android.track.Activity.UserInfoActivity" />
         <activity android:name="com.example.android.track.Activity.FollowActivity"></activity>
 

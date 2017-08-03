@@ -16,8 +16,6 @@ public class ShareMeRecord extends DataSupport {
     private String feed_id;
     private String share_comment;
 
-    private String relationship;
-
     private String status;
 
     public int getUser_id() {
@@ -76,11 +74,4 @@ public class ShareMeRecord extends DataSupport {
         this.status = status;
     }
 
-    public String getRelationship() {
-        return relationship;
-    }
-
-    public void setRelationship(String relationship) {
-        this.relationship = relationship;
-    }
 }

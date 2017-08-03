@@ -94,7 +94,7 @@ public class UserRequester {
             return "failed";
         }
 
-        verify.storeToken(token, user_id);
+        verify.storeToken(token, user_id, user_name, password);
 
         return "success";
 
@@ -285,6 +285,26 @@ public class UserRequester {
         }
         else
             return "failed";
+    }
+
+    public String getPortraitUrl(int user_id){
+        String resource = "getPortraitUrl";
+        String pre_url = generatePreUrl(resource, false);
+        String url = pre_url + "?user_id=" + user_id;
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String result = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(response.isSuccessful())
+                result = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
 }
