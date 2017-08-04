@@ -117,7 +117,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/like"/>
+                            android:src="@drawable/like_hand_14"/>
                         <TextView
                             android:textColor="@color/gray"
                             android:id="@+id/like_cnt"
@@ -145,7 +145,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/share_3"/>
+                            android:src="@drawable/share_14"/>
 
                         <TextView
                             android:textColor="@color/gray"

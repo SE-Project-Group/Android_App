@@ -51,7 +51,7 @@ public class DiscoverAroundFragment extends Fragment implements View.OnClickList
     private MapView mapView;
     private BaiduMap baiduMap;
     private boolean firstLocate;
-    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_mark);
+    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.mark_30);
     private List<Feed> feedList;
     private static final int GET_AROUND_OK = 0;
     private static final int GET_AROUND_FAILED = 1;

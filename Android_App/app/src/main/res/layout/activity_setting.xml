@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
         <View
@@ -122,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -201,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
         <View
@@ -238,7 +238,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -277,7 +277,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
         <View
@@ -314,7 +314,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:src="@drawable/detail_right_back"/>
+                    android:src="@drawable/right_arrow"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

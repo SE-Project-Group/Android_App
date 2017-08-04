@@ -27,7 +27,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/search_button"
-                android:drawableLeft="@drawable/discover_search"
+                android:drawableLeft="@drawable/search_24"
                 android:gravity="center_vertical"
                 android:text="搜索更多精彩内容"
                 android:textColor="@color/black" />

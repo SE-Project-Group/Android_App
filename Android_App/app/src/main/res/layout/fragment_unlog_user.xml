@@ -74,7 +74,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_album"
+                android:src="@drawable/album_24"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginTop="7dp"
@@ -104,7 +104,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_favorite"
+                android:src="@drawable/like_heart_24"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginTop="7dp"
@@ -135,7 +135,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/user_comment"
+                android:src="@drawable/comment_24"
                 android:layout_marginTop="5dp"/>
             <TextView
                 android:layout_marginLeft="10dp"
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:src="@drawable/user_settings" />
+                    android:src="@drawable/settings_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
