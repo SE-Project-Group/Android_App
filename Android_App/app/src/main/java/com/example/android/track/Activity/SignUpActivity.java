@@ -77,18 +77,6 @@ public class SignUpActivity extends AppCompatActivity {
                 case SIGNUP_OK:
                     // sign up Jmessage client
                     Toast.makeText(MyApplication.getContext(), "account注册成功", Toast.LENGTH_SHORT).show();
-                    String user_id = msg.getData().getString("user_id");
-                    JMessageClient.register(user_id, user_id, new BasicCallback() {
-                        @Override
-                        public void gotResult(int i, String s) {
-                            if(i == 0){
-                                Toast.makeText(MyApplication.getContext(), "JMessage注册成功", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(MyApplication.getContext(), s, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
                     // go back to home activity
                     Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                     startActivity(intent);
@@ -110,22 +98,16 @@ public class SignUpActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserRequester requester = new UserRequester();
-                String response_data = requester.signUp(name, pwd, phone);
+                String response_data = MyApplication.signUp(name, pwd, phone);
 
                 Message message = new Message();
                 if(response_data.equals("existing phone"))
                     message.what = EXIST_PHONE;
                 if(response_data.equals("existing user name"))
                     message.what = EXIST_USER_NAME;
-                else{
-                    String user_id = response_data;
-                    Bundle bundle = new Bundle();
-                    bundle.putString("user_id", user_id);
+                if(response_data.equals("success"))
                     message.what = SIGNUP_OK;
-                    handler.sendMessage(message);
-                }
-                
+                handler.sendMessage(message);
             }
         }).start();
         

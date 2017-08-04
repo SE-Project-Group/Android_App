@@ -62,10 +62,15 @@ public class Verify {
 
     public String getUser_id(){
         SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
-        Boolean loged = pref.getBoolean("loged",false);
-        int user_id = pref.getInt("user_id", -1);
+        int user_id = pref.getInt("user_id", 0);
         String str = String.valueOf(user_id);
         return str;
+    }
+
+    public String getUser_pwd(){
+        SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
+        String pwd = pref.getString("password", "");
+        return pwd;
     }
 
     public boolean getLoged(){

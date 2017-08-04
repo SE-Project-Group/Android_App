@@ -394,7 +394,7 @@ public class UserInfoActivity extends AppCompatActivity {
             mMonth = monthOfYear;
             mDay = dayOfMonth;
             // set text view
-            birthday_tv.setText(new StringBuffer().append(mYear).append(" ").append(mMonth + 1).append("-").append(mDay).append("-"));
+            birthday_tv.setText(new StringBuffer().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay));
         }
     };
 

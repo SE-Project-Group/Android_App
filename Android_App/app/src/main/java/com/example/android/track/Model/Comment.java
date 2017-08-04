@@ -6,20 +6,12 @@ package com.example.android.track.Model;
 
 public class Comment {
     private int reply_id;
+    private int comment_id;
     private String portrait_url;
     private int user_id;
     private String user_name;
     private String comment_text;
     private String time;
-
-    public Comment(int reply_id, String portrait_url, int user_id, String user_name, String comment_text, String time) {
-        this.reply_id = reply_id;
-        this.portrait_url = portrait_url;
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.comment_text = comment_text;
-        this.time = time;
-    }
 
     public int getReply_id() {
         return reply_id;
@@ -67,5 +59,13 @@ public class Comment {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public int getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(int comment_id) {
+        this.comment_id = comment_id;
     }
 }

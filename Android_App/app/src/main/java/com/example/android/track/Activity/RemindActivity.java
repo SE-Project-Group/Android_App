@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 /**
  * Created by thor on 2017/8/3.
  */
@@ -73,7 +74,7 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setUser_name(record.getUser_name());
                 remind.setTime(record.getTime());
                 remind.setComment_text(record.getComment_text());
-                remind.setReply_id(record.getReply_id());
+                remind.setComment_id(record.getComment_id());
                 remind.setFeed_id(record.getFeed_id());
                 List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
                 MyFeed myFeed = myFeeds.get(0);
