@@ -30,11 +30,10 @@ import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Message;
 import com.example.android.track.R;
-import com.example.android.track.Util.RemindView;
+import com.example.android.track.View.RemindView;
 
 import org.litepal.crud.DataSupport;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

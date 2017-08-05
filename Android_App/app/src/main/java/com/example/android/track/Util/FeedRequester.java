@@ -263,7 +263,7 @@ public class FeedRequester{
 
     // cancel like
     public String cancelLike(String feed_id){
-        String resource = "";
+        String resource = "decLikeFeed";
         String url = generatePreUrl(resource, true);
         // create json
         JSONObject jsonObject = new JSONObject();

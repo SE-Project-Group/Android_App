@@ -35,7 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.R;
-import com.example.android.track.Util.BottomPopView;
+import com.example.android.track.View.BottomPopView;
 import com.example.android.track.Util.ImageUriParser;
 import com.example.android.track.Util.OssInit;
 import com.example.android.track.Util.OssService;

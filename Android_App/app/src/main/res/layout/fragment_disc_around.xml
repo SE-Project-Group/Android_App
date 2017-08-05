@@ -49,25 +49,13 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"/>
 
-        <LinearLayout
-            android:id="@+id/ll_detail"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true">
-            <include layout="@layout/item_feed"/>
-        </LinearLayout>
-    </RelativeLayout>
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"/>
+
 
 
 </LinearLayout>
