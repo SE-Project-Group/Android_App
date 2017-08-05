@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -50,7 +51,7 @@ public class DiscoverAroundFragment extends Fragment{
     private BaiduMap baiduMap;
     private boolean firstLocate;
     private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_mark);
-
+    private FloatingActionButton refresh_btn;
 
     private List<Feed> feedList;
     private static final int GET_AROUND_OK = 0;
@@ -94,6 +95,13 @@ public class DiscoverAroundFragment extends Fragment{
             }
         });
 
+        refresh_btn = (FloatingActionButton) getActivity().findViewById(R.id.refresh_btn);
+        refresh_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstLocate = true;
+            }
+        });
 
         //set Map
         mapView = (MapView) getActivity().findViewById(R.id.bmapView);
