@@ -37,6 +37,9 @@ import com.example.android.track.View.FeedDetailView;
 
 import java.util.List;
 
+import static cn.jpush.android.d.f;
+import static cn.jpush.im.android.api.enums.ContentType.location;
+
 
 /**
  * Created by thor on 2017/6/29.
@@ -60,8 +63,6 @@ public class DiscoverAroundFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_disc_around, container, false);
-        // set firstLocate
-        firstLocate = true;
         return view;
     }
 
@@ -93,19 +94,18 @@ public class DiscoverAroundFragment extends Fragment{
             }
         });
 
+
         //set Map
         mapView = (MapView) getActivity().findViewById(R.id.bmapView);
+        baiduMap = mapView.getMap();
+        baiduMap.setMyLocationEnabled(true);
 
+        firstLocate = true;
         // set location on map
         startLocate();
     }
 
     private void startLocate(){
-        // get BaiduMap at the first time
-        if(baiduMap == null) {
-            baiduMap = mapView.getMap();
-            baiduMap.setMyLocationEnabled(true);
-        }
         // initialize options， set scan span and CoorType (Baidu Map use BD09LL location)
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(2000);
@@ -121,13 +121,14 @@ public class DiscoverAroundFragment extends Fragment{
     public void locateMe(){
         // navigate to my location on map
         final BDLocation location = ((HomeActivity) getActivity()).getNow_location();
-        if(firstLocate == true) {
+        boolean test = firstLocate;
+        if(firstLocate) {
             if (location.getLocType() == BDLocation.TypeNetWorkLocation ||
                     location.getLocType() == BDLocation.TypeGpsLocation) {
                 LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
                 baiduMap.animateMapStatus(update);
-                update = MapStatusUpdateFactory.zoomTo(19f);
+                update = MapStatusUpdateFactory.zoomTo(20f);
                 baiduMap.animateMapStatus(update);
 
                 // get aroudnd feed
@@ -212,7 +213,6 @@ public class DiscoverAroundFragment extends Fragment{
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        firstLocate = true;
     }
 
     @Override
@@ -221,11 +221,17 @@ public class DiscoverAroundFragment extends Fragment{
         mapView.onPause();
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mapView.onDestroy();
         ((HomeActivity) getActivity()).getmLocationClient().stop();
         baiduMap.setMyLocationEnabled(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
