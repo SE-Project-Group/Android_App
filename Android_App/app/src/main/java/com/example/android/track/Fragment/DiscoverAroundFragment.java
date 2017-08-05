@@ -72,6 +72,10 @@ public class DiscoverAroundFragment extends Fragment{
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        // set homeactivity around fragment
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.setAroundFragment(true);
+
         Verify verify = new Verify();
         if(verify.getLoged()) {
             loggedIn = true;
