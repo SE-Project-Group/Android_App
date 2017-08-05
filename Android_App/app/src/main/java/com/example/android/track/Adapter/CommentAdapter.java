@@ -3,6 +3,7 @@ package com.example.android.track.Adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.android.track.Activity.CommentConversationActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Model.Comment;
 import com.example.android.track.R;
@@ -33,6 +35,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     private Activity context;
     private List<Comment> commentList;
     private String feed_id;
+    private boolean conversation;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -53,10 +56,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
     }
 
-    public CommentAdapter(List<Comment> commentList, Activity context, String feed_id){
+    public CommentAdapter(List<Comment> commentList, Activity context, String feed_id, boolean conversation){
         this.commentList = commentList;
         this.context = context;
         this.feed_id = feed_id;
+        this.conversation = conversation;
     }
 
 
@@ -109,6 +113,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         holder.comment_view.setText(comment.getComment_text());
         holder.user_name_view.setText(comment.getUser_name());
         holder.time_view.setText(comment.getTime());
+
+        // if already in conversation List , do not allow click this button again
+        if(conversation){
+            holder.conversation_btn.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -201,5 +210,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             }
         }
 
+        Intent intent = new Intent(context, CommentConversationActivity.class);
+        Bundle bundle = new Bundle();
+        ArrayList<Comment> conversation = new ArrayList<>();
+        conversation.addAll(commentConversation);
+        bundle.putParcelableArrayList("conversation",conversation);
+        bundle.putString("feed_id", feed_id);
+        intent.putExtra("bundle", bundle);
+        context.startActivity(intent);
     }
 }
