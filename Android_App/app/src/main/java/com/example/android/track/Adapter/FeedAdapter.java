@@ -21,6 +21,7 @@ import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
+import com.example.android.track.Util.Verify;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
@@ -37,6 +38,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private List<Feed> mFeedList;
     private Activity context;
     private FeedRequester requester;
+    private int my_user_id;
 
     private final static int LIKE_OK = 0;
     private final static int LIKE_FAILED = 1;
@@ -74,6 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         this.context = context;
         mFeedList = feedList;
         requester = new FeedRequester();
+        my_user_id = Integer.valueOf(new Verify().getUser_id());
     }
 
     private void toHomePage(int user_id){
@@ -136,18 +139,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 Feed feed = mFeedList.get(postion);
                 // used to liked
                 if(!feed.getLiked()) {
-                    int old_cnt = Integer.valueOf(holder.like_btn.getText().toString());
-                    holder.like_btn.setText(String.valueOf(old_cnt++));
+                    int new_cnt = Integer.valueOf(holder.like_btn.getText().toString()) + 1;
+                    holder.like_btn.setText(String.valueOf(new_cnt));
                     int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
                     holder.like_btn.setTextColor(liked_color);
                     like(feed.getFeed_id(), position);
+                    feed.setLiked(true);
                 }
                 else{
-                    int old_cnt = Integer.valueOf(holder.like_btn.getText().toString());
-                    holder.like_btn.setText(String.valueOf(old_cnt--));
-                    int unliked_color = MyApplication.getContext().getResources().getColor(R.color.black);
+                    int new_cnt = Integer.valueOf(holder.like_btn.getText().toString()) - 1;
+                    holder.like_btn.setText(String.valueOf(new_cnt));
+                    int unliked_color = MyApplication.getContext().getResources().getColor(R.color.gray);
                     holder.like_btn.setTextColor(unliked_color);
                     cancelLike(feed.getFeed_id(), position);
+                    feed.setLiked(false);
                 }
             }
         });
@@ -163,6 +168,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         holder.comment_btn.setText(temp);
         temp = String.valueOf(feed.getLike_cnt());
         holder.like_btn.setText(temp);
+        // if liked , set number color to orange
+        if(feed.getLiked()){
+            int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
+            holder.like_btn.setTextColor(liked_color);
+        }
+        // if this is my own feed, do not allow like
+        if(feed.getOwner_id() == my_user_id){
+            holder.like_btn.setClickable(false);
+        }
         temp = String.valueOf(feed.getShare_cnt());
         holder.share_btn.setText(temp);
         holder.position_view.setText(feed.getPosition());
@@ -255,14 +269,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case LIKE_OK:
+                    Toast.makeText(MyApplication.getContext(), "like success", Toast.LENGTH_SHORT).show();
                     break;
                 case LIKE_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "like failed", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_OK:
+                    Toast.makeText(MyApplication.getContext(), "cancel success", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "cancel failed", Toast.LENGTH_SHORT).show();
                     break;
 
             }
