@@ -60,9 +60,11 @@ public class OssService {
             Log.w("LocalFile", localFile);
             return;
         }
+        String fileName = file.getName();
+        String format = fileName.split(".")[1];
 
         // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest(bucket, object, localFile);
+        PutObjectRequest put = new PutObjectRequest(bucket, object+format, localFile);
 
         if (callbackAddress != null) {
             // 传入对应的上传回调参数，这里默认使用OSS提供的公共测试回调服务器地址
