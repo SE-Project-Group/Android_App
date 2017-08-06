@@ -269,9 +269,11 @@ public class NewFeedActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case ADD_PHOTO:
-                List<String> newPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                pathList = newPathList;
-                refreshGridView();
+                if(resultCode != 0) {
+                    List<String> newPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                    pathList = newPathList;
+                    refreshGridView();
+                }
                 break;
             case EDIT_PHOTO:
                 Uri editedImageUri = data.getParcelableExtra(AdobeImageIntent.EXTRA_OUTPUT_URI);

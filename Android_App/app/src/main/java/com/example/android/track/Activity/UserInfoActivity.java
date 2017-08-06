@@ -188,10 +188,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
         // load portrait
         Glide.with(this)
-                .load("")
+                .load(clientInfo.getPortrait_url())
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic);
+                .placeholder(R.drawable.exp_pic)
+                .into(portrait_view);
     }
 
     private void upload() {
@@ -322,13 +323,15 @@ public class UserInfoActivity extends AppCompatActivity {
                 portraitChanged = true;
                 break;
             case CHOOSE_PHOTO :
-                ImageUriParser imageUriParser = new ImageUriParser(this);
-                String path = imageUriParser.parse(data.getData());
-                Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-                Bitmap scaled = scaleBitmap(bitmap, 300,300);
-                portrait_view.setImageBitmap(scaled);
-                portrait_path = path;
-                portraitChanged = true;
+                if(resultCode != 0) {
+                    ImageUriParser imageUriParser = new ImageUriParser(this);
+                    String path = imageUriParser.parse(data.getData());
+                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                    Bitmap scaled = scaleBitmap(bitmap, 300, 300);
+                    portrait_view.setImageBitmap(scaled);
+                    portrait_path = path;
+                    portraitChanged = true;
+                }
                 break;
             default:
                 break;
