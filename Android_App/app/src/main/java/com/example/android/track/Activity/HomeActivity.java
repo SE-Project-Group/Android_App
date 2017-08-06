@@ -27,6 +27,7 @@ import com.example.android.track.Fragment.DiscoverAroundFragment;
 import com.example.android.track.Fragment.DiscoverFragment;
 import com.example.android.track.Fragment.LogedUserFragment;
 import com.example.android.track.Fragment.MessageFragment;
+import com.example.android.track.Util.Verify;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
@@ -42,7 +43,11 @@ public class HomeActivity extends AppCompatActivity{
     public boolean loged;
 
     private int old_postion = 0;
-    private static final int NEW_FEED = 1;
+    private boolean aroundFragment = false;
+
+    public void setAroundFragment(boolean aroundFragment) {
+        this.aroundFragment = aroundFragment;
+    }
 
     public LocationClient getmLocationClient() {
         return mLocationClient;
@@ -102,8 +107,7 @@ public class HomeActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         // get login info from file in onResume , so loged can change when come back from login activity
-        SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
-        if(pref.getBoolean("loged",false) == false)
+        if(!new Verify().getLoged())
             loged = false;
         else
             loged = true;
@@ -149,7 +153,13 @@ public class HomeActivity extends AppCompatActivity{
                 Fragment f = discoverFragment;
                 switch (position) {
                     case 0:
-                        f = discoverFragment;
+                        if(aroundFragment){
+                            if(discoverAroundFragment == null)
+                                discoverAroundFragment = new DiscoverAroundFragment();
+                            f = discoverAroundFragment;
+                        }
+                        else
+                            f = discoverFragment;
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 1:

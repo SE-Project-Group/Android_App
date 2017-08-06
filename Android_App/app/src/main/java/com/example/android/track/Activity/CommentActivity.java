@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,11 +41,15 @@ public class CommentActivity extends AppCompatActivity {
     // message
     private final static int GET_COMMENTS_OK = 0;
     private final static int GET_COMMENTS_FAILED = 1;
+    private final static int SEND_OK = 2;
+    private final static int SEND_FAILED = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
         feed_id = intent.getStringExtra("feed_id");
@@ -81,7 +86,7 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.comment_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        CommentAdapter adapter = new CommentAdapter(commentList, this);
+        CommentAdapter adapter = new CommentAdapter(commentList, this, feed_id, false);
         recyclerView.setAdapter(adapter);
     }
 
@@ -101,6 +106,12 @@ public class CommentActivity extends AppCompatActivity {
                     public void run() {
                         FeedRequester requester = new FeedRequester();
                         String result = requester.comment(comment, feed_id, 0); // 0 for comment feed
+                        Message message = new Message();
+                        if(result.equals("success"))
+                            message.what = SEND_OK;
+                        else
+                            message.what = SEND_FAILED;
+                        handler.sendMessage(message);
                     }
                 }).start();
             }
@@ -116,6 +127,15 @@ public class CommentActivity extends AppCompatActivity {
                     break;
                 case GET_COMMENTS_FAILED:
                     Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case SEND_OK:
+                    Toast.makeText(MyApplication.getContext(), "send success", Toast.LENGTH_SHORT).show();
+                    onDestroy();
+                    break;
+                case  SEND_FAILED:
+                    Toast.makeText(MyApplication.getContext(), "send failed", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
                     break;
             }
         }

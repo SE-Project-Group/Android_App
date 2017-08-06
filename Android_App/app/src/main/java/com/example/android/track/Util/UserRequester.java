@@ -64,7 +64,8 @@ public class UserRequester {
         }
         final String jsonString = jsonObject.toString();
         final JsonSender sender = new JsonSender(jsonString, host + resource);
-        return sender.post();
+        String result =  sender.post();
+        return result;
     }
 
 
@@ -93,7 +94,6 @@ public class UserRequester {
             e.printStackTrace();
             return "failed";
         }
-
         verify.storeToken(token, user_id, user_name, password);
 
         return "success";
@@ -277,8 +277,8 @@ public class UserRequester {
     // modify client info
     public String modifyClientInfo(String jsonStr){
         String resource = "modifyPersonalInfo";
-        String pre_url = generatePreUrl(resource, true);
-        JsonSender sender = new JsonSender(jsonStr, pre_url);
+        String url = generatePreUrl(resource, true);
+        JsonSender sender = new JsonSender(jsonStr, url);
         String response = sender.put();
         if(response.equals("success")){
             return "success";
