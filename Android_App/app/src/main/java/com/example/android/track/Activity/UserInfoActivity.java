@@ -50,11 +50,13 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.example.android.track.R.id.user_name;
 
 public class UserInfoActivity extends AppCompatActivity {
     // View
-    private ImageView portrait_view;
+    private CircleImageView portrait_view;
     private BottomPopView bottomPopView;
     private TextView birthday_tv;
     private EditText user_name_et;
@@ -107,7 +109,7 @@ public class UserInfoActivity extends AppCompatActivity {
         initUserInfo();
 
         //portrait
-        portrait_view = (ImageView) findViewById(R.id.portrait_view);
+        portrait_view = (CircleImageView) findViewById(R.id.portrait_view);
         portrait_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +189,8 @@ public class UserInfoActivity extends AppCompatActivity {
         // load portrait
         Glide.with(this)
                 .load("")
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic);
     }
 

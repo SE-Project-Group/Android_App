@@ -24,12 +24,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax" >
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
                     android:id="@+id/portrait"
                     android:layout_gravity="center"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
                     android:layout_marginBottom="10dp"/>
+
                 <TextView
                     android:textColor="@color/gray"
                     android:id="@+id/user_name"

@@ -96,8 +96,8 @@ public class MessageFragment extends Fragment {
 
         likeRemindView.setBackground(R.drawable.heart_filled_24);
         commentRemindView.setBackground(R.drawable.comment_24);
-        shareRemindView.setBackground(R.drawable.share_1);
-        mentionRemindView.setBackground(R.drawable.new_feed_at);
+        shareRemindView.setBackground(R.drawable.share_24);
+        mentionRemindView.setBackground(R.drawable.mention_24);
 
         likeRemindView.setMessageCount(MyApplication.getUnReadLikenCnt());
         commentRemindView.setMessageCount(MyApplication.getUnReadCommentCnt());

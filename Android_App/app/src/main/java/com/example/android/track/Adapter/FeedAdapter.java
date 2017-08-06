@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.C;
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.CommentActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
@@ -27,7 +28,12 @@ import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
 import java.util.List;
 
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.android.track.R.id.portrait;
 import static com.example.android.track.R.id.position;
+import static java.lang.System.load;
 
 
 /**
@@ -47,7 +53,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView portrait_view;
+        CircleImageView portrait_view;
         TextView feed_owner_view;
         TextView date_view;
         TextView position_view;
@@ -60,7 +66,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
 
         public ViewHolder (View view){
             super(view);
-            portrait_view = (ImageView) view.findViewById(R.id.portrait);
+            portrait_view = (CircleImageView) view.findViewById(R.id.portrait);
             feed_owner_view = (TextView) view.findViewById(R.id.feed_owner);
             date_view = (TextView) view.findViewById(R.id.date);
             position_view = (TextView) view.findViewById(position);
@@ -185,8 +191,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         // load portrait
         Glide.with(context)
                 .load(feed.getPortrait_url())
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.portrait_view);
+
 
         NineGridImageViewAdapter<String> mNGIVAdapter = new NineGridImageViewAdapter<String>(){
             @Override

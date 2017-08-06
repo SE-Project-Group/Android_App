@@ -27,7 +27,7 @@ import com.example.android.track.Util.Verify;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -190,16 +190,18 @@ public class PersonalHomeActivity extends AppCompatActivity {
 
     private void displayUserInfo(){
         // find view
-        ImageView portrait_view = (ImageView) findViewById(R.id.portrait);
+        CircleImageView portrait_view = (CircleImageView) findViewById(R.id.portrait);
         TextView user_name_view = (TextView) findViewById(R.id.user_name);
         TextView following_cnt_view = (TextView) findViewById(R.id.following_cnt);
         TextView follower_cnt_view = (TextView) findViewById(R.id.follower_cnt);
         TextView like_cnt_view = (TextView) findViewById(R.id.like_cnt);
         TextView share_cnt_view = (TextView) findViewById(R.id.share_cnt);
 
-        // load
+        // load portrait
         Glide.with(this)
                 .load(userInfo.getPortrait_url())
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(portrait_view);
         user_name_view.setText(userInfo.getName());

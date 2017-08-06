@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.example.android.track.R.drawable.comment;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * Created by thor on 2017/7/17.
@@ -39,7 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView portrait_view;
+        CircleImageView portrait_view;
         TextView user_name_view;
         TextView time_view;
         TextView comment_view;
@@ -47,7 +48,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Button conversation_btn;
         public ViewHolder (View view){
             super(view);
-            portrait_view = (ImageView)view.findViewById(R.id.portrait_image);
+            portrait_view = (CircleImageView) view.findViewById(R.id.portrait_image);
             user_name_view = (TextView)view.findViewById(R.id.user_name_text);
             comment_view = (TextView)view.findViewById(R.id.comment_text);
             time_view = (TextView) view.findViewById(R.id.time_text);
@@ -108,6 +109,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         Comment comment = commentList.get(position);
         Glide.with(context)
                 .load(comment.getPortrait_url())
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.portrait_view);
         holder.comment_view.setText(comment.getComment_text());

@@ -10,22 +10,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/portrait"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
-
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +40,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="3dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -63,7 +59,7 @@
             android:id="@+id/feed_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_margin="10dp"
             android:text="....."
             android:textColor="@color/black"
             android:textSize="17dp" />
@@ -71,7 +67,7 @@
         <com.jaeger.ninegridimageview.NineGridImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="10dp"
             android:id="@+id/nine_gridView"
             android:layout_width="match_parent"
             app:imgGap="4dp"
@@ -84,7 +80,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="from:"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_margin="10dp"/>
 
         <!--comment or like button-->
         <LinearLayout

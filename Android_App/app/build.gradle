@@ -73,6 +73,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
     compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.code.gson:gson:2.7'
     /*compile 'com.google.android.gms:play-services-maps:11.0.1'*/
