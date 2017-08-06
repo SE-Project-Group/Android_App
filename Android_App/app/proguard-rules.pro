@@ -40,7 +40,7 @@
 -dontwarn cn.jiguang.**
 -keep class cn.jiguang.** { *; }
 
-# jmessage
+
 -keepattributes  EnclosingMethod,Signature
  -keepclassmembers class ** {
      public void onEvent*(**);

@@ -68,6 +68,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private static final int DATE_DIALOG = 2;
 
     private Uri new_portrait_uri;
+    private String portrait_path;
 
     private UserRequester requester = new UserRequester();
     private ClientInfo clientInfo;
@@ -226,7 +227,7 @@ public class UserInfoActivity extends AppCompatActivity {
             OssService ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
             Verify verify = new Verify();
             String user_id = verify.getUser_id();
-            ossService.asyncPutImage(user_id + "_portrait", new_portrait_uri.getPath());
+            ossService.asyncPutImage(user_id + "_portrait", portrait_path);
 
         }
     }
@@ -312,6 +313,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                     Bitmap scaled = scaleBitmap(bitmap, 300,300);
                     portrait_view.setImageBitmap(scaled);
+                    portrait_path = path;
                 }
                 portraitChanged = true;
                 break;
@@ -321,6 +323,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(path, options);
                 Bitmap scaled = scaleBitmap(bitmap, 300,300);
                 portrait_view.setImageBitmap(scaled);
+                portrait_path = path;
                 portraitChanged = true;
                 break;
             default:
