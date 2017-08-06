@@ -69,6 +69,11 @@ public class DiscoverFragment extends Fragment {
         // set tool bar
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.discoverToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        // set home activity aroundFragment
+        HomeActivity homeActivity = (HomeActivity) getActivity();
+        homeActivity.setAroundFragment(false);
+
         Button search_btn = (Button) getActivity().findViewById(R.id.search_toolBar_btn);
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override

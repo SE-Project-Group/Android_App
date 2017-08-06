@@ -60,6 +60,10 @@ public class OssService {
             Log.w("LocalFile", localFile);
             return;
         }
+        // get format
+        String fileName = file.getName();
+        String[] array = fileName.split("\\."); // . is a special char
+        String format = "." + array[array.length-1];
 
         // 构造上传请求
         PutObjectRequest put = new PutObjectRequest(bucket, object, localFile);

@@ -18,7 +18,7 @@ public class Remind {
     private String feed_id;
     private String type; // comment, like, share, mention
 
-    private int reply_id;
+    private int comment_id;
 
     public int getUser_id() {
         return user_id;
@@ -93,11 +93,11 @@ public class Remind {
         this.comment_text = comment_text;
     }
 
-    public int getReply_id() {
-        return reply_id;
+    public int getComment_id() {
+        return comment_id;
     }
 
-    public void setReply_id(int reply_id) {
-        this.reply_id = reply_id;
+    public void setComment_id(int comment_id) {
+        this.comment_id = comment_id;
     }
 }

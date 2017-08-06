@@ -31,7 +31,7 @@
                         android:text="通知"
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true" />
-                    <com.example.android.track.Util.RemindView
+                    <com.example.android.track.View.RemindView
                         android:id="@+id/ic_notification"
                         android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                         android:text="私聊"
                         android:layout_alignParentBottom="true"
                         android:layout_centerInParent="true" />
-                    <com.example.android.track.Util.RemindView
+                    <com.example.android.track.View.RemindView
                         android:id="@+id/ic_chat"
                         android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"

@@ -2,6 +2,8 @@ package com.example.android.track.Application;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Message;
 import android.support.multidex.MultiDex;
 import android.widget.Toast;
 
@@ -15,6 +17,8 @@ import org.litepal.LitePal;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
+
+import static android.R.id.message;
 
 /**
  * Created by thor on 2017/7/19.
@@ -102,10 +106,11 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
             // if logged , log in JMessage
             Verify verify = new Verify();
             if(verify.getLoged()){
-                JMessageClient.login(verify.getUser_id(), verify.getUser_id(),new BasicCallback() {
+                JMessageClient.login(verify.getUser_id(), password,new BasicCallback() {
                     @Override
                     public void gotResult(int code, String desc) {
                         if (code == 0) {
+                            Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, "jmessage login error", Toast.LENGTH_SHORT).show();
                         }
@@ -126,6 +131,31 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
             JMessageClient.logout();
         }
         return result;
+    }
+
+    public static String signUp(String user_name, String pwd, String phone){
+        UserRequester requester = new UserRequester();
+        String response_data = requester.signUp(user_name, pwd, phone);
+
+        if(response_data.equals("existing phone"))
+            return response_data;
+        if(response_data.equals("existing user name"))
+            return response_data;
+        else{
+            String user_id = response_data;
+            JMessageClient.register(user_id, pwd, new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    if(i == 0){
+                        Toast.makeText(MyApplication.getContext(), "JMessage注册成功", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(MyApplication.getContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            return "success";
+        }
     }
 
     public static int getUnReadMsgCnt() {

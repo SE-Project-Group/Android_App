@@ -1,4 +1,4 @@
-package com.example.android.track.Util;
+package com.example.android.track.View;
 
 import android.annotation.TargetApi;
 import android.content.Context;

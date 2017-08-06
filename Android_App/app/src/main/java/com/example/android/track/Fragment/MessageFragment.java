@@ -30,11 +30,10 @@ import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Message;
 import com.example.android.track.R;
-import com.example.android.track.Util.RemindView;
+import com.example.android.track.View.RemindView;
 
 import org.litepal.crud.DataSupport;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -167,11 +166,15 @@ public class MessageFragment extends Fragment {
             message.setUser_id(user_id);
             List<Acquaintance> acquaintances = DataSupport.select("portrait", "user_name")
                     .where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
-
-            Acquaintance acquaintance = acquaintances.get(0);
-            message.setUser_name(acquaintance.getUser_name());
-            message.setPortrait(acquaintance.getPortrait());
-
+            if(acquaintances.size() == 0){
+                message.setUser_name(conversation.getTargetId());
+                message.setPortrait(new byte[1]);
+            }
+            else {
+                Acquaintance acquaintance = acquaintances.get(0);
+                message.setUser_name(acquaintance.getUser_name());
+                message.setPortrait(acquaintance.getPortrait());
+            }
             messagesList.add(message);
         }
         // init recyclerView

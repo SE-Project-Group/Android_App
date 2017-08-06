@@ -1,4 +1,4 @@
-package com.example.android.track.Util;
+package com.example.android.track.View;
 
 import android.app.Activity;
 import android.content.Context;
@@ -120,6 +120,7 @@ public abstract class BottomPopView {
     public void setBottomText(String text) {
         mTvBottom.setText(text);
     }
+
     public void dismiss(){
         if(mPopupWindow!=null && mPopupWindow.isShowing()){
             mPopupWindow.dismiss();

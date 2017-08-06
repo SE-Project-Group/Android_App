@@ -1,27 +1,16 @@
 package com.example.android.track.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,39 +20,24 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.bumptech.glide.Glide;
 import com.example.android.track.Adapter.GridViewAdapter;
-import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Util.BottomPopView;
+import com.example.android.track.View.BottomPopView;
 import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.ImageUriParser;
-import com.example.android.track.Util.MyGridView;
+import com.example.android.track.View.MyGridView;
 import com.example.android.track.Util.OssInit;
 import com.example.android.track.Util.OssService;
 import com.example.android.track.Util.Verify;
 import com.example.android.track.R;
-import com.jaeger.ninegridimageview.NineGridImageView;
-import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
-
-import static android.R.attr.path;
-import static android.R.id.list;
-import static com.baidu.location.d.j.A;
-import static com.baidu.location.d.j.n;
-import static com.baidu.location.d.j.v;
 
 
 public class NewFeedActivity extends AppCompatActivity {

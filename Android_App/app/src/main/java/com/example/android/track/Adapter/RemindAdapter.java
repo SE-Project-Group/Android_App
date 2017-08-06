@@ -65,7 +65,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_remind,parent,false);
+                .inflate(R.layout.view_remind,parent,false);
         RemindAdapter.ViewHolder holder = new RemindAdapter.ViewHolder(view);
 
         // set on click listener
@@ -97,7 +97,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                int reply_id = mRemindList.get(position).getReply_id();
+                int reply_id = mRemindList.get(position).getComment_id();
                 String feed_id = mRemindList.get(position).getFeed_id();
                 showCommentDialog(feed_id, reply_id);
             }

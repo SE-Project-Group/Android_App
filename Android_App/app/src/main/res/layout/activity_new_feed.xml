@@ -46,7 +46,7 @@
                         android:textColorHint="@color/gray"
                         android:textSize="16dp" />
 
-                    <com.example.android.track.Util.MyGridView
+                    <com.example.android.track.View.MyGridView
                         xmlns:android="http://schemas.android.com/apk/res/android"
                         android:id="@+id/gridview"
                         android:layout_marginTop="15dp"

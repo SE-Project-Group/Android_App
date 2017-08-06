@@ -48,14 +48,9 @@ public class FeedRequester{
         return prefix_url;
     }
 
-
-
     // constructor with no argument
     public FeedRequester(){
-
     }
-
-
 
     // get aroud feed and show on map
     public List<Feed> getAround(BDLocation location){
@@ -83,11 +78,10 @@ public class FeedRequester{
         return feedList;
     }
 
-
     public List<Feed> getHotFeed(){
         String resource = "getPublicFeedAfterTime";
         String pre_url = generatePreUrl(resource, false);
-        String url = pre_url + "?time=" + "2016-01-01 10:00:00";
+        String url = pre_url + "?time=" + "2016-01-01 10:00:00" + "&user_id=" + verify.getUser_id();
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -113,7 +107,6 @@ public class FeedRequester{
 
     }
 
-
     // need log in
     public List<Feed> loggedGetOnePersonFeeds(int who){
         String resource = "getFeedsLoggedIn";
@@ -136,7 +129,6 @@ public class FeedRequester{
         return feedList;
     }
 
-
     // do not need log in
     public List<Feed> unLoggedGetOnePersonFeeds(int who){
         String resource = "getFeedsNotLoggedIn";
@@ -158,7 +150,6 @@ public class FeedRequester{
         }
         return feedList;
     }
-
 
     public List<Feed> getCircleFeed(){
         String resource = "getFollowingFeedList";
@@ -183,8 +174,6 @@ public class FeedRequester{
         return feedList;
     }
 
-
-
     public String newFeed(String jsonString){
         String resource = "newFeed";
         String url = generatePreUrl(resource, true);
@@ -193,8 +182,6 @@ public class FeedRequester{
 
         return response;
     }
-
-
 
     public List<Feed> publicPolling(Date last_update_time){
         String resource = "";
@@ -224,11 +211,9 @@ public class FeedRequester{
         return null;
     }
 
-
     public List<Feed> friendPolling(Date last_update_time){
         return null;
     }
-
 
     public String removeFeed(String feed_id){
         String resource = "removeFeed";
@@ -258,7 +243,6 @@ public class FeedRequester{
             return "failed";
     }
 
-
     // like
     public String like(String feed_id){
         String resource = "incLikeFeed";
@@ -279,7 +263,7 @@ public class FeedRequester{
 
     // cancel like
     public String cancelLike(String feed_id){
-        String resource = "";
+        String resource = "decLikeFeed";
         String url = generatePreUrl(resource, true);
         // create json
         JSONObject jsonObject = new JSONObject();
@@ -293,7 +277,6 @@ public class FeedRequester{
         String response = sender.put();
         return response;
     }
-
 
     // comment
     public String comment(String text, String feed_id, int reply_id){
@@ -339,7 +322,5 @@ public class FeedRequester{
         return gson.fromJson(responseData, new TypeToken<List<Comment>>(){}.getType());
 
     }
-
-
 
 }

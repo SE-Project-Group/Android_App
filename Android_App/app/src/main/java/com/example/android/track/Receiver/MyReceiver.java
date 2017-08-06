@@ -28,6 +28,9 @@ import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
+import static com.baidu.location.d.j.S;
+import static org.apache.commons.lang3.StringUtils.split;
+
 /**
  * Created by thor on 2017/7/21.
  */
@@ -40,8 +43,10 @@ public class MyReceiver extends BroadcastReceiver {
         // receive custom message
         if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             //String external = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            String title = bundle.getString(JPushInterface.EXTRA_TITLE);
-            String json_message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+
+            String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+            String title = message.split("#")[0];   // get title
+            String json_message = message.replace(title+"#", ""); // remove title
             Gson gson = new Gson();
 
             int old_cnt = MyApplication.getUnReadMsgCnt();

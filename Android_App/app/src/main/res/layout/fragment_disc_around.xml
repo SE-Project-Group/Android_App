@@ -49,7 +49,7 @@
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.baidu.mapapi.map.MapView
@@ -57,17 +57,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"/>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/refresh_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:src="@drawable/ic_refresh"
+            android:layout_gravity="bottom"
+            app:elevation="8dp"
+            app:borderWidth="0dp"
+            app:fabSize="mini"/>
+    </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_detail"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:visibility="gone"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true">
-            <include layout="@layout/item_feed"/>
-        </LinearLayout>
-    </RelativeLayout>
+
 
 
 </LinearLayout>
