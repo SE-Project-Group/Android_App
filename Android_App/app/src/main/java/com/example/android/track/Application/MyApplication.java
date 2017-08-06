@@ -44,6 +44,7 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
     private static int unReadMentionCnt;
     private static int unReadChatMsgCnt;
     private static boolean newFollowFeed = false;
+    private static boolean newMsg = false;
 
     private Verify verify;
 
@@ -268,5 +269,13 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
     public static void setNewFollowFeed(boolean newFollowFeed) {
         MyApplication.newFollowFeed = newFollowFeed;
+    }
+
+    public static boolean hasNewMsg() {
+        return newMsg;
+    }
+
+    public static void setNewMsg(boolean newMsg) {
+        MyApplication.newMsg = newMsg;
     }
 }

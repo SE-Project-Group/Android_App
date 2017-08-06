@@ -1,5 +1,6 @@
 package com.example.android.track.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -45,7 +46,9 @@ public class HomeActivity extends AppCompatActivity{
     private BottomNavigationBar bottomNavigationBar;
     private LocationClient mLocationClient;
 
+    // used to update bottome bar
     private final static int UPDATE_BOTTOM_BAR = 1;
+    private static boolean frontPage;
 
     public boolean loged;
 
@@ -103,9 +106,9 @@ public class HomeActivity extends AppCompatActivity{
         permission.getPermissions();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
-        setBottomNavigator(MyApplication.getUnReadMsgCnt(), true);
-
+        setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
         setDefaultFragment();
+        checkReceiver();
     }
 
     // when come back from other avtivity, set default fragment and reset bottom navigation bar
@@ -120,6 +123,13 @@ public class HomeActivity extends AppCompatActivity{
             loged = true;
 
         bottomNavigationBar.selectTab(old_postion);
+        frontPage = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        frontPage = false;
     }
 
     // set default fragment to discover fragment
@@ -135,7 +145,7 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     // set bottom navigation bar
-    private void setBottomNavigator(int msgCnt, boolean followFeed){
+    public void setBottomNavigator(int msgCnt, boolean followFeed){
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);  // set mode
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
@@ -198,6 +208,8 @@ public class HomeActivity extends AppCompatActivity{
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 1:
+                        // remove has new msg
+                        MyApplication.setNewMsg(false);
                         if(messageFragment == null)
                             messageFragment = new MessageFragment();
                         f = messageFragment;
@@ -243,6 +255,27 @@ public class HomeActivity extends AppCompatActivity{
         });
     }
 
+    private void checkReceiver(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try {
+                        Thread.sleep(5000); // sleep 5s
+                        // update when has new message or new follow feed
+                        if(MyApplication.hasNewMsg() || MyApplication.hasNewFollowFeed()){
+                            Message message = new Message();
+                            message.what = UPDATE_BOTTOM_BAR;
+                            handler.sendMessage(message);
+                        }
+                    }catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -271,8 +304,12 @@ public class HomeActivity extends AppCompatActivity{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATE_BOTTOM_BAR:
+                    if (!frontPage)
+                        break;
                     bottomNavigationBar.clearAll();
                     setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
+                    bottomNavigationBar.selectTab(old_postion);
+                    break;
             }
         }
     };

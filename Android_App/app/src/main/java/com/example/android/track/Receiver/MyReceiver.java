@@ -71,6 +71,7 @@ public class MyReceiver extends BroadcastReceiver {
                 case "NewLikeMessage":
                     old_cnt = MyApplication.getUnReadLikenCnt();
                     MyApplication.setUnReadLikenCnt(old_cnt + 1);
+                    MyApplication.setNewMsg(true);
                     LikeMeRecord likeMeRecord = gson.fromJson(json_message, new TypeToken<LikeMeRecord>() {}.getType());
                     likeMeRecord.setStatus("unRead");
                     likeMeRecord.save();
@@ -78,7 +79,8 @@ public class MyReceiver extends BroadcastReceiver {
                     break;
                 case "NewCommentMessage":
                     old_cnt = MyApplication.getUnReadCommentCnt();
-                    MyApplication.setUnReadCommentCnt(old_cnt++);
+                    MyApplication.setUnReadCommentCnt(old_cnt + 1);
+                    MyApplication.setNewMsg(true);
                     CommentMeRecord commentMeRecord = gson.fromJson(json_message, new TypeToken<CommentMeRecord>(){}.getType());
                     commentMeRecord.setStatus("unRead");
                     commentMeRecord.save();
@@ -86,7 +88,8 @@ public class MyReceiver extends BroadcastReceiver {
                     break;
                 case "NewShareMessage":
                     old_cnt = MyApplication.getUnReadShareCnt();
-                    MyApplication.setUnReadShareCnt(old_cnt++);
+                    MyApplication.setUnReadShareCnt(old_cnt + 1);
+                    MyApplication.setNewMsg(true);
                     ShareMeRecord shareMeRecord = gson.fromJson(json_message, new TypeToken<ShareMeRecord>(){}.getType());
                     shareMeRecord.setStatus("unRead");
                     shareMeRecord.save();
@@ -94,7 +97,8 @@ public class MyReceiver extends BroadcastReceiver {
                     break;
                 case "NewMentionMeMessage":
                     old_cnt = MyApplication.getUnReadMentionCnt();
-                    MyApplication.setUnReadMentionCnt(old_cnt++);
+                    MyApplication.setUnReadMentionCnt(old_cnt + 1);
+                    MyApplication.setNewMsg(true);
                     MentionMeRecord mentionMeRecord = gson.fromJson(json_message, new TypeToken<MentionMeRecord>(){}.getType());
                     mentionMeRecord.setStatus("unRead");
                     mentionMeRecord.save();

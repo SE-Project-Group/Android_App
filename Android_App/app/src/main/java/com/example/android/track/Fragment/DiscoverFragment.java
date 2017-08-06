@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
 import com.example.android.track.Adapter.FeedAdapter;
 import com.example.android.track.Activity.HomeActivity;
@@ -121,6 +122,8 @@ public class DiscoverFragment extends Fragment {
 
     // use feedlist to initialize recycleView
     private void initRecycleView(){
+        if(getActivity() == null)
+            return;
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -231,7 +234,7 @@ public class DiscoverFragment extends Fragment {
                     // get Activity() will receive a null point,
 
                     if(getActivity() != null)
-                        Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
                     break;
                 case CON_GET_FEED_OK:
                     updateRecyclerView(DOWN);
