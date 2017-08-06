@@ -34,6 +34,7 @@ import com.example.android.track.View.RemindView;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -158,23 +159,12 @@ public class MessageFragment extends Fragment {
         for(Conversation conversation : conversationList){
             Message message = new Message();
             //SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date(conversation.getLastMsgDate() * 1000);
+            Date date = new Date(conversation.getLastMsgDate());
             //String str = sdf.format(date);
             message.setDate(date);
             message.setMessage_text(conversation.getLatestText());
             int user_id = Integer.valueOf(conversation.getTargetId());
             message.setUser_id(user_id);
-            List<Acquaintance> acquaintances = DataSupport.select("portrait", "user_name")
-                    .where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
-            if(acquaintances.size() == 0){
-                message.setUser_name(conversation.getTargetId());
-                message.setPortrait(new byte[1]);
-            }
-            else {
-                Acquaintance acquaintance = acquaintances.get(0);
-                message.setUser_name(acquaintance.getUser_name());
-                message.setPortrait(acquaintance.getPortrait());
-            }
             messagesList.add(message);
         }
         // init recyclerView

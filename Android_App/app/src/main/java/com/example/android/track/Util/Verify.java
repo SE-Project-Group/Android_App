@@ -87,9 +87,6 @@ public class Verify {
         editor.putString("user_name", user_name);
         editor.putString("password", password);
         editor.apply();
-
-        // set Alias
-        JPushInterface.setAlias(MyApplication.getContext(),String.valueOf(user_id), null);
     }
 
 

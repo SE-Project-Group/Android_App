@@ -18,6 +18,9 @@ import com.example.android.track.R;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.baidu.location.d.j.m;
 
 /**
  * Created by jarvis on 2017/7/12.
@@ -29,7 +32,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout entry_btn;
-        ImageView portrait;
+        CircleImageView portrait;
         TextView user_name;
         TextView date;
         TextView message_text;
@@ -37,7 +40,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         public ViewHolder(View view){
             super(view);
             entry_btn = (LinearLayout) view.findViewById(R.id.entry_btn);
-            portrait = (ImageView)view.findViewById(R.id.portrait_image);
+            portrait = (CircleImageView) view.findViewById(R.id.portrait_image);
             user_name = (TextView)view.findViewById(R.id.user_name_text);
             date = (TextView)view.findViewById(R.id.date);
             message_text = (TextView)view.findViewById(R.id.message_text);
@@ -69,12 +72,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         Message message = mConversationList.get(position);
-        holder.user_name.setText(message.getUser_name());
+        holder.user_name.setText("");
         holder.message_text.setText(message.getMessage_text());
         holder.date.setText(message.getDate().toString());
         // load the picture use glide
         Glide.with(context)
-                .load(message.getPortrait())
+                .load("")
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.portrait);
 

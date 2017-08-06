@@ -3,6 +3,8 @@ package com.example.android.track.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Fragment.CircleFragment;
 import com.example.android.track.Fragment.UnlogUserFragment;
 import com.example.android.track.Util.Permission;
@@ -39,6 +44,8 @@ public class HomeActivity extends AppCompatActivity{
     private UnlogUserFragment unlogUserFragment;
     private BottomNavigationBar bottomNavigationBar;
     private LocationClient mLocationClient;
+
+    private final static int UPDATE_BOTTOM_BAR = 1;
 
     public boolean loged;
 
@@ -96,7 +103,7 @@ public class HomeActivity extends AppCompatActivity{
         permission.getPermissions();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
-        setBottomNavigator();
+        setBottomNavigator(MyApplication.getUnReadMsgCnt(), true);
 
         setDefaultFragment();
     }
@@ -128,7 +135,7 @@ public class HomeActivity extends AppCompatActivity{
     }
 
     // set bottom navigation bar
-    private void setBottomNavigator(){
+    private void setBottomNavigator(int msgCnt, boolean followFeed){
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);  // set mode
         bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
@@ -137,12 +144,40 @@ public class HomeActivity extends AppCompatActivity{
         bottomNavigationBar.setInActiveColor(R.color.gray);
 
         // inflate items
-        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_discover, "发现"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_message, "消息"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_add,"新动态"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_circle, "圈子"))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "我的"))
-                .initialise();
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_discover, "发现"));
+
+        if(msgCnt > 0) {
+            BadgeItem msgBadge = new BadgeItem()
+                    .setBorderWidth(2)//Badge的Border(边界)宽度
+                    //.setBorderColor("#FF0000")//Badge的Border颜色
+                    //.setBackgroundColor("#9ACD32")//Badge背景颜色
+                    .setGravity(Gravity.RIGHT | Gravity.TOP)//位置，默认右上角
+                    .setText(String.valueOf(msgCnt))//显示的文本
+                    //.setTextColor("#F0F8FF")//文本颜色
+                    .setAnimationDuration(400)
+                    .setHideOnSelect(true);//当选中状态时消失，非选中状态显示
+            bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_message, "消息").setBadgeItem(msgBadge));
+        }
+        else
+            bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_message, "消息"));
+
+
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_add,"新动态"));
+
+        if(followFeed){
+                BadgeItem circleBadge = new BadgeItem()
+                        .setBorderWidth(2)//Badge的Border(边界)宽度
+                        .setGravity(Gravity.RIGHT | Gravity.TOP)//位置，默认右上角
+                        .setText("new")//显示的文本
+                        .setAnimationDuration(400)
+                        .setHideOnSelect(true);//当选中状态时消失，非选中状态显示
+            bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_circle, "圈子").setBadgeItem(circleBadge));
+        }
+        else
+            bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnvg_circle, "圈子"));
+
+        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.ic_btmnav_user, "我的"));
+        bottomNavigationBar.initialise();
 
         // bottom navigator bar listener
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -230,5 +265,16 @@ public class HomeActivity extends AppCompatActivity{
                 break;
         }
     }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case UPDATE_BOTTOM_BAR:
+                    bottomNavigationBar.clearAll();
+                    setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
+            }
+        }
+    };
 
 }

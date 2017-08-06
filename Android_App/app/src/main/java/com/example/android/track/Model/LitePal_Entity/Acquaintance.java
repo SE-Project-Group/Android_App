@@ -10,8 +10,8 @@ import java.util.Date;
 
 public class Acquaintance extends DataSupport {
     private int user_id;
-    private byte[] portrait;
     private String user_name;
+    private Date updateTime;
     private String relationship;
 
     public int getUser_id() {
@@ -20,14 +20,6 @@ public class Acquaintance extends DataSupport {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
-    }
-
-    public byte[] getPortrait() {
-        return portrait;
-    }
-
-    public void setPortrait(byte[] portrait) {
-        this.portrait = portrait;
     }
 
     public String getUser_name() {
@@ -45,4 +37,13 @@ public class Acquaintance extends DataSupport {
     public void setRelationship(String relationship) {
         this.relationship = relationship;
     }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
 }

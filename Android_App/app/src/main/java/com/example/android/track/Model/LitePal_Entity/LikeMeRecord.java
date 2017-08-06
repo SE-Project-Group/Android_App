@@ -2,7 +2,10 @@ package com.example.android.track.Model.LitePal_Entity;
 
 import org.litepal.crud.DataSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created by thor on 2017/8/2.
@@ -15,6 +18,7 @@ public class LikeMeRecord extends DataSupport{
     private String feed_id;
 
     private String status;
+
 
     public int getUser_id() {
         return user_id;
@@ -36,8 +40,15 @@ public class LikeMeRecord extends DataSupport{
         return time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setTime(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        try {
+            date = sdf.parse(time);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        this.time = date;
     }
 
     public String getFeed_id() {

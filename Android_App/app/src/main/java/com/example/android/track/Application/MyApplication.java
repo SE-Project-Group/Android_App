@@ -14,7 +14,10 @@ import com.example.android.track.Util.Verify;
 
 import org.litepal.LitePal;
 
+import java.util.Set;
+
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
@@ -42,6 +45,8 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
     private static int unReadChatMsgCnt;
     private static boolean newFollowFeed = false;
 
+    private Verify verify;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -60,12 +65,40 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
         // set context
         context = getApplicationContext();
+
+        verify = new Verify();
         // init JPushInterface
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        if(verify.getLoged()){
+            // set Alias
+            JPushInterface.setAlias(MyApplication.getContext(),verify.getUser_id(), new TagAliasCallback(){
+                @Override
+                public void gotResult(int responseCode, String alias, Set<String> tags) {
+                    if (responseCode == 0) {
+                        Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "jpush setAlias error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
         // init JMessageClient
         JMessageClient.setDebugMode(true);
         JMessageClient.init(this, true);  // turn on message roaming
+        if(verify.getLoged()){
+            JMessageClient.login(verify.getUser_id(), verify.getUser_pwd(),new BasicCallback() {
+                @Override
+                public void gotResult(int code, String desc) {
+                    if (code == 0) {
+                        Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "jmessage login error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -106,6 +139,7 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
             // if logged , log in JMessage
             Verify verify = new Verify();
             if(verify.getLoged()){
+                // set jmessage
                 JMessageClient.login(verify.getUser_id(), password,new BasicCallback() {
                     @Override
                     public void gotResult(int code, String desc) {
@@ -113,6 +147,18 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
                             Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context, "jmessage login error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // set jpush
+                JPushInterface.setAlias(context,verify.getUser_id(), new TagAliasCallback(){
+                    @Override
+                    public void gotResult(int responseCode, String alias, Set<String> tags) {
+                        if (responseCode == 0) {
+                            Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "jpush setAlias error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -129,6 +175,16 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
         String result = requester.logOut();
         if(result.equals("success")){
             JMessageClient.logout();
+            JPushInterface.setAlias(context, "", new TagAliasCallback(){
+                @Override
+                public void gotResult(int responseCode, String alias, Set<String> tags) {
+                    if (responseCode == 0) {
+                        Toast.makeText(context, "jpush alias logout success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "jpush alias logout error", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
         return result;
     }

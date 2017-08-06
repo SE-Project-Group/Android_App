@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.PersonalHomeActivity;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
@@ -23,7 +24,10 @@ import com.example.android.track.Util.FeedRequester;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.File;
 import java.util.List;
+
+import static com.baidu.location.d.j.ac;
 
 /**
  * Created by jarvis on 2017/7/12.
@@ -139,9 +143,11 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
             holder.response_btn.setVisibility(View.VISIBLE);
 
         // load the user portrait use glide
-        List<Acquaintance> acquaintances = DataSupport.select("portrait").where("user_id = ?", String.valueOf(remind.getUser_id())).find(Acquaintance.class);
+        int user_id = remind.getUser_id();
+        File fileDir = MyApplication.getContext().getFilesDir();
+        File portrait = new File(fileDir, user_id+"_portrait");
         Glide.with(context)
-                .load(acquaintances.get(0).getPortrait())
+                .load(portrait)
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.user_portrait);
 
