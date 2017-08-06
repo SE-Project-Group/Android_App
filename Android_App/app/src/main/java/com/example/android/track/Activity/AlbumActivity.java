@@ -38,7 +38,7 @@ public class AlbumActivity extends AppCompatActivity {
         albumList.add((album1));
         albumList.add((album1));
         albumList.add((album1));
-        Album album2 = new Album(R.drawable.comment_down);
+        Album album2 = new Album(R.drawable.add_pic);
         albumList.add(album2);
         albumList.add(album2);
         albumList.add(album2);

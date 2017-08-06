@@ -86,7 +86,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/new_feed_location"
+                            android:src="@drawable/location_24"
                             android:layout_marginTop="9dp"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/new_feed_eye"
+                        android:src="@drawable/eye_24"
                         android:layout_marginTop="4dp"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/new_feed_at"
+                        android:src="@drawable/mention_24"
                         android:layout_marginTop="4dp"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -205,7 +205,7 @@
                         android:layout_marginTop="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/detail_right_back"/>
+                        android:src="@drawable/right_arrow"/>
                 </LinearLayout>
 
             </LinearLayout>

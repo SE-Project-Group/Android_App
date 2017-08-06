@@ -8,7 +8,7 @@
     >
 
     <ImageView
-        android:src="@drawable/ic_add_pic"
+        android:src="@drawable/add_pic"
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="100dp"

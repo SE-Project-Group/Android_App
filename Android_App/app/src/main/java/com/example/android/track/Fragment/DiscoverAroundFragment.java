@@ -50,8 +50,10 @@ public class DiscoverAroundFragment extends Fragment{
     private MapView mapView;
     private BaiduMap baiduMap;
     private boolean firstLocate;
-    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.ic_mark);
+
+    private BitmapDescriptor mMarkerIcon = BitmapDescriptorFactory.fromResource(R.drawable.mark_30);
     private FloatingActionButton refresh_btn;
+
 
     private List<Feed> feedList;
     private static final int GET_AROUND_OK = 0;

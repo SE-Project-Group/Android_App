@@ -100,7 +100,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/feed_item_share"
+                android:drawableLeft="@drawable/share_unfilled_24"
                 android:textColor="@color/gray"
                 android:text="number"/>
 
@@ -111,7 +111,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/feed_item_comment"
+                android:drawableLeft="@drawable/comment_unfilled_24"
                 android:textColor="@color/gray"
                 android:background="@color/white"
                 android:text="number"/>
@@ -123,7 +123,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/feed_item_like"
+                android:drawableLeft="@drawable/heart_filled_24"
                 android:textColor="@color/gray"
                 android:background="@color/white"
                 android:text="number"/>

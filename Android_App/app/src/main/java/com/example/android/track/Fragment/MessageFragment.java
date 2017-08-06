@@ -94,8 +94,8 @@ public class MessageFragment extends Fragment {
         RemindView shareRemindView = (RemindView) parentView.findViewById(R.id.ic_share);
         RemindView mentionRemindView = (RemindView) parentView.findViewById(R.id.ic_mention);
 
-        likeRemindView.setBackground(R.drawable.feed_item_like);
-        commentRemindView.setBackground(R.drawable.user_comment);
+        likeRemindView.setBackground(R.drawable.heart_filled_24);
+        commentRemindView.setBackground(R.drawable.comment_24);
         shareRemindView.setBackground(R.drawable.share_1);
         mentionRemindView.setBackground(R.drawable.new_feed_at);
 
