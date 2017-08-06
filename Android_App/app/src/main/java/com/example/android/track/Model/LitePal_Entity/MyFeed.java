@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.android.track.R.id.like_cnt;
+import static com.example.android.track.R.id.share_cnt;
+
 /**
  * Created by thor on 2017/8/3.
  */
@@ -17,10 +20,6 @@ public class MyFeed extends DataSupport {
     private String position;
     private double latitude;
     private double longitude;
-    private List<String> picPaths = new ArrayList<>();
-    private int like_cnt;
-    private int share_cnt;
-    private int comment_cnt;
 
     public String getFeed_id() {
         return feed_id;
@@ -70,35 +69,4 @@ public class MyFeed extends DataSupport {
         this.longitude = longitude;
     }
 
-    public List<String> getPicPaths() {
-        return picPaths;
-    }
-
-    public void setPicPaths(List<String> picPaths) {
-        this.picPaths = picPaths;
-    }
-
-    public int getLike_cnt() {
-        return like_cnt;
-    }
-
-    public void setLike_cnt(int like_cnt) {
-        this.like_cnt = like_cnt;
-    }
-
-    public int getShare_cnt() {
-        return share_cnt;
-    }
-
-    public void setShare_cnt(int share_cnt) {
-        this.share_cnt = share_cnt;
-    }
-
-    public int getComment_cnt() {
-        return comment_cnt;
-    }
-
-    public void setComment_cnt(int comment_cnt) {
-        this.comment_cnt = comment_cnt;
-    }
 }

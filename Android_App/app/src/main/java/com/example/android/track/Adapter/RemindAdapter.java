@@ -17,17 +17,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
 
-import org.litepal.crud.DataSupport;
-
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import static com.baidu.location.d.j.ac;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by jarvis on 2017/7/12.
@@ -38,7 +37,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     private Context context;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView user_portrait;
+        CircleImageView user_portrait;
         ImageView first_pic;
         TextView time;
         TextView user_name;
@@ -50,7 +49,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
         public ViewHolder(View view){
             super(view);
-            user_portrait = (ImageView)view.findViewById(R.id.user_portrait);
+            user_portrait = (CircleImageView) view.findViewById(R.id.user_portrait);
             user_name = (TextView)view.findViewById(R.id.user_name);
             time = (TextView)view.findViewById(R.id.time);
             remind_text = (TextView)view.findViewById(R.id.remind_text);
@@ -69,7 +68,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_remind,parent,false);
+                .inflate(R.layout.item_remind,parent,false);
         RemindAdapter.ViewHolder holder = new RemindAdapter.ViewHolder(view);
 
         // set on click listener
@@ -134,7 +133,9 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         if(type.equals("mention"))
             holder.remind_text.setText("提到了我");
 
-        holder.time.setText(remind.getTime().toString());
+        SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeFormated = sdp.format(remind.getTime());
+        holder.time.setText(timeFormated);
 
         holder.author_name.setText(remind.getAuthor_name());
         holder.author_text.setText(remind.getAuthor_text());
@@ -148,6 +149,8 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         File portrait = new File(fileDir, user_id+"_portrait");
         Glide.with(context)
                 .load(portrait)
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.user_portrait);
 

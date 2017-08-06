@@ -12,15 +12,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_portrait"
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
@@ -28,18 +25,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp">
                     <TextView
                         android:id="@+id/user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="User name"
-                        android:textSize="17dp"/>
+                        android:textSize="17dp"
+                        android:textColor="@color/orange"/>
                     <TextView
                         android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="timeStamp"/>
+                        android:text="timeStamp" />
                 </LinearLayout>
                 <Button
                     android:background="@drawable/button_white"
@@ -57,35 +56,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="I am a comment LOL./点赞了你的动态/在动态中提及你"
-                android:textSize="17dp"
-                />
+                android:textSize="17dp" />
+
             <LinearLayout
                 android:id="@+id/feed_abstract"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/colorPrimary">
+                android:background="@color/light_gray">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/author_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Author Name"
+                        android:text="Author"
                         android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/author_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="blablabla" />
+                        android:text="blablabla"
+                        android:layout_marginLeft="10dp"/>
                 </LinearLayout>
             </LinearLayout>
 

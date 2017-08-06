@@ -132,7 +132,7 @@ public class RemindActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.remind_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        RemindAdapter adapter = new RemindAdapter(remindList, getApplicationContext());
+        RemindAdapter adapter = new RemindAdapter(remindList, RemindActivity.this);
         recyclerView.setAdapter(adapter);
     }
 }

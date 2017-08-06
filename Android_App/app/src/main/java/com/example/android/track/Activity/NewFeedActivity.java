@@ -1,5 +1,6 @@
 package com.example.android.track.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.android.track.Adapter.GridViewAdapter;
+import com.example.android.track.Model.LitePal_Entity.MyFeed;
 import com.example.android.track.View.BottomPopView;
 import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.ImageUriParser;
@@ -35,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
@@ -45,6 +48,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private LocationClient mLocationClient;
     private TextView tv_position;
     private MyGridView gridView;
+    private ProgressDialog progressDialog;  // used to tell upload progress
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -70,9 +74,9 @@ public class NewFeedActivity extends AppCompatActivity {
     // used to upload picture
     private OssService ossService;
     private List<String> pathList = new ArrayList<>();
-
+    // used to replace photo
     private int replace_position;
-
+    private MyFeed myFeed;
     // @ someone ids
     private JSONArray mentionList = new JSONArray();
 
@@ -88,6 +92,7 @@ public class NewFeedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
         gridView=(MyGridView) findViewById(R.id.gridview);
+        progressDialog = new ProgressDialog(NewFeedActivity.this);
         refreshGridView();
 
         // get location
@@ -156,6 +161,11 @@ public class NewFeedActivity extends AppCompatActivity {
                     Toast.makeText(NewFeedActivity.this, "not log in", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                progressDialog.setTitle("正在拼命上传");
+                progressDialog.setMessage("上传动态内容......");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 final String jsonString = generateJsonString();
                 final FeedRequester requester = new FeedRequester();
                 new Thread(new Runnable() {
@@ -172,6 +182,9 @@ public class NewFeedActivity extends AppCompatActivity {
                             Bundle bundle = new Bundle();
                             bundle.putString("feed_id", result);
                             message.setData(bundle);
+
+                            // save in local database
+                            saveMyFeed(result);
                         }
                         handler.sendMessage(message);
 
@@ -304,15 +317,16 @@ public class NewFeedActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            int count = pathList.size();
             switch (msg.what){
                 case UPLOAD_OK:
+                    progressDialog.setMessage("内容上传成功");
                     Bundle bundle = msg.getData();
-                    if(count == 0){     // no picture need to be upload
+                    if(pathList.size() == 0){     // no picture need to be upload
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();
                     }
+                    progressDialog.setMessage("上传图片......");
                     upload_pic(bundle.getString("feed_id"));
                     break;
                 case UPLOAD_FAILED:
@@ -323,8 +337,9 @@ public class NewFeedActivity extends AppCompatActivity {
                     tv_currentPosition.setText(detailed_location);
                     break;
                 case UPLOAD_PIC_OK:
-                    count --;
-                    if(count == 0){
+                    pathList.remove(0);
+                    if(pathList.size() == 0){
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(), "上传成功", Toast.LENGTH_SHORT).show();
                         // go back to home activity
                         Intent intent = new Intent(NewFeedActivity.this, HomeActivity.class);
@@ -336,5 +351,17 @@ public class NewFeedActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void saveMyFeed(String feed_id){
+        // create myFeed
+        myFeed = new MyFeed();
+        myFeed.setFeed_id(feed_id);
+        myFeed.setText(text);
+        myFeed.setDate(new Date(System.currentTimeMillis()));
+        myFeed.setLatitude(latitude);
+        myFeed.setLatitude(longitude);
+        myFeed.setPosition(detailed_location);
+        myFeed.save();
+    }
 
 }

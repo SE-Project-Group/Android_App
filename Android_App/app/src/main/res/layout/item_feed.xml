@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             app:imgGap="4dp"
             app:showStyle="fill"
-            app:singleImgSize="120dp"/>
+            app:singleImgSize="200dp"/>
 
         <TextView
             android:id="@+id/position"
