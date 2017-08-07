@@ -29,6 +29,7 @@ import com.example.android.track.Activity.RemindActivity;
 import com.example.android.track.Adapter.ConversationAdapter;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.Verify;
 import com.example.android.track.View.RemindView;
 
@@ -37,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 
 /**
@@ -48,6 +50,9 @@ public class MessageFragment extends Fragment {
     private ArrayList<View> pageview;
     private TextView notification_tv;
     private TextView chat_tv;
+
+    private RemindView notification_ic;
+    private RemindView chat_ic;
 
     private RelativeLayout notification_layout;
     private RelativeLayout chat_layout;
@@ -85,6 +90,14 @@ public class MessageFragment extends Fragment {
         notification_layout.performClick();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // update unread cnt
+        notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
+        chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
+        initChatRecord(chat_view);
+    }
 
     private void setUnReadRemind(View parentView){
         RemindView likeRemindView = (RemindView) parentView.findViewById(R.id.ic_like);
@@ -163,13 +176,12 @@ public class MessageFragment extends Fragment {
 
     private void setViewPager(){
         // set Icon
-
-        RemindView notification_ic = (RemindView) getActivity().findViewById(R.id.ic_notification);
-        RemindView chat_ic = (RemindView) getActivity().findViewById(R.id.ic_chat);
+        notification_ic = (RemindView) getActivity().findViewById(R.id.ic_notification);
+        chat_ic = (RemindView) getActivity().findViewById(R.id.ic_chat);
         //notification_ic.setBackground(R);
 
         notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
-        chat_ic.setMessageCount(MyApplication.getUnReadChatMsgCnt());
+        chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
 
         // set view pager
 
@@ -270,6 +282,9 @@ public class MessageFragment extends Fragment {
                      * float fromYDelta 动画开始的点离当前View Y坐标上的差值
                      * float toYDelta 动画开始的点离当前View Y坐标上的差值
                      **/
+                    // update unread cnt
+                    notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
+                    chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
                     animation = new TranslateAnimation(one, 0, 0, 0);
                     // change color
                     //notification_ic.setBackground();
@@ -283,6 +298,9 @@ public class MessageFragment extends Fragment {
                     }
                     break;
                 case 1:
+                    // update unread cnt
+                    notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
+                    chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
                     animation = new TranslateAnimation(offset, one, 0, 0);
                     // change color
                     //chat_ic.setBackground();
@@ -312,4 +330,5 @@ public class MessageFragment extends Fragment {
         public void onPageScrollStateChanged(int arg0) {
         }
     }
+
 }

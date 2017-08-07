@@ -27,6 +27,7 @@ import cn.jpush.im.api.BasicCallback;
 
 import static cn.jpush.im.android.api.JMessageClient.getSingleConversation;
 import static cn.jpush.im.android.api.JMessageClient.sendMessage;
+import static com.example.android.track.Application.MyApplication.getUnReadMsgCnt;
 
 public class TalkingActivity extends AppCompatActivity {
 
@@ -45,13 +46,17 @@ public class TalkingActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 
+        // get with who
+        Intent intent = getIntent();
+        with_who = intent.getIntExtra("with_who", 0) + "";
+
+        // set up JMessageClient
         JMessageClient.registerEventReceiver(this); // register message receiver
         // do not show notification anymore
         JMessageClient.enterSingleConversation(with_who);
 
-        // get with who
-        Intent intent = getIntent();
-        with_who = intent.getIntExtra("with_who", 0) + "";
+
+
         msg_recycler_view = (RecyclerView) findViewById(R.id.msg_recycler_view);
         initRecord();
 
@@ -84,9 +89,11 @@ public class TalkingActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
+        JMessageClient.unRegisterEventReceiver(this);
         JMessageClient.exitConversation();
         super.onStop();
     }
+
 
     private void initRecord() {
         // init conversation
@@ -94,6 +101,9 @@ public class TalkingActivity extends AppCompatActivity {
         if (null == conversation) {
             conversation = Conversation.createSingleConversation(with_who);
         }
+        // remove all unread count
+        conversation.setUnReadMessageCnt(0);
+
         // init message history record
         messageList = conversation.getAllMessage();
 
@@ -116,6 +126,8 @@ public class TalkingActivity extends AppCompatActivity {
 
     public void onEventMainThread(MessageEvent event) {
         Message msg = event.getMessage();
+        int new_cnt = conversation.getUnReadMsgCnt() - 1;
+        conversation.setUnReadMessageCnt(new_cnt);
         switch (msg.getContentType()) {
             case text:
                 // 处理文字消息

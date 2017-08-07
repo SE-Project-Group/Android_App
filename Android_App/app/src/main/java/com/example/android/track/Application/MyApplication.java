@@ -49,7 +49,6 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
     private static int unReadCommentCnt;
     private static int unReadShareCnt;
     private static int unReadMentionCnt;
-    private static int unReadChatMsgCnt;
     private static boolean newFollowFeed = false;
     private static boolean newMsg = false;
 
@@ -279,14 +278,6 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
     public static void setUnReadMentionCnt(int unReadMentionCnt) {
         MyApplication.unReadMentionCnt = unReadMentionCnt;
-    }
-
-    public static int getUnReadChatMsgCnt() {
-        return unReadChatMsgCnt;
-    }
-
-    public static void setUnReadChatMsgCnt(int unReadChatMsgCnt) {
-        MyApplication.unReadChatMsgCnt = unReadChatMsgCnt;
     }
 
     public static boolean hasNewFollowFeed() {

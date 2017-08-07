@@ -70,7 +70,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 // remove unread count
                 int position = holder.getAdapterPosition();
                 Conversation conversation = mConversationList.get(position);
-                //conversation.setUnReadMessageCnt(0);
 
                 Intent intent = new Intent(context, TalkingActivity.class);
                 int target = Integer.valueOf(conversation.getTargetId());

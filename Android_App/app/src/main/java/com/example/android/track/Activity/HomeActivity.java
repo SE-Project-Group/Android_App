@@ -115,7 +115,8 @@ public class HomeActivity extends AppCompatActivity{
         permission.getPermissions();
         Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
         setSupportActionBar(toolbar);
-        setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
+        setBottomNavigator(MyApplication.getUnReadMsgCnt()
+                + JMessageClient.getAllUnReadMsgCount(), MyApplication.hasNewFollowFeed());
         setDefaultFragment();
         checkReceiver();
     }
@@ -131,8 +132,12 @@ public class HomeActivity extends AppCompatActivity{
         else
             loged = true;
 
-        bottomNavigationBar.selectTab(old_postion);
         frontPage = true;
+        // update unread cnt
+        bottomNavigationBar.clearAll();
+        setBottomNavigator(MyApplication.getUnReadMsgCnt()
+                + JMessageClient.getAllUnReadMsgCount(), MyApplication.hasNewFollowFeed());
+        bottomNavigationBar.selectTab(old_postion);
     }
 
     @Override
@@ -155,7 +160,7 @@ public class HomeActivity extends AppCompatActivity{
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment, discoverFragment);
         transaction.commit();
-        old_postion = bottomNavigationBar.getCurrentSelectedPosition();
+        old_postion = 0;
 
     }
 
@@ -322,7 +327,8 @@ public class HomeActivity extends AppCompatActivity{
                     if (!frontPage)
                         break;
                     bottomNavigationBar.clearAll();
-                    setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
+                    setBottomNavigator(MyApplication.getUnReadMsgCnt() +
+                            JMessageClient.getAllUnReadMsgCount(), MyApplication.hasNewFollowFeed());
                     bottomNavigationBar.selectTab(old_postion);
                     MyApplication.setNewMsg(false);
                     MyApplication.setNewFollowFeed(false);
@@ -339,8 +345,6 @@ public class HomeActivity extends AppCompatActivity{
 
         // update unread count
         MyApplication.setNewMsg(true);
-        int new_cnt = MyApplication.getUnReadMsgCnt() + 1;
-        MyApplication.setUnReadChatMsgCnt(new_cnt);
     }
 
 }
