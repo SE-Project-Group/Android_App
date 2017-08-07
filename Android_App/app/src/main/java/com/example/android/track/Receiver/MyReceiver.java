@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
+import com.example.android.track.Activity.TalkingActivity;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.Model.LitePal_Entity.CommentMeRecord;
@@ -14,6 +15,7 @@ import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.LitePal_Entity.ShareMeRecord;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.UserRequester;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,7 +40,17 @@ import java.util.List;
 import java.util.concurrent.RunnableFuture;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.content.CustomContent;
+import cn.jpush.im.android.api.content.EventNotificationContent;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.content.VoiceContent;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.android.api.model.Message;
 
+import static cn.jpush.im.android.api.enums.ContentType.eventNotification;
 import static cn.jpush.im.android.api.enums.ContentType.file;
 import static com.baidu.location.d.j.S;
 import static com.baidu.location.d.j.g;
@@ -49,6 +61,16 @@ import static org.apache.commons.lang3.StringUtils.split;
  */
 
 public class MyReceiver extends BroadcastReceiver {
+
+    public MyReceiver() {
+        super();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
@@ -75,7 +97,7 @@ public class MyReceiver extends BroadcastReceiver {
                     LikeMeRecord likeMeRecord = gson.fromJson(json_message, new TypeToken<LikeMeRecord>() {}.getType());
                     likeMeRecord.setStatus("unRead");
                     likeMeRecord.save();
-                    savePortrait(likeMeRecord.getUser_id(), likeMeRecord.getUser_name());
+                    AcquaintanceManager.saveAcquaintance(likeMeRecord.getUser_id());
                     break;
                 case "NewCommentMessage":
                     old_cnt = MyApplication.getUnReadCommentCnt();
@@ -84,7 +106,7 @@ public class MyReceiver extends BroadcastReceiver {
                     CommentMeRecord commentMeRecord = gson.fromJson(json_message, new TypeToken<CommentMeRecord>(){}.getType());
                     commentMeRecord.setStatus("unRead");
                     commentMeRecord.save();
-                    savePortrait(commentMeRecord.getUser_id(), commentMeRecord.getUser_name());
+                    AcquaintanceManager.saveAcquaintance(commentMeRecord.getUser_id());
                     break;
                 case "NewShareMessage":
                     old_cnt = MyApplication.getUnReadShareCnt();
@@ -93,7 +115,7 @@ public class MyReceiver extends BroadcastReceiver {
                     ShareMeRecord shareMeRecord = gson.fromJson(json_message, new TypeToken<ShareMeRecord>(){}.getType());
                     shareMeRecord.setStatus("unRead");
                     shareMeRecord.save();
-                    savePortrait(shareMeRecord.getUser_id(), shareMeRecord.getUser_name());
+                    AcquaintanceManager.saveAcquaintance(shareMeRecord.getUser_id());
                     break;
                 case "NewMentionMeMessage":
                     old_cnt = MyApplication.getUnReadMentionCnt();
@@ -102,7 +124,7 @@ public class MyReceiver extends BroadcastReceiver {
                     MentionMeRecord mentionMeRecord = gson.fromJson(json_message, new TypeToken<MentionMeRecord>(){}.getType());
                     mentionMeRecord.setStatus("unRead");
                     mentionMeRecord.save();
-                    savePortrait(mentionMeRecord.getUser_id(), mentionMeRecord.getUser_name());
+                    AcquaintanceManager.saveAcquaintance(mentionMeRecord.getUser_id());
                     break;
                 case "NewFollowFeedMessage":
                     MyApplication.setNewFollowFeed(true);
@@ -113,46 +135,6 @@ public class MyReceiver extends BroadcastReceiver {
         }
     }
 
-    private void  savePortrait(int user_id, String user_name){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Acquaintance> acquaintances = DataSupport.select("*").where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
-                if(acquaintances.size() == 0){      // have no save
-                    String urlString = new UserRequester().getPortraitUrl(user_id);
-                    try {
-                        HttpURLConnection conn = (HttpURLConnection) new URL(urlString).openConnection();
-                        conn.setConnectTimeout(5000);
-                        conn.setRequestMethod("GET");
-                        conn.setDoInput(true);
+    
 
-                        if (conn.getResponseCode() == 200) {
-                            InputStream is = conn.getInputStream();
-                            FileOutputStream fos = MyApplication.getContext().openFileOutput(user_id+"_portrait", Context.MODE_PRIVATE);
-                            byte[] buffer = new byte[1024];
-                            int len = 0;
-                            while ((len = is.read(buffer)) != -1) {
-                                fos.write(buffer, 0, len);
-                            }
-                            is.close();
-                            fos.close();
-                            // storage in SQLite
-                            Acquaintance acquaintance = new Acquaintance();
-                            acquaintance.setUser_id(user_id);
-                            acquaintance.setUser_name(user_name);
-                            acquaintance.setUpdateTime(new Date(System.currentTimeMillis()));
-                            acquaintance.save();
-                        }
-                        else
-                            return;
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-                else
-                    return;
-            }
-        }).start();
-
-    }
 }

@@ -1,76 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bubble="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false">
+
     <LinearLayout
-        android:id="@+id/entry_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_style">
+
         <LinearLayout
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:id="@+id/portrait_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/portrait_image" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp" />
 
             <LinearLayout
-                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp">
+                android:layout_weight="2">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
+                        android:id="@id/user_name_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UserName"
-                        android:textSize="17dp"
                         android:layout_weight="1"
-                        android:id="@id/user_name_text"/>
+                        android:text="UserName"
+                        android:textSize="20dp" />
+
                     <TextView
+                        android:id="@+id/date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TimeStamp"
-                        android:id="@+id/date"
-                        android:textSize="10dp"/>
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_marginTop="5dp"
+                        android:id="@+id/message_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="blablablablabla"
-                        android:id="@+id/message_text"
-                        />
+                        android:layout_marginTop="5dp"
+                        android:text="blablablablabla" />
                 </LinearLayout>
 
             </LinearLayout>
-            <ImageView
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/right_arrow"/>
+
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clipChildren="false">
+                <com.example.android.track.View.DragBubbleView
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/dragBubbleView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    bubble:bubbleColor="#ff0000"
+                    bubble:bubbleRadius="9dp"
+                    bubble:text="0"
+                    bubble:textColor="#ffffff"
+                    bubble:textSize="10sp" />
+            </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

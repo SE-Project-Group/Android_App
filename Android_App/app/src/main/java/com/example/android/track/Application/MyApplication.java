@@ -2,6 +2,7 @@ package com.example.android.track.Application;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.multidex.MultiDex;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
 import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
+import com.example.android.track.Activity.TalkingActivity;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 
@@ -19,9 +21,14 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 import static android.R.id.message;
+import static com.baidu.location.d.j.U;
 
 /**
  * Created by thor on 2017/7/19.
@@ -100,6 +107,7 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
                 }
             });
         }
+        // receive new message
     }
 
     @Override
@@ -124,8 +132,8 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
 
     @Override
     public void onTerminate() {
-        super.onTerminate();
         JMessageClient.logout();
+        super.onTerminate();
     }
 
 
@@ -211,6 +219,24 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
                     }
                 }
             });
+            JMessageClient.getUserInfo(user_id, new GetUserInfoCallback() {
+                @Override
+                public void gotResult(int i, String s, UserInfo userInfo) {
+                    if(i == 0){
+                        userInfo.setNickname(user_name);
+                        JMessageClient.updateMyInfo(UserInfo.Field.nickname, userInfo, new BasicCallback() {
+                            @Override
+                            public void gotResult(int i, String s) {
+                                if(i == 0)
+                                    Toast.makeText(MyApplication.getContext(), "修改昵称成功", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(MyApplication.getContext(), "修改昵称失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+
             return "success";
         }
     }

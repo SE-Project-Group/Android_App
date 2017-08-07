@@ -223,6 +223,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
     // if it's not my own home page, then set follow function button and chat button
     // to visible and set click listener for them
     private void initInteractButton(){
+        boolean logged = new Verify().getLoged();
         // set correct follow button
         add_follow_btn = (Button) findViewById(R.id.add_follow_btn);
         cancel_follow_btn = (Button) findViewById(R.id.cancel_follow_btn);
@@ -241,25 +242,25 @@ public class PersonalHomeActivity extends AppCompatActivity {
         add_follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                follow(userInfo.getUser_id(), "stranger");
+                follow(user_id, "stranger");
             }
         });
         also_follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                follow(userInfo.getUser_id(), "followed");
+                follow(user_id, "followed");
             }
         });
         cancel_follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelFollow(userInfo.getUser_id(), "following");
+                cancelFollow(user_id, "following");
             }
         });
         cancel_friend_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelFollow(userInfo.getUser_id(), "friend");
+                cancelFollow(user_id, "friend");
             }
         });
 
@@ -270,7 +271,12 @@ public class PersonalHomeActivity extends AppCompatActivity {
         chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!logged){
+                    Toast.makeText(PersonalHomeActivity.this, "not login", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(PersonalHomeActivity.this, TalkingActivity.class);
+                intent.putExtra("with_who", user_id);
                 startActivity(intent);
             }
         });

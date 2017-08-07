@@ -27,6 +27,8 @@ import com.baidu.mapapi.SDKInitializer;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Fragment.CircleFragment;
 import com.example.android.track.Fragment.UnlogUserFragment;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.Permission;
 import com.example.android.track.R;
 import com.example.android.track.Fragment.DiscoverAroundFragment;
@@ -34,6 +36,12 @@ import com.example.android.track.Fragment.DiscoverFragment;
 import com.example.android.track.Fragment.LogedUserFragment;
 import com.example.android.track.Fragment.MessageFragment;
 import com.example.android.track.Util.Verify;
+
+import java.util.Date;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
 
 public class HomeActivity extends AppCompatActivity{
     private BDLocation now_location;
@@ -96,6 +104,7 @@ public class HomeActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JMessageClient.registerEventReceiver(this);  // receive JMessage also
         // get location client
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
@@ -128,8 +137,14 @@ public class HomeActivity extends AppCompatActivity{
 
     @Override
     protected void onPause() {
-        super.onPause();
         frontPage = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroy();
     }
 
     // set default fragment to discover fragment
@@ -309,9 +324,23 @@ public class HomeActivity extends AppCompatActivity{
                     bottomNavigationBar.clearAll();
                     setBottomNavigator(MyApplication.getUnReadMsgCnt(), MyApplication.hasNewFollowFeed());
                     bottomNavigationBar.selectTab(old_postion);
+                    MyApplication.setNewMsg(false);
+                    MyApplication.setNewFollowFeed(false);
                     break;
             }
         }
     };
+
+    public void onEvent(MessageEvent event){
+        cn.jpush.im.android.api.model.Message message = event.getMessage();
+        // download portrait and user_name
+        int user_id  = Integer.valueOf(message.getTargetID());
+        AcquaintanceManager.saveAcquaintance(user_id);
+
+        // update unread count
+        MyApplication.setNewMsg(true);
+        int new_cnt = MyApplication.getUnReadMsgCnt() + 1;
+        MyApplication.setUnReadChatMsgCnt(new_cnt);
+    }
 
 }

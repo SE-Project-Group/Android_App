@@ -46,16 +46,17 @@ public class TalkingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         JMessageClient.registerEventReceiver(this); // register message receiver
+        // do not show notification anymore
+        JMessageClient.enterSingleConversation(with_who);
 
-        getWho();
+        // get with who
+        Intent intent = getIntent();
+        with_who = intent.getIntExtra("with_who", 0) + "";
+        msg_recycler_view = (RecyclerView) findViewById(R.id.msg_recycler_view);
         initRecord();
 
         input_text = (EditText)findViewById(R.id.msg_input);
         send_btn = (Button)findViewById(R.id.send);
-        msg_recycler_view = (RecyclerView) findViewById(R.id.msg_recycler_view);
-
-
-
         send_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -81,25 +82,29 @@ public class TalkingActivity extends AppCompatActivity {
         });
     }
 
-    private void initRecord(){
+    @Override
+    protected void onStop() {
+        JMessageClient.exitConversation();
+        super.onStop();
+    }
+
+    private void initRecord() {
         // init conversation
         conversation = JMessageClient.getSingleConversation(with_who);
         if (null == conversation) {
-            conversation = Conversation.createSingleConversation("tom");
+            conversation = Conversation.createSingleConversation(with_who);
         }
         // init message history record
         messageList = conversation.getAllMessage();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(TalkingActivity.this);
         msg_recycler_view.setLayoutManager(layoutManager);
-        adapter = new TalkingAdapter(messageList);
+        adapter = new TalkingAdapter(messageList, Integer.valueOf(with_who));
         msg_recycler_view.setAdapter(adapter);
-        msg_recycler_view.scrollToPosition(messageList.size()-1); // scroll to latest record
+        msg_recycler_view.scrollToPosition(messageList.size() - 1); // scroll to latest record
+
     }
 
-    private void getWho(){
-        Intent intent = getIntent();
-        with_who = String.valueOf(intent.getIntExtra("with_who", 0));
-    }
 
     private void showNewMessage(Message message){
         // show new message

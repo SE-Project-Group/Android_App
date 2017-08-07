@@ -17,23 +17,24 @@
         android:id="@+id/msg_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/light_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
         <EditText
             android:id="@+id/msg_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Type something here"
-            android:maxLines="2"/>
+            android:layout_weight="1" />
         <Button
-            android:background="@drawable/item_talking_receive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_white"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:id="@+id/send"
-            android:text="send"/>
+            android:text="发送"/>
     </LinearLayout>
 </LinearLayout>

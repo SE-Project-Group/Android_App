@@ -2,6 +2,7 @@ package com.example.android.track.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,8 +34,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.R;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.View.BottomPopView;
 import com.example.android.track.Util.ImageUriParser;
 import com.example.android.track.Util.OssInit;
@@ -62,7 +66,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private EditText user_name_et;
     private RadioGroup gender_group;
     private EditText email_et;
-
+    private ProgressDialog progressDialog;
 
     private final static int TAKE_PHOTO = 0;
     private final static int CHOOSE_PHOTO = 1;
@@ -100,6 +104,8 @@ public class UserInfoActivity extends AppCompatActivity {
         // set tool bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+        progressDialog = new ProgressDialog(UserInfoActivity.this);
+
         // set retur button
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
@@ -196,6 +202,12 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     private void upload() {
+        // show dialog
+        progressDialog.setTitle("正在拼命上传");
+        progressDialog.setMessage("上传个人信息......");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         // upload info
         String user_name = user_name_et.getText().toString();
         String gender = "male";
@@ -226,15 +238,6 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         }).start();
 
-
-        // upload new portrait
-        if (portraitChanged) {
-            OssService ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
-            Verify verify = new Verify();
-            String user_id = verify.getUser_id();
-            ossService.asyncPutImage(user_id + "_portrait", portrait_path);
-
-        }
     }
 
     
@@ -413,11 +416,6 @@ public class UserInfoActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            int need_success_cnt;
-            if(portraitChanged == true)
-                need_success_cnt = 2;
-            else
-                need_success_cnt = 1;
 
             switch(msg.what){
                 case GET_INFO_FAILED:
@@ -427,19 +425,26 @@ public class UserInfoActivity extends AppCompatActivity {
                     setInfo();
                     break;
                 case UPLOAD_INFO_OK:
-                    Toast.makeText(UserInfoActivity.this, "edit success", Toast.LENGTH_SHORT).show();
-                    need_success_cnt --;
-                    if(need_success_cnt == 0)
+                    progressDialog.setMessage("上传个人信息成功");
+                    // upload new portrait
+                    if (portraitChanged) {
+                        progressDialog.setMessage("上传新头像......");
+                        OssService ossService = new OssInit().initOSS(getApplicationContext(), handler, UPLOAD_PIC_OK);
+                        Verify verify = new Verify();
+                        String user_id = verify.getUser_id();
+                        ossService.asyncPutImage(user_id + "_portrait", portrait_path);
+                    }
+                    else
                         finish();
                     break;
                 case UPLOAD_INFO_FAILED:
                     Toast.makeText(UserInfoActivity.this, "edit failed", Toast.LENGTH_SHORT).show();
                     break;
                 case UPLOAD_PIC_OK:
-                    Toast.makeText(UserInfoActivity.this, "upload pic ok", Toast.LENGTH_SHORT).show();
-                    need_success_cnt --;
-                    if(need_success_cnt == 0)
-                        finish();
+                    AcquaintanceManager.saveAcquaintance(Integer.valueOf(new Verify().getUser_id()));
+                    progressDialog.setMessage("新头像上传成功");
+                    progressDialog.dismiss();
+                    finish();
                     break;
             }
         }

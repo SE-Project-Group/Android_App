@@ -2,43 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="@color/light_gray">
 
     <!-- send -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/send_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_talking_send"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_gravity="right">
-        <TextView
-            android:id="@+id/talking_send"
+        android:layout_gravity="right"
+        android:layout_marginLeft="50dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/my_portrait"
+            android:layout_alignParentRight="true"/>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I am talking!"
-            android:textSize="15dp"/>
-    </LinearLayout>
+            android:background="@drawable/item_talking_send"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/my_portrait">
+            <TextView
+                android:id="@+id/talking_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am talking!"
+                android:textSize="15dp"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <!-- receive -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/receive_layout"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_talking_receive"
-        android:layout_gravity="left">
-        <TextView
-            android:id="@+id/talking_receive"
+        android:layout_marginRight="50dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/his_portrait"
+            android:layout_alignParentLeft="true"/>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I am talking too!"
-            android:textSize="15dp"/>
-    </LinearLayout>
+            android:padding="10dp"
+            android:background="@drawable/item_talking_receive"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/his_portrait">
+            <TextView
+                android:id="@+id/talking_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am talking too!"
+                android:textSize="15dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

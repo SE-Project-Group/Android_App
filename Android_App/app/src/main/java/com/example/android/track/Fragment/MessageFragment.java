@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,14 +28,10 @@ import android.widget.Toast;
 import com.example.android.track.Activity.RemindActivity;
 import com.example.android.track.Adapter.ConversationAdapter;
 import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Model.LitePal_Entity.Acquaintance;
-import com.example.android.track.Model.Message;
 import com.example.android.track.R;
+import com.example.android.track.Util.Verify;
 import com.example.android.track.View.RemindView;
 
-import org.litepal.crud.DataSupport;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,8 +65,7 @@ public class MessageFragment extends Fragment {
     private View notification_view;
     private View chat_view;
 
-
-    private List<Message> messagesList = new ArrayList<>();
+    private boolean logged;
 
     @Nullable
     @Override
@@ -84,6 +80,7 @@ public class MessageFragment extends Fragment {
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.messageToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        logged = new Verify().getLoged();
         setViewPager();
         notification_layout.performClick();
     }
@@ -155,24 +152,13 @@ public class MessageFragment extends Fragment {
             Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT);
             return;
         }
-
-        for(Conversation conversation : conversationList){
-            Message message = new Message();
-            //SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date(conversation.getLastMsgDate());
-            //String str = sdf.format(date);
-            message.setDate(date);
-            message.setMessage_text(conversation.getLatestText());
-            int user_id = Integer.valueOf(conversation.getTargetId());
-            message.setUser_id(user_id);
-            messagesList.add(message);
-        }
         // init recyclerView
         RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        ConversationAdapter adapter = new ConversationAdapter(messagesList, getContext());
+        ConversationAdapter adapter = new ConversationAdapter(conversationList, getContext());
         recyclerView.setAdapter(adapter);
+
     }
 
     private void setViewPager(){
@@ -288,19 +274,24 @@ public class MessageFragment extends Fragment {
                     // change color
                     //notification_ic.setBackground();
                     //chat_ic.setBackground();
-                    notification_tv.setTextColor(getResources().getColor(R.color.orange));
+                    notification_tv.setTextColor(getResources().getColor(R.color.gray));
                     chat_tv.setTextColor(getResources().getColor(R.color.white));
+
                     setUnReadRemind(notification_view);
-                    setClickListener(notification_view);
+                    if(logged) {
+                        setClickListener(notification_view);
+                    }
                     break;
                 case 1:
                     animation = new TranslateAnimation(offset, one, 0, 0);
                     // change color
                     //chat_ic.setBackground();
                     //notification_ic.setBackground();
-                    chat_tv.setTextColor(getResources().getColor(R.color.orange));
+                    chat_tv.setTextColor(getResources().getColor(R.color.gray));
                     notification_tv.setTextColor(getResources().getColor(R.color.white));
-                    initChatRecord(chat_view);
+                    if(logged) {
+                        initChatRecord(chat_view);
+                    }
                     break;
             }
             //arg0为切换到的页的编码

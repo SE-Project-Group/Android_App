@@ -38,7 +38,6 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView user_portrait;
-        ImageView first_pic;
         TextView time;
         TextView user_name;
         TextView remind_text;
