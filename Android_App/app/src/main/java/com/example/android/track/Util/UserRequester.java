@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
@@ -330,6 +331,28 @@ public class UserRequester {
         Gson gson = new Gson();
         List<Follow> result =  gson.fromJson(responseData, new TypeToken<List<Follow>>(){}.getType());
         return result;
+    }
+
+    public String getBigPortraitUrl(int user_id){
+        String resource = "getBigPortraitUrls";
+        String pre_ur = generatePreUrl(resource, false);
+        String url = pre_ur + "?user_id=" + user_id;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return  responseData;
     }
 
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.track">
+    package="com.example.android.track"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,6 +14,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+
     <application
         android:name=".Application.MyApplication"
         android:allowBackup="true"
@@ -24,8 +26,11 @@
 
         <!-- Baidu lbs api need -->
         <meta-data
+            tools:replace="android:value"
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="WkHea5Yq5dAD44rRyjmz1sz5lEHKwxQU" />
+
+
         <receiver
             android:name=".Receiver.MyReceiver"
             android:enabled="true">
@@ -80,6 +85,7 @@
         <activity android:name="com.example.android.track.Activity.FollowActivity"/>
         <activity android:name="com.example.android.track.Activity.RemindActivity"/>
         <activity android:name="com.example.android.track.Activity.CommentConversationActivity"/>
+        <activity android:name="com.example.android.track.Activity.PhotoViewActivity"/>
 
     </application>
 

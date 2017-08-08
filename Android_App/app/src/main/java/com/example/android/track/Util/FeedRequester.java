@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -346,6 +348,33 @@ public class FeedRequester{
         Gson gson = new Gson();
         List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
         return result;
+    }
+
+    public List<String> getBigPhotoUrls(String feed_id){
+        String resource = "getBigPicUrls";
+        String pre_ur = generatePreUrl(resource, false);
+        String url = pre_ur + "?feed_id=" + feed_id;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        if(responseData.equals("failed"))
+            return null;
+        else{
+            List<String> result = Arrays.asList(responseData.split(","));
+            return result;
+        }
+
     }
 
 }

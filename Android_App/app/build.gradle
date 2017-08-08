@@ -81,9 +81,10 @@ dependencies {
     compile 'com.aliyun.dpa:oss-android-sdk:2.3.0'
     compile 'com.jaeger.ninegridimageview:library:1.0.2'
 
+    //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     compile 'com.android.support:support-v4:25.3.0'
+
     // JPush
     compile 'cn.jiguang.sdk:jpush:3.0.3'  // 此处以JPush 3.0.3 版本为例。
     // JMessage
@@ -99,7 +100,9 @@ dependencies {
 
     // solve too much functions
     compile 'com.android.support:multidex:1.0.0'
-
+    // litepal, ORM SQLite
     compile 'org.litepal.android:core:1.4.1'
+    // PhotoView
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
     testCompile 'junit:junit:4.12'
 }

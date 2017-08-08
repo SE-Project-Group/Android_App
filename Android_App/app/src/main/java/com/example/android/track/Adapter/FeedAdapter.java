@@ -18,6 +18,7 @@ import com.baidu.platform.comapi.map.C;
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.CommentActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
+import com.example.android.track.Activity.PhotoViewActivity;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
 import com.example.android.track.R;
@@ -33,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.android.track.R.id.portrait;
 import static com.example.android.track.R.id.position;
+import static java.lang.System.in;
 import static java.lang.System.load;
 
 
@@ -211,7 +213,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             }
             @Override
             protected void onItemImageClick(Context context, int index, List<String> photoList) {
-        /*showBigPicture(context, photoList.get(index).getBigUrl());*/
+                Intent intent = new Intent(context, PhotoViewActivity.class);
+                intent.putExtra("type", "feed");
+                intent.putExtra("feed_id", feed.getFeed_id());
+                intent.putExtra("currentPosition", index);
+                context.startActivity(intent);
             }
         };
 

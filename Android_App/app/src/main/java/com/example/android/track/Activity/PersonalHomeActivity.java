@@ -20,6 +20,7 @@ import com.example.android.track.Model.Feed;
 import com.example.android.track.Adapter.FeedAdapter;
 import com.example.android.track.Model.UserInfo;
 import com.example.android.track.R;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
@@ -216,6 +217,17 @@ public class PersonalHomeActivity extends AppCompatActivity {
         temp = userInfo.getShare_cnt();
         share_cnt_view.setText(String.valueOf(temp));
 
+        portrait_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalHomeActivity.this, PhotoViewActivity.class);
+                intent.putExtra("type", "user");
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("currentPosition", 0);
+                startActivity(intent);
+            }
+        });
+
 
         // if it's not my own home page, then set follow function button and chat button
         if(!ME)
@@ -277,6 +289,9 @@ public class PersonalHomeActivity extends AppCompatActivity {
                     Toast.makeText(PersonalHomeActivity.this, "not login", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // save as acquaintance
+                AcquaintanceManager.saveAcquaintance(user_id);
+
                 Intent intent = new Intent(PersonalHomeActivity.this, TalkingActivity.class);
                 intent.putExtra("with_who", user_id);
                 startActivity(intent);
@@ -291,6 +306,10 @@ public class PersonalHomeActivity extends AppCompatActivity {
             Toast.makeText(PersonalHomeActivity.this, "not log in", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        //save as acquaintance
+        AcquaintanceManager.saveAcquaintance(who);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
