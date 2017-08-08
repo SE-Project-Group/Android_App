@@ -76,11 +76,15 @@ public class PersonalHomeActivity extends AppCompatActivity {
         // get who's home
         Intent intent = getIntent();
         user_id = intent.getIntExtra("user_id", 0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         // check if myself
         Verify verify = new Verify();
         if (user_id == Integer.valueOf(verify.getUser_id()))
             ME = true;
-
         initHomeInfo();
         setFollowActivityButton();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -99,8 +103,6 @@ public class PersonalHomeActivity extends AppCompatActivity {
         else{
             loggedGetOthersFeeds();       // all of my feed
         }
-
-
     }
 
     private void setFollowActivityButton(){
@@ -234,7 +236,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
             add_follow_btn.setVisibility(View.VISIBLE);
         if(relationship.equals("following"))
             cancel_follow_btn.setVisibility(View.VISIBLE);
-        if(relationship.equals("followed"))
+        if(relationship.equals("follower"))
             also_follow_btn.setVisibility(View.VISIBLE);
         if(relationship.equals("friend"))
             cancel_friend_btn.setVisibility(View.VISIBLE);
@@ -248,7 +250,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         also_follow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                follow(user_id, "followed");
+                follow(user_id, "follower");
             }
         });
         cancel_follow_btn.setOnClickListener(new View.OnClickListener() {

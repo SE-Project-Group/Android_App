@@ -2,6 +2,7 @@ package com.example.android.track.Adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Follow;
 import com.example.android.track.R;
@@ -118,6 +120,30 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
                 int position = holder.getAdapterPosition();
                 Follow follow = mFollowList.get(position);
                 cancelFollow(follow.getUser_id());
+            }
+        });
+
+        holder.portrait.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Follow follow = mFollowList.get(position);
+                int user_id = follow.getUser_id();
+                Intent intent = new Intent(context, PersonalHomeActivity.class);
+                intent.putExtra("user_id", user_id);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.user_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Follow follow = mFollowList.get(position);
+                int user_id = follow.getUser_id();
+                Intent intent = new Intent(context, PersonalHomeActivity.class);
+                intent.putExtra("user_id", user_id);
+                context.startActivity(intent);
             }
         });
         return holder;

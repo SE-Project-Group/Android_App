@@ -62,8 +62,6 @@ public class MessageFragment extends Fragment {
     private ImageView scrollbar;
     // 滚动条初始偏移量
     private int offset = 0;
-    // 当前页编号
-    private int currIndex = 0;
     // 滚动条宽度
     private int bmpW;
     //一倍滚动量
@@ -304,7 +302,7 @@ public class MessageFragment extends Fragment {
         });
     }
 
-    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageSelected(int arg0) {
@@ -348,8 +346,6 @@ public class MessageFragment extends Fragment {
                     }
                     break;
             }
-            //arg0为切换到的页的编码
-            currIndex = arg0;
             // 将此属性设置为true可以使得图片停在动画结束时的位置
             animation.setFillAfter(true);
             //动画持续时间，单位为毫秒

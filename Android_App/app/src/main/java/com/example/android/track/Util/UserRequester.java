@@ -2,6 +2,8 @@ package com.example.android.track.Util;
 
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
+import com.example.android.track.Model.Comment;
+import com.example.android.track.Model.Feed;
 import com.example.android.track.Model.Follow;
 import com.example.android.track.Model.UserInfo;
 import com.google.gson.Gson;
@@ -304,6 +306,29 @@ public class UserRequester {
             e.printStackTrace();
         }
 
+        return result;
+    }
+
+    public List<Follow> searchUser(String query){
+        String resource = "searchUser";
+        String pre_url = generatePreUrl(resource, false);
+        String url = pre_url + "?query=" + query + "&user_id=" + verify.getUser_id();
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        List<Follow> result =  gson.fromJson(responseData, new TypeToken<List<Follow>>(){}.getType());
         return result;
     }
 
