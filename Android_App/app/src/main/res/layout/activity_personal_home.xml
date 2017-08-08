@@ -33,9 +33,9 @@
                     android:layout_marginBottom="10dp"/>
 
                 <TextView
-                    android:textColor="@color/gray"
+                    android:textColor="@color/orange"
                     android:id="@+id/user_name"
-                    android:textSize="17dp"
+                    android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -170,7 +170,7 @@
                     <Button
                         android:id="@+id/cancel_friend_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="30dp"
                         android:text="互为好友"
                         android:background="@drawable/discover_top_btn_bg"
                         android:textColor="@color/gray"
@@ -180,7 +180,7 @@
                     <Button
                         android:id="@+id/add_follow_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="30dp"
                         android:text="关注"
                         android:background="@drawable/discover_top_btn_bg"
                         android:textColor="@color/gray"
@@ -190,7 +190,7 @@
                     <Button
                         android:id="@+id/also_follow_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="30dp"
                         android:text="也关注"
                         android:background="@drawable/discover_top_btn_bg"
                         android:textColor="@color/gray"
@@ -200,7 +200,7 @@
                     <Button
                         android:id="@+id/cancel_follow_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="30dp"
                         android:text="取消关注"
                         android:background="@drawable/discover_top_btn_bg"
                         android:textColor="@color/gray"
@@ -210,9 +210,9 @@
                     <Button
                         android:id="@+id/chat_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="25dp"
+                        android:layout_height="30dp"
                         android:text="私信"
-                        android:background="@drawable/item_talking_receive"
+                        android:background="@drawable/button_white"
                         android:textColor="@color/gray"
                         android:layout_marginLeft="5dp"
                         android:visibility="gone"/>

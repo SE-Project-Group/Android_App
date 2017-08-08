@@ -3,56 +3,23 @@ package com.example.android.track.Receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 
-import com.example.android.track.Activity.TalkingActivity;
 import com.example.android.track.Application.MyApplication;
-import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.Model.LitePal_Entity.CommentMeRecord;
 import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
-import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.LitePal_Entity.ShareMeRecord;
 import com.example.android.track.Util.AcquaintanceManager;
-import com.example.android.track.Util.UserRequester;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.crud.DataSupport;
-
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.RunnableFuture;
 
 import cn.jpush.android.api.JPushInterface;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.content.CustomContent;
-import cn.jpush.im.android.api.content.EventNotificationContent;
-import cn.jpush.im.android.api.content.ImageContent;
-import cn.jpush.im.android.api.content.TextContent;
-import cn.jpush.im.android.api.content.VoiceContent;
-import cn.jpush.im.android.api.event.MessageEvent;
-import cn.jpush.im.android.api.event.NotificationClickEvent;
-import cn.jpush.im.android.api.model.Message;
 
-import static cn.jpush.im.android.api.enums.ContentType.eventNotification;
-import static cn.jpush.im.android.api.enums.ContentType.file;
-import static com.baidu.location.d.j.S;
 import static com.baidu.location.d.j.g;
 import static org.apache.commons.lang3.StringUtils.split;
 
@@ -129,6 +96,19 @@ public class MyReceiver extends BroadcastReceiver {
                 case "NewFollowFeedMessage":
                     MyApplication.setNewFollowFeed(true);
                     break;
+                case "NewFollowerMessage":
+                    old_cnt = MyApplication.getUnReadFollowMeCnt();
+                    MyApplication.setUnReadFollowMeCnt(old_cnt + 1);
+                    MyApplication.setNewMsg(true);
+                    try {
+                        JSONObject jsonObject = new JSONObject(json_message);
+                        AcquaintanceManager.saveAcquaintance(jsonObject.getInt("user_id"));
+                    }catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
                 default:
                     break;
             }

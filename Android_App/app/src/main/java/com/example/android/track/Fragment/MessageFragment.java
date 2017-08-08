@@ -25,9 +25,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.track.Activity.FollowActivity;
 import com.example.android.track.Activity.RemindActivity;
 import com.example.android.track.Adapter.ConversationAdapter;
 import com.example.android.track.Application.MyApplication;
+import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.Verify;
@@ -104,16 +106,19 @@ public class MessageFragment extends Fragment {
         RemindView commentRemindView = (RemindView) parentView.findViewById(R.id.ic_comment);
         RemindView shareRemindView = (RemindView) parentView.findViewById(R.id.ic_share);
         RemindView mentionRemindView = (RemindView) parentView.findViewById(R.id.ic_mention);
+        RemindView followMeRemindView = (RemindView) parentView.findViewById(R.id.ic_followMe);
 
         likeRemindView.setBackground(R.drawable.heart_filled_24);
         commentRemindView.setBackground(R.drawable.comment_24);
         shareRemindView.setBackground(R.drawable.share_24);
         mentionRemindView.setBackground(R.drawable.mention_24);
+        followMeRemindView.setBackground(R.drawable.mention_24);
 
         likeRemindView.setMessageCount(MyApplication.getUnReadLikenCnt());
         commentRemindView.setMessageCount(MyApplication.getUnReadCommentCnt());
         shareRemindView.setMessageCount(MyApplication.getUnReadShareCnt());
         mentionRemindView.setMessageCount(MyApplication.getUnReadMentionCnt());
+        followMeRemindView.setMessageCount(MyApplication.getUnReadFollowMeCnt());
     }
 
     private void setClickListener(View parentView){
@@ -121,6 +126,10 @@ public class MessageFragment extends Fragment {
         commentMe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int unReadCnt = MyApplication.getUnReadCommentCnt();
+                int new_cnt = MyApplication.getUnReadMsgCnt() - unReadCnt;
+                MyApplication.setUnReadMsgCnt(new_cnt);
+                MyApplication.setUnReadCommentCnt(0);
                 Intent intent = new Intent(getActivity(),RemindActivity.class);
                 intent.putExtra("type", "comment");
                 startActivity(intent);
@@ -132,6 +141,10 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+                int unReadCnt = MyApplication.getUnReadMentionCnt();
+                int new_cnt = MyApplication.getUnReadMsgCnt() - unReadCnt;
+                MyApplication.setUnReadMentionCnt(new_cnt);
+                MyApplication.setUnReadShareCnt(0);
                 Intent intent = new Intent(getActivity(), RemindActivity.class);
                 intent.putExtra("type", "mention");
                 startActivity(intent);
@@ -142,6 +155,10 @@ public class MessageFragment extends Fragment {
         likeMe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int unReadCnt = MyApplication.getUnReadLikenCnt();
+                int new_cnt = MyApplication.getUnReadMsgCnt() - unReadCnt;
+                MyApplication.setUnReadMsgCnt(new_cnt);
+                MyApplication.setUnReadLikenCnt(0);
                 Intent intent = new Intent(getActivity(),RemindActivity.class);
                 intent.putExtra("type", "like");
                 startActivity(intent);
@@ -151,8 +168,27 @@ public class MessageFragment extends Fragment {
         shareMe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int unReadCnt = MyApplication.getUnReadShareCnt();
+                int new_cnt = MyApplication.getUnReadMsgCnt() - unReadCnt;
+                MyApplication.setUnReadMsgCnt(new_cnt);
+                MyApplication.setUnReadShareCnt(0);
                 Intent intent = new Intent(getActivity(),RemindActivity.class);
                 intent.putExtra("type", "share");
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout followMe_btn = (LinearLayout) parentView.findViewById(R.id.followMe_remind);
+        followMe_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int unReadFollowMeCnt = MyApplication.getUnReadFollowMeCnt();
+                int new_cnt = MyApplication.getUnReadMsgCnt() - unReadFollowMeCnt;
+                MyApplication.setUnReadMsgCnt(new_cnt);
+                MyApplication.setUnReadFollowMeCnt(0);
+                Intent intent = new Intent(getActivity(), FollowActivity.class);
+                intent.putExtra("relationship", "follower");
+                intent.putExtra("who", Integer.valueOf(new Verify().getUser_id()));
                 startActivity(intent);
             }
         });

@@ -37,9 +37,9 @@ public class FollowActivity extends AppCompatActivity {
         String relationship = intent.getStringExtra("relationship");
         who = intent.getIntExtra("who",0);
 
-        if(relationship.equals("following"))
+        if(relationship.equals("following")) // his following list
             initFollowings();
-        if(relationship.equals("follower"))
+        if(relationship.equals("follower")) // his follower list
             initFollowers();
 
     }

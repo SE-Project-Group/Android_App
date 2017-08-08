@@ -12,17 +12,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            android:padding="10dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/portrait"/>
             <LinearLayout
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -32,13 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="User Name"
-                    android:textSize="17dp"/>
-                <TextView
-                    android:id="@+id/last_feed_text"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="The last feed"/>
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <Button
@@ -46,30 +37,33 @@
                 android:layout_marginTop="4dp"
                 android:id="@+id/add_follow_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="关注"
-                android:visibility="gone"/>
+                android:visibility="gone" />
             <Button
                 android:layout_marginTop="4dp"
                 android:id="@+id/cancel_follow_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="取消关注"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:background="@drawable/button_white"/>
             <Button
                 android:layout_marginTop="4dp"
                 android:id="@+id/cancel_friend_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="互为好友"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:background="@drawable/button_white"/>
             <Button
                 android:layout_marginTop="4dp"
                 android:id="@+id/also_follow_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="也关注"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:background="@drawable/button_white"/>
 
         </LinearLayout>
     </LinearLayout>

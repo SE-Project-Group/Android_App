@@ -21,6 +21,8 @@ import com.example.android.track.Util.Verify;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * Created by jarvis on 2017/7/6.
@@ -41,7 +43,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
     private UserRequester requester = new UserRequester();
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView portrait;
+        CircleImageView portrait;
         TextView user_name;
         Button add_follow_btn;
         Button also_follow_btn;
@@ -50,7 +52,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
 
         public ViewHolder(View view){
             super(view);
-            portrait = (ImageView)view.findViewById(R.id.portrait);
+            portrait = (CircleImageView) view.findViewById(R.id.portrait);
             user_name = (TextView)view.findViewById(R.id.user_name_text);
             add_follow_btn = (Button) view.findViewById(R.id.add_follow_btn);
             cancel_follow_btn = (Button) view.findViewById(R.id.cancel_follow_btn);
@@ -138,6 +140,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowAdapter.ViewHolder
         // load the picture use glide
         Glide.with(context)
                 .load(user.getportrait_url())
+                .asBitmap()
+                .centerCrop()
                 .placeholder(R.drawable.exp_pic)
                 .into(holder.portrait);
 
