@@ -377,4 +377,25 @@ public class FeedRequester{
 
     }
 
+    public String getOriginPhotoUrl(String fileName){
+        String resource = "getOriginPhotoUrl";
+        String pre_url = generatePreUrl(resource, true);
+        String url = pre_url + "&fileName=" + fileName;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return  responseData;
+    }
+
 }
