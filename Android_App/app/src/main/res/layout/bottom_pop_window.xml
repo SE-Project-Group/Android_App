@@ -28,6 +28,8 @@
                 android:textSize="15dp"
                 android:text="取消"></TextView>
 
+
+
                 <TextView
                     android:background="@color/white"
                     android:gravity="center"
