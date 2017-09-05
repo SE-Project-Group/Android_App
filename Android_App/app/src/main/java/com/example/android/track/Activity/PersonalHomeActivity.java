@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.localytics.android.Localytics.upload;
 
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -105,6 +108,17 @@ public class PersonalHomeActivity extends AppCompatActivity {
             loggedGetOthersFeeds();       // all of my feed
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
 
     private void setFollowActivityButton(){
         TextView his_following_btn = (TextView) findViewById(R.id.his_following_btn);

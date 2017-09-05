@@ -110,7 +110,7 @@ public class UserInfoActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.send_24);        // need modify
+            //actionBar.setHomeAsUpIndicator(R.drawable.send_24);        // need modify
         }
         initUserInfo();
 

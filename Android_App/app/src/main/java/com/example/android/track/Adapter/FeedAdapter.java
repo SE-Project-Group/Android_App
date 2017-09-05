@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,10 +33,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.android.track.R.id.portrait;
 import static com.example.android.track.R.id.position;
-import static java.lang.System.in;
-import static java.lang.System.load;
+
 
 
 /**
@@ -65,6 +64,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         Button like_btn;
         NineGridImageView<String> nineGridView;
 
+        // share things
+        LinearLayout share_area;
+        TextView share_owner_name;
+        TextView share_text;
+
 
         public ViewHolder (View view){
             super(view);
@@ -77,6 +81,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             comment_btn = (Button)view.findViewById(R.id.comment_btn);
             like_btn = (Button)view.findViewById(R.id.like_btn);
             nineGridView = (NineGridImageView<String>) view.findViewById(R.id.nine_gridView);
+
+            // share things
+            share_area  = (LinearLayout) view.findViewById(R.id.share_ll);
+            share_owner_name = (TextView) view.findViewById(R.id.origin_owner);
+            share_text = (TextView) view.findViewById(R.id.origin_text);
         }
     }
 
@@ -119,13 +128,25 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             }
         });
 
+        holder.share_owner_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Feed feed = mFeedList.get(position);
+                toHomePage(feed.getShare_owner_id());
+            }
+        });
+
         // buttons will trig some action
         holder.share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                share(feed.getFeed_id());
+                if(feed.getShare_feed_id().equals(""))  // not a share feed
+                    share(feed.getFeed_id());
+                else
+                    share(feed.getShare_feed_id());
             }
         });
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +172,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                     holder.like_btn.setText(String.valueOf(new_cnt));
                     int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
                     holder.like_btn.setTextColor(liked_color);
-                    like(feed.getFeed_id(), position);
+                    if(feed.getShare_feed_id().equals(""))  // not a share feed
+                        like(feed.getFeed_id(), position);
+                    else
+                        like(feed.getShare_feed_id(), position);
+
                     feed.setLiked(true);
                 }
                 else{
@@ -159,7 +184,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                     holder.like_btn.setText(String.valueOf(new_cnt));
                     int unliked_color = MyApplication.getContext().getResources().getColor(R.color.gray);
                     holder.like_btn.setTextColor(unliked_color);
-                    cancelLike(feed.getFeed_id(), position);
+                    if(feed.getShare_feed_id().equals(""))  // not a share feed
+                        cancelLike(feed.getFeed_id(), position);
+                    else
+                        cancelLike(feed.getShare_feed_id(), position);
                     feed.setLiked(false);
                 }
             }
@@ -170,6 +198,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = mFeedList.get(position);
+
         holder.feed_owner_view.setText(feed.getOwner_name());
         holder.feedText_view.setText(feed.getText());
         String temp = String.valueOf(feed.getComment_cnt());
@@ -224,6 +253,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         // download picture from oss server here
         holder.nineGridView.setAdapter(mNGIVAdapter);
         holder.nineGridView.setImagesData(feed.getPicUrls());
+
+        // share Area
+        if(!feed.getShare_feed_id().equals("")) {  // this is a share feed
+            holder.share_area.setVisibility(View.VISIBLE);
+            holder.share_owner_name.setText("@" + feed.getShare_owner_name());
+            holder.share_text.setText(feed.getShare_text());
+
+        }
     }
 
     @Override

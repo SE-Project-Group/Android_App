@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private TextView tv_position;
     private MyGridView gridView;
     private ProgressDialog progressDialog;  // used to tell upload progress
+    private LinearLayout mentionMenu;
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -78,7 +81,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private int replace_position;
     private MyFeed myFeed;
     // @ someone ids
-    private JSONArray mentionList = new JSONArray();
+    private List<Integer> mentionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,17 @@ public class NewFeedActivity extends AppCompatActivity {
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
         gridView=(MyGridView) findViewById(R.id.gridview);
         progressDialog = new ProgressDialog(NewFeedActivity.this);
+        mentionMenu = (LinearLayout) findViewById(R.id.mention_menu);
+
+        mentionMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewFeedActivity.this,ChooseMentionActivity.class);
+                intent.putExtra("chooseList", mentionList);
+                startActivity(intent);
+            }
+        });
+
         refreshGridView();
 
         // get location
@@ -232,7 +246,11 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("location", location);
 
             jsonObject.put("shareArea", shareArea);
-            jsonObject.put("mentionList", mentionList);
+            JSONArray mentionListArray = new JSONArray();
+            for(Integer mentionId : mentionList){
+                mentionListArray.put(mentionId);
+            }
+            jsonObject.put("mentionList", mentionListArray);
             jsonObject.put("picCount", pathList.size());
             jsonObject.put("position", detailed_location);
         }catch (JSONException e){

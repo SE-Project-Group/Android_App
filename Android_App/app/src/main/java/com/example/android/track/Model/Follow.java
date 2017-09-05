@@ -15,12 +15,6 @@ public class Follow {
     public final String FOLLOWER = "follower";
     public final String STRANGER = "stranger";
 
-    public Follow(String user_name, String portrait_url, int user_id, String state){
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.portrait_url = portrait_url;
-        this.state = state;
-    }
 
     public int getUser_id() {
         return user_id;
