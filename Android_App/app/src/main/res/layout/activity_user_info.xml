@@ -11,8 +11,16 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
 
     <LinearLayout
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_style"
@@ -124,7 +132,7 @@
                     android:background="@drawable/item_talking_receive"
                     android:id="@+id/edit_birthday_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="26dp"
                     android:text="edit"/>
             </LinearLayout>
             
@@ -159,6 +167,16 @@
 
 
 
+
+
         </LinearLayout>
+
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
 </LinearLayout>

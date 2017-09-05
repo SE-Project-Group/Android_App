@@ -14,7 +14,16 @@
         android:weightSum="1">
     </android.support.v7.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
     <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="3dp"
         android:id="@+id/myAlbum_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
