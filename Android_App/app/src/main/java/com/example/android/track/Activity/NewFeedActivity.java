@@ -44,6 +44,8 @@ import java.util.List;
 
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
+import static android.R.id.list;
+
 
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
@@ -52,6 +54,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private MyGridView gridView;
     private ProgressDialog progressDialog;  // used to tell upload progress
     private LinearLayout mentionMenu;
+    private TextView mentionNames_tv;
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -74,6 +77,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final int UPLOAD_FAILED = 6;
     private static final int UPLOAD_PIC_OK = 5;
 
+    private static final int CHOOSE_MENTION_OK = 7;
+
     // used to upload picture
     private OssService ossService;
     private List<String> pathList = new ArrayList<>();
@@ -82,6 +87,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private MyFeed myFeed;
     // @ someone ids
     private List<Integer> mentionList = new ArrayList<>();
+    private List<String> mentionNameList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +103,21 @@ public class NewFeedActivity extends AppCompatActivity {
         gridView=(MyGridView) findViewById(R.id.gridview);
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         mentionMenu = (LinearLayout) findViewById(R.id.mention_menu);
+        mentionNames_tv = (TextView) findViewById(R.id.mention_names);
 
         mentionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NewFeedActivity.this,ChooseMentionActivity.class);
-                intent.putExtra("chooseList", mentionList);
-                startActivity(intent);
+                ArrayList arrayList1 = new ArrayList();
+                arrayList1.addAll(mentionList);
+                intent.putIntegerArrayListExtra("chooseList", arrayList1);
+
+                ArrayList arrayList2 = new ArrayList();
+                arrayList2.add(mentionNameList);
+                intent.putStringArrayListExtra("chooseNames", arrayList2);
+
+                startActivityForResult(intent, CHOOSE_MENTION_OK);
             }
         });
 
@@ -317,6 +331,22 @@ public class NewFeedActivity extends AppCompatActivity {
                     refreshGridView();
                     break;
                 }
+            case CHOOSE_MENTION_OK:
+                // display user names on screen
+                if(resultCode == RESULT_OK){
+                    mentionNameList = data.getStringArrayListExtra("chooseNames");
+                    String nameString = "";
+                    for(String name : mentionNameList){
+                        nameString += ", ";
+                        nameString += name;
+                    }
+                    nameString = nameString.substring(2, -1);
+                    // display it
+                    mentionNames_tv.setText(nameString);
+
+                    mentionList = data.getIntegerArrayListExtra("chooseList");
+                }
+                break;
             default:
                 break;
         }

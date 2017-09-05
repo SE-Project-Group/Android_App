@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHolder> {
     public List<Integer> chooseList;
-
+    private List<String> chooseNames;
     private List<Follow> acquaintanceList;
     private Activity context;
 
@@ -40,9 +40,10 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
         }
     }
 
-    public MentionAdapter(List<Follow> list, List<Integer> chooseList, Activity context){
+    public MentionAdapter(List<Follow> list, List<Integer> chooseList, List<String> chooseNames, Activity context){
         this.acquaintanceList = list;
         this.chooseList = chooseList;
+        this.chooseNames = chooseNames;
         this.context = context;
     }
 
@@ -60,12 +61,15 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
                     int position = holder.getAdapterPosition();
                     Follow acquaintance = acquaintanceList.get(position);
                     chooseList.add(acquaintance.getUser_id());
+                    chooseNames.add(acquaintance.getUser_name());
+
                 }
                 else{
                     // remove from choose list
                     int position = holder.getAdapterPosition();
                     Follow acquaintance = acquaintanceList.get(position);
                     chooseList.remove(acquaintance.getUser_id());
+                    chooseNames.remove(acquaintance.getUser_name());
                 }
             }
         });

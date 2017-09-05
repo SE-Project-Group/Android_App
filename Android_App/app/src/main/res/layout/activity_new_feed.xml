@@ -209,6 +209,27 @@
                         android:src="@drawable/right_arrow"/>
                 </LinearLayout>
 
+                <!--mention names -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/mention_names"
+                        android:layout_marginLeft="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/gray"
+                        android:textSize="15dp"
+                        android:text="some one, some one"/>
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
