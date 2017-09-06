@@ -24,12 +24,12 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-#oss server
+#==========================oss server =======================
 -keep class com.alibaba.sdk.android.oss.** { *; }
 -dontwarn okio.**
 -dontwarn org.apache.commons.codec.binary.**
 
-# jpush
+# =========================jpush=============================
 -dontoptimize
 -dontpreverify
 
@@ -52,3 +52,11 @@
 
 #========================protobuf================================
 -keep class com.google.protobuf.** {*;}
+
+
+# =======================SMSSDK=================================
+-dontwarn com.mob.**
+-keep class com.mob.**{*;}
+
+-dontwarn cn.smssdk.**
+-keep class cn.smssdk.**{*;}

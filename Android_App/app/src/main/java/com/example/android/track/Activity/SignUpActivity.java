@@ -16,10 +16,6 @@ import android.widget.Toast;
 
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
-import com.example.android.track.Util.UserRequester;
-
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.api.BasicCallback;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -31,13 +27,17 @@ public class SignUpActivity extends AppCompatActivity {
     //view
     private EditText et_userName;
     private EditText et_password;
-    private EditText et_phone;
     private EditText et_password_confirm;
+
+    private String phone;  // get from last activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        Intent intent = getIntent();
+        phone = intent.getStringExtra("phone");
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.signUpToolBar);
         setSupportActionBar(toolbar);
@@ -47,7 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         // get EditText et_password_confirmform
         et_userName = (EditText) findViewById(R.id.et_userName);
         et_password = (EditText) findViewById(R.id.et_password);
-        et_phone = (EditText) findViewById(R.id.et_phone);
         et_password_confirm = (EditText) findViewById(R.id.et_password_confirm);
         
         sign_up_btn = (Button) findViewById(R.id.sign_up_btn); 
@@ -56,10 +55,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v){
                 String user_name_ed = et_userName.getText().toString();
                 String password_ed = et_password.getText().toString();
-                String phone_ed = et_phone.getText().toString();
+                String phone_ed = phone;
                 String password_confirm_ed = et_password_confirm.getText().toString();
 
-                if(phone_ed.equals("") || user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
+                if(user_name_ed.equals("") || password_ed.equals("") || !password_ed.equals(password_confirm_ed)) {
                     Toast.makeText(SignUpActivity.this, "表单信息有误", Toast.LENGTH_SHORT).show();
                 }else {
                     // create a new Thread to send sign up request
@@ -117,82 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     // check the form
     private void setCheckListener(){
-
-        final TextInputLayout textInputLayout = (TextInputLayout) findViewById(R.id.phone_num);
-        EditText phone_num = textInputLayout.getEditText();
-        phone_num.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length()==0) {
-                    textInputLayout.setError("手机号码不可为空");
-                    textInputLayout.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else {
-                    textInputLayout.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()==0) {
-                    textInputLayout.setError("手机号码不可为空");
-                    textInputLayout.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else {
-                    textInputLayout.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-
-            public void afterTextChanged(Editable s) {
-                if (s.length()==0) {
-                    textInputLayout.setError("手机号码不可为空");
-                    textInputLayout.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else {
-                    textInputLayout.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-
-        });
-
-        final TextInputLayout textInputLayout2 = (TextInputLayout) findViewById(R.id.security_code);
-        EditText security_code = textInputLayout2.getEditText();
-
-        security_code.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (s.length() == 0) {
-                    textInputLayout2.setError("验证码不可为空");
-                    textInputLayout2.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else {
-                    textInputLayout2.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()==0) {
-                    textInputLayout2.setError("验证码不可为空");
-                    sign_up_btn.setEnabled(false);
-                    textInputLayout2.setErrorEnabled(true);
-                } else {
-                    textInputLayout2.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-
-            public void afterTextChanged(Editable s) {
-                if (s.length()==0) {
-                    textInputLayout2.setError("验证码不可为空");
-                    textInputLayout2.setErrorEnabled(true);
-                    sign_up_btn.setEnabled(false);
-                } else {
-                    textInputLayout2.setErrorEnabled(false);
-                    sign_up_btn.setEnabled(true);
-                }
-            }
-        });
 
         final TextInputLayout textInputLayout3 = (TextInputLayout) findViewById(R.id.user_name);
         EditText user_name = textInputLayout3.getEditText();

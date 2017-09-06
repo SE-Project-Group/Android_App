@@ -10,8 +10,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,8 @@ import java.util.List;
 
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
+import static android.R.id.list;
+
 
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
@@ -49,6 +53,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private TextView tv_position;
     private MyGridView gridView;
     private ProgressDialog progressDialog;  // used to tell upload progress
+    private LinearLayout mentionMenu;
+    private TextView mentionNames_tv;
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -71,6 +77,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private static final int UPLOAD_FAILED = 6;
     private static final int UPLOAD_PIC_OK = 5;
 
+    private static final int CHOOSE_MENTION_OK = 7;
+
     // used to upload picture
     private OssService ossService;
     private List<String> pathList = new ArrayList<>();
@@ -78,7 +86,8 @@ public class NewFeedActivity extends AppCompatActivity {
     private int replace_position;
     private MyFeed myFeed;
     // @ someone ids
-    private JSONArray mentionList = new JSONArray();
+    private List<Integer> mentionList = new ArrayList<>();
+    private List<String> mentionNameList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +102,25 @@ public class NewFeedActivity extends AppCompatActivity {
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
         gridView=(MyGridView) findViewById(R.id.gridview);
         progressDialog = new ProgressDialog(NewFeedActivity.this);
+        mentionMenu = (LinearLayout) findViewById(R.id.mention_menu);
+        mentionNames_tv = (TextView) findViewById(R.id.mention_names);
+
+        mentionMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewFeedActivity.this,ChooseMentionActivity.class);
+                ArrayList arrayList1 = new ArrayList();
+                arrayList1.addAll(mentionList);
+                intent.putIntegerArrayListExtra("chooseList", arrayList1);
+
+                ArrayList arrayList2 = new ArrayList();
+                arrayList2.addAll(mentionNameList);
+                intent.putStringArrayListExtra("chooseNames", arrayList2);
+
+                startActivityForResult(intent, CHOOSE_MENTION_OK);
+            }
+        });
+
         refreshGridView();
 
         // get location
@@ -232,7 +260,11 @@ public class NewFeedActivity extends AppCompatActivity {
             jsonObject.put("location", location);
 
             jsonObject.put("shareArea", shareArea);
-            jsonObject.put("mentionList", mentionList);
+            JSONArray mentionListArray = new JSONArray();
+            for(Integer mentionId : mentionList){
+                mentionListArray.put(mentionId);
+            }
+            jsonObject.put("mentionList", mentionListArray);
             jsonObject.put("picCount", pathList.size());
             jsonObject.put("position", detailed_location);
         }catch (JSONException e){
@@ -297,8 +329,29 @@ public class NewFeedActivity extends AppCompatActivity {
                     pathList.remove(replace_position);
                     pathList.add(replace_position, newPath);
                     refreshGridView();
-                    break;
                 }
+                break;
+
+            case CHOOSE_MENTION_OK:
+                // display user names on screen
+                if(resultCode == RESULT_OK){
+                    mentionNameList = data.getStringArrayListExtra("chooseNames");
+                    String nameString = "";
+                    if(mentionNameList.size() == 0)
+                        mentionNames_tv.setText("");
+                    else {
+                        for (String name : mentionNameList) {
+                            nameString += ", ";
+                            nameString += name;
+                        }
+                        nameString = nameString.substring(2);
+                        // display it
+                        mentionNames_tv.setText(nameString);
+                    }
+
+                    mentionList = data.getIntegerArrayListExtra("chooseList");
+                }
+                break;
             default:
                 break;
         }

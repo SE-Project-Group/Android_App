@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,9 +30,12 @@ import com.example.android.track.R;
 
 import com.example.android.track.Util.FeedRequester;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import static android.R.id.message;
 
 
 /**
@@ -40,6 +44,7 @@ import java.util.List;
 
 public class DiscoverFragment extends Fragment {
     private List<Feed> feedList = new ArrayList<>();
+    private FeedAdapter feedAdapter;
     private List<Feed> moreFeeds = new ArrayList<>();
     private FeedRequester requester = new FeedRequester(); // do not need verify
 
@@ -48,13 +53,11 @@ public class DiscoverFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
 
 
-    private final static int GET_FEED_OK = 0;
-    private final static int GET_FEED_FAILED = 1;
-    private final static int CON_GET_FEED_OK = 2;
-    private final static int CON_GET_FEED_FAILED = 3;
+    private final static int GET_AFTER_FEED_OK = 0;
+    private final static int GET_AFTER_FEED_FAILED = 1;
+    private final static int GET_BEFORE_FEED_OK = 2;
+    private final static int GET_BEFORE_FEED_FAILED = 3;
 
-    private final static int UP = 4;
-    private final static int DOWN = 5;
 
     @Nullable
     @Override
@@ -92,8 +95,14 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
+        // init recyclerView
+        initRecycleView();
+
         // set Recycle View
-        getFeeds();
+        Date nowTime = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String dateStr = sdf.format(nowTime);
+        getFeeds("before", dateStr);
 
         // set refresh layout
         swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
@@ -101,10 +110,18 @@ public class DiscoverFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh_feed();
+                if(feedList.size() == 0){
+                    // if have no friend feed , refresh again
+                    Date nowTime = new Date(System.currentTimeMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    String dateStr = sdf.format(nowTime);
+                    getFeeds("before", dateStr);
+                    return;
+                }
+                String last_date = feedList.get(0).getDate();
+                getFeeds("after", last_date);
             }
         });
-
 
     }
 
@@ -127,18 +144,11 @@ public class DiscoverFragment extends Fragment {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(getActivity(), feedList);
-        recyclerView.setAdapter(adapter);
+        feedAdapter = new FeedAdapter(getActivity(), feedList);
+        recyclerView.setAdapter(feedAdapter);
         setRecyclerViewScrollListener();
     }
 
-
-    private void updateRecyclerView(int direction){
-        if(direction == UP)
-            return;
-        else
-            return;
-    }
 
     // moniter if the recyclerView is scroll to the bottom and continue get more feeds
     private void setRecyclerViewScrollListener(){
@@ -156,11 +166,12 @@ public class DiscoverFragment extends Fragment {
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
 
-                    // 判断是否滚动到底部，并且是向右滚动
+                    // 判断是否滚动到底部，并且是向下滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         //加载更多功能的代码
                         Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
-                        continueGetFeeds();
+                        String earliestTime = feedList.get(feedList.size()-1).getDate();
+                        getFeeds("before", earliestTime);
                     }
                 }
             }
@@ -169,11 +180,12 @@ public class DiscoverFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
-                if (dx > 0) {
-                    //大于0表示正在向右滚动
+                // 如果 dx>0 则表示 右滑 ， dx<0 表示 左滑
+                // dy <0 表示 上滑， dy>0 表示下滑
+
+                if (dy < 0) {
                     isSlidingToLast = true;
                 } else {
-                    //小于等于0表示停止或向左滚动
                     isSlidingToLast = false;
                 }
             }
@@ -182,18 +194,29 @@ public class DiscoverFragment extends Fragment {
     }
 
 
-    private void getFeeds(){
-        Thread newThread =
-        new Thread(new Runnable() {
+    private void getFeeds(String direction, String time){
+        Thread newThread = new Thread(new Runnable() {
             @Override
             public void run() {
-
-                feedList = requester.getHotFeed();
                 Message message = new Message();
-                if(feedList == null)
-                    message.what = GET_FEED_FAILED;
-                else
-                    message.what = GET_FEED_OK;
+                moreFeeds = requester.getHotFeeds(direction, time);
+
+                if(direction.equals("after")) {
+                    if (moreFeeds == null)
+                        message.what = GET_AFTER_FEED_FAILED;
+                    else {
+                        feedList.addAll(0, moreFeeds);
+                        message.what = GET_AFTER_FEED_OK;
+                    }
+                }
+                else if(direction.equals("before")){
+                    if (moreFeeds == null)
+                        message.what = GET_BEFORE_FEED_FAILED;
+                    else{
+                        feedList.addAll(moreFeeds);
+                        message.what = GET_BEFORE_FEED_OK;
+                    }
+                }
 
                 handler.sendMessage(message);
             }
@@ -201,43 +224,34 @@ public class DiscoverFragment extends Fragment {
         newThread.start();
     }
 
-    private void continueGetFeeds(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                List<Feed> moreFeeds = requester.getHotFeed();
-                Message message = new Message();
-                if(moreFeeds == null)
-                    message.what = CON_GET_FEED_FAILED;
-                else
-                    message.what = CON_GET_FEED_OK;
 
-                handler.sendMessage(message);
-            }
-        }).start();
-    }
-
-    private void refresh_feed(){
-        return;
-    }
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            swipeRefresh.setRefreshing(false);
+
             switch (msg.what){
-                case GET_FEED_OK:
-                    initRecycleView();
+                case GET_AFTER_FEED_OK:
+                    feedAdapter.notifyItemRangeInserted(0, moreFeeds.size());
                     break;
-                case GET_FEED_FAILED:
+                case GET_BEFORE_FEED_OK:
+                    feedAdapter.notifyItemChanged(feedList.size()-1, moreFeeds.size());
+                    break;
+
+                case GET_BEFORE_FEED_FAILED:
+                    if(getActivity() != null)
+                        Toast.makeText(MyApplication.getContext(), "get feed failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case GET_AFTER_FEED_FAILED:
                     // very importtant, if the fragment have already switch to other fragment,
                     // and the http request thread is still run, when handler get a message and handle it
                     // get Activity() will receive a null point,
 
                     if(getActivity() != null)
-                        Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "get feed failed", Toast.LENGTH_SHORT).show();
                     break;
-                case CON_GET_FEED_OK:
-                    updateRecyclerView(DOWN);
+
             }
         }
     };

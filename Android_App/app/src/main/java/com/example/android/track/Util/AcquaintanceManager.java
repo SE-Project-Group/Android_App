@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
+import com.example.android.track.Model.UserInfo;
 
 import org.litepal.crud.DataSupport;
 
@@ -14,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * Created by thor on 2017/8/7.
@@ -46,11 +48,12 @@ public class AcquaintanceManager {
                             // storage in SQLite
                             Acquaintance acquaintance = new Acquaintance();
                             acquaintance.setUser_id(user_id);
-                            ClientInfo clientInfo = new UserRequester().getClientInfo(user_id);
-                            if(clientInfo != null)
-                                acquaintance.setUser_name(clientInfo.getUser_name());
+                            UserInfo userInfo = new UserRequester().getHomeInfo(user_id);
+                            if(userInfo != null)
+                                acquaintance.setUser_name(userInfo.getName());
                             else
                                 acquaintance.setUser_name("stranger");
+                            acquaintance.setRelationship(userInfo.getRelationship());
                             acquaintance.setUpdateTime(new Date(System.currentTimeMillis()));
                             acquaintance.save();
                         }

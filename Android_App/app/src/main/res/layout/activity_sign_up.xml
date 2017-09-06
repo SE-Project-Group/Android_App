@@ -34,112 +34,73 @@
             android:src="@drawable/logo"
             android:layout_gravity="center"/>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_margin="20dp">
+
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/phone_num"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_phone"
+                    android:id="@+id/et_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="请输入手机号"
+                    android:hint="请输入用户名(5-15位字符或数字)"
+                    android:textSize="15dp"
+                    android:maxLines="2"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入密码(5-15位字符或数字)"
                     android:textSize="15dp"
                     android:maxLines="2"
-                    android:inputType="phone"/>
+                    android:inputType="textPassword"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_com"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_password_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="再次输入密码"
+                    android:textSize="15dp"
+                    android:inputType="textPassword"
+                    android:maxLines="2"/>
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="发送验证码"
-                android:textSize="15dp"
-                android:textColor="@color/gray"
-                android:background="@drawable/btn_style"/>
+
         </LinearLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/security_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入验证码"
-                android:inputType="number"
-                android:textSize="15dp"
-                android:maxLines="2"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et_userName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入用户名(5-15位字符或数字)"
-                android:textSize="15dp"
-                android:maxLines="2"/>
-
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入密码(5-15位字符或数字)"
-                android:textSize="15dp"
-                android:maxLines="2"
-                android:inputType="textPassword"/>
-
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/password_com"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/et_password_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="再次输入密码"
-                android:textSize="15dp"
-                android:inputType="textPassword"
-                android:maxLines="2"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-
-        <android.support.design.widget.BottomNavigationView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
         <Button
             android:layout_width="match_parent"
             android:id="@+id/sign_up_btn"
             android:layout_height="40dp"
-            android:background="@color/colorPrimaryDark"
-            android:textColor="@color/white"
+            android:background="@drawable/btn_style"
+            android:textColor="@color/black"
             android:layout_marginTop="20dp"
             android:text="注册"
-            android:textSize="17dp"/>
-    </android.support.design.widget.BottomNavigationView>
+            android:textSize="17dp"
+            android:layout_margin="20dp"/>
+
     </LinearLayout>
 
 </LinearLayout>

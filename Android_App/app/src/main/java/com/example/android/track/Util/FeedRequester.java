@@ -82,10 +82,15 @@ public class FeedRequester{
         return feedList;
     }
 
-    public List<Feed> getHotFeed(){
-        String resource = "getPublicFeedAfterTime";
+    public List<Feed> getHotFeeds(String direction, String time){
+        String resource = "";
+        if(direction.equals("after"))
+            resource = "getPublicFeedAfterTime";
+        else
+            resource = "getPublicFeedBeforeTime";
+
         String pre_url = generatePreUrl(resource, false);
-        String url = pre_url + "?time=" + "2016-01-01 10:00:00" + "&user_id=" + verify.getUser_id();
+        String url = pre_url + "?time=" + time + "&user_id=" + verify.getUser_id();
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -108,8 +113,10 @@ public class FeedRequester{
         }
 
         return feedList;
-
     }
+
+
+
 
     // need log in
     public List<Feed> loggedGetOnePersonFeeds(int who){
@@ -155,8 +162,13 @@ public class FeedRequester{
         return feedList;
     }
 
-    public List<Feed> getCircleFeed(){
-        String resource = "getFollowingFeedList";
+    public List<Feed> getCircleFeed(String direction, String time){
+        String resource = "";
+        if(direction.equals("after"))
+            resource = "getFollowingFeedsAfterTime";
+        else
+            resource = "getFollowingFeedsBeforeTime";
+
         String url = generatePreUrl(resource, true);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -397,5 +409,74 @@ public class FeedRequester{
         }
         return  responseData;
     }
+
+    public List<Feed> getMyLikeFeeds(){
+        String resource = "myLikeFeeds";
+        String url = generatePreUrl(resource, true);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        return result;
+
+    }
+
+    public List<Feed> getMyCommentFeeds(){
+        String resource = "myCommentFeeds";
+        String url = generatePreUrl(resource, true);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        return result;
+    }
+
+
+    public List<Feed> getMyShareFeeds(){
+        String resource = "myShareFeeds";
+        String url = generatePreUrl(resource, true);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        return result;
+    }
+
 
 }
