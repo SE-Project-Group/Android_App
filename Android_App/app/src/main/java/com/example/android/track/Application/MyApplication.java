@@ -14,6 +14,8 @@ import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
 import com.example.android.track.Activity.TalkingActivity;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
+import com.mob.MobApplication;
+import com.mob.MobSDK;
 
 import org.litepal.LitePal;
 
@@ -28,6 +30,7 @@ import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
+import static android.R.attr.data;
 import static android.R.id.message;
 import static com.baidu.location.d.j.U;
 
@@ -35,7 +38,7 @@ import static com.baidu.location.d.j.U;
  * Created by thor on 2017/7/19.
  */
 
-public class MyApplication extends Application implements IAdobeAuthClientCredentials{
+public class MyApplication extends MobApplication implements IAdobeAuthClientCredentials{
 
     /* Be sure to fill in the two strings below. */
     private static final String CREATIVE_SDK_CLIENT_ID      = "5c7de475a1a449d2b3c366259a71ccd9";
@@ -67,6 +70,7 @@ public class MyApplication extends Application implements IAdobeAuthClientCreden
         super.onCreate();
         // adobe creative sdk initialize
         AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
+
         // initialize Litepal
         LitePal.initialize(this);
         // need

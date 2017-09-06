@@ -10,24 +10,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
-import com.example.android.track.Util.UserRequester;
 
-import cn.jpush.android.api.JPushInterface;
+import java.util.HashMap;
 
-import static android.R.id.message;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
+
 
 
 public class LogInActivity extends AppCompatActivity {
     private static final int LOG_IN_OK = 0;
     private static final int LOG_IN_FAILED = 1;
     private ProgressDialog progressDialog;
-
+    private EventHandler eventHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +57,47 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
         // go to sign up page
-        TextView signUp_text = (TextView) findViewById(R.id.signUp_text);
+        Button signUp_btn = (Button) findViewById(R.id.signUp_btn);
 
-        signUp_text.setOnClickListener(new View.OnClickListener(){
+        signUp_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(LogInActivity.this,SignUpActivity.class);
-                startActivity(intent);
+               signUp();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterEventHandler(eventHandler);
+    }
+
+    private void signUp(){
+        // 如果希望在读取通信录的时候提示用户，可以添加下面的代码，并且必须在其他代码调用之前，否则不起作用；如果没这个需求，可以不加这行代码
+        SMSSDK.setAskPermisionOnReadContact(true);
+        EventHandler eventHandler = new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+                if (data instanceof Throwable) {
+                    Throwable throwable = (Throwable) data;
+                    String msg = throwable.getMessage();
+                    Toast.makeText(LogInActivity.this, msg, Toast.LENGTH_SHORT).show();
+                } else {
+                    @SuppressWarnings("unchecked")
+                    HashMap<String, Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country");
+                    String phone = (String) phoneMap.get("phone");
+
+                    // enter sign up activity
+                    Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                    intent.putExtra("phone", phone);
+                    startActivity(intent);
+                }
+            }
+        };
+        RegisterPage registerPage = new RegisterPage();
+        registerPage.setRegisterCallback(eventHandler);
+        registerPage.show(LogInActivity.this);
     }
 
 
