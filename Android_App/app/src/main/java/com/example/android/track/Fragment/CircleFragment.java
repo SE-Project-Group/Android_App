@@ -77,6 +77,7 @@ public class CircleFragment extends Fragment {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
                     String dateStr = sdf.format(nowTime);
                     getFeeds("before", dateStr);
+                    return;
                 }
 
                 String last_date = feedList.get(0).getDate();
@@ -124,6 +125,49 @@ public class CircleFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+
+    private void setRecyclerViewScrollListener(){
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                // 当不滚动时
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    //获取最后一个完全显示的Item 的 Position
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    // 判断是否滚动到底部，并且是向右滚动
+                    if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
+                        //加载更多功能的代码
+                        Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
+                        String earliestTime = feedList.get(feedList.size() -1).getDate();
+                        getFeeds("before", earliestTime);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
+                // 如果 dx>0 则表示 右滑 ， dx<0 表示 左滑
+                // dy <0 表示 上滑， dy>0 表示下滑
+
+                if (dy < 0) {
+                    isSlidingToLast = true;
+                } else {
+                    isSlidingToLast = false;
+                }
+            }
+
+        });
+
+    }
 
     private Handler handler = new Handler(){
         @Override

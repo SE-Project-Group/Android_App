@@ -110,12 +110,18 @@ public class DiscoverFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                if(feedList.size() == 0){
+                    // if have no friend feed , refresh again
+                    Date nowTime = new Date(System.currentTimeMillis());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    String dateStr = sdf.format(nowTime);
+                    getFeeds("before", dateStr);
+                    return;
+                }
                 String last_date = feedList.get(0).getDate();
                 getFeeds("after", last_date);
             }
         });
-
-
 
     }
 
@@ -160,12 +166,12 @@ public class DiscoverFragment extends Fragment {
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
 
-                    // 判断是否滚动到底部，并且是向右滚动
+                    // 判断是否滚动到底部，并且是向下滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         //加载更多功能的代码
                         Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
-
-                        //getFeeds();
+                        String earliestTime = feedList.get(feedList.size()-1).getDate();
+                        getFeeds("before", earliestTime);
                     }
                 }
             }
@@ -174,11 +180,12 @@ public class DiscoverFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 //dx用来判断横向滑动方向，dy用来判断纵向滑动方向
-                if (dx > 0) {
-                    //大于0表示正在向右滚动
+                // 如果 dx>0 则表示 右滑 ， dx<0 表示 左滑
+                // dy <0 表示 上滑， dy>0 表示下滑
+
+                if (dy < 0) {
                     isSlidingToLast = true;
                 } else {
-                    //小于等于0表示停止或向左滚动
                     isSlidingToLast = false;
                 }
             }
@@ -222,6 +229,8 @@ public class DiscoverFragment extends Fragment {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            swipeRefresh.setRefreshing(false);
+
             switch (msg.what){
                 case GET_AFTER_FEED_OK:
                     feedAdapter.notifyItemRangeInserted(0, moreFeeds.size());
