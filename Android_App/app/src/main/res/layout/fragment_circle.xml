@@ -12,15 +12,26 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+  
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swip_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
-        android:id="@+id/home_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    
+      <android.support.v7.widget.RecyclerView
+          android:layout_marginTop="3dp"
+          android:id="@+id/home_recyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

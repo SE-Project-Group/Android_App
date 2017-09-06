@@ -11,7 +11,16 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
     <LinearLayout
+        android:layout_marginTop="3dp"
         android:id="@+id/personal_home_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +68,14 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -100,6 +117,14 @@
                 />
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
 
 
 
@@ -268,6 +293,14 @@
 
            </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -310,6 +343,14 @@
                </LinearLayout>
            </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -334,6 +375,14 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
 
 
 

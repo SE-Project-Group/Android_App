@@ -68,7 +68,16 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/shadow"
+        >
+
+    </View>
+
     <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_marginTop="3dp"
         android:id="@+id/swip_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
