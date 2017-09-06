@@ -105,6 +105,7 @@
         <activity android:name="com.example.android.track.Activity.CommentConversationActivity"/>
         <activity android:name="com.example.android.track.Activity.PhotoViewActivity"/>
         <activity android:name="com.example.android.track.Activity.ChooseMentionActivity"/>
+        <activity android:name="com.example.android.track.Activity.ChangePwdActivity"/>
 
     </application>
 

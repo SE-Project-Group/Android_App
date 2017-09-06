@@ -73,6 +73,7 @@ public class Verify {
         return pwd;
     }
 
+
     public boolean getLoged(){
         SharedPreferences pref = context.getSharedPreferences("logIn_data", MODE_PRIVATE);
         Boolean loged = pref.getBoolean("loged",false);
@@ -95,6 +96,8 @@ public class Verify {
         editor.putBoolean("loged", false);
         editor.putString("token", "");
         editor.putInt("user_id", 0);
+        editor.putString("user_name", "");
+        editor.putString("password", "");
         editor.apply();
 
         //delete alias

@@ -116,6 +116,49 @@
                 android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
+
+
+        <View
+            android:layout_height="1px"
+            android:background="#e0e0e0"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="40dp">
+        </View>
+
+
+        <LinearLayout
+            android:id="@+id/edit_pwd_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:layout_marginTop="1dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/settings_24"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改密码"
+                android:textSize="17dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/right_arrow"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
     </LinearLayout>
 
     <View
@@ -293,13 +336,13 @@
 
            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow"
-        >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/shadow"
+                >
 
-    </View>
+            </View>
 
            <LinearLayout
                android:layout_width="match_parent"
@@ -308,39 +351,7 @@
                android:background="@drawable/layout_style"
                android:orientation="vertical">
 
-               <LinearLayout
-                   android:id="@+id/setting_btn"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:background="?android:attr/selectableItemBackground"
-                   android:paddingTop="5dp"
-                   android:paddingBottom="5dp"
-                   android:paddingLeft="5dp"
-                   android:paddingRight="5dp"
-                   android:orientation="horizontal"
-                   android:clickable="true"
-                   android:layout_marginTop="1dp">
-                   <ImageView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/settings_24"
-                       android:layout_marginTop="5dp"/>
-                   <TextView
-                       android:layout_marginLeft="10dp"
-                       android:layout_marginTop="7dp"
-                       android:layout_marginBottom="5dp"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="设置"
-                       android:textSize="17dp"
-                       android:layout_weight="1"/>
-                   <ImageView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/right_arrow"
-                       android:layout_gravity="center_vertical"
-                       />
-               </LinearLayout>
+
            </LinearLayout>
 
     <View

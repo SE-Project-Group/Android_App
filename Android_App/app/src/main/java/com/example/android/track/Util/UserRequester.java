@@ -355,4 +355,49 @@ public class UserRequester {
         return  responseData;
     }
 
+    public String verifyPhone(String phone){
+        String resource = "verifyPhone";
+        String pre_ur = generatePreUrl(resource, true);
+        String url = pre_ur + "&phone=" + phone;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return "failed";
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return responseData;
+    }
+
+    public String changePwd(String old_pwd, String new_pwd){
+        String resource = "verifyPhone";
+        String pre_ur = generatePreUrl(resource, true);
+        String url = pre_ur + "&old_pwd=" + old_pwd + "&new_pwd=" + new_pwd;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return "failed";
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return responseData;
+    }
+
+
 }

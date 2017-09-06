@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/logInToolBar"
+        android:id="@+id/toolBart"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -28,43 +28,41 @@
         android:orientation="vertical"
         android:layout_marginTop="30dp">
         <EditText
-            android:id="@+id/user_name"
+            android:id="@+id/old_pwd"
+            android:inputType="textPassword"
             android:background="@drawable/edittext_bg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="用户名" />
+            android:hint="原密码" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/new_pwd"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_bg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="密码" />
+            android:hint="新密码（5-15位）" />
+
+        <EditText
+            android:id="@+id/new_pwd_ensure"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:hint="再次确认新密码" />
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/send_btn"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="20dp"
-            android:text="登陆"
+            android:text="提交修改"
             android:background="@drawable/btn_style"
             android:textSize="17dp"
             android:textAlignment="center"
             android:textColor="@color/black"/>
-
-
-        <Button
-            android:id="@+id/signUp_btn"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:text="注册"
-            android:background="@drawable/btn_style"
-            android:textSize="17dp"
-            android:textAlignment="center"
-            android:textColor="@color/gray"/>
 
     </LinearLayout>
 

@@ -135,6 +135,8 @@ public class LogInActivity extends AppCompatActivity {
                     ((EditText) findViewById(R.id.user_name)).setText("");
                     ((EditText) findViewById(R.id.password)).setText("");
                     break;
+                default:
+                    break;
             }
         }
     };
