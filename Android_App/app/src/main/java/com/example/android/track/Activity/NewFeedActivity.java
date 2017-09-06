@@ -114,7 +114,7 @@ public class NewFeedActivity extends AppCompatActivity {
                 intent.putIntegerArrayListExtra("chooseList", arrayList1);
 
                 ArrayList arrayList2 = new ArrayList();
-                arrayList2.add(mentionNameList);
+                arrayList2.addAll(mentionNameList);
                 intent.putStringArrayListExtra("chooseNames", arrayList2);
 
                 startActivityForResult(intent, CHOOSE_MENTION_OK);
@@ -329,20 +329,25 @@ public class NewFeedActivity extends AppCompatActivity {
                     pathList.remove(replace_position);
                     pathList.add(replace_position, newPath);
                     refreshGridView();
-                    break;
                 }
+                break;
+
             case CHOOSE_MENTION_OK:
                 // display user names on screen
                 if(resultCode == RESULT_OK){
                     mentionNameList = data.getStringArrayListExtra("chooseNames");
                     String nameString = "";
-                    for(String name : mentionNameList){
-                        nameString += ", ";
-                        nameString += name;
+                    if(mentionNameList.size() == 0)
+                        mentionNames_tv.setText("");
+                    else {
+                        for (String name : mentionNameList) {
+                            nameString += ", ";
+                            nameString += name;
+                        }
+                        nameString = nameString.substring(2);
+                        // display it
+                        mentionNames_tv.setText(nameString);
                     }
-                    nameString = nameString.substring(2, -1);
-                    // display it
-                    mentionNames_tv.setText(nameString);
 
                     mentionList = data.getIntegerArrayListExtra("chooseList");
                 }

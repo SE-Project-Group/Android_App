@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.android.track.Activity.HomeActivity;
 import com.example.android.track.Activity.MyAlbumActivity;
+import com.example.android.track.Activity.MyCommentActivity;
 import com.example.android.track.Activity.MyLikeActivity;
 import com.example.android.track.Activity.MyShareActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
@@ -113,6 +114,15 @@ public class LogedUserFragment extends Fragment{
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(),MyShareActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout my_comment = (LinearLayout) getActivity().findViewById(R.id.my_comment_btn);
+        my_share.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(),MyCommentActivity.class);
                 startActivity(intent);
             }
         });

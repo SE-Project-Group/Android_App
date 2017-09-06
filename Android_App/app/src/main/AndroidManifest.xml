@@ -81,11 +81,13 @@
         <activity android:name="com.example.android.track.Activity.AlbumActivity" />
         <activity android:name="com.example.android.track.Activity.MyLikeActivity" />
         <activity android:name="com.example.android.track.Activity.MyShareActivity" />
+        <activity android:name="com.example.android.track.Activity.MyCommentActivity" />
         <activity android:name="com.example.android.track.Activity.UserInfoActivity" />
         <activity android:name="com.example.android.track.Activity.FollowActivity"/>
         <activity android:name="com.example.android.track.Activity.RemindActivity"/>
         <activity android:name="com.example.android.track.Activity.CommentConversationActivity"/>
         <activity android:name="com.example.android.track.Activity.PhotoViewActivity"/>
+        <activity android:name="com.example.android.track.Activity.ChooseMentionActivity"/>
 
     </application>
 

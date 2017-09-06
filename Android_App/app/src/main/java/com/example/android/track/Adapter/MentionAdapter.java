@@ -17,6 +17,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.android.track.R.id.position;
+
 
 /**
  * Created by thor on 2017/9/5.
@@ -32,6 +34,7 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
         CircleImageView portrait_view;
         TextView user_name;
         CheckBox checkBox;
+
         public ViewHolder(View view){
             super(view);
             portrait_view = (CircleImageView) view.findViewById(R.id.portrait);
@@ -51,28 +54,8 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_choose_mention,parent,false);
-        final ViewHolder holder = new ViewHolder(view);
+        MentionAdapter.ViewHolder holder = new MentionAdapter.ViewHolder(view);
 
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.checkBox.isChecked()){
-                    // add to choose list
-                    int position = holder.getAdapterPosition();
-                    Follow acquaintance = acquaintanceList.get(position);
-                    chooseList.add(acquaintance.getUser_id());
-                    chooseNames.add(acquaintance.getUser_name());
-
-                }
-                else{
-                    // remove from choose list
-                    int position = holder.getAdapterPosition();
-                    Follow acquaintance = acquaintanceList.get(position);
-                    chooseList.remove(acquaintance.getUser_id());
-                    chooseNames.remove(acquaintance.getUser_name());
-                }
-            }
-        });
         return new ViewHolder(view);
     }
 
@@ -85,6 +68,29 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
         if(chooseList.indexOf(acquaintance.getUser_id()) != -1){
             holder.checkBox.setChecked(true);
         }
+        else
+            holder.checkBox.setChecked(false);
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //int position = holder.getAdapterPosition();
+
+                if(holder.checkBox.isChecked()){
+                    // add to choose list
+                    Follow acquaintance = acquaintanceList.get(position);
+                    chooseList.add(acquaintance.getUser_id());
+                    chooseNames.add(acquaintance.getUser_name());
+                }
+                else{
+                    // remove from choose list
+                    Follow acquaintance = acquaintanceList.get(position);
+                    chooseList.remove((Object) acquaintance.getUser_id());
+                    chooseNames.remove(acquaintance.getUser_name());
+                }
+                MentionAdapter.this.notifyItemChanged(position);
+            }
+        });
 
         Glide.with(MyApplication.getContext())
                 .load(acquaintance.getportrait_url())

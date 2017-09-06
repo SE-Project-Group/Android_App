@@ -4,8 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.android.track.Adapter.FollowAdapter;
+
 import com.example.android.track.Adapter.MentionAdapter;
-import com.example.android.track.Adapter.RemindAdapter;
 import com.example.android.track.Model.Follow;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.R;
-import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.UserRequester;
 
 import org.litepal.crud.DataSupport;
@@ -44,7 +40,6 @@ public class ChooseMentionActivity extends AppCompatActivity{
     // View
     private ProgressBar progressBar;
     private SearchView searchView;
-    private Button search_btn;
     private RecyclerView recyclerView;
     
     
@@ -54,24 +49,16 @@ public class ChooseMentionActivity extends AppCompatActivity{
     private final static int GET_SEARCH_RESULT_FAILED = 3;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_mention);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        
-        // display home button
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.acquaintance_list);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        searchView = (SearchView) findViewById(R.id.searchView);
-        search_btn = (Button) findViewById(R.id.search_usr_btn);
-        setToolbarListener();
-        
+
         Intent intent = getIntent();
         chooseList = intent.getIntegerArrayListExtra("chooseList"); // get choose list from last activity
         chooseNames = intent.getStringArrayListExtra("chooseNames");
@@ -82,6 +69,13 @@ public class ChooseMentionActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.choose_mention_toolbar,menu);
+        MenuItem menuItem=menu.findItem(R.id.search);//
+        searchView= (SearchView) MenuItemCompat.getActionView(menuItem);//加载searchview
+        searchView.setSubmitButtonEnabled(true);//设置是否显示搜索按钮
+        searchView.setQueryHint("查找");//设置提示信息
+        searchView.setIconifiedByDefault(true);//设置搜索默认为图标
+        setListener();
+
         return true;
     }
 
@@ -101,11 +95,7 @@ public class ChooseMentionActivity extends AppCompatActivity{
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            case android.R.id.home:
-                Intent fail_intent = new Intent();
-                setResult(RESULT_CANCELED);
-                finish();
-                break;
+
             default:
                 break;
         }
@@ -113,15 +103,7 @@ public class ChooseMentionActivity extends AppCompatActivity{
         return true;
     }
     
-    private void setToolbarListener(){
-        search_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search_btn.setVisibility(View.GONE);
-                searchView.setVisibility(View.VISIBLE);
-            }
-        });
-
+    private void setListener(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             // 当点击搜索按钮时触发该方法
             @Override
@@ -160,8 +142,9 @@ public class ChooseMentionActivity extends AppCompatActivity{
                     Follow follow = new Follow();
                     follow.setUser_name(acquaintance.getUser_name());
                     follow.setUser_id(acquaintance.getUser_id());
-                    follow.setState(acquaintance.getRelationship());
+                    follow.setState("stranger");
                     follow.setportrait_url(requester.getPortraitUrl(acquaintance.getUser_id()));
+                    follows.add(follow);
                 }
 
                 Message message = new Message();

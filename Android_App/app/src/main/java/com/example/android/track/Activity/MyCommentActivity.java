@@ -1,22 +1,26 @@
 package com.example.android.track.Activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.example.android.track.Model.Feed;
 import com.example.android.track.Adapter.FeedAdapter;
+import com.example.android.track.Model.Feed;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyShareActivity extends AppCompatActivity {
+/**
+ * Created by thor on 2017/9/6.
+ */
+
+public class MyCommentActivity extends AppCompatActivity {
 
     private List<Feed> feedList = new ArrayList<>();
 
@@ -53,7 +57,7 @@ public class MyShareActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_share_View);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        FeedAdapter adapter = new FeedAdapter(MyShareActivity.this, feedList);
+        FeedAdapter adapter = new FeedAdapter(MyCommentActivity.this, feedList);
         recyclerView.setAdapter(adapter);
     }
 
@@ -63,7 +67,7 @@ public class MyShareActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case GET_FEED_FAILED:
-                    Toast.makeText(MyShareActivity.this, "get feed failed", Toast.LENGTH_SHORT);
+                    Toast.makeText(MyCommentActivity.this, "get feed failed", Toast.LENGTH_SHORT);
                     break;
                 case GET_FEED_OK:
                     setRecyclerView();

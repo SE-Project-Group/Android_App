@@ -2,8 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/search"
+        android:title="dd"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:icon="@drawable/search_24"
+        />
+    <item
         android:id="@+id/ok_btn"
         android:icon="@drawable/send_24"
         android:title="send"
         app:showAsAction="always" />
+
+
 </menu>
