@@ -237,6 +237,7 @@ public class LogedUserFragment extends Fragment{
                 case LOG_OUT_OK:
                     // if log out success, then delete the token store in XML file
                     new Verify().delete_token();
+                    MyApplication.clearData();  //clear database and portrait cache
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
                     break;

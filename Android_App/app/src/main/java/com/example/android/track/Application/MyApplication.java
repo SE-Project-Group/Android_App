@@ -12,13 +12,22 @@ import android.widget.Toast;
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
 import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
 import com.example.android.track.Activity.TalkingActivity;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
+import com.example.android.track.Model.LitePal_Entity.CommentMeRecord;
+import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
+import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
+import com.example.android.track.Model.LitePal_Entity.MyFeed;
+import com.example.android.track.Model.LitePal_Entity.ShareMeRecord;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 import com.mob.MobApplication;
 import com.mob.MobSDK;
+import com.mob.tools.utils.Data;
 
 import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 
+import java.io.File;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -32,6 +41,7 @@ import cn.jpush.im.api.BasicCallback;
 
 import static android.R.attr.data;
 import static android.R.id.message;
+import static cn.jpush.im.android.api.enums.ContentType.file;
 import static com.baidu.location.d.j.U;
 
 /**
@@ -244,6 +254,27 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
 
             return "success";
         }
+    }
+
+    // when log out, clear all database
+    public static void clearData(){
+        // clear database
+        DataSupport.deleteAll(Acquaintance.class);
+        DataSupport.deleteAll(CommentMeRecord.class);
+        DataSupport.deleteAll(LikeMeRecord.class);
+        DataSupport.deleteAll(MentionMeRecord.class);
+        DataSupport.deleteAll(MyFeed.class);
+        DataSupport.deleteAll(ShareMeRecord.class);
+
+        // clear portrait cache
+
+        File fileDir = MyApplication.getContext().getFilesDir();
+        for (File file : fileDir.listFiles()) {
+            if (file.isFile() && (file.getName().indexOf("_portrait") != -1))
+                file.delete(); // 删除所有portrait文件
+        }
+
+        return;
     }
 
     public static int getUnReadMsgCnt() {

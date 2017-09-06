@@ -9,12 +9,17 @@ import com.example.android.track.Model.UserInfo;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+
+import static cn.jpush.im.android.api.enums.ContentType.file;
 
 
 /**
@@ -69,4 +74,5 @@ public class AcquaintanceManager {
         }).start();
 
     }
+
 }
