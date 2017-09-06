@@ -95,6 +95,9 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
+        // init recyclerView
+        initRecycleView();
+
         // set Recycle View
         Date nowTime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -112,7 +115,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        initRecycleView();
+
 
     }
 
@@ -189,22 +192,17 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void run() {
                 Message message = new Message();
+                moreFeeds = requester.getHotFeeds(direction, time);
 
                 if(direction.equals("after")) {
-                    moreFeeds = requester.getHotFeeds(direction, time);
-
                     if (moreFeeds == null)
                         message.what = GET_AFTER_FEED_FAILED;
                     else {
-                        moreFeeds.addAll(feedList);
-                        feedList = moreFeeds;
-
+                        feedList.addAll(0, moreFeeds);
                         message.what = GET_AFTER_FEED_OK;
                     }
                 }
                 else if(direction.equals("before")){
-                    moreFeeds = requester.getHotFeeds(direction, time);
-
                     if (moreFeeds == null)
                         message.what = GET_BEFORE_FEED_FAILED;
                     else{
@@ -229,7 +227,7 @@ public class DiscoverFragment extends Fragment {
                     feedAdapter.notifyItemRangeInserted(0, moreFeeds.size());
                     break;
                 case GET_BEFORE_FEED_OK:
-                    feedAdapter.notifyItemChanged(-1, moreFeeds.size());
+                    feedAdapter.notifyItemChanged(feedList.size()-1, moreFeeds.size());
                     break;
 
                 case GET_BEFORE_FEED_FAILED:

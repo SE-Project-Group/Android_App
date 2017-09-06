@@ -162,8 +162,13 @@ public class FeedRequester{
         return feedList;
     }
 
-    public List<Feed> getCircleFeed(){
-        String resource = "getFollowingFeedList";
+    public List<Feed> getCircleFeed(String direction, String time){
+        String resource = "";
+        if(direction.equals("after"))
+            resource = "getFollowingFeedsAfterTime";
+        else
+            resource = "getFollowingFeedsBeforeTime";
+
         String url = generatePreUrl(resource, true);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
