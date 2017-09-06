@@ -478,5 +478,26 @@ public class FeedRequester{
         return result;
     }
 
+    public List<Feed> getMyFeeds(){
+        String resource = "myFeed";
+        String url = generatePreUrl(resource, true);
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        return result;
+    }
 
 }

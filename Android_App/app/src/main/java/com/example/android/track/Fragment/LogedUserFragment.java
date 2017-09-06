@@ -133,7 +133,7 @@ public class LogedUserFragment extends Fragment{
         });
 
         LinearLayout my_comment = (LinearLayout) getActivity().findViewById(R.id.my_comment_btn);
-        my_share.setOnClickListener(new View.OnClickListener(){
+        my_comment.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(getActivity(),MyCommentActivity.class);

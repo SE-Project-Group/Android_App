@@ -40,7 +40,7 @@ public class MyCommentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 FeedRequester requester = new FeedRequester();
-                feedList = requester.getMyShareFeeds();
+                feedList = requester.getMyCommentFeeds();
                 Message message = new Message();
 
                 if(feedList == null)

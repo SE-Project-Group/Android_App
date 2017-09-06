@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import com.example.android.track.Model.Feed;
 import com.example.android.track.Adapter.FeedAdapter;
 import com.example.android.track.R;
+import com.example.android.track.Util.FeedRequester;
 
 import java.util.List;
 
@@ -37,10 +38,13 @@ public class MyAlbumActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //feedList = requestServer.getMyFeed();
+                feedList = new FeedRequester().getMyFeeds();
                 // send message to main thread
                 Message msg = new Message();
-                msg.what = GET_MY_FEED_OK;
+                if (feedList == null)
+                    msg.what = GET_MY_FEED_FAILED;
+                else
+                    msg.what = GET_MY_FEED_OK;
                 handler.sendMessage(msg);
             }
         }).start();
