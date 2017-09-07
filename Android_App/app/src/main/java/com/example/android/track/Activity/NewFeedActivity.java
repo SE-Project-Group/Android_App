@@ -50,6 +50,8 @@ import static android.R.id.list;
 public class NewFeedActivity extends AppCompatActivity {
     private BottomPopView bottomPopView;
     private LocationClient mLocationClient;
+
+    private EditText content;
     private TextView tv_position;
     private MyGridView gridView;
     private ProgressDialog progressDialog;  // used to tell upload progress
@@ -101,6 +103,7 @@ public class NewFeedActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.newFeedToolBar);
         setSupportActionBar(toolbar);
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
+        content = (EditText) findViewById(R.id.edit_text);
         gridView=(MyGridView) findViewById(R.id.gridview);
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         mentionMenu = (LinearLayout) findViewById(R.id.mention_menu);
@@ -199,7 +202,13 @@ public class NewFeedActivity extends AppCompatActivity {
                     Toast.makeText(NewFeedActivity.this, "您尚未选择可见范围", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                String content_text = content.getText().toString();
+                if(pathList.size() == 0 && content_text.equals("") ){
+                    Toast.makeText(NewFeedActivity.this, "您尚未任何编辑内容", Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
+                // check over, show hint and begin to upload
                 progressDialog.setTitle("正在拼命上传");
                 progressDialog.setMessage("上传动态内容......");
                 progressDialog.setCancelable(false);
@@ -236,18 +245,17 @@ public class NewFeedActivity extends AppCompatActivity {
 
     // get and check information form page
     private String generateJsonString(){
-        EditText edit_text = (EditText) findViewById(R.id.edit_text);
-        text = edit_text.getText().toString();
+        text = content.getText().toString();
 
         int selection = shareArea_group.getCheckedRadioButtonId();
         switch (selection){
-            case 1:
+            case R.id.rb1:
                 shareArea = PUBLIC;
                 break;
-            case 2:
+            case R.id.rb2:
                 shareArea = FRIEND;
                 break;
-            case 3:
+            case R.id.rb3:
                 shareArea = PRIVATE;
         }
         CheckBox showLocation_btn = (CheckBox) findViewById(R.id.showLocation_btn);

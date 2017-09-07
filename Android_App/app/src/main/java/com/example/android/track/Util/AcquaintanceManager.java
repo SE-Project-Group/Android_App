@@ -68,7 +68,7 @@ public class AcquaintanceManager {
                         e.printStackTrace();
                     }
                 }
-                else
+                else   // if have already save this user, just return
                     return;
             }
         }).start();

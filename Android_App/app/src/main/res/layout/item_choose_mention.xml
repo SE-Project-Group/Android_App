@@ -14,8 +14,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:padding="10dp">
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:id="@+id/portrait"/>
             <LinearLayout
                 android:layout_marginLeft="20dp"

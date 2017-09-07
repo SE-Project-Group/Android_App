@@ -56,6 +56,10 @@ public class CircleFragment extends Fragment {
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.homeToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        // clear new following counter
+        MyApplication.setNewFollowFeed(false);
+        MyApplication.setNewMsg(true);
+
         // init recyclerView
         initRecyclerView();
 

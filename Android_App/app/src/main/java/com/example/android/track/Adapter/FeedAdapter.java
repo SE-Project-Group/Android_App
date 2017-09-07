@@ -347,25 +347,25 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case LIKE_OK:
-                    Toast.makeText(MyApplication.getContext(), "like success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "like success", Toast.LENGTH_SHORT).show();
                     break;
                 case LIKE_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "like failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "like failed", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_OK:
-                    Toast.makeText(MyApplication.getContext(), "cancel success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "cancel success", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "cancel failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "cancel failed", Toast.LENGTH_SHORT).show();
                     break;
                 case SHARE_OK:
-                    Toast.makeText(MyApplication.getContext(), "share success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "share success", Toast.LENGTH_SHORT).show();
                     break;
                 case SHARE_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "请求发送失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请求发送失败", Toast.LENGTH_SHORT).show();
                     break;
                 case SHARE_NOT_ALLOWED:
-                    Toast.makeText(MyApplication.getContext(), "抱歉，该动态不是公开动态\n您不能分享非公开动态", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "抱歉，该动态不是公开动态\n您不能分享非公开动态", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

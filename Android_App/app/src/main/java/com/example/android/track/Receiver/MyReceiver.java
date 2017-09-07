@@ -55,7 +55,8 @@ public class MyReceiver extends BroadcastReceiver {
 
 
             int old_cnt = MyApplication.getUnReadMsgCnt();
-            MyApplication.setUnReadMsgCnt(old_cnt + 1);
+            if(!title.equals("NewFollowFeedMessage")) // except of new following feed , other message should be add to unReadMsgCnt
+                MyApplication.setUnReadMsgCnt(old_cnt + 1);
             switch (title){
                 case "NewLikeMessage":
                     old_cnt = MyApplication.getUnReadLikenCnt();
