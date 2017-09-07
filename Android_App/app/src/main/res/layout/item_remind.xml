@@ -76,14 +76,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Author"
-                        android:textSize="15dp" />
+                        android:textSize="17dp"
+                        android:textColor="@color/orange"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" :"
+                        android:textSize="17dp"
+                        android:textColor="@color/orange"/>
 
                     <TextView
                         android:id="@+id/author_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="blablabla"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="15dp"/>
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,8 +1,12 @@
 package com.example.android.track.Adapter;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,13 +17,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Application.MyApplication;
+import com.example.android.track.Model.Feed;
 import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
+import com.example.android.track.Util.Verify;
+import com.example.android.track.View.FeedDetailView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -34,7 +42,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder>{
     private List<Remind> mRemindList;
-    private Context context;
+    private Activity context;
+
+    private ProgressDialog progressDialog;
+    private FeedRequester requester;
+    private Feed feedDetail;
+    private boolean logged;
+
+    // signal
+    private final static int GET_FEED_OK = 1;
+    private final static int GET_FEED_FAILED = 2;
+    private final static int NOT_LOGGED = 3;
+    private final static int SEND_COMMENT_OK = 4;
+    private final static int SEND_COMMENT_FAILED = 5;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         CircleImageView user_portrait;
@@ -59,9 +79,17 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         }
     }
 
-    public RemindAdapter(List<Remind> remindList, Context cxt){
+    public RemindAdapter(List<Remind> remindList, Activity cxt){
         mRemindList = remindList;
         context = cxt;
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("动态详情");
+        progressDialog.setMessage("正在拼命加载");
+        progressDialog.setCancelable(false);
+        requester = new FeedRequester();
+        feedDetail = new Feed();
+        logged = new Verify().getLoged();
     }
 
     @Override
@@ -108,7 +136,10 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
         holder.feed_abstract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                progressDialog.show();  // show hint
+                int position = holder.getAdapterPosition();
+                String feed_id = mRemindList.get(position).getFeed_id();
+                getFeedDetail(feed_id);
             }
         });
 
@@ -172,14 +203,27 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // chech if logged
+                        if(!logged){
+                            Message message = new Message();
+                            message.what = NOT_LOGGED;
+                            handler.sendMessage(message);
+                            return;
+                        }
                         // 获取EditView中的输入内容
                         EditText edit_text =
                                 (EditText) dialogView.findViewById(R.id.edit_text);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                FeedRequester requester = new FeedRequester();
-                                requester.comment(edit_text.getText().toString(), feed_id, reply_id);
+                                String response = requester.comment(edit_text.getText().toString(), feed_id, reply_id);
+                                // send message
+                                Message message = new Message();
+                                if(response.equals("failed") || response.equals("status wrong"))
+                                    message.what = SEND_COMMENT_FAILED;
+                                else
+                                    message.what = SEND_COMMENT_OK;
+                                handler.sendMessage(message);
                             }
                         }).start();
                     }
@@ -194,5 +238,57 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
 
         commentDialog.create().show();
     }
+
+    private void getFeedDetail(final String feed_id){
+        // chech if logged
+        if(!logged){
+            Message message = new Message();
+            message.what = NOT_LOGGED;
+            handler.sendMessage(message);
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FeedRequester requester = new FeedRequester();
+                feedDetail =  requester.getFeedDetail(feed_id);
+                Message message = new Message();
+                if(feedDetail == null)
+                    message.what = GET_FEED_FAILED;
+                else
+                    message.what = GET_FEED_OK;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case GET_FEED_OK:
+                    // show feed detail
+                    progressDialog.dismiss();
+                    FeedDetailView feedDetailView = new FeedDetailView(context, feedDetail);
+                    feedDetailView.show();
+                    break;
+                case GET_FEED_FAILED:
+                    progressDialog.dismiss();
+                    Toast.makeText(context, "获取动态失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case SEND_COMMENT_OK:
+                    Toast.makeText(context, "评论发送成功", Toast.LENGTH_SHORT).show();
+                    break;
+                case SEND_COMMENT_FAILED:
+                    Toast.makeText(context, "评论发送失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case NOT_LOGGED:
+                    Toast.makeText(context, "请您先登录", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
 }

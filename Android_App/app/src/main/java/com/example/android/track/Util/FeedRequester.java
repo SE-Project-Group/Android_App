@@ -519,4 +519,28 @@ public class FeedRequester{
         return result;
     }
 
+
+    public Feed getFeedDetail(String feed_id){
+        String resource = "getFeedDetail";
+        String pre_url = generatePreUrl(resource, true);
+        String url = pre_url + "&feed_id=" + feed_id;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        String responseData = "";
+        try{
+            Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
+            responseData = response.body().string();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        Feed result =  gson.fromJson(responseData, new TypeToken<Feed>(){}.getType());
+        return result;
+    }
+
 }
