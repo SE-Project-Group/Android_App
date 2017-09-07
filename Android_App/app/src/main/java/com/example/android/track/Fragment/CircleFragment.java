@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.track.Adapter.FeedAdapter;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
@@ -59,13 +60,12 @@ public class CircleFragment extends Fragment {
         initRecyclerView();
 
         Date nowTime = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = sdf.format(nowTime);
         getFeeds("before", dateStr);
 
 
         // set refresh layout
-        swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
         swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -74,7 +74,7 @@ public class CircleFragment extends Fragment {
                 if(feedList.size() == 0){
                     // if have no friend feed , refresh again
                     Date nowTime = new Date(System.currentTimeMillis());
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateStr = sdf.format(nowTime);
                     getFeeds("before", dateStr);
                     return;
@@ -102,7 +102,7 @@ public class CircleFragment extends Fragment {
                 FeedRequester requester = new FeedRequester();
                 moreFeeds = requester.getCircleFeed(direction, time);
                 Message message = new Message();
-                if (feedList == null)
+                if (moreFeeds == null)
                     message.what = GET_FEED_FAILED;
 
                 else {
@@ -118,7 +118,7 @@ public class CircleFragment extends Fragment {
     }
 
     private void initRecyclerView(){
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.discHot_recyclerView);
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.circle_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         FeedAdapter adapter = new FeedAdapter(getActivity(), feedList);
@@ -144,7 +144,7 @@ public class CircleFragment extends Fragment {
                     // 判断是否滚动到底部，并且是向右滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         //加载更多功能的代码
-                        Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "正为您加载更多动态....", Toast.LENGTH_SHORT).show();
                         String earliestTime = feedList.get(feedList.size() -1).getDate();
                         getFeeds("before", earliestTime);
                     }
@@ -158,7 +158,7 @@ public class CircleFragment extends Fragment {
                 // 如果 dx>0 则表示 右滑 ， dx<0 表示 左滑
                 // dy <0 表示 上滑， dy>0 表示下滑
 
-                if (dy < 0) {
+                if (dy > 0) {
                     isSlidingToLast = true;
                 } else {
                     isSlidingToLast = false;
@@ -174,14 +174,19 @@ public class CircleFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case NOT_LOG_IN:
-                    Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT).show();
+                    if(getActivity() != null)
+                        Toast.makeText(getActivity(), "您尚未登陆", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_FEED_FAILED:
-                    Toast.makeText(getActivity(), "get feed failed", Toast.LENGTH_SHORT).show();
+                    if(getActivity() != null)
+                        Toast.makeText(getActivity(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_AFTER_FEED_OK:
                     feedList.addAll(0, moreFeeds);
-                    feedAdapter.notifyItemRangeInserted(0, moreFeeds.size());
+                    int newCnt = moreFeeds.size();
+                    feedAdapter.notifyItemRangeInserted(0, newCnt);
+                    Toast.makeText(MyApplication.getContext(), newCnt + "条新动态", Toast.LENGTH_SHORT).show();
+                    recyclerView.smoothScrollToPosition(0); //sroll to head
                     break;
                 case GET_BEFORE_FEED_OK:
                     feedList.addAll(moreFeeds);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.android.track.Model.Feed;
@@ -27,11 +28,13 @@ public class MyAlbumActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_album);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.myAlbumToolBar);
+        setContentView(R.layout.activity_my_xxx);
+        // set toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
-        progressBar = (ProgressBar) findViewById(R.id.pb_myAlbum);
-        recyclerView = (RecyclerView) findViewById(R.id.myAlbum_recyclerView);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        recyclerView = (RecyclerView) findViewById(R.id.myRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         //final RequestServer requestServer = new RequestServer(new Verify(MyAlbumActivity.this));
@@ -56,6 +59,7 @@ public class MyAlbumActivity extends AppCompatActivity {
             switch (msg.what){
                 case GET_MY_FEED_OK:
                     recyclerView.setAdapter(new FeedAdapter(MyAlbumActivity.this, feedList));
+                    progressBar.setVisibility(View.GONE);
                     break;
                 case GET_MY_FEED_FAILED:
                     break;

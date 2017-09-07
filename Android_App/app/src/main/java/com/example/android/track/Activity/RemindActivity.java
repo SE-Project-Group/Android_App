@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.example.android.track.Adapter.RemindAdapter;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.LitePal_Entity.CommentMeRecord;
 import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
@@ -40,8 +41,28 @@ public class RemindActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
+        clearUnReadCnt(type);  // clear unread cnt store in MyApplication
         initReminds(type);
 
+    }
+
+    private void clearUnReadCnt(String type){
+        switch (type){
+            case "like":
+                MyApplication.setUnReadLikenCnt(0);
+                break;
+            case "comment":
+                MyApplication.setUnReadCommentCnt(0);
+                break;
+            case "share":
+                MyApplication.setUnReadShareCnt(0);
+                break;
+            case "mention":
+                MyApplication.setUnReadMentionCnt(0);
+                break;
+            default:
+                break;
+        }
     }
 
     private void initReminds(String type){
@@ -55,6 +76,9 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setTime(record.getTime());
                 remind.setFeed_id(record.getFeed_id());
                 List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
+                if(myFeeds.size() == 0)
+                    continue;  // if this machine has no data about this feed, then drop it
+
                 MyFeed myFeed = myFeeds.get(0);
                 remind.setAuthor_text(myFeed.getText());
                 SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
@@ -77,6 +101,8 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setComment_id(record.getComment_id());
                 remind.setFeed_id(record.getFeed_id());
                 List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
+                if(myFeeds.size() == 0)
+                    continue;  // if this machine has no data about this feed, then drop it
                 MyFeed myFeed = myFeeds.get(0);
                 remind.setAuthor_text(myFeed.getText());
                 SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
@@ -98,6 +124,8 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setComment_text(record.getShare_comment());
                 remind.setFeed_id(record.getFeed_id());
                 List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
+                if(myFeeds.size() == 0)
+                    continue;  // if this machine has no data about this feed, then drop it
                 MyFeed myFeed = myFeeds.get(0);
                 remind.setAuthor_text(myFeed.getText());
                 SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
@@ -117,13 +145,9 @@ public class RemindActivity extends AppCompatActivity {
                 remind.setUser_name(record.getUser_name());
                 remind.setTime(record.getTime());
                 remind.setFeed_id(record.getFeed_id());
-                List<MyFeed> myFeeds = DataSupport.select("text").where("feed_id = ?", record.getFeed_id()).find(MyFeed.class);
-                MyFeed myFeed = myFeeds.get(0);
-                remind.setAuthor_text(myFeed.getText());
-                SharedPreferences pref = getSharedPreferences("logIn_data", MODE_PRIVATE);
-                remind.setAuthor_name(pref.getString("user_name", ""));
+                remind.setAuthor_name(record.getUser_name());
+                remind.setAuthor_text(record.getText());
                 remind.setType("mention");
-
                 remindList.add(remind);
             }
         }

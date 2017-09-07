@@ -1,32 +1,32 @@
 package com.example.android.track.Fragment;
 
 
-import android.content.Context;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.track.Activity.ChangePwdActivity;
 import com.example.android.track.Activity.HomeActivity;
-import com.example.android.track.Activity.LogInActivity;
 import com.example.android.track.Activity.MyAlbumActivity;
 import com.example.android.track.Activity.MyCommentActivity;
 import com.example.android.track.Activity.MyLikeActivity;
 import com.example.android.track.Activity.MyShareActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
-import com.example.android.track.Activity.SettingActivity;
-import com.example.android.track.Activity.SignUpActivity;
+import com.example.android.track.Activity.PhotoViewActivity;
 import com.example.android.track.Activity.UserInfoActivity;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
@@ -35,15 +35,12 @@ import com.example.android.track.Util.Verify;
 
 import java.util.HashMap;
 
-import cn.jpush.android.api.JPushInterface;
 import cn.smssdk.EventHandler;
 import cn.smssdk.gui.RegisterPage;
 
-import static android.R.id.edit;
 import static android.app.Activity.RESULT_OK;
-import static com.baidu.location.d.j.C;
-import static com.example.android.track.Application.MyApplication.logOut;
-import static com.example.android.track.R.id.setting_btn;
+import static com.baidu.location.d.j.P;
+import static com.baidu.location.d.j.t;
 
 
 /**
@@ -56,9 +53,11 @@ public class LogedUserFragment extends Fragment{
     private static final int PHONE_CORRECT = 2;
     private static final int PHONE_WRONG = 3;
     private static final int VERIFY_PHONE_FAILED = 4;
+    private static final int NET_FAILED = 5;
     private static final int CHANGE_PWD = 5;
 
-
+    private ProgressDialog progressDialog;  // used when clear user data
+    private Boolean isChangingPwd = false;  // if it is change pwd, then do not need clear user data
 
 
     @Nullable
@@ -176,6 +175,9 @@ public class LogedUserFragment extends Fragment{
 
 
     private void editPwd(){
+        isChangingPwd = true;
+        Toast.makeText(MyApplication.getContext(), "请先验证手机号码", Toast.LENGTH_SHORT).show();
+
         EventHandler eventHandler = new EventHandler() {
             public void afterEvent(int event, int result, Object data) {
                 if (data instanceof Throwable) {
@@ -205,12 +207,14 @@ public class LogedUserFragment extends Fragment{
                 UserRequester requester = new UserRequester();
                 String result = requester.verifyPhone(phone);
                 Message message = new Message();
-                if(result.equals("failed"))
+                if(result.equals("status wrong"))
                     message.what = VERIFY_PHONE_FAILED;
                 else if (result.equals("true"))
                     message.what = PHONE_CORRECT;
                 else if (result.equals("false"))
                     message.what = PHONE_WRONG;
+                else
+                    message.what = NET_FAILED;
 
                 handler.sendMessage(message);
             }
@@ -230,6 +234,42 @@ public class LogedUserFragment extends Fragment{
         }
     }
 
+    // ask if clear user data
+    private void showDialog() {
+        AlertDialog.Builder clearDialog = new AlertDialog.Builder(getActivity());
+        clearDialog.setTitle("清楚用户数据") //标题
+                .setIcon(R.mipmap.ic_launcher) //icon
+                .setCancelable(false) //不响应back按钮
+                .setMessage("是否清除手机内所有用户数据？\n清除后数据将无法复原，如果您还会在本机登陆此账号，不建议您清除所有数据"); //对话框显示内容
+        //设置按钮
+        clearDialog.setPositiveButton("清除",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // show progress dialog
+                        progressDialog = new ProgressDialog(getActivity());
+                        progressDialog.setTitle("清除数据");
+                        progressDialog.setMessage("清除用户数据中......");
+                        progressDialog.setCancelable(true);
+                        progressDialog.show();
+                        // clear data
+                        MyApplication.clearData();
+
+                        progressDialog.dismiss();
+                    }
+                });
+        clearDialog.setNegativeButton("不清除",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        //创建Dialog对象
+        AlertDialog dlg = clearDialog.create();
+        dlg.show();
+    }
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -237,7 +277,9 @@ public class LogedUserFragment extends Fragment{
                 case LOG_OUT_OK:
                     // if log out success, then delete the token store in XML file
                     new Verify().delete_token();
-                    MyApplication.clearData();  //clear database and portrait cache
+                    if(!isChangingPwd)
+                        showDialog();   // ask if clear user data
+
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
                     break;
@@ -245,7 +287,7 @@ public class LogedUserFragment extends Fragment{
                     Toast.makeText(getContext(), "退出登录失败", Toast.LENGTH_SHORT).show();
                     break;
                 case PHONE_CORRECT:
-                    Toast.makeText(getContext(), "验证成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "账户匹配成功", Toast.LENGTH_SHORT).show();
                     Intent changePwdIntent = new Intent(getActivity(), ChangePwdActivity.class);
                     startActivityForResult(changePwdIntent, CHANGE_PWD);
                     break;
@@ -253,7 +295,12 @@ public class LogedUserFragment extends Fragment{
                     Toast.makeText(getContext(), "手机号与当前账号不匹配，请重试", Toast.LENGTH_SHORT).show();
                     break;
                 case VERIFY_PHONE_FAILED:
-                    Toast.makeText(getContext(), "验证失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "账户异常，请重新登陆", Toast.LENGTH_SHORT).show();
+                    break;
+                case NET_FAILED:
+                    Toast.makeText(getContext(), "请求发送失败", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
                     break;
             }
         }

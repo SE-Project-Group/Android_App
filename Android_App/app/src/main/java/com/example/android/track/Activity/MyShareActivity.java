@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.track.Model.Feed;
@@ -20,13 +23,20 @@ public class MyShareActivity extends AppCompatActivity {
 
     private List<Feed> feedList = new ArrayList<>();
 
+    private ProgressBar progressBar;
+
     private static final int GET_FEED_OK = 1;
     private static final int GET_FEED_FAILED = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_share);
+        setContentView(R.layout.activity_my_xxx);
+        // set toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
+        setSupportActionBar(toolbar);
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         initFeeds();
 
     }
@@ -50,7 +60,7 @@ public class MyShareActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.my_share_View);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.myRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         FeedAdapter adapter = new FeedAdapter(MyShareActivity.this, feedList);
@@ -67,6 +77,7 @@ public class MyShareActivity extends AppCompatActivity {
                     break;
                 case GET_FEED_OK:
                     setRecyclerView();
+                    progressBar.setVisibility(View.GONE);
             }
         }
     };

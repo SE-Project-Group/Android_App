@@ -32,7 +32,6 @@ public class CommentActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EditText comment_content;
     private Button send_btn;
-    private RelativeLayout rl_comment;
     private String feed_id;
 
     private Verify verify;
@@ -59,13 +58,12 @@ public class CommentActivity extends AppCompatActivity {
         // inti bottom comment part
         comment_content = (EditText) findViewById(R.id.comment_content);
         send_btn = (Button) findViewById(R.id.comment_send);
-        rl_comment = (RelativeLayout) findViewById(R.id.rl_comment);
         setListener();
 
         initComment();
     }
 
-    private void initComment(){
+    public void initComment(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +98,7 @@ public class CommentActivity extends AppCompatActivity {
                     return;
                 }
                 // send comment
-                final String comment = ((EditText)findViewById(R.id.comment_content)).getText().toString();
+                final String comment = comment_content.getText().toString();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -130,7 +128,8 @@ public class CommentActivity extends AppCompatActivity {
                     break;
                 case SEND_OK:
                     Toast.makeText(MyApplication.getContext(), "send success", Toast.LENGTH_SHORT).show();
-                    onDestroy();
+                    comment_content.setText("");  // clear input area
+                    initComment();
                     break;
                 case  SEND_FAILED:
                     Toast.makeText(MyApplication.getContext(), "send failed", Toast.LENGTH_SHORT).show();

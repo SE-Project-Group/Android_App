@@ -55,6 +55,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;  // used to tell upload progress
     private LinearLayout mentionMenu;
     private TextView mentionNames_tv;
+    private RadioGroup shareArea_group;
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -104,6 +105,9 @@ public class NewFeedActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(NewFeedActivity.this);
         mentionMenu = (LinearLayout) findViewById(R.id.mention_menu);
         mentionNames_tv = (TextView) findViewById(R.id.mention_names);
+        shareArea_group = (RadioGroup) findViewById(R.id.shareArea_group);
+        shareArea_group.check(R.id.rb1);  // default is public
+
 
         mentionMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,9 +190,16 @@ public class NewFeedActivity extends AppCompatActivity {
                 Verify verify = new Verify();
                 // check log status
                 if(!verify.getLoged()){
-                    Toast.makeText(NewFeedActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewFeedActivity.this, "您尚未登陆", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                // check if share Area is selected
+                int selection = shareArea_group.getCheckedRadioButtonId();
+                if(selection == -1){
+                    Toast.makeText(NewFeedActivity.this, "您尚未选择可见范围", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 progressDialog.setTitle("正在拼命上传");
                 progressDialog.setMessage("上传动态内容......");
                 progressDialog.setCancelable(false);
@@ -228,7 +239,6 @@ public class NewFeedActivity extends AppCompatActivity {
         EditText edit_text = (EditText) findViewById(R.id.edit_text);
         text = edit_text.getText().toString();
 
-        RadioGroup shareArea_group = (RadioGroup) findViewById(R.id.shareArea_group);
         int selection = shareArea_group.getCheckedRadioButtonId();
         switch (selection){
             case 1:

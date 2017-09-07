@@ -97,6 +97,7 @@ public class MessageFragment extends Fragment {
         notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
         chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
         initChatRecord(chat_view);
+        setUnReadRemind(notification_view);
     }
 
     private void setUnReadRemind(View parentView){

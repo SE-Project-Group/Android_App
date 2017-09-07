@@ -1,9 +1,11 @@
 package com.example.android.track.Activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -12,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +26,7 @@ import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 import com.example.android.track.View.PhotoViewPager;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,6 +68,8 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
+        initSystemBar(PhotoViewActivity.this);  // set system bar to black
+
         initView();
         Intent intent = getIntent();
         currentPosition = intent.getIntExtra("currentPosition", 0);
@@ -77,6 +84,19 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
             getUrls();
         }
 
+    }
+
+
+    public static void initSystemBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//因为不是所有的系统都可以设置颜色的，在4.4以下就不可以。。有的说4.1，所以在设置的时候要检查一下系统版本是否是4.1以上
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(R.color.black));
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        // 使用颜色资源
+        tintManager.setStatusBarTintResource(R.color.black);
     }
 
     private void getUrls(){
@@ -95,7 +115,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                 }
                 if(type.equals("user")){
                     UserRequester requester = new UserRequester();
-                    String response = requester.getPortraitUrl(user_id);
+                    String response = requester.getBigPortraitUrl(user_id);
                     Message message = new Message();
                     if(response.equals("failed"))
                         message.what = GET_URL_FAILED;

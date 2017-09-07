@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.android.track.Activity.CommentActivity;
 import com.example.android.track.Activity.CommentConversationActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Model.Comment;
@@ -155,6 +156,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                             public void run() {
                                 FeedRequester requester = new FeedRequester();
                                 requester.comment(edit_text.getText().toString(), feed_id, reply_id);
+                                // refresh comment list after send a new comment
+                                ((CommentActivity) context).initComment();
                             }
                         }).start();
                     }

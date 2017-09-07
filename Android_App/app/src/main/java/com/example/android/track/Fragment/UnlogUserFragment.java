@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.android.track.Activity.LogInActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
@@ -45,22 +46,42 @@ public class UnlogUserFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        LinearLayout setting_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_setting_btn);
-        setting_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
-            }
-        });
 
         LinearLayout mycomment_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_mycomment_btn);
         mycomment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PersonalHomeActivity.class);
-                startActivity(intent);
+                makeToast();
             }
         });
+
+        LinearLayout myshare_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_myshare_btn);
+        myshare_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast();
+            }
+        });
+
+        LinearLayout mylike_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_mylike_btn);
+        mylike_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast();
+            }
+        });
+
+        LinearLayout myalbum_btn = (LinearLayout) getActivity().findViewById(R.id.unlog_myalbum_btn);
+        myalbum_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeToast();
+            }
+        });
+    }
+
+    private void makeToast(){
+        Toast.makeText(getActivity(), "  请您先登录~\n稍后发现更多精彩内容！",Toast.LENGTH_SHORT).show();
+        return;
     }
 }

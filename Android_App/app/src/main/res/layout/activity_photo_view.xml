@@ -7,7 +7,9 @@
     <com.example.android.track.View.PhotoViewPager
         android:id="@+id/view_pager_photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="30dp">
 
     </com.example.android.track.View.PhotoViewPager>
 
@@ -20,11 +22,14 @@
         android:id="@+id/tv_image_count"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="20dp"/>
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+       />
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="30dp"

@@ -169,7 +169,9 @@ public class FeedRequester{
         else
             resource = "getFollowingFeedsBeforeTime";
 
-        String url = generatePreUrl(resource, true);
+        String pre_url = generatePreUrl(resource, true);
+        String url = pre_url + "&time=" + time;
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -314,6 +316,22 @@ public class FeedRequester{
         return response;
     }
 
+    public String shareFeed(String feed_id, String text){
+        String resource = "shareFeed";
+        // check if loged in
+        String url = generatePreUrl(resource, true);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("feed_id", feed_id);
+            jsonObject.put("share_text", text);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        String response = sender.put();
+        return response;
+    }
+
     // getCommentList
     public List<Comment> getCommentList(String feed_id){
         String resource = "commentList";
@@ -359,11 +377,12 @@ public class FeedRequester{
         }
         Gson gson = new Gson();
         List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
+        Feed test = result.get(0);
         return result;
     }
 
     public List<String> getBigPhotoUrls(String feed_id){
-        String resource = "getBigPicUrls";
+        String resource = "getBigPhotoUrls";
         String pre_ur = generatePreUrl(resource, false);
         String url = pre_ur + "?feed_id=" + feed_id;
 

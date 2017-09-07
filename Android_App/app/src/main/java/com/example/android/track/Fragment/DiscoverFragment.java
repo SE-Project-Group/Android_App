@@ -100,7 +100,7 @@ public class DiscoverFragment extends Fragment {
 
         // set Recycle View
         Date nowTime = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = sdf.format(nowTime);
         getFeeds("before", dateStr);
 
@@ -113,7 +113,7 @@ public class DiscoverFragment extends Fragment {
                 if(feedList.size() == 0){
                     // if have no friend feed , refresh again
                     Date nowTime = new Date(System.currentTimeMillis());
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dateStr = sdf.format(nowTime);
                     getFeeds("before", dateStr);
                     return;
@@ -169,7 +169,6 @@ public class DiscoverFragment extends Fragment {
                     // 判断是否滚动到底部，并且是向下滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
                         //加载更多功能的代码
-                        Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
                         String earliestTime = feedList.get(feedList.size()-1).getDate();
                         getFeeds("before", earliestTime);
                     }
@@ -183,7 +182,7 @@ public class DiscoverFragment extends Fragment {
                 // 如果 dx>0 则表示 右滑 ， dx<0 表示 左滑
                 // dy <0 表示 上滑， dy>0 表示下滑
 
-                if (dy < 0) {
+                if (dy > 0) {
                     isSlidingToLast = true;
                 } else {
                     isSlidingToLast = false;
@@ -204,18 +203,14 @@ public class DiscoverFragment extends Fragment {
                 if(direction.equals("after")) {
                     if (moreFeeds == null)
                         message.what = GET_AFTER_FEED_FAILED;
-                    else {
-                        feedList.addAll(0, moreFeeds);
+                    else
                         message.what = GET_AFTER_FEED_OK;
-                    }
                 }
                 else if(direction.equals("before")){
                     if (moreFeeds == null)
                         message.what = GET_BEFORE_FEED_FAILED;
-                    else{
-                        feedList.addAll(moreFeeds);
+                    else
                         message.what = GET_BEFORE_FEED_OK;
-                    }
                 }
 
                 handler.sendMessage(message);
@@ -233,15 +228,20 @@ public class DiscoverFragment extends Fragment {
 
             switch (msg.what){
                 case GET_AFTER_FEED_OK:
-                    feedAdapter.notifyItemRangeInserted(0, moreFeeds.size());
+                    feedList.addAll(0, moreFeeds);
+                    int newCnt = moreFeeds.size();
+                    feedAdapter.notifyItemRangeInserted(0, newCnt);
+                    Toast.makeText(MyApplication.getContext(), newCnt + "条新动态", Toast.LENGTH_SHORT).show();
+                    recyclerView.smoothScrollToPosition(0); //sroll to head
                     break;
                 case GET_BEFORE_FEED_OK:
+                    feedList.addAll(moreFeeds);
                     feedAdapter.notifyItemChanged(feedList.size()-1, moreFeeds.size());
                     break;
 
                 case GET_BEFORE_FEED_FAILED:
                     if(getActivity() != null)
-                        Toast.makeText(MyApplication.getContext(), "get feed failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_AFTER_FEED_FAILED:
                     // very importtant, if the fragment have already switch to other fragment,
@@ -249,7 +249,7 @@ public class DiscoverFragment extends Fragment {
                     // get Activity() will receive a null point,
 
                     if(getActivity() != null)
-                        Toast.makeText(MyApplication.getContext(), "get feed failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;
 
             }

@@ -28,6 +28,7 @@
         android:orientation="vertical"
         android:layout_marginTop="30dp">
         <EditText
+            android:padding="10dp"
             android:id="@+id/user_name"
             android:background="@drawable/edittext_bg"
             android:layout_width="match_parent"
@@ -35,13 +36,15 @@
             android:hint="用户名" />
 
         <EditText
+            android:padding="10dp"
             android:id="@+id/password"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_bg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="密码" />
+            android:hint="密码"
+            android:layout_marginBottom="30dp"/>
 
         <Button
             android:id="@+id/login_btn"
@@ -52,7 +55,9 @@
             android:background="@drawable/btn_style"
             android:textSize="17dp"
             android:textAlignment="center"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
 
 
         <Button
@@ -64,7 +69,9 @@
             android:background="@drawable/btn_style"
             android:textSize="17dp"
             android:textAlignment="center"
-            android:textColor="@color/gray"/>
+            android:textColor="@color/gray"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
 
     </LinearLayout>
 

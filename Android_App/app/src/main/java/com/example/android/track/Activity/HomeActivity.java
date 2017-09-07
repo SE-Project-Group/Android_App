@@ -133,7 +133,7 @@ public class HomeActivity extends AppCompatActivity{
             loged = true;
 
         frontPage = true;
-        // update unread cnt
+        // update unread cnt every time come from other page
         bottomNavigationBar.clearAll();
         setBottomNavigator(MyApplication.getUnReadMsgCnt()
                 + JMessageClient.getAllUnReadMsgCount(), MyApplication.hasNewFollowFeed());
@@ -228,8 +228,6 @@ public class HomeActivity extends AppCompatActivity{
                         old_postion = bottomNavigationBar.getCurrentSelectedPosition();
                         break;
                     case 1:
-                        // remove has new msg
-                        MyApplication.setNewMsg(false);
                         if(messageFragment == null)
                             messageFragment = new MessageFragment();
                         f = messageFragment;

@@ -2,14 +2,17 @@ package com.example.android.track.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,11 +49,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     private Activity context;
     private FeedRequester requester;
     private int my_user_id;
+    private boolean logged;
 
     private final static int LIKE_OK = 0;
     private final static int LIKE_FAILED = 1;
     private final static int CANCEL_LIKE_OK = 2;
     private final static int CANCEL_LIKE_FAILED = 3;
+    private final static int SHARE_OK = 4;
+    private final static int SHARE_NOT_ALLOWED = 5;
+    private final static int SHARE_FAILED = 6;
 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -94,6 +101,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         mFeedList = feedList;
         requester = new FeedRequester();
         my_user_id = Integer.valueOf(new Verify().getUser_id());
+        logged = new Verify().getLoged();
     }
 
     private void toHomePage(int user_id){
@@ -141,8 +149,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         holder.share_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!logged){
+                    Toast.makeText(context, "您需要先登录才能使用该功能", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
+                // change count
+                int new_cnt = Integer.valueOf(holder.share_btn.getText().toString()) + 1;
+                holder.share_btn.setText(String.valueOf(new_cnt));
+                int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
+                holder.share_btn.setTextColor(liked_color);
+
                 if(feed.getShare_feed_id().equals(""))  // not a share feed
                     share(feed.getFeed_id());
                 else
@@ -152,6 +170,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!logged){
+                    Toast.makeText(context, "您需要先登录才能使用该功能", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
                 comment(feed.getFeed_id());
@@ -163,6 +185,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         holder.like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!logged){
+                    Toast.makeText(context, "您需要先登录才能使用该功能", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // update view
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
@@ -172,11 +198,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                     holder.like_btn.setText(String.valueOf(new_cnt));
                     int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
                     holder.like_btn.setTextColor(liked_color);
-                    if(feed.getShare_feed_id().equals(""))  // not a share feed
-                        like(feed.getFeed_id(), position);
-                    else
-                        like(feed.getShare_feed_id(), position);
 
+                    like(feed.getFeed_id(), position);
                     feed.setLiked(true);
                 }
                 else{
@@ -184,10 +207,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                     holder.like_btn.setText(String.valueOf(new_cnt));
                     int unliked_color = MyApplication.getContext().getResources().getColor(R.color.gray);
                     holder.like_btn.setTextColor(unliked_color);
-                    if(feed.getShare_feed_id().equals(""))  // not a share feed
-                        cancelLike(feed.getFeed_id(), position);
-                    else
-                        cancelLike(feed.getShare_feed_id(), position);
+
+                    cancelLike(feed.getFeed_id(), position);
                     feed.setLiked(false);
                 }
             }
@@ -244,7 +265,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             protected void onItemImageClick(Context context, int index, List<String> photoList) {
                 Intent intent = new Intent(context, PhotoViewActivity.class);
                 intent.putExtra("type", "feed");
-                intent.putExtra("feed_id", feed.getFeed_id());
+                if(feed.getShare_feed_id().equals("")) // not a share feed
+                    intent.putExtra("feed_id", feed.getFeed_id());
+                else
+                    intent.putExtra("feed_id", feed.getShare_feed_id());
                 intent.putExtra("currentPosition", index);
                 context.startActivity(intent);
             }
@@ -313,7 +337,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     }
 
     private void share(String feed_id){
-
+        // update recyclerView
+        this.notifyItemChanged(position);
+        showShareDialog(feed_id);
     }
 
     private Handler handler = new Handler(){
@@ -332,9 +358,67 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 case CANCEL_LIKE_FAILED:
                     Toast.makeText(MyApplication.getContext(), "cancel failed", Toast.LENGTH_SHORT).show();
                     break;
+                case SHARE_OK:
+                    Toast.makeText(MyApplication.getContext(), "share success", Toast.LENGTH_SHORT).show();
+                    break;
+                case SHARE_FAILED:
+                    Toast.makeText(MyApplication.getContext(), "请求发送失败", Toast.LENGTH_SHORT).show();
+                    break;
+                case SHARE_NOT_ALLOWED:
+                    Toast.makeText(MyApplication.getContext(), "抱歉，该动态不是公开动态\n您不能分享非公开动态", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
 
             }
         }
     };
+
+
+    private void showShareDialog(String feed_id){
+        AlertDialog.Builder shareDialog =
+                new AlertDialog.Builder(context);
+        final View dialogView = LayoutInflater.from(context)
+                .inflate(R.layout.dialog_comment, null);
+        shareDialog.setTitle("分享动态");
+        shareDialog.setView(dialogView);
+        // send comment text
+        shareDialog.setPositiveButton("发送",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 获取EditView中的输入内容
+                        EditText edit_text =
+                                (EditText) dialogView.findViewById(R.id.edit_text);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                requester = new FeedRequester();
+                                String response = requester.shareFeed(feed_id, edit_text.getText().toString());
+
+                                Message message = new Message();
+                                if(response.equals("success")) {
+                                    message.what = SHARE_OK;
+                                }
+                                else if (response.equals("failed"))
+                                    message.what = SHARE_FAILED;
+                                else if (response.equals("not allow"))
+                                    message.what = SHARE_NOT_ALLOWED;
+                                else
+                                    message.what =  SHARE_FAILED;
+                            }
+                        }).start();
+                    }
+                });
+        // cancel
+        shareDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        shareDialog.create().show();
+    }
 
 }

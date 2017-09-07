@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolBart"
+        android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -33,7 +33,8 @@
             android:background="@drawable/edittext_bg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="原密码" />
+            android:hint="原密码"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/new_pwd"
@@ -42,7 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="新密码（5-15位）" />
+            android:hint="新密码（5-15位）"
+            android:padding="10dp"/>
 
         <EditText
             android:id="@+id/new_pwd_ensure"
@@ -51,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:inputType="textPassword"
-            android:hint="再次确认新密码" />
+            android:hint="再次确认新密码"
+            android:padding="10dp"/>
 
         <Button
             android:id="@+id/send_btn"

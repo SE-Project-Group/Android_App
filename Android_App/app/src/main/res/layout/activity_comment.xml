@@ -37,7 +37,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/rl_comment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"

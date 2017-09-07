@@ -41,7 +41,7 @@
         </LinearLayout>
 
         <View
-            android:layout_height="1px"
+            android:layout_height="2px"
             android:background="#e0e0e0"
             android:layout_width="match_parent"
             android:layout_marginLeft="40dp">
@@ -80,7 +80,7 @@
         </LinearLayout>
 
         <View
-            android:layout_height="1px"
+            android:layout_height="2px"
             android:background="#e0e0e0"
             android:layout_width="match_parent"
             android:layout_marginLeft="40dp">
@@ -116,7 +116,7 @@
         </LinearLayout>
 
         <View
-            android:layout_height="1px"
+            android:layout_height="2px"
             android:background="#e0e0e0"
             android:layout_width="match_parent"
             android:layout_marginLeft="40dp">
@@ -152,7 +152,7 @@
         </LinearLayout>
 
     <View
-        android:layout_height="1px"
+        android:layout_height="2px"
         android:background="#e0e0e0"
         android:layout_width="match_parent"
         android:layout_marginLeft="40dp">
@@ -186,5 +186,11 @@
             android:src="@drawable/right_arrow"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
+    <View
+        android:layout_height="2px"
+        android:background="#e0e0e0"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="40dp">
+    </View>
 
     </LinearLayout>

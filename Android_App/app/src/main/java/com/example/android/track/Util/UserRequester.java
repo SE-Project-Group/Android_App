@@ -88,6 +88,8 @@ public class UserRequester {
         int user_id = 0;
         try{
             Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())  // this in most time means redis server is fucked...
+                return "ERROR";
             String responseData = response.body().string();
             JSONObject jsonObject = new JSONObject(responseData);
             token = jsonObject.getString("token");
@@ -95,7 +97,7 @@ public class UserRequester {
             //Toast.makeText(LogInActivity.this, result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             e.printStackTrace();
-            return "failed";
+            return "ERROR";
         }
         verify.storeToken(token, user_id, user_name, password);
 
@@ -334,7 +336,7 @@ public class UserRequester {
     }
 
     public String getBigPortraitUrl(int user_id){
-        String resource = "getBigPortraitUrls";
+        String resource = "getBigPortraitUrl";
         String pre_ur = generatePreUrl(resource, false);
         String url = pre_ur + "?user_id=" + user_id;
 
@@ -378,25 +380,19 @@ public class UserRequester {
     }
 
     public String changePwd(String old_pwd, String new_pwd){
-        String resource = "verifyPhone";
-        String pre_ur = generatePreUrl(resource, true);
-        String url = pre_ur + "&old_pwd=" + old_pwd + "&new_pwd=" + new_pwd;
+        String resource = "changePwd";
+        String url = generatePreUrl(resource, true);
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        String responseData = "";
-        try{
-            Response response = client.newCall(request).execute();
-            if(!response.isSuccessful())
-                return "failed";
-            responseData = response.body().string();
-        }catch (IOException e){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("old_pwd", old_pwd);
+            jsonObject.put("new_pwd", new_pwd);
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-        return responseData;
+        JsonSender sender = new JsonSender(jsonObject.toString(), url);
+        String response = sender.put();
+        return response;
     }
 
 

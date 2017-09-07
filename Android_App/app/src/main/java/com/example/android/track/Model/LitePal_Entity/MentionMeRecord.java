@@ -14,6 +14,7 @@ public class MentionMeRecord extends DataSupport {
     private Date time;
     private String feed_id;
     private String status;
+    private String text;
 
     public int getUser_id() {
         return user_id;
@@ -54,5 +55,13 @@ public class MentionMeRecord extends DataSupport {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

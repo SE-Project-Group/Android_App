@@ -62,13 +62,7 @@
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow"
-        >
 
-    </View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -78,6 +72,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/unlog_myalbum_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -109,6 +104,7 @@
             android:layout_marginLeft="40dp">
         </View>
         <LinearLayout
+            android:id="@+id/unlog_mylike_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -138,7 +134,8 @@
             android:layout_width="fill_parent"
             android:layout_marginLeft="40dp">
         </View>
-        <LinearLayout
+
+         <LinearLayout
             android:id="@+id/unlog_mycomment_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -163,59 +160,37 @@
                 android:textSize="17dp"/>
 
         </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow"
-        >
-
-    </View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/layout_style"
-        android:orientation="vertical">
-
-
+        <View
+            android:layout_height="1px"
+            android:background="#505050"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dp">
+        </View>
         <LinearLayout
+            android:id="@+id/unlog_myshare_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_style"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/unlog_setting_btn"
-                android:layout_width="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp">
+                android:src="@drawable/comment_24"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的分享"
+                android:textSize="17dp"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/settings_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="7dp"
-                    android:text="设置"
-                    android:textSize="17dp" />
-            </LinearLayout>
         </LinearLayout>
-
-
     </LinearLayout>
 
     <View
@@ -225,6 +200,8 @@
         >
 
     </View>
+
+
 
 
 </LinearLayout>

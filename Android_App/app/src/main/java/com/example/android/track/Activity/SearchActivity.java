@@ -1,5 +1,6 @@
 package com.example.android.track.Activity;
 
+import android.app.ProgressDialog;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Handler;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -39,12 +41,14 @@ import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
 
 import static android.R.attr.breadCrumbShortTitle;
+import static android.R.attr.id;
 import static android.R.attr.offset;
 import static com.example.android.track.R.id.cancel_action;
 import static com.example.android.track.R.id.chat_layout;
 import static com.example.android.track.R.id.chat_tv;
 import static com.example.android.track.R.id.notification_layout;
 import static com.example.android.track.R.id.notification_tv;
+import static com.example.android.track.R.id.search;
 import static com.example.android.track.R.id.viewPager;
 
 public class SearchActivity extends AppCompatActivity {
@@ -68,10 +72,13 @@ public class SearchActivity extends AppCompatActivity {
     // message
     private static final int GET_SEARCH_RESULT_OK = 1;
     private static final int GET_SEARCH_RESULT_FAILED = 2;
+    private static final int GET_EMPTY_RESULT = 3;
     
     private List<Follow> userSearchResult;
     private List<Feed> feedSearchResult;
-    
+
+    private ProgressDialog progressDialog;
+
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +87,11 @@ public class SearchActivity extends AppCompatActivity {
         //setToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.searchToolBar);
         setSupportActionBar(toolbar);
+
+        // a hint shown while searching something
+        progressDialog = new ProgressDialog(SearchActivity.this);
+        progressDialog.setTitle("搜索");
+        progressDialog.setMessage("正在拼命检索....");
         
         setSearchView();
         setViewPager();
@@ -92,15 +104,17 @@ public class SearchActivity extends AppCompatActivity {
             // 当点击搜索按钮时触发该方法
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(SearchActivity.this,"search...",Toast.LENGTH_LONG).show();
-                if(query.length() > 20){
-                    Toast.makeText(SearchActivity.this,"too long",Toast.LENGTH_LONG).show();
+                if(query.length() > 30){
+                    Toast.makeText(SearchActivity.this,"您输入的字段太长啦",Toast.LENGTH_LONG).show();
                     return true;
                 }
                 if(query.equals("")){
-                    Toast.makeText(SearchActivity.this,"nothing",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SearchActivity.this,"搜索内容不能为空",Toast.LENGTH_LONG).show();
                     return true;
                 }
+                // show search hint
+                progressDialog.show();
+
                 search(query);
                 return true;
             }
@@ -108,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
             // 当搜索内容改变时触发该方法
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(SearchActivity.this,"typing...",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SearchActivity.this,"typing...",Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
@@ -121,8 +135,6 @@ public class SearchActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         search_user_view = inflater.inflate(R.layout.view_pager_search, null);
         search_feed_view = inflater.inflate(R.layout.view_pager_search, null);
-        feedRecyclerView = (RecyclerView) search_feed_view.findViewById(R.id.search_recyclerView);
-        userRecyclerView = (RecyclerView) search_user_view.findViewById(R.id.search_recyclerView); 
         
         feed_tv = (TextView) findViewById(R.id.feed_tv);
         user_tv = (TextView) findViewById(R.id.user_tv); 
@@ -257,6 +269,8 @@ public class SearchActivity extends AppCompatActivity {
                     Message message = new Message();
                     if(feedSearchResult == null)
                         message.what = GET_SEARCH_RESULT_FAILED;
+                    else if (feedSearchResult.size() == 0)
+                        message.what = GET_EMPTY_RESULT;
                     else
                         message.what = GET_SEARCH_RESULT_OK;
                     handler.sendMessage(message);
@@ -267,6 +281,8 @@ public class SearchActivity extends AppCompatActivity {
                     Message message = new Message();
                     if(userSearchResult == null)
                         message.what = GET_SEARCH_RESULT_FAILED;
+                    else if (userSearchResult.size() == 0)
+                        message.what = GET_EMPTY_RESULT;
                     else
                         message.what = GET_SEARCH_RESULT_OK;
                     handler.sendMessage(message);
@@ -277,14 +293,14 @@ public class SearchActivity extends AppCompatActivity {
     
     private void showResult(){
         if(which_page.equals("feed")){
-            feedRecyclerView = (RecyclerView) findViewById(R.id.discHot_recyclerView);
+            feedRecyclerView = (RecyclerView) search_feed_view.findViewById(R.id.search_recyclerView);
             LinearLayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
             feedRecyclerView.setLayoutManager(layoutManager);
             FeedAdapter adapter = new FeedAdapter(SearchActivity.this, feedSearchResult);
             feedRecyclerView.setAdapter(adapter);
         }
         else{
-            userRecyclerView = (RecyclerView) findViewById(R.id.discHot_recyclerView);
+            userRecyclerView = (RecyclerView) search_user_view.findViewById(R.id.search_recyclerView);
             LinearLayoutManager layoutManager = new LinearLayoutManager(SearchActivity.this);
             userRecyclerView.setLayoutManager(layoutManager);
             FollowAdapter adapter = new FollowAdapter(userSearchResult, SearchActivity.this);
@@ -295,13 +311,16 @@ public class SearchActivity extends AppCompatActivity {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            progressDialog.dismiss();
             switch(msg.what){
                 case GET_SEARCH_RESULT_OK:
-                    if(which_page.equals("feed"))
-                        showResult();
+                    showResult();
                     break;
                 case GET_SEARCH_RESULT_FAILED:
                     Toast.makeText(SearchActivity.this, "search failed", Toast.LENGTH_SHORT).show();
+                    break;
+                case GET_EMPTY_RESULT:
+                    Toast.makeText(SearchActivity.this, "啥也没搜到呢，再试试吧~", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;

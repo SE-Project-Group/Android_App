@@ -97,6 +97,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 int position = holder.getAdapterPosition();
                 Conversation conversation = mConversationList.get(position);
                 conversation.setUnReadMessageCnt(0);
+                MyApplication.setNewMsg(true);  // let monitor thread update bottom bar
                 // update adapter
                 //ConversationAdapter.this.notifyItemChanged(position);
             }
@@ -120,7 +121,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             content = content.substring(0, 10) + "....";
         }
         holder.message_text.setText(content);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateStr = sdf.format(conversation.getLastMsgDate());
         holder.date.setText(dateStr);
         // load the picture use glide

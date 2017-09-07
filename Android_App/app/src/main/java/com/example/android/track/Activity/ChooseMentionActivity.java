@@ -52,7 +52,10 @@ public class ChooseMentionActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_mention);
+        // set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.gray));
+        toolbar.setTitle("选择用户");
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.acquaintance_list);
