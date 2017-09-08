@@ -2,7 +2,6 @@ package com.example.android.track.Adapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +29,6 @@ import com.example.android.track.View.FeedDetailView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -181,7 +178,7 @@ public class RemindAdapter extends RecyclerView.Adapter<RemindAdapter.ViewHolder
                 .load(portrait)
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(holder.user_portrait);
 
     }

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -131,7 +130,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
                 .load(portrait)
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(holder.portrait);
 
         // set unread bubble

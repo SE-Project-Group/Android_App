@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.localytics.android.Localytics.upload;
 
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -220,7 +217,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
                 .load(userInfo.getPortrait_url())
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(portrait_view);
         user_name_view.setText(userInfo.getName());
         int temp = userInfo.getFollow_cnt();

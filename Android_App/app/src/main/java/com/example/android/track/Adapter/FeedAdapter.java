@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.platform.comapi.map.C;
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.CommentActivity;
 import com.example.android.track.Activity.PersonalHomeActivity;
@@ -240,7 +239,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 .load(feed.getPortrait_url())
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(holder.portrait_view);
 
 
@@ -249,7 +248,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             protected void onDisplayImage(Context context, ImageView imageView, String url) {
                 Glide.with(context)
                         .load(url)
-                        .placeholder(R.drawable.exp_pic)
+                        .placeholder(R.drawable.default_portrait)
                         .into(imageView);
             }
             @Override
