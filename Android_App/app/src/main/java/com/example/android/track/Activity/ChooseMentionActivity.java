@@ -22,6 +22,7 @@ import com.example.android.track.Model.Follow;
 import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.R;
 import com.example.android.track.Util.UserRequester;
+import com.example.android.track.Util.Verify;
 
 import org.litepal.crud.DataSupport;
 
@@ -139,9 +140,13 @@ public class ChooseMentionActivity extends AppCompatActivity{
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Verify verify = new Verify();
+                int my_id = Integer.valueOf(verify.getUser_id());
                 UserRequester requester = new UserRequester();
                 List<Acquaintance> acquaintanceList = DataSupport.select("*").find(Acquaintance.class);
                 for(Acquaintance acquaintance : acquaintanceList){
+                    if(acquaintance.getUser_id() == my_id)
+                        continue;
                     Follow follow = new Follow();
                     follow.setUser_name(acquaintance.getUser_name());
                     follow.setUser_id(acquaintance.getUser_id());

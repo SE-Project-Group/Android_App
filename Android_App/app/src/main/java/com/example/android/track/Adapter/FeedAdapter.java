@@ -155,11 +155,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 }
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
-                // change count
-                int new_cnt = Integer.valueOf(holder.share_btn.getText().toString()) + 1;
-                holder.share_btn.setText(String.valueOf(new_cnt));
-                int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
-                holder.share_btn.setTextColor(liked_color);
 
                 if(feed.getShare_feed_id().equals(""))  // not a share feed
                     share(feed.getFeed_id(), feed.getOwner_id());
@@ -234,7 +229,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         // if this is my own feed, do not allow like
         if(feed.getOwner_id() == my_user_id){
             holder.like_btn.setClickable(false);
-            holder.share_btn.setClickable(false);
         }
         temp = String.valueOf(feed.getShare_cnt());
         holder.share_btn.setText(temp);

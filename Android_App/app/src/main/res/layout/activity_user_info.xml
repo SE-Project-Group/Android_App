@@ -22,20 +22,31 @@
     <LinearLayout
         android:layout_marginTop="3dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/layout_style"
         android:orientation="vertical"
         android:paddingBottom="20dp">
 
         <!--portrait -->
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/portrait_view"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal" />
-
+            android:layout_gravity="center_horizontal" >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/portrait_view"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_toRightOf="@id/portrait_view"
+                android:layout_marginLeft="-20dp"
+                android:src="@drawable/exp_pic"
+                android:layout_marginTop="50dp" />
+        </RelativeLayout>
 
 
         <LinearLayout
@@ -123,17 +134,20 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/birthday_14"/>
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:id="@+id/birthday_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
                     android:text="默认日期"/>
                 <Button
-                    android:background="@drawable/item_talking_receive"
+                    android:background="@drawable/btn_style"
                     android:id="@+id/edit_birthday_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="26dp"
-                    android:text="edit"/>
+                    android:text="编辑"
+                    android:layout_marginLeft="60dp"/>
             </LinearLayout>
             
             <!--email-->
@@ -164,19 +178,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
-
-
-
-
-
         </LinearLayout>
-
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow"
-        >
 
-    </View>
 </LinearLayout>

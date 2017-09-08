@@ -27,15 +27,16 @@
                     android:id="@+id/user_name_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="User Name"
-                    android:textSize="20dp" />
+                    android:text="User Name王"
+                    android:textSize="17dp" />
             </LinearLayout>
 
             <CheckBox
                 android:id="@+id/choose_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"/>
 
 
         </LinearLayout>

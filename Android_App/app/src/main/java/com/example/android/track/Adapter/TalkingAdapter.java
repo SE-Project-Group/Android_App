@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
 import com.example.android.track.Util.Verify;
@@ -93,6 +94,8 @@ public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHold
                     .load(myPortrait)
                     .asBitmap()
                     .centerCrop()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .placeholder(R.drawable.exp_pic)
                     .into(holder.my_portrait_view);
         }

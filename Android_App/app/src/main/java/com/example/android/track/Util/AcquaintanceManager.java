@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.InterfaceAddress;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,15 @@ public class AcquaintanceManager {
             @Override
             public void run() {
                 List<Acquaintance> acquaintances = DataSupport.select("*").where("user_id = ?", String.valueOf(user_id)).find(Acquaintance.class);
-                if(acquaintances.size() == 0){      // have no save
+                int myId = Integer.valueOf(new Verify().getUser_id());  // user_id == myId means user is change portrait
+                if(acquaintances.size() == 0 || user_id == myId){      // have no save
+                    if(user_id == myId) {
+                        File fileDir = MyApplication.getContext().getFilesDir();
+                        File myPortrait = new File(fileDir, user_id + "_portrait");
+                        if (myPortrait.exists()) {
+                            myPortrait.delete();
+                        }
+                    }
                     String urlString = new UserRequester().getPortraitUrl(user_id);
                     try {
                         HttpURLConnection conn = (HttpURLConnection) new URL(urlString).openConnection();
@@ -51,6 +60,10 @@ public class AcquaintanceManager {
                             is.close();
                             fos.close();
                             // storage in SQLite
+                            // if it is change portrait, then remove old data first
+                            if(user_id == myId){
+                                acquaintances.get(0).delete();
+                            }
                             Acquaintance acquaintance = new Acquaintance();
                             acquaintance.setUser_id(user_id);
                             UserInfo userInfo = new UserRequester().getHomeInfo(user_id);
