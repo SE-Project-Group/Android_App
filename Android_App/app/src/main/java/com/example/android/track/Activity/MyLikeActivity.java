@@ -35,6 +35,7 @@ public class MyLikeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_xxx);
         // set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
+        toolbar.setTitleTextColor(MyLikeActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);

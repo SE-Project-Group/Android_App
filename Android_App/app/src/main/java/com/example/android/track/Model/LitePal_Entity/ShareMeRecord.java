@@ -11,7 +11,6 @@ import java.util.Date;
 public class ShareMeRecord extends DataSupport {
     private int user_id;
     private String user_name;
-    private String portrait_url;
     private Date time;
     private String feed_id;
     private String share_comment;
@@ -32,14 +31,6 @@ public class ShareMeRecord extends DataSupport {
 
     public void setUser_name(String user_name) {
         this.user_name = user_name;
-    }
-
-    public String getPortrait_url() {
-        return portrait_url;
-    }
-
-    public void setPortrait_url(String portrait_url) {
-        this.portrait_url = portrait_url;
     }
 
     public Date getTime() {

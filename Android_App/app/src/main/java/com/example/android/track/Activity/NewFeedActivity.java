@@ -101,6 +101,7 @@ public class NewFeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_feed);
         // set tool bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.newFeedToolBar);
+        toolbar.setTitleTextColor(NewFeedActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
         tv_position = (TextView) findViewById(R.id.tv_currentPosition);
         content = (EditText) findViewById(R.id.edit_text);

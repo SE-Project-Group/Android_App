@@ -36,6 +36,7 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.logInToolBar);
+        toolbar.setTitleTextColor(LogInActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         // set button listener

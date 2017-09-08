@@ -316,7 +316,7 @@ public class FeedRequester{
         return response;
     }
 
-    public String shareFeed(String feed_id, String text){
+    public String shareFeed(String feed_id, int owner, String text){
         String resource = "shareFeed";
         // check if loged in
         String url = generatePreUrl(resource, true);
@@ -324,6 +324,7 @@ public class FeedRequester{
         try {
             jsonObject.put("feed_id", feed_id);
             jsonObject.put("share_text", text);
+            jsonObject.put("owner", owner);
         }catch (Exception e){
             e.printStackTrace();
         }

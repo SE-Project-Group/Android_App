@@ -39,6 +39,7 @@ public class MyCommentActivity extends AppCompatActivity {
 
         // set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
+        toolbar.setTitleTextColor(MyCommentActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);

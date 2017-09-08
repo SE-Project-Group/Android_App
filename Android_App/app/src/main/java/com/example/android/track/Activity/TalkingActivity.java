@@ -44,6 +44,7 @@ public class TalkingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_talking);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(TalkingActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         // get with who

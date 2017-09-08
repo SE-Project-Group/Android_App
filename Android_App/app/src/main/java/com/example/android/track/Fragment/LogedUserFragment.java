@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.ChangePwdActivity;
 import com.example.android.track.Activity.HomeActivity;
 import com.example.android.track.Activity.MyAlbumActivity;
@@ -33,10 +35,12 @@ import com.example.android.track.R;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 
+import java.io.File;
 import java.util.HashMap;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.gui.RegisterPage;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static com.baidu.location.d.j.P;
@@ -59,6 +63,10 @@ public class LogedUserFragment extends Fragment{
     private ProgressDialog progressDialog;  // used when clear user data
     private Boolean isChangingPwd = false;  // if it is change pwd, then do not need clear user data
 
+    private CircleImageView portraitView;
+    private int user_id;
+
+
 
     @Nullable
     @Override
@@ -73,7 +81,22 @@ public class LogedUserFragment extends Fragment{
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.logedUserToolBar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        Verify verify = new Verify();
+        int user_id = Integer.valueOf(verify.getUser_id());
+        setMyPortrait();
         setClickListener();
+    }
+
+    private void setMyPortrait(){
+        portraitView = (CircleImageView) getActivity().findViewById(R.id.portrait_view);
+        File fileDir = MyApplication.getContext().getFilesDir();
+        File myPortrait = new File(fileDir, new Verify().getUser_id()+"_portrait");
+        Glide.with(MyApplication.getContext())
+                .load(myPortrait)
+                .asBitmap()
+                .centerCrop()
+                .placeholder(R.drawable.exp_pic)
+                .into(portraitView);
     }
 
 
@@ -84,8 +107,7 @@ public class LogedUserFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PersonalHomeActivity.class);
-                Verify verify = new Verify();
-                int user_id = Integer.valueOf(verify.getUser_id());
+
                 intent.putExtra("user_id", user_id);
                 startActivity(intent);
             }

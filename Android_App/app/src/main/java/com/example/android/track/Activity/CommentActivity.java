@@ -48,6 +48,7 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(CommentActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();

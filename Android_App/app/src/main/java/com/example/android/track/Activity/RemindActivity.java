@@ -37,6 +37,7 @@ public class RemindActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remind);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(RemindActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();

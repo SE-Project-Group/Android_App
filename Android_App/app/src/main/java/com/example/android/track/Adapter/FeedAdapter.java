@@ -162,9 +162,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 holder.share_btn.setTextColor(liked_color);
 
                 if(feed.getShare_feed_id().equals(""))  // not a share feed
-                    share(feed.getFeed_id());
+                    share(feed.getFeed_id(), feed.getOwner_id());
                 else
-                    share(feed.getShare_feed_id());
+                    share(feed.getShare_feed_id(), feed.getOwner_id());
             }
         });
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +234,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         // if this is my own feed, do not allow like
         if(feed.getOwner_id() == my_user_id){
             holder.like_btn.setClickable(false);
+            holder.share_btn.setClickable(false);
         }
         temp = String.valueOf(feed.getShare_cnt());
         holder.share_btn.setText(temp);
@@ -336,10 +337,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         context.startActivity(intent);
     }
 
-    private void share(String feed_id){
+    private void share(String feed_id, int owner){
         // update recyclerView
         this.notifyItemChanged(position);
-        showShareDialog(feed_id);
+        showShareDialog(feed_id, owner);
     }
 
     private Handler handler = new Handler(){
@@ -375,7 +376,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     };
 
 
-    private void showShareDialog(String feed_id){
+    private void showShareDialog(String feed_id, int owner){
         AlertDialog.Builder shareDialog =
                 new AlertDialog.Builder(context);
         final View dialogView = LayoutInflater.from(context)
@@ -394,7 +395,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                             @Override
                             public void run() {
                                 requester = new FeedRequester();
-                                String response = requester.shareFeed(feed_id, edit_text.getText().toString());
+                                String response = requester.shareFeed(feed_id, owner, edit_text.getText().toString());
 
                                 Message message = new Message();
                                 if(response.equals("success")) {

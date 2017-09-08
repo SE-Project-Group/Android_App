@@ -72,6 +72,7 @@ public class PersonalHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_home);
         // set toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(PersonalHomeActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null)

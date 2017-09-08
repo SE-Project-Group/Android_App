@@ -29,6 +29,7 @@ public class CommentConversationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(CommentConversationActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         // get conversation List

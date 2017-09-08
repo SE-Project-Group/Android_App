@@ -103,6 +103,7 @@ public class UserInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_info);
         // set tool bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
+        toolbar.setTitleTextColor(UserInfoActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
         progressDialog = new ProgressDialog(UserInfoActivity.this);
 

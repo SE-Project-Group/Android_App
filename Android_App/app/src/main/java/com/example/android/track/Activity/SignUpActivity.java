@@ -40,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         phone = intent.getStringExtra("phone");
         // set ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.signUpToolBar);
+        toolbar.setTitleTextColor(SignUpActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         setCheckListener();
@@ -75,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
             switch (msg.what){
                 case SIGNUP_OK:
                     // sign up Jmessage client
-                    Toast.makeText(MyApplication.getContext(), "account注册成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "注册成功", Toast.LENGTH_SHORT).show();
                     // go back to home activity
                     Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
                     startActivity(intent);
@@ -102,9 +103,9 @@ public class SignUpActivity extends AppCompatActivity {
                 Message message = new Message();
                 if(response_data.equals("existing phone"))
                     message.what = EXIST_PHONE;
-                if(response_data.equals("existing user name"))
+                else if(response_data.equals("existing user name"))
                     message.what = EXIST_USER_NAME;
-                if(response_data.equals("success"))
+                else if(response_data.equals("success"))
                     message.what = SIGNUP_OK;
                 handler.sendMessage(message);
             }

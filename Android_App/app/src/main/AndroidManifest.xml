@@ -53,14 +53,11 @@
             android:enabled="true"
             android:process=":remote" />
 
-        <service
-            android:name="com.example.android.track.Service.PollingService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name="com.example.android.track.Activity.HomeActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -83,29 +80,66 @@
 
         <activity
             android:name="com.example.android.track.Activity.LogInActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="请登录" />
-        <activity android:name="com.example.android.track.Activity.SignUpActivity" />
-        <activity android:name="com.example.android.track.Activity.SearchActivity" />
+        <activity android:name="com.example.android.track.Activity.SignUpActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="欢迎注册" />
+        <activity android:name="com.example.android.track.Activity.SearchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="" />
 
 
-        <activity android:name="com.example.android.track.Activity.NewFeedActivity" />
-        <activity android:name="com.example.android.track.Activity.SettingActivity" />
+        <activity android:name="com.example.android.track.Activity.NewFeedActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="编辑新动态" />
+
+        <!-- useless-->
+        <activity android:name="com.example.android.track.Activity.SettingActivity"/>
         <activity android:name="com.example.android.track.Activity.UserSercurityActivity" />
-        <activity android:name="com.example.android.track.Activity.MyAlbumActivity" />
-        <activity android:name="com.example.android.track.Activity.PersonalHomeActivity" />
-        <activity android:name="com.example.android.track.Activity.TalkingActivity" />
-        <activity android:name="com.example.android.track.Activity.CommentActivity" />
         <activity android:name="com.example.android.track.Activity.AlbumActivity" />
-        <activity android:name="com.example.android.track.Activity.MyLikeActivity" />
-        <activity android:name="com.example.android.track.Activity.MyShareActivity" />
-        <activity android:name="com.example.android.track.Activity.MyCommentActivity" />
-        <activity android:name="com.example.android.track.Activity.UserInfoActivity" />
-        <activity android:name="com.example.android.track.Activity.FollowActivity"/>
-        <activity android:name="com.example.android.track.Activity.RemindActivity"/>
-        <activity android:name="com.example.android.track.Activity.CommentConversationActivity"/>
+
+
+        <activity android:name="com.example.android.track.Activity.MyAlbumActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="我的相册" />/>
+        <activity android:name="com.example.android.track.Activity.PersonalHomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="" />
+        <activity android:name="com.example.android.track.Activity.TalkingActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="" />
+        <activity android:name="com.example.android.track.Activity.CommentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="评论" />
+        <activity android:name="com.example.android.track.Activity.MyLikeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="我赞过的" />
+        <activity android:name="com.example.android.track.Activity.MyShareActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="我的分享" />
+        <activity android:name="com.example.android.track.Activity.MyCommentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="评论过的" />
+        <activity android:name="com.example.android.track.Activity.UserInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="修改个人信息" />
+        <activity android:name="com.example.android.track.Activity.FollowActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="" />
+        <activity android:name="com.example.android.track.Activity.RemindActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="" />
+        <activity android:name="com.example.android.track.Activity.CommentConversationActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="对话列表" />
         <activity android:name="com.example.android.track.Activity.PhotoViewActivity"/>
-        <activity android:name="com.example.android.track.Activity.ChooseMentionActivity"/>
-        <activity android:name="com.example.android.track.Activity.ChangePwdActivity"/>
+        <activity android:name="com.example.android.track.Activity.ChooseMentionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="选择用户" />
+        <activity android:name="com.example.android.track.Activity.ChangePwdActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="修改密码" />
 
     </application>
 

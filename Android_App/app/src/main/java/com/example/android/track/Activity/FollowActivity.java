@@ -31,6 +31,7 @@ public class FollowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(FollowActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();

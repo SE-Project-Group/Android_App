@@ -46,9 +46,11 @@ import static android.R.attr.offset;
 import static com.example.android.track.R.id.cancel_action;
 import static com.example.android.track.R.id.chat_layout;
 import static com.example.android.track.R.id.chat_tv;
+import static com.example.android.track.R.id.feed_layout;
 import static com.example.android.track.R.id.notification_layout;
 import static com.example.android.track.R.id.notification_tv;
 import static com.example.android.track.R.id.search;
+import static com.example.android.track.R.id.user_layout;
 import static com.example.android.track.R.id.viewPager;
 
 public class SearchActivity extends AppCompatActivity {
@@ -56,6 +58,8 @@ public class SearchActivity extends AppCompatActivity {
     private View search_feed_view;
     private RecyclerView feedRecyclerView;
     private RecyclerView userRecyclerView;
+    RelativeLayout feed_layout;
+    RelativeLayout user_layout;
     private TextView feed_tv;
     private TextView user_tv;
     private String which_page;
@@ -86,16 +90,22 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         //setToolBar
         Toolbar toolbar = (Toolbar)findViewById(R.id.searchToolBar);
+        toolbar.setTitleTextColor(SearchActivity.this.getResources().getColor(R.color.gray));
         setSupportActionBar(toolbar);
 
         // a hint shown while searching something
         progressDialog = new ProgressDialog(SearchActivity.this);
         progressDialog.setTitle("搜索");
         progressDialog.setMessage("正在拼命检索....");
+
+        feed_layout = (RelativeLayout) findViewById(R.id.feed_layout);
+        user_layout = (RelativeLayout) findViewById(R.id.user_layout);
         
         setSearchView();
         setViewPager();
-        
+
+        // init click
+        feed_layout.callOnClick();
     }
     
     private void setSearchView(){
@@ -176,7 +186,7 @@ public class SearchActivity extends AppCompatActivity {
         //添加切换界面的监听器
         viewPager.addOnPageChangeListener(new MyOnPageChangeListener());
 
-        viewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(1);
         which_page = "feed";
 
         // 获取滚动条的宽度
@@ -198,8 +208,6 @@ public class SearchActivity extends AppCompatActivity {
 
 
         // set Listener
-        RelativeLayout feed_layout = (RelativeLayout) findViewById(R.id.feed_layout);
-        RelativeLayout user_layout = (RelativeLayout) findViewById(R.id.user_layout);
         feed_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
