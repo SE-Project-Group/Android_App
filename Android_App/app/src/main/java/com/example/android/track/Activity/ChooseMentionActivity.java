@@ -172,7 +172,8 @@ public class ChooseMentionActivity extends AppCompatActivity{
         progressBar.setVisibility(View.GONE);
     }
 
-    private void search(String query){
+    private void search(String rawQuery){
+        String query = transSpecialChar(rawQuery);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -187,6 +188,19 @@ public class ChooseMentionActivity extends AppCompatActivity{
 
             }
         }).start();
+    }
+
+    private String transSpecialChar(String rawStr){
+        rawStr = rawStr.replace("%", "%25");
+        rawStr = rawStr.replace("+","%2B");
+        rawStr = rawStr.replace("/", "%2F");
+        rawStr = rawStr.replace(" ","%20" );
+        rawStr = rawStr.replace("?","%3F");
+        rawStr = rawStr.replace("#", "%23");
+        rawStr = rawStr.replace("&", "%26");
+        rawStr = rawStr.replace("=", "%3D");
+
+        return rawStr;
     }
 
     private Handler handler = new Handler(){

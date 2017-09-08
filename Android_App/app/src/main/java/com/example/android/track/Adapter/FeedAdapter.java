@@ -216,7 +216,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         Feed feed = mFeedList.get(position);
 
         holder.feed_owner_view.setText(feed.getOwner_name());
-        holder.feedText_view.setText(feed.getText());
+        String text = feed.getText();
+        if(text.equals(""))
+            holder.feedText_view.setVisibility(View.GONE);
+        else
+            holder.feedText_view.setText(feed.getText());
+
         String temp = String.valueOf(feed.getComment_cnt());
         holder.comment_btn.setText(temp);
         temp = String.valueOf(feed.getLike_cnt());
