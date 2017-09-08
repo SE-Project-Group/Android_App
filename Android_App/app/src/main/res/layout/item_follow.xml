@@ -33,12 +33,13 @@
             </LinearLayout>
 
             <Button
-                android:background="@drawable/button_white"
+                android:background="@drawable/follow_btn"
                 android:layout_marginTop="10dp"
                 android:id="@+id/add_follow_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="关注"
+                android:drawableLeft="@drawable/add_orange"
                 android:visibility="gone" />
             <Button
                 android:layout_marginTop="10dp"
@@ -46,24 +47,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="取消关注"
+                android:drawableLeft="@drawable/stop_unfilled_orange_15"
                 android:visibility="gone"
-                android:background="@drawable/button_white"/>
+                android:background="@drawable/follow_btn"/>
             <Button
                 android:layout_marginTop="10dp"
                 android:id="@+id/cancel_friend_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="互为好友"
+                android:drawableLeft="@drawable/shakehand_unfilled_orange_15"
                 android:visibility="gone"
-                android:background="@drawable/button_white"/>
+                android:background="@drawable/follow_btn"/>
             <Button
                 android:layout_marginTop="10dp"
                 android:id="@+id/also_follow_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="也关注"
+                android:text="去关注"
+                android:drawableLeft="@drawable/rightarrow_orange_15"
                 android:visibility="gone"
-                android:background="@drawable/button_white"/>
+                android:background="@drawable/follow_btn"/>
 
         </LinearLayout>
     </LinearLayout>
