@@ -113,9 +113,7 @@ public class HomeActivity extends AppCompatActivity{
         // get permissons
         Permission permission = new Permission(HomeActivity.this);
         permission.getPermissions();
-        Toolbar toolbar = (Toolbar)findViewById(R.id.discoverToolBar);
-        toolbar.setTitleTextColor(HomeActivity.this.getResources().getColor(R.color.gray));
-        setSupportActionBar(toolbar);
+
         setBottomNavigator(MyApplication.getUnReadMsgCnt()
                 + JMessageClient.getAllUnReadMsgCount(), MyApplication.hasNewFollowFeed());
         setDefaultFragment();

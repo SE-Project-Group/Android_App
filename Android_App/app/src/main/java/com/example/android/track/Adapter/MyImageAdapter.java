@@ -32,7 +32,7 @@ public class MyImageAdapter extends PagerAdapter {
         PhotoView photoView = new PhotoView(activity);
         Picasso.with(activity)
                 .load(url)
-                .placeholder(R.drawable.add_pic)
+                .placeholder(R.drawable.default_photo)
                 .into(photoView);
         container.addView(photoView);
         photoView.setOnClickListener(new View.OnClickListener() {

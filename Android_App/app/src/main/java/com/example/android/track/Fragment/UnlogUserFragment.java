@@ -35,6 +35,8 @@ public class UnlogUserFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         //set tool bar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.userToolBar);
+        toolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.gray));
+        toolbar.setTitle("用户");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // set button listener

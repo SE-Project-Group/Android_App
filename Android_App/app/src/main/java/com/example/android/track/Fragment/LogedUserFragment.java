@@ -75,6 +75,8 @@ public class LogedUserFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         //set tool bar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.logedUserToolBar);
+        toolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.gray));
+        toolbar.setTitle("用户");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         Verify verify = new Verify();

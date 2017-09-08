@@ -29,11 +29,14 @@ import com.example.android.track.Activity.FollowActivity;
 import com.example.android.track.Activity.RemindActivity;
 import com.example.android.track.Adapter.ConversationAdapter;
 import com.example.android.track.Application.MyApplication;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.Model.Remind;
 import com.example.android.track.R;
 import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.Verify;
 import com.example.android.track.View.RemindView;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +45,8 @@ import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
+
+import static org.litepal.crud.DataSupport.select;
 
 /**
  * Created by thor on 2017/6/28.
@@ -111,7 +116,7 @@ public class MessageFragment extends Fragment {
         commentRemindView.setBackground(R.drawable.comment_24);
         shareRemindView.setBackground(R.drawable.share_24);
         mentionRemindView.setBackground(R.drawable.mention_24);
-        followMeRemindView.setBackground(R.drawable.mention_24);
+        followMeRemindView.setBackground(R.drawable.telescope_filled_20);
 
         likeRemindView.setMessageCount(MyApplication.getUnReadLikenCnt());
         commentRemindView.setMessageCount(MyApplication.getUnReadCommentCnt());
@@ -199,6 +204,14 @@ public class MessageFragment extends Fragment {
         if (conversationList == null) {
             Toast.makeText(getActivity(), "not log in", Toast.LENGTH_SHORT);
             return;
+        }
+        // download portraits and name
+        for(Conversation conversation : conversationList){
+
+            Acquaintance acquaintance = DataSupport.select("user_name").where("user_id = ?", conversation.getTargetId())
+                    .findFirst(Acquaintance.class);
+            if(acquaintance == null)
+                AcquaintanceManager.saveAcquaintance(Integer.valueOf(conversation.getTargetId()));
         }
         // init recyclerView
         RecyclerView recyclerView = (RecyclerView) parentView.findViewById(R.id.message_recyclerView);

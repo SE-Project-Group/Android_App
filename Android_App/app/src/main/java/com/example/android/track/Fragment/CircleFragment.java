@@ -54,6 +54,8 @@ public class CircleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         // set toolbar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.homeToolBar);
+        toolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.gray));
+        toolbar.setTitle("我的圈子");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // clear new following counter

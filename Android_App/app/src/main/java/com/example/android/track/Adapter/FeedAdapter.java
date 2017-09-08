@@ -253,7 +253,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             protected void onDisplayImage(Context context, ImageView imageView, String url) {
                 Glide.with(context)
                         .load(url)
-                        .placeholder(R.drawable.default_portrait)
+                        .placeholder(R.drawable.gray_bg)
                         .into(imageView);
             }
             @Override

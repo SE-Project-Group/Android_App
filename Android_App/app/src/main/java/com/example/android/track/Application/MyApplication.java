@@ -18,6 +18,7 @@ import com.example.android.track.Model.LitePal_Entity.LikeMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MentionMeRecord;
 import com.example.android.track.Model.LitePal_Entity.MyFeed;
 import com.example.android.track.Model.LitePal_Entity.ShareMeRecord;
+import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.Util.UserRequester;
 import com.example.android.track.Util.Verify;
 import com.mob.MobApplication;
@@ -43,6 +44,7 @@ import static android.R.attr.data;
 import static android.R.id.message;
 import static cn.jpush.im.android.api.enums.ContentType.file;
 import static com.baidu.location.d.j.U;
+import static com.baidu.location.d.j.ac;
 
 /**
  * Created by thor on 2017/7/19.
@@ -123,6 +125,13 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
             });
         }
         // receive new message
+
+        // check if have my portrait file , if not , download
+        int my_id = Integer.valueOf(verify.getUser_id());
+        Acquaintance acquaintance = DataSupport.select("user_name").where("user_id = ?", verify.getUser_id())
+                .findFirst(Acquaintance.class);
+        if(acquaintance == null)
+            AcquaintanceManager.saveAcquaintance(my_id);
     }
 
     @Override
@@ -187,6 +196,12 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                     }
                 });
 
+                // check if have my portrait file , if not , download
+                int my_id = Integer.valueOf(verify.getUser_id());
+                Acquaintance acquaintance = DataSupport.select("user_name").where("user_id = ?", verify.getUser_id())
+                        .findFirst(Acquaintance.class);
+                if(acquaintance == null)
+                    AcquaintanceManager.saveAcquaintance(my_id);
             }
             // then create SQLite tables
             LitePal.getDatabase();

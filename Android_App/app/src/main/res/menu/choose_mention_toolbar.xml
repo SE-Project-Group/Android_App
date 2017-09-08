@@ -10,7 +10,7 @@
         />
     <item
         android:id="@+id/ok_btn"
-        android:icon="@drawable/send_24"
+        android:icon="@drawable/checkmark_filled_24"
         android:title="send"
         app:showAsAction="always" />
 
