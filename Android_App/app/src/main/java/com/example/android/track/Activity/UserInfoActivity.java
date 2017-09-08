@@ -27,16 +27,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
-import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.R;
 import com.example.android.track.Util.AcquaintanceManager;
 import com.example.android.track.View.BottomPopView;
@@ -198,7 +195,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 .load(clientInfo.getPortrait_url())
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(portrait_view);
     }
 

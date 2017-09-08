@@ -31,7 +31,7 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     private void initPics(){
-        Album album1 = new Album(R.drawable.exp_pic);
+        Album album1 = new Album(R.drawable.default_portrait);
         albumList.add((album1));
         albumList.add((album1));
         albumList.add((album1));

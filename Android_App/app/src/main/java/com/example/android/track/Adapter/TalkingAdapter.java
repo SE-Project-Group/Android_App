@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,8 +20,6 @@ import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.model.Message;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.example.android.track.R.id.portrait;
 
 /**ta
  * Created by jarvis on 2017/7/19.
@@ -81,7 +78,7 @@ public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHold
                     .load(hisPortrait)
                     .asBitmap()
                     .centerCrop()
-                    .placeholder(R.drawable.exp_pic)
+                    .placeholder(R.drawable.default_portrait)
                     .into(holder.his_portrait_view);
         }else{
             //if it is send
@@ -96,7 +93,7 @@ public class TalkingAdapter extends RecyclerView.Adapter<TalkingAdapter.ViewHold
                     .centerCrop()
                     .skipMemoryCache(true)
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .placeholder(R.drawable.exp_pic)
+                    .placeholder(R.drawable.default_portrait)
                     .into(holder.my_portrait_view);
         }
     }

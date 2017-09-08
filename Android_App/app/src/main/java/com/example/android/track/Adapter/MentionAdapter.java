@@ -17,8 +17,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.android.track.R.id.position;
-
 
 /**
  * Created by thor on 2017/9/5.
@@ -96,7 +94,7 @@ public class MentionAdapter extends RecyclerView.Adapter<MentionAdapter.ViewHold
                 .load(acquaintance.getportrait_url())
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.drawable.exp_pic)
+                .placeholder(R.drawable.default_portrait)
                 .into(holder.portrait_view);
     }
 
