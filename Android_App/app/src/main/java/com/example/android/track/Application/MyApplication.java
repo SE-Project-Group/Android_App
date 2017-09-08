@@ -101,9 +101,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                 @Override
                 public void gotResult(int responseCode, String alias, Set<String> tags) {
                     if (responseCode == 0) {
-                        Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(context, "jpush setAlias error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "推送服务初始化失败\n您可能无法收取通知", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -117,9 +117,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                 @Override
                 public void gotResult(int code, String desc) {
                     if (code == 0) {
-                        Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(context, "jmessage login error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "消息服务初始化失败\n您可能无法使用聊天功能", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -177,9 +177,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                     @Override
                     public void gotResult(int code, String desc) {
                         if (code == 0) {
-                            Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "jmessage login success", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, "jmessage login error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "消息服务初始化失败\n您可能无法使用聊天功能", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -189,9 +189,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                     @Override
                     public void gotResult(int responseCode, String alias, Set<String> tags) {
                         if (responseCode == 0) {
-                            Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "jpush setAlias success", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, "jpush setAlias error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "推送服务初始化失败\n您可能无法收取通知", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -218,9 +218,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                 @Override
                 public void gotResult(int responseCode, String alias, Set<String> tags) {
                     if (responseCode == 0) {
-                        Toast.makeText(context, "jpush alias logout success", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "jpush alias logout success", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(context, "jpush alias logout error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "推送服务退订异常\n您仍将收到通知", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -242,7 +242,7 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                 @Override
                 public void gotResult(int i, String s) {
                     if(i == 0){
-                        Toast.makeText(MyApplication.getContext(), "JMessage注册成功", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MyApplication.getContext(), "JMessage注册成功", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Toast.makeText(MyApplication.getContext(), s, Toast.LENGTH_SHORT).show();
@@ -257,8 +257,9 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                         JMessageClient.updateMyInfo(UserInfo.Field.nickname, userInfo, new BasicCallback() {
                             @Override
                             public void gotResult(int i, String s) {
-                                if(i == 0)
-                                    Toast.makeText(MyApplication.getContext(), "修改昵称成功", Toast.LENGTH_SHORT).show();
+                                if(i == 0) {
+                                    //Toast.makeText(MyApplication.getContext(), "修改昵称成功", Toast.LENGTH_SHORT).show();
+                                }
                                 else
                                     Toast.makeText(MyApplication.getContext(), "修改昵称失败", Toast.LENGTH_SHORT).show();
                             }
