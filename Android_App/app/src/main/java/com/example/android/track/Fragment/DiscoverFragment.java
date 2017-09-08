@@ -29,13 +29,19 @@ import com.example.android.track.Activity.SearchActivity;
 import com.example.android.track.R;
 
 import com.example.android.track.Util.FeedRequester;
+import com.example.android.track.Util.Verify;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cn.jiguang.analytics.android.api.BrowseEvent;
+import cn.jiguang.analytics.android.api.CountEvent;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+
 import static android.R.id.message;
+import static com.example.android.track.R.id.et_userName;
 
 
 /**
@@ -111,6 +117,17 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onRefresh() {
                 if(feedList.size() == 0){
+                    Verify verify = new Verify();
+
+                    // analytics data upload
+                    CountEvent cEvent = new CountEvent("refresh_public");
+                    cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                    if(verify.getLoged())
+                        cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                    else
+                        cEvent.addKeyValue("browser_id", "" + "not login");
+                    JAnalyticsInterface.onEvent(getActivity(), cEvent);
+
                     // if have no friend feed , refresh again
                     Date nowTime = new Date(System.currentTimeMillis());
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -168,7 +185,19 @@ public class DiscoverFragment extends Fragment {
 
                     // 判断是否滚动到底部，并且是向下滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        //加载更多功能的代码
+                        //加载更多
+                        // analytics data upload
+                        Verify verify = new Verify();
+
+                        CountEvent cEvent = new CountEvent("refresh_public");
+                        cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                        if(verify.getLoged())
+                            cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                        else
+                            cEvent.addKeyValue("browser_id", "" + "not login");
+                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
+
+                        // get more feed
                         String earliestTime = feedList.get(feedList.size()-1).getDate();
                         getFeeds("before", earliestTime);
                     }

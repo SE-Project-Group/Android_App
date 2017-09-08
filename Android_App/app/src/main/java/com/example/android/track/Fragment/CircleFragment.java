@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cn.jiguang.analytics.android.api.BrowseEvent;
+import cn.jiguang.analytics.android.api.CountEvent;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+
 
 /**
  * Created by thor on 2017/6/27.
@@ -78,6 +82,17 @@ public class CircleFragment extends Fragment {
             @Override
             public void onRefresh() {
                 if(feedList.size() == 0){
+                    Verify verify = new Verify();
+                    if(!verify.getLoged()){
+                        Toast.makeText(getActivity(), "您尚未登陆", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // analytics data upload
+                    CountEvent cEvent = new CountEvent("refresh_circle");
+                    cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                    JAnalyticsInterface.onEvent(getActivity(), cEvent);
+
                     // if have no friend feed , refresh again
                     Date nowTime = new Date(System.currentTimeMillis());
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -149,7 +164,12 @@ public class CircleFragment extends Fragment {
 
                     // 判断是否滚动到底部，并且是向右滚动
                     if (lastVisibleItem == (totalItemCount - 1) && isSlidingToLast) {
-                        //加载更多功能的代码
+                        //加载更多
+                        // analytics data upload
+                        CountEvent cEvent = new CountEvent("refresh_circle");
+                        cEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+                        JAnalyticsInterface.onEvent(getActivity(), cEvent);
+
                         //Toast.makeText(getActivity(), "正为您加载更多动态....", Toast.LENGTH_SHORT).show();
                         String earliestTime = feedList.get(feedList.size() -1).getDate();
                         getFeeds("before", earliestTime);

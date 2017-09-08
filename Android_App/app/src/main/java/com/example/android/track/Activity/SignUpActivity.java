@@ -17,6 +17,9 @@ import android.widget.Toast;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.R;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.RegisterEvent;
+
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
@@ -75,6 +78,12 @@ public class SignUpActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case SIGNUP_OK:
+                    // upload analytics data
+                    RegisterEvent rEvent = new RegisterEvent();
+                    rEvent.addKeyValue("user_name", et_userName.getText().toString());
+                    rEvent.addKeyValue("phone", phone);
+                    JAnalyticsInterface.onEvent(SignUpActivity.this, rEvent);
+
                     // sign up Jmessage client
                     Toast.makeText(MyApplication.getContext(), "注册成功", Toast.LENGTH_SHORT).show();
                     // go back to home activity

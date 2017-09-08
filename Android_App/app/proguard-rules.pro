@@ -60,3 +60,6 @@
 
 -dontwarn cn.smssdk.**
 -keep class cn.smssdk.**{*;}
+
+# ========================= JANALYTICS ===========================
+-keep public class cn.jiguang.analytics.android.api.** { *; }

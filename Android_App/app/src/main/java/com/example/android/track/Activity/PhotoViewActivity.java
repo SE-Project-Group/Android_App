@@ -38,6 +38,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import cn.jiguang.analytics.android.api.BrowseEvent;
+import cn.jiguang.analytics.android.api.CountEvent;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+
 import static android.R.id.message;
 
 
@@ -63,6 +67,8 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
     private final static int SAVE_PHOTO_FAILED = 4;
 
     private ProgressDialog progressDialog;
+
+    //private
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -244,10 +250,27 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.save_btn:
                 // check log in status
-                if(!new Verify().getLoged()){
-                    Toast.makeText(PhotoViewActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+                Verify verify = new Verify();
+                if(!verify.getLoged()){
+                    Toast.makeText(PhotoViewActivity.this, "您需要登陆才能使用此功能", Toast.LENGTH_SHORT).show();
                     break;
                 }
+
+                // get file name
+                String fileName = "";
+                if (type.equals("feed")){
+                    fileName = feed_id + "_" + (currentPosition+1);
+                }
+                if (type.equals("user")){
+                    fileName = user_id + "_portrait";
+                }
+
+                // upload downdata
+                CountEvent cEvent = new CountEvent("download count");
+                cEvent.addKeyValue("file_name",fileName);
+                cEvent.addKeyValue("downloader", verify.getUser_id());
+                JAnalyticsInterface.onEvent(PhotoViewActivity.this, cEvent);
+
                 // show progress dialog
                 progressDialog = new ProgressDialog(PhotoViewActivity.this);
                 progressDialog.setTitle("保存原图");
@@ -256,13 +279,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                 progressDialog.show();
 
                 // begin download
-                String fileName = "";
-                if (type.equals("feed")){
-                    fileName = feed_id + "_" + (currentPosition+1);
-                }
-                if (type.equals("user")){
-                    fileName = user_id + "_portrait";
-                }
+
                 downloadPhoto(fileName);
                 break;
         }

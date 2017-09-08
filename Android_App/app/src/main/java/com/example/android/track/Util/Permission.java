@@ -38,6 +38,30 @@ public class Permission {
                 permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
+
+        // access read external storage permission
+        if(ContextCompat.checkSelfPermission(activityContext, Manifest.
+                permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        // read contacts
+        if(ContextCompat.checkSelfPermission(activityContext, Manifest.
+                permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.READ_CONTACTS);
+        }
+        // read SMS
+        if(ContextCompat.checkSelfPermission(activityContext, Manifest.
+                permission.READ_SMS) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.READ_SMS);
+        }
+        // receive SMS
+        if(ContextCompat.checkSelfPermission(activityContext, Manifest.
+                permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED){
+            permissionList.add(Manifest.permission.RECEIVE_SMS);
+        }
+
+
         // check permission list
         if(!permissionList.isEmpty()){
             String [] permissions = permissionList.toArray(new String[permissionList.size()]);

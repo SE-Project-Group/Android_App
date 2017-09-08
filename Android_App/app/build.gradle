@@ -113,5 +113,9 @@ dependencies {
     // Mob SMS SDK
     compile name:'SMSSDK-3.0.0',ext:'aar'
     compile name:'SMSSDKGUI-3.0.0',ext:'aar'
+
+    // JAnalytics
+    compile 'cn.jiguang.sdk:janalytics:1.1.1' // 此处以JAnalytics 1.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.2' // 此处以JCore 1.1.2 版本为例。
     testCompile 'junit:junit:4.12'
 }

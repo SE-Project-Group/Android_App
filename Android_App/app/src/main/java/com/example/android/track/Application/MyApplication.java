@@ -31,6 +31,8 @@ import org.litepal.crud.DataSupport;
 import java.io.File;
 import java.util.Set;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.LoginEvent;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import cn.jpush.im.android.api.JMessageClient;
@@ -95,6 +97,13 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
         // init JPushInterface
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        // init JAnalytics
+        JAnalyticsInterface.setDebugMode(true);
+        JAnalyticsInterface.init(this);
+        JAnalyticsInterface.initCrashHandler(this);  // turn on upload data
+
+
         if(verify.getLoged()){
             // set Alias
             JPushInterface.setAlias(MyApplication.getContext(),verify.getUser_id(), new TagAliasCallback(){
@@ -132,6 +141,15 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
                 .findFirst(Acquaintance.class);
         if(acquaintance == null)
             AcquaintanceManager.saveAcquaintance(my_id);
+
+        // upload open app analytics data
+        LoginEvent lEvent = new LoginEvent("normal",true);
+        if(verify.getLoged())
+            lEvent.addKeyValue("user_id", verify.getUser_id());
+        else
+            lEvent.addKeyValue("user_id", "not login");
+        JAnalyticsInterface.onEvent(this, lEvent);
+
     }
 
     @Override

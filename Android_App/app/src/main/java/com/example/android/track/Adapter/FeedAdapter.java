@@ -33,8 +33,11 @@ import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import java.util.List;
 
 
+import cn.jiguang.analytics.android.api.BrowseEvent;
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.android.track.R.id.beginning;
 import static com.example.android.track.R.id.position;
 
 
@@ -262,6 +265,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
             }
             @Override
             protected void onItemImageClick(Context context, int index, List<String> photoList) {
+                // go to browse page
                 Intent intent = new Intent(context, PhotoViewActivity.class);
                 intent.putExtra("type", "feed");
                 if(feed.getShare_feed_id().equals("")) // not a share feed
