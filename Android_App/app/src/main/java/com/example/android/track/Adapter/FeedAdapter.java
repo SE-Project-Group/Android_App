@@ -285,7 +285,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         String share_feed_id = feed.getShare_feed_id();
         holder.share_area.setVisibility(View.GONE);
 
-        if(share_feed_id.equals("")) {  // this is a share feed
+        if(!share_feed_id.equals("")) {  // this is a share feed
             holder.share_area.setVisibility(View.VISIBLE);
             holder.share_owner_name.setText("@" + feed.getShare_owner_name());
             holder.share_text.setText(feed.getShare_text());
