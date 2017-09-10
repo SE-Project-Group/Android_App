@@ -1,5 +1,8 @@
 package com.example.android.track.Activity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +41,23 @@ public class MyShareActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+        // check internet
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) MyShareActivity.this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            if (!mNetworkInfo.isAvailable()) {
+                Toast.makeText(MyShareActivity.this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
+        } else {
+            Toast.makeText(MyShareActivity.this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
         initFeeds();
 
     }

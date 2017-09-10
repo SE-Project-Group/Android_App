@@ -191,8 +191,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         // get before comment
         int reply_id = comment.getReply_id();
         while (reply_id != 0){
-            for(int i = 0; i < comments.size(); i++){
-                Comment temp = comments.get(i);
+            while(true){
+                Comment temp = comments.get(0);
                 comments.remove(0);
                 if(temp.getComment_id() == reply_id){
                     commentConversation.add(0, temp);
@@ -203,15 +203,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         }
 
         int comment_id = comment.getComment_id();
-        while(replys.size()!= 0){
-            for(int i = 0; i < replys.size(); i++){
-                Comment temp = replys.get(i);
-                replys.remove(0);
-                if(temp.getReply_id() == comment_id){
-                    commentConversation.add(temp);
-                    comment_id = temp.getComment_id();
-                    break;
-                }
+        while(replys.size()!= 0) {     // look for reply until the end
+            Comment temp = replys.get(0);
+            replys.remove(0);
+            if (temp.getReply_id() == comment_id) {
+                commentConversation.add(temp);
+                comment_id = temp.getComment_id();
+                break;
             }
         }
 

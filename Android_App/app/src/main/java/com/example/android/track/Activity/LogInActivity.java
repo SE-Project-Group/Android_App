@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,14 +46,26 @@ public class LogInActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // chech input
+                String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
+                String password = ((EditText) findViewById(R.id.password)).getText().toString();
+                if(user_name.equals("")){
+                    Toast.makeText(LogInActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(user_name.equals("")){
+                    Toast.makeText(LogInActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 progressDialog = new ProgressDialog(LogInActivity.this);
                 progressDialog.setTitle("正在登录");
                 progressDialog.setMessage("请稍后");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 // create a new Thread to log in
-                String user_name = ((EditText) findViewById(R.id.user_name)).getText().toString();
-                String password = ((EditText) findViewById(R.id.password)).getText().toString();
+
                 logIn(user_name, password);
 
             }

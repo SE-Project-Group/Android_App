@@ -1,6 +1,9 @@
 package com.example.android.track.Fragment;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClientOption;
@@ -116,6 +120,23 @@ public class DiscoverAroundFragment extends Fragment{
     }
 
     private void startLocate(){
+        // check network status
+        if (getActivity() != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) getActivity()
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                if(!mNetworkInfo.isAvailable()){
+                    Toast.makeText(getActivity(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            else {
+                Toast.makeText(getActivity(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+
         // initialize options， set scan span and CoorType (Baidu Map use BD09LL location)
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(2000);

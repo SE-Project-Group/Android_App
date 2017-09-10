@@ -126,7 +126,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     // check the form
     private void setCheckListener(){
-
         final TextInputLayout textInputLayout3 = (TextInputLayout) findViewById(R.id.user_name);
         EditText user_name = textInputLayout3.getEditText();
 

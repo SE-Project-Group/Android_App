@@ -1,10 +1,12 @@
 package com.example.android.track.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,12 +38,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import cn.jiguang.analytics.android.api.BrowseEvent;
 import cn.jiguang.analytics.android.api.CountEvent;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
-import static android.R.id.message;
-import static com.example.android.track.R.id.et_userName;
 
 
 /**
@@ -63,6 +62,7 @@ public class DiscoverFragment extends Fragment {
     private final static int GET_AFTER_FEED_FAILED = 1;
     private final static int GET_BEFORE_FEED_OK = 2;
     private final static int GET_BEFORE_FEED_FAILED = 3;
+    private final static int EMPTY_RESULT = 4;
 
 
     @Nullable
@@ -101,12 +101,6 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        // set Recycle View
-        Date nowTime = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateStr = sdf.format(nowTime);
-        getFeeds("before", dateStr);
-
         // set refresh layout
         swipeRefresh = (SwipeRefreshLayout) getActivity().findViewById(R.id.swip_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
@@ -136,7 +130,31 @@ public class DiscoverFragment extends Fragment {
                 getFeeds("after", last_date);
             }
         });
+        feedList.clear();
+        firstTime_getFeed();
+    }
 
+
+    private void firstTime_getFeed(){
+        // check internet
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) MyApplication.getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            if (!mNetworkInfo.isAvailable()) {
+                Toast.makeText(MyApplication.getContext(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            Toast.makeText(MyApplication.getContext(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // set Recycle View
+        Date nowTime = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr = sdf.format(nowTime);
+        getFeeds("before", dateStr);
     }
 
     private void switch_frag(){
@@ -229,12 +247,18 @@ public class DiscoverFragment extends Fragment {
                 if(direction.equals("after")) {
                     if (moreFeeds == null)
                         message.what = GET_AFTER_FEED_FAILED;
+                    else if (moreFeeds.size() == 0){
+                        message.what = EMPTY_RESULT;
+                    }
                     else
                         message.what = GET_AFTER_FEED_OK;
                 }
                 else if(direction.equals("before")){
                     if (moreFeeds == null)
                         message.what = GET_BEFORE_FEED_FAILED;
+                    else if (moreFeeds.size() == 0){
+                        message.what = EMPTY_RESULT;
+                    }
                     else
                         message.what = GET_BEFORE_FEED_OK;
                 }
@@ -274,13 +298,18 @@ public class DiscoverFragment extends Fragment {
 
                 case GET_BEFORE_FEED_FAILED:
                     if(getActivity() != null)
-                        Toast.makeText(MyApplication.getContext(), "没有更多啦~", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getContext(), "请求失败，请检查网络状态", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_AFTER_FEED_FAILED:
                     // very importtant, if the fragment have already switch to other fragment,
                     // and the http request thread is still run, when handler get a message and handle it
                     // get Activity() will receive a null point,
 
+                    if(getActivity() != null)
+                        Toast.makeText(MyApplication.getContext(), "请求失败，请检查网络状态", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case EMPTY_RESULT:
                     if(getActivity() != null)
                         Toast.makeText(MyApplication.getContext(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;

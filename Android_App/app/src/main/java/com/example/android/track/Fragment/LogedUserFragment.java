@@ -258,7 +258,7 @@ public class LogedUserFragment extends Fragment{
     // ask if clear user data
     private void showDialog() {
         AlertDialog.Builder clearDialog = new AlertDialog.Builder(getActivity());
-        clearDialog.setTitle("清楚用户数据") //标题
+        clearDialog.setTitle("清除用户数据") //标题
                 .setIcon(R.mipmap.ic_launcher) //icon
                 .setCancelable(false) //不响应back按钮
                 .setMessage("是否清除手机内所有用户数据？\n清除后数据将无法复原，如果您还会在本机登陆此账号，不建议您清除所有数据"); //对话框显示内容

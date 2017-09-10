@@ -1,5 +1,8 @@
 package com.example.android.track.Fragment;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.android.track.Activity.MyAlbumActivity;
 import com.example.android.track.Adapter.FeedAdapter;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
@@ -68,10 +72,6 @@ public class CircleFragment extends Fragment {
         MyApplication.setNewFollowFeed(false);
         MyApplication.setNewMsg(true);
 
-        Date nowTime = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateStr = sdf.format(nowTime);
-        getFeeds("before", dateStr);
 
 
         // set refresh layout
@@ -104,7 +104,31 @@ public class CircleFragment extends Fragment {
                 getFeeds("after", last_date);
             }
         });
+        feedList.clear();
+        firstTime_getFeed();
     }
+
+    private void firstTime_getFeed(){
+        // check internet
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) MyApplication.getContext()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            if (!mNetworkInfo.isAvailable()) {
+                Toast.makeText(MyApplication.getContext(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } else {
+            Toast.makeText(MyApplication.getContext(), "当前网络不可用", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Date nowTime = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateStr = sdf.format(nowTime);
+        getFeeds("before", dateStr);
+    }
+
 
     private void getFeeds(String direction, String time){
         new Thread(new Runnable() {
@@ -201,28 +225,28 @@ public class CircleFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             swipeRefresh.setRefreshing(false);
-            switch (msg.what){
+            switch (msg.what) {
                 case NOT_LOG_IN:
-                    if(getActivity() != null)
+                    if (getActivity() != null)
                         Toast.makeText(getActivity(), "您尚未登陆", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_FEED_FAILED:
-                    if(getActivity() != null)
+                    if (getActivity() != null)
                         Toast.makeText(getActivity(), "请求失败，请检查网络状态", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_AFTER_FEED_OK:
                     feedList.addAll(0, moreFeeds);
                     int newCnt = moreFeeds.size();
                     feedAdapter.notifyItemRangeInserted(0, newCnt);
-                    Toast.makeText(MyApplication.getContext(), newCnt + "条新动态", Toast.LENGTH_SHORT).show();
+                    if (getActivity() != null)
+                        Toast.makeText(MyApplication.getContext(), newCnt + "条新动态", Toast.LENGTH_SHORT).show();
                     recyclerView.smoothScrollToPosition(0); //sroll to head
                     break;
                 case GET_BEFORE_FEED_OK:
-                    if(feedList.size() == 0) {  // if first time show feeds
+                    if (feedList.size() == 0) {  // if first time show feeds
                         feedList.addAll(moreFeeds);
                         initRecyclerView();
-                    }
-                    else {
+                    } else {
                         int old_last_index = feedList.size() - 1;
                         feedList.addAll(moreFeeds);
                         feedAdapter.notifyItemRangeInserted(old_last_index, moreFeeds.size());
@@ -231,7 +255,7 @@ public class CircleFragment extends Fragment {
                     break;
 
                 case EMPTY_RESULT:
-                    if(getActivity() != null)
+                    if (getActivity() != null)
                         Toast.makeText(getActivity(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;
                 default:

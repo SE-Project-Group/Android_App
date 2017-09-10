@@ -1,5 +1,8 @@
 package com.example.android.track.Activity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.android.track.Model.Feed;
 import com.example.android.track.Adapter.FeedAdapter;
@@ -38,7 +42,26 @@ public class MyAlbumActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.myRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        //final RequestServer requestServer = new RequestServer(new Verify(MyAlbumActivity.this));
+        //final RequestServer requestServer = new RequestServer(new Verify(MyAlbumActivity.this)
+
+
+        // check internet
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) MyAlbumActivity.this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            if (!mNetworkInfo.isAvailable()) {
+                Toast.makeText(MyAlbumActivity.this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
+        } else {
+            Toast.makeText(MyAlbumActivity.this, "当前网络不可用", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {

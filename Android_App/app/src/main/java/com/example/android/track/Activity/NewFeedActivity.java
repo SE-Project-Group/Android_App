@@ -45,6 +45,7 @@ import java.util.List;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 import static android.R.id.list;
+import static cn.jpush.im.android.api.enums.ContentType.location;
 
 
 public class NewFeedActivity extends AppCompatActivity {
@@ -286,13 +287,15 @@ public class NewFeedActivity extends AppCompatActivity {
         try{
             jsonObject.put("userId" ,verify.getUser_id());
             jsonObject.put("text", text);
-            jsonObject.put("showLocation", showLocation);
-            // loaction json object
-            JSONObject location = new JSONObject();
-            location.put("latitude", latitude);
-            location.put("longitude", longitude);
-            jsonObject.put("location", location);
 
+            if(showLocation == true) {
+                // loaction json object
+                JSONObject location = new JSONObject();
+                location.put("latitude", latitude);
+                location.put("longitude", longitude);
+                jsonObject.put("location", location);
+                jsonObject.put("position", detailed_location);
+            }
             jsonObject.put("shareArea", shareArea);
             JSONArray mentionListArray = new JSONArray();
             for(Integer mentionId : mentionList){
@@ -300,7 +303,7 @@ public class NewFeedActivity extends AppCompatActivity {
             }
             jsonObject.put("mentionList", mentionListArray);
             jsonObject.put("picCount", pathList.size());
-            jsonObject.put("position", detailed_location);
+
         }catch (JSONException e){
             e.printStackTrace();
         }

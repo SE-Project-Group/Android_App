@@ -217,7 +217,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Feed feed = mFeedList.get(position);
-
         holder.feed_owner_view.setText(feed.getOwner_name());
         String text = feed.getText();
         if(text.equals(""))
@@ -283,7 +282,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         holder.nineGridView.setImagesData(feed.getPicUrls());
 
         // share Area
-        if(!feed.getShare_feed_id().equals("")) {  // this is a share feed
+        String share_feed_id = feed.getShare_feed_id();
+        holder.share_area.setVisibility(View.GONE);
+
+        if(share_feed_id.equals("")) {  // this is a share feed
             holder.share_area.setVisibility(View.VISIBLE);
             holder.share_owner_name.setText("@" + feed.getShare_owner_name());
             holder.share_text.setText(feed.getShare_text());
@@ -394,6 +396,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                         // 获取EditView中的输入内容
                         EditText edit_text =
                                 (EditText) dialogView.findViewById(R.id.edit_text);
+                        // check input
+                        String input = edit_text.getText().toString();
+                        if(input.length() > 140){
+                            Toast.makeText(context, "输入内容不能超过140字哦", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

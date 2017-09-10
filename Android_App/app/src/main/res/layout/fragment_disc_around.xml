@@ -31,11 +31,10 @@
                         android:id="@+id/hot_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:text="热门"
+                        android:text="广场"
                         android:background="@drawable/discover_top_btn_bg"
                         android:textColor="@color/black"
                         android:layout_marginRight="5dp"/>
-                    />
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"

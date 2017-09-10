@@ -95,11 +95,18 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!verify.getLoged()){
-                    Toast.makeText(CommentActivity.this, "not log in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentActivity.this, "您尚未登陆，无法使用此功能", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // send comment
                 final String comment = comment_content.getText().toString();
+                // check input
+                if(comment.length() > 140){
+                    Toast.makeText(CommentActivity.this, "输入内容不能超过140字哦", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // send comment
+                send_btn.setClickable(false);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -125,15 +132,17 @@ public class CommentActivity extends AppCompatActivity {
                     setCommentList();
                     break;
                 case GET_COMMENTS_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "获取动态列表哦请求失败\n请检查网络状态", Toast.LENGTH_SHORT).show();
                     break;
                 case SEND_OK:
-                    Toast.makeText(MyApplication.getContext(), "send success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "评论成功", Toast.LENGTH_SHORT).show();
                     comment_content.setText("");  // clear input area
+                    send_btn.setClickable(true);
                     initComment();
                     break;
                 case  SEND_FAILED:
-                    Toast.makeText(MyApplication.getContext(), "send failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getContext(), "请求失败，请检查网络状态", Toast.LENGTH_SHORT).show();
+                    send_btn.setClickable(true);
                     break;
                 default:
                     break;

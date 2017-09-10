@@ -3,6 +3,8 @@ package com.example.android.track.Application;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.multidex.MultiDex;
@@ -94,14 +96,37 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
         context = getApplicationContext();
 
         verify = new Verify();
+
+
         // init JPushInterface
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        // init JMessage
+        JMessageClient.setDebugMode(true);
+        JMessageClient.init(this, true);  // turn on message roaming
 
         // init JAnalytics
         JAnalyticsInterface.setDebugMode(true);
         JAnalyticsInterface.init(this);
         JAnalyticsInterface.initCrashHandler(this);  // turn on upload data
+
+
+        // check internet
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                if(!mNetworkInfo.isAvailable()){
+                    Toast.makeText(context, "当前网络不可用，很多功能将无法使用", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            else {
+                return;
+            }
+        }
 
 
         if(verify.getLoged()){
@@ -118,9 +143,7 @@ public class MyApplication extends MobApplication implements IAdobeAuthClientCre
             });
         }
 
-        // init JMessageClient
-        JMessageClient.setDebugMode(true);
-        JMessageClient.init(this, true);  // turn on message roaming
+        // login JMessageClient
         if(verify.getLoged()){
             JMessageClient.login(verify.getUser_id(), verify.getUser_pwd(),new BasicCallback() {
                 @Override

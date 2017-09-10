@@ -73,6 +73,8 @@ public class FeedRequester{
                 .build();
         try {
             Response response = client.newCall(request).execute();
+            if(!response.isSuccessful())
+                return null;
             String responseData  = response.body().string();
             Gson gson = new Gson();
             feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
@@ -107,7 +109,7 @@ public class FeedRequester{
             Gson gson = new Gson();
             feedList = gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
             if(feedList.size() == 0)
-                return null;
+                return feedList;
         }catch (Exception e){
             e.printStackTrace();
             return null;
@@ -202,37 +204,6 @@ public class FeedRequester{
         return response;
     }
 
-    public List<Feed> publicPolling(Date last_update_time){
-        String resource = "";
-        String pre_url = generatePreUrl(resource, false);
-
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().
-                url(pre_url + "?last_update_time" + last_update_time.toString())
-                .build();
-        String responseData = "";
-        try{
-            Response response = client.newCall(request).execute();
-            responseData = response.body().string();
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        // parse response
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(responseData);
-        }catch (JSONException e){
-            e.printStackTrace();
-            return null;
-        }
-
-        return null;
-    }
-
-    public List<Feed> friendPolling(Date last_update_time){
-        return null;
-    }
 
     public String removeFeed(String feed_id){
         String resource = "removeFeed";

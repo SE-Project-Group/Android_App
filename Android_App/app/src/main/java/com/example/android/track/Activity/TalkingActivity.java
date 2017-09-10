@@ -1,6 +1,9 @@
 package com.example.android.track.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +16,9 @@ import android.widget.Toast;
 
 import com.baidu.platform.comapi.map.I;
 import com.example.android.track.Adapter.TalkingAdapter;
+import com.example.android.track.Model.LitePal_Entity.Acquaintance;
 import com.example.android.track.R;
+import com.example.android.track.Util.AcquaintanceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,21 +56,38 @@ public class TalkingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         with_who = intent.getIntExtra("with_who", 0) + "";
 
+        // update acquaintance data
+        AcquaintanceManager.saveAcquaintance(intent.getIntExtra("with_who", 0));
+
+        msg_recycler_view = (RecyclerView) findViewById(R.id.msg_recycler_view);
+
+        initRecord();
+
         // set up JMessageClient
         JMessageClient.registerEventReceiver(this); // register message receiver
         // do not show notification anymore
         JMessageClient.enterSingleConversation(with_who);
-
-
-
-        msg_recycler_view = (RecyclerView) findViewById(R.id.msg_recycler_view);
-        initRecord();
 
         input_text = (EditText)findViewById(R.id.msg_input);
         send_btn = (Button)findViewById(R.id.send);
         send_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                // check internet
+                ConnectivityManager mConnectivityManager = (ConnectivityManager) TalkingActivity.this
+                        .getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+                if (mNetworkInfo != null) {
+                    if (!mNetworkInfo.isAvailable()) {
+                        Toast.makeText(TalkingActivity.this, "当前网络不可用,无法发送消息", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } else {
+                    Toast.makeText(TalkingActivity.this, "当前网络不可用，无法发送消息", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 String content = input_text.getText().toString();
                 if(!"".equals(content)){
                     // send message

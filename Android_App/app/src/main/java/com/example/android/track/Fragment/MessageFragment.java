@@ -353,7 +353,7 @@ public class MessageFragment extends Fragment {
                     animation = new TranslateAnimation(offset, one, 0, 0);
                     // change color
                     chat_ic.setBackground(R.drawable.letter_filled_24);
-                    notification_ic.setBackground(R.drawable.letter_unfilled_white_24);
+                    notification_ic.setBackground(R.drawable.jingle_bell_unfilled_white_24);
                     chat_tv.setTextColor(getResources().getColor(R.color.gray));
                     notification_tv.setTextColor(getResources().getColor(R.color.white));
                     if(logged) {
