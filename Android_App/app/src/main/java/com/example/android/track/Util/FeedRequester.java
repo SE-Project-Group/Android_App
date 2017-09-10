@@ -2,6 +2,7 @@ package com.example.android.track.Util;
 
 
 import com.baidu.location.BDLocation;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Comment;
 import com.example.android.track.Model.Feed;
 
@@ -375,10 +376,10 @@ public class FeedRequester{
             responseData = response.body().string();
         }catch (IOException e){
             e.printStackTrace();
+            return null;
         }
         Gson gson = new Gson();
         List<Feed> result =  gson.fromJson(responseData, new TypeToken<List<Feed>>(){}.getType());
-        Feed test = result.get(0);
         return result;
     }
 

@@ -29,6 +29,7 @@ import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.Verify;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -254,7 +255,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         NineGridImageViewAdapter<String> mNGIVAdapter = new NineGridImageViewAdapter<String>(){
             @Override
             protected void onDisplayImage(Context context, ImageView imageView, String url) {
-                Glide.with(context)
+                Picasso.with(context)  // picaso scale faster
                         .load(url)
                         .placeholder(R.drawable.gray_bg)
                         .into(imageView);

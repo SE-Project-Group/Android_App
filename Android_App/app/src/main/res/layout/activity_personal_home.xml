@@ -50,24 +50,30 @@
                         android:layout_marginRight="40dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_weight="1"
                         android:gravity="right">
-                        <TextView
+                        <LinearLayout
                             android:id="@+id/his_follower_btn"
-                            android:textColor="@color/gray"
-                            android:textSize="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="关注他的" />
-                        <TextView
-                            android:textColor="@color/orange"
-                            android:id="@+id/follower_cnt"
-                            android:textSize="17dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="100"/>
+                            android:orientation="vertical"
+                            android:gravity="right">
+                            <TextView
+                                android:textColor="@color/gray"
+                                android:textSize="15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="关注他的" />
+                            <TextView
+                                android:textColor="@color/orange"
+                                android:id="@+id/follower_cnt"
+                                android:textSize="17dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="100"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -76,22 +82,27 @@
                         android:orientation="vertical"
                         android:layout_gravity="left"
                         android:layout_weight="1">
-                        <TextView
+                        <LinearLayout
                             android:id="@+id/his_following_btn"
-                            android:textColor="@color/gray"
-                            android:textSize="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="他关注的"/>
+                            android:orientation="vertical">
+                            <TextView
+                                android:textColor="@color/gray"
+                                android:textSize="15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="他关注的"/>
 
-                        <TextView
-                            android:textColor="@color/orange"
-                            android:id="@+id/following_cnt"
-                            android:textSize="17dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="100" />
+                            <TextView
+                                android:textColor="@color/orange"
+                                android:id="@+id/following_cnt"
+                                android:textSize="17dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="100" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -103,7 +114,7 @@
                     android:orientation="horizontal"
                     >
                     <LinearLayout
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="20dp"
                         android:gravity="right"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,7 +125,7 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/like_filled_gray_20"/>
                         <TextView
-                            android:textColor="@color/orange"
+                            android:textColor="@color/gray"
                             android:id="@+id/like_cnt"
                             android:textSize="17dp"
                             android:layout_marginLeft="5dp"
@@ -123,7 +134,7 @@
                             android:text="100"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="25dp"
                         android:gravity="left"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -132,7 +143,7 @@
 
 
                         <TextView
-                            android:textColor="@color/orange"
+                            android:textColor="@color/gray"
                             android:id="@+id/share_cnt"
                             android:textSize="17dp"
                             android:layout_marginRight="5dp"
@@ -167,7 +178,7 @@
                     <Button
                         android:id="@+id/add_follow_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:text="关注"
                         android:background="@drawable/follow_btn"
                         android:drawableLeft="@drawable/add_orange"
@@ -177,8 +188,9 @@
 
                     <Button
                         android:id="@+id/also_follow_btn"
+                        android:paddingRight="5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:text="去关注"
                         android:background="@drawable/follow_btn"
                         android:textColor="@color/gray"
@@ -188,8 +200,9 @@
 
                     <Button
                         android:id="@+id/cancel_follow_btn"
+                        android:paddingRight="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:text="取消关注"
                         android:drawableLeft="@drawable/stop_unfilled_orange_15"
                         android:background="@drawable/follow_btn"
@@ -200,7 +213,7 @@
                     <Button
                         android:id="@+id/chat_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:text="私信"
                         android:drawableLeft="@drawable/letter_unfilled_orange"
                         android:background="@drawable/follow_btn"

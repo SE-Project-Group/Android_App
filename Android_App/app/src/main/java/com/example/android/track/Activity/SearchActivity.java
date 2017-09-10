@@ -268,6 +268,14 @@ public class SearchActivity extends AppCompatActivity {
     }
     
     private void search(String rawQuery){
+        // remove " " at the begin
+        while(rawQuery.indexOf(" ") == 0){
+            rawQuery = rawQuery.substring(1);
+            if(rawQuery.length() == 0){
+                Toast.makeText(SearchActivity.this, "您没输入任何有效内容呢", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         String query = transSpecialChar(rawQuery);
         new Thread(new Runnable() {
             @Override
@@ -339,7 +347,7 @@ public class SearchActivity extends AppCompatActivity {
                     showResult();
                     break;
                 case GET_SEARCH_RESULT_FAILED:
-                    Toast.makeText(SearchActivity.this, "search failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "请求失败，请检查网络", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_EMPTY_RESULT:
                     Toast.makeText(SearchActivity.this, "啥也没搜到呢，再试试吧~", Toast.LENGTH_SHORT).show();

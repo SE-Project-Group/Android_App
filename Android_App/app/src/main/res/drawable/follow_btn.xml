@@ -13,6 +13,6 @@
         android:width="0.1px"
         android:color="#505050"/>
     <padding
-        android:left="10dp"/>
+        android:left="10dp" />
 
 </shape>

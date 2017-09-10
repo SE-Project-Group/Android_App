@@ -58,6 +58,7 @@ public class NewFeedActivity extends AppCompatActivity {
     private LinearLayout mentionMenu;
     private TextView mentionNames_tv;
     private RadioGroup shareArea_group;
+    private CheckBox showLocation_cb;
 
     private static final int ADD_PHOTO = 1;
     private static final int EDIT_PHOTO = 2;
@@ -206,6 +207,10 @@ public class NewFeedActivity extends AppCompatActivity {
                 String content_text = content.getText().toString();
                 if(pathList.size() == 0 && content_text.equals("") ){
                     Toast.makeText(NewFeedActivity.this, "您尚未任何编辑内容", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if(content_text.length()>140){
+                    Toast.makeText(NewFeedActivity.this, "只能编辑小于140个字哦~", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
@@ -402,7 +407,8 @@ public class NewFeedActivity extends AppCompatActivity {
                     upload_pic(bundle.getString("feed_id"));
                     break;
                 case UPLOAD_FAILED:
-                    Toast.makeText(NewFeedActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewFeedActivity.this, "请求失败，请检查网络", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     break;
                 case LOCATE_OK:
                     TextView tv_currentPosition = (TextView) findViewById(R.id.tv_currentPosition);

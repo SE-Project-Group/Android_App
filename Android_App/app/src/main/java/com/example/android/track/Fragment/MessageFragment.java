@@ -226,7 +226,8 @@ public class MessageFragment extends Fragment {
         // set Icon
         notification_ic = (RemindView) getActivity().findViewById(R.id.ic_notification);
         chat_ic = (RemindView) getActivity().findViewById(R.id.ic_chat);
-        //notification_ic.setBackground(R);
+        notification_ic.setBackground(R.drawable.jingle_bell_unfilled_white_24);
+        chat_ic.setBackground(R.drawable.letter_unfilled_white_24);
 
         notification_ic.setMessageCount(MyApplication.getUnReadMsgCnt());
         chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
@@ -335,8 +336,8 @@ public class MessageFragment extends Fragment {
                     chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
                     animation = new TranslateAnimation(one, 0, 0, 0);
                     // change color
-                    //notification_ic.setBackground();
-                    //chat_ic.setBackground();
+                    notification_ic.setBackground(R.drawable.jingle_bell_filled_24);
+                    chat_ic.setBackground(R.drawable.letter_unfilled_white_24);
                     notification_tv.setTextColor(getResources().getColor(R.color.gray));
                     chat_tv.setTextColor(getResources().getColor(R.color.white));
 
@@ -351,8 +352,8 @@ public class MessageFragment extends Fragment {
                     chat_ic.setMessageCount(JMessageClient.getAllUnReadMsgCount());
                     animation = new TranslateAnimation(offset, one, 0, 0);
                     // change color
-                    //chat_ic.setBackground();
-                    //notification_ic.setBackground();
+                    chat_ic.setBackground(R.drawable.letter_filled_24);
+                    notification_ic.setBackground(R.drawable.letter_unfilled_white_24);
                     chat_tv.setTextColor(getResources().getColor(R.color.gray));
                     notification_tv.setTextColor(getResources().getColor(R.color.white));
                     if(logged) {
