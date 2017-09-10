@@ -101,9 +101,6 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        // init recyclerView
-        initRecycleView();
-
         // set Recycle View
         Date nowTime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -264,8 +261,15 @@ public class DiscoverFragment extends Fragment {
                     recyclerView.smoothScrollToPosition(0); //sroll to head
                     break;
                 case GET_BEFORE_FEED_OK:
-                    feedList.addAll(moreFeeds);
-                    feedAdapter.notifyItemChanged(feedList.size()-1, moreFeeds.size());
+                    if(feedList.size() == 0) {  // if first time show feeds
+                        feedList.addAll(moreFeeds);
+                        initRecycleView();
+                    }
+                    else {
+                        int old_last_index = feedList.size() - 1;
+                        feedList.addAll(moreFeeds);
+                        feedAdapter.notifyItemRangeInserted(old_last_index, moreFeeds.size());
+                    }
                     break;
 
                 case GET_BEFORE_FEED_FAILED:

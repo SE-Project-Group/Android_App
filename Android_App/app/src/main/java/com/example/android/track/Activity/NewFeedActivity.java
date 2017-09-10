@@ -68,8 +68,8 @@ public class NewFeedActivity extends AppCompatActivity {
     // used to send to server
     // select show area
     private boolean showLocation;
-    private double latitude;
-    private double longitude;
+    private double latitude = 0;
+    private double longitude = 0;
     private String text;
     private String shareArea;
 
@@ -155,6 +155,10 @@ public class NewFeedActivity extends AppCompatActivity {
             String building = bdLocation.getBuildingName();
             StringBuilder currentPosition = new StringBuilder();
             // if has building name , display it
+            if(city == null && district == null & street == null){
+                detailed_location = "无法获取当前定位，请检查GPS及网络状态";
+                return;
+            }
             if(building != null)
                 currentPosition.append(city).append(district).append(street).append("(").append(building).append(")");
             else
@@ -206,11 +210,17 @@ public class NewFeedActivity extends AppCompatActivity {
                 }
                 String content_text = content.getText().toString();
                 if(pathList.size() == 0 && content_text.equals("") ){
-                    Toast.makeText(NewFeedActivity.this, "您尚未任何编辑内容", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewFeedActivity.this, "您尚未编辑任何内容", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if(content_text.length()>140){
                     Toast.makeText(NewFeedActivity.this, "只能编辑小于140个字哦~", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                // check if get correct location
+                if((longitude == 0 || latitude == 0) && (showLocation == true)){
+                    Toast.makeText(NewFeedActivity.this, "定位信息缺失\n您可以取消显示位置或者重试", Toast.LENGTH_SHORT).show();
                     break;
                 }
 

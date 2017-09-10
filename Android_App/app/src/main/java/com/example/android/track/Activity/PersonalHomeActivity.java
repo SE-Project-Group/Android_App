@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.android.track.R.id.his_follower_btn;
+import static com.example.android.track.R.id.his_following_btn;
 
 
 public class PersonalHomeActivity extends AppCompatActivity {
@@ -119,8 +123,8 @@ public class PersonalHomeActivity extends AppCompatActivity {
 
 
     private void setFollowActivityButton(){
-        TextView his_following_btn = (TextView) findViewById(R.id.his_following_btn);
-        TextView his_follower_btn = (TextView) findViewById(R.id.his_follower_btn);
+        LinearLayout his_following_btn = (LinearLayout) findViewById(R.id.his_following_btn);
+        LinearLayout his_follower_btn = (LinearLayout) findViewById(R.id.his_follower_btn);
         his_following_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

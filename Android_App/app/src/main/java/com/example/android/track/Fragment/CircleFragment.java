@@ -47,6 +47,8 @@ public class CircleFragment extends Fragment {
     private final static int GET_AFTER_FEED_OK = 1 ;
     private final static int GET_BEFORE_FEED_OK = 2;
     private final static int NOT_LOG_IN = 3;
+    private final static int EMPTY_RESULT = 4;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_circle,container,false);
@@ -65,9 +67,6 @@ public class CircleFragment extends Fragment {
         // clear new following counter
         MyApplication.setNewFollowFeed(false);
         MyApplication.setNewMsg(true);
-
-        // init recyclerView
-        initRecyclerView();
 
         Date nowTime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -126,13 +125,16 @@ public class CircleFragment extends Fragment {
                 if (moreFeeds == null)
                     message.what = GET_FEED_FAILED;
 
+                else if(moreFeeds.size() == 0)
+                    message.what = EMPTY_RESULT;
+
                 else {
                     if(direction.equals("after"))
                         message.what = GET_AFTER_FEED_OK;
                     else if(direction.equals("before"))
                         message.what = GET_BEFORE_FEED_OK;
                 }
-
+                handler.sendMessage(message);
 
             }
         }).start();
@@ -198,6 +200,7 @@ public class CircleFragment extends Fragment {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            swipeRefresh.setRefreshing(false);
             switch (msg.what){
                 case NOT_LOG_IN:
                     if(getActivity() != null)
@@ -205,7 +208,7 @@ public class CircleFragment extends Fragment {
                     break;
                 case GET_FEED_FAILED:
                     if(getActivity() != null)
-                        Toast.makeText(getActivity(), "没有更多啦~", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "请求失败，请检查网络状态", Toast.LENGTH_SHORT).show();
                     break;
                 case GET_AFTER_FEED_OK:
                     feedList.addAll(0, moreFeeds);
@@ -215,8 +218,21 @@ public class CircleFragment extends Fragment {
                     recyclerView.smoothScrollToPosition(0); //sroll to head
                     break;
                 case GET_BEFORE_FEED_OK:
-                    feedList.addAll(moreFeeds);
-                    feedAdapter.notifyItemRangeInserted(feedList.size()-1, moreFeeds.size());
+                    if(feedList.size() == 0) {  // if first time show feeds
+                        feedList.addAll(moreFeeds);
+                        initRecyclerView();
+                    }
+                    else {
+                        int old_last_index = feedList.size() - 1;
+                        feedList.addAll(moreFeeds);
+                        feedAdapter.notifyItemRangeInserted(old_last_index, moreFeeds.size());
+                    }
+
+                    break;
+
+                case EMPTY_RESULT:
+                    if(getActivity() != null)
+                        Toast.makeText(getActivity(), "没有更多啦~", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
