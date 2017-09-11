@@ -153,6 +153,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                 case SAVE_PHOTO_OK:
                     progressDialog.dismiss();
                     Toast.makeText(PhotoViewActivity.this, "下载成功",Toast.LENGTH_SHORT).show();
+                    break;
                 case SAVE_PHOTO_FAILED:
                     progressDialog.dismiss();
                     Toast.makeText(PhotoViewActivity.this, "下载失败",Toast.LENGTH_SHORT).show();
@@ -248,8 +249,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                         message.what = SAVE_PHOTO_OK;
                         handler.sendMessage(message);
                     }
-                    else
-                    {
+                    else {
                         message.what = SAVE_PHOTO_FAILED;
                         handler.sendMessage(message);
                         return;
