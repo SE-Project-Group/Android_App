@@ -64,6 +64,7 @@ public class UserRequester {
             jsonObject.put("password", password);
         } catch (Exception e) {
             e.printStackTrace();
+            return "failed";
         }
         final String jsonString = jsonObject.toString();
         final JsonSender sender = new JsonSender(jsonString, host + resource);

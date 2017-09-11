@@ -20,11 +20,14 @@ import com.example.android.track.R;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jiguang.analytics.android.api.RegisterEvent;
 
+import static com.adobe.creativesdk.aviary.internal.AdobeAccountUserStatus.Type.SIGNUP;
+
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int SIGNUP_OK = 0;
     private static final int EXIST_PHONE = 1;
     private static final int EXIST_USER_NAME = 2;
+    private static final int SIGNUP_FAILED = 3;
     private Button sign_up_btn;
 
     //view
@@ -96,6 +99,9 @@ public class SignUpActivity extends AppCompatActivity {
                 case EXIST_USER_NAME:
                     Toast.makeText(SignUpActivity.this, "用户名已存在", Toast.LENGTH_SHORT).show();
                     break;
+                case SIGNUP_FAILED:
+                    Toast.makeText(SignUpActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+                    break;
                 default:
                     break;
             }
@@ -116,6 +122,8 @@ public class SignUpActivity extends AppCompatActivity {
                     message.what = EXIST_USER_NAME;
                 else if(response_data.equals("success"))
                     message.what = SIGNUP_OK;
+                else
+                    message.what = SIGNUP_FAILED;
                 handler.sendMessage(message);
             }
         }).start();
