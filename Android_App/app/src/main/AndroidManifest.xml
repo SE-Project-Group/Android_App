@@ -64,6 +64,16 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <provider
+            android:authorities="com.example.android.track.fileProvider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name="com.example.android.track.Activity.HomeActivity"
             android:launchMode="singleTask"

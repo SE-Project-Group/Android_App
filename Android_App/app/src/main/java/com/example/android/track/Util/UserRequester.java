@@ -101,6 +101,7 @@ public class UserRequester {
             return "ERROR";
         }
         verify.storeToken(token, user_id, user_name, password);
+        AcquaintanceManager.saveAcquaintance(user_id);
 
         return "success";
 

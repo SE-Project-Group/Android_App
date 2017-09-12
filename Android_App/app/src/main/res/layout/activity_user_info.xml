@@ -44,7 +44,7 @@
                 android:layout_height="25dp"
                 android:layout_toRightOf="@id/portrait_view"
                 android:layout_marginLeft="-20dp"
-                android:src="@drawable/default_portrait"
+                android:src="@drawable/camera_filled_orange"
                 android:layout_marginTop="50dp" />
         </RelativeLayout>
 

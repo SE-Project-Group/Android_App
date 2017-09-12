@@ -24,6 +24,7 @@ import com.example.android.track.Activity.PersonalHomeActivity;
 import com.example.android.track.Activity.PhotoViewActivity;
 import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.Feed;
+import com.example.android.track.Model.LitePal_Entity.MyFeed;
 import com.example.android.track.R;
 import com.example.android.track.Util.FeedRequester;
 import com.example.android.track.Util.Verify;
@@ -31,6 +32,7 @@ import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -160,9 +162,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 Feed feed = mFeedList.get(postion);
 
                 if(feed.getShare_feed_id().equals(""))  // not a share feed
-                    share(feed.getFeed_id(), feed.getOwner_id());
+                    share(feed, feed.getOwner_id());
                 else
-                    share(feed.getShare_feed_id(), feed.getOwner_id());
+                    share(feed, feed.getOwner_id());
             }
         });
         holder.comment_btn.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +192,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 // update view
                 int postion =  holder.getAdapterPosition();
                 Feed feed = mFeedList.get(postion);
+
+                // if this is my own feed, do not allow like
+                if(feed.getOwner_id() == my_user_id){
+                    Toast.makeText(context, "您不能点赞自己的动态", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // used to liked
                 if(!feed.getLiked()) {
                     int new_cnt = Integer.valueOf(holder.like_btn.getText().toString()) + 1;
@@ -232,10 +241,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         if(feed.getLiked()){
             int liked_color = MyApplication.getContext().getResources().getColor(R.color.orange);
             holder.like_btn.setTextColor(liked_color);
-        }
-        // if this is my own feed, do not allow like
-        if(feed.getOwner_id() == my_user_id){
-            holder.like_btn.setClickable(false);
         }
         temp = String.valueOf(feed.getShare_cnt());
         holder.share_btn.setText(temp);
@@ -314,6 +319,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 }
                 else
                     message.what = LIKE_FAILED;
+
+                handler.sendMessage(message);
             }
         }).start();
     }
@@ -331,6 +338,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                 }
                 else
                     message.what = CANCEL_LIKE_FAILED;
+
+                handler.sendMessage(message);
             }
         }).start();
     }
@@ -342,10 +351,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         context.startActivity(intent);
     }
 
-    private void share(String feed_id, int owner){
+    private void share(Feed feed, int owner){
         // update recyclerView
         this.notifyItemChanged(position);
-        showShareDialog(feed_id, owner);
+        showShareDialog(feed, owner);
     }
 
     private Handler handler = new Handler(){
@@ -353,19 +362,19 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case LIKE_OK:
-                    Toast.makeText(context, "like success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
                     break;
                 case LIKE_FAILED:
-                    Toast.makeText(context, "like failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请求发送失败", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_OK:
-                    Toast.makeText(context, "cancel success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "取消成功", Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL_LIKE_FAILED:
-                    Toast.makeText(context, "cancel failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "请求发送失败", Toast.LENGTH_SHORT).show();
                     break;
                 case SHARE_OK:
-                    Toast.makeText(context, "share success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "转发成功", Toast.LENGTH_SHORT).show();
                     break;
                 case SHARE_FAILED:
                     Toast.makeText(context, "请求发送失败", Toast.LENGTH_SHORT).show();
@@ -381,7 +390,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
     };
 
 
-    private void showShareDialog(String feed_id, int owner){
+    private void showShareDialog(Feed feed, int owner){
+        String feed_id = feed.getFeed_id();
         AlertDialog.Builder shareDialog =
                 new AlertDialog.Builder(context);
         final View dialogView = LayoutInflater.from(context)
@@ -403,6 +413,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                             return;
                         }
 
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -410,15 +421,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
                                 String response = requester.shareFeed(feed_id, owner, edit_text.getText().toString());
 
                                 Message message = new Message();
-                                if(response.equals("success")) {
-                                    message.what = SHARE_OK;
-                                }
-                                else if (response.equals("failed"))
+                                if (response.equals("failed"))
                                     message.what = SHARE_FAILED;
                                 else if (response.equals("not allow"))
                                     message.what = SHARE_NOT_ALLOWED;
-                                else
-                                    message.what =  SHARE_FAILED;
+                                else {
+                                    message.what = SHARE_OK;
+                                    // save this feed
+                                    MyFeed myFeed = new MyFeed();
+                                    myFeed.setFeed_id(response);
+                                    myFeed.setText(input);
+                                    myFeed.setDate(new Date(System.currentTimeMillis()));
+                                    myFeed.save();
+                                }
+                                handler.sendMessage(message);
                             }
                         }).start();
                     }
@@ -433,5 +449,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>{
 
         shareDialog.create().show();
     }
+
 
 }

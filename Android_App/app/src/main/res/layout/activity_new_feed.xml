@@ -68,6 +68,14 @@
                         android:stretchMode="columnWidth"
                         android:gravity="center" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:text="点击照片进行美化"
+                        android:layout_marginLeft="12dp"
+                        android:textColor="@color/gray"/>
+
                 </LinearLayout>
 
                 <View

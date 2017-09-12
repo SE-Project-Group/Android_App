@@ -151,6 +151,7 @@ public class HomeActivity extends AppCompatActivity{
         super.onDestroy();
     }
 
+
     // set default fragment to discover fragment
     private void setDefaultFragment(){
         if (discoverFragment == null)

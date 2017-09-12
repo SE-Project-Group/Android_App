@@ -79,7 +79,7 @@ public class ChangePwdActivity extends AppCompatActivity {
             return;
         }
         else
-            changeJMessagePwd(old_pwd, new_pwd); // if JMessage pwd change successful, then send change request to server
+            changeJMessagePwd(new_pwd, old_pwd); // if JMessage pwd change successful, then send change request to server
     }
 
     private void sendChangeRequest(final String old_pwd, final String new_pwd){
@@ -104,7 +104,7 @@ public class ChangePwdActivity extends AppCompatActivity {
             @Override
             public void gotResult(int i, String s) {
                 if(i == 0){
-                    Toast.makeText(MyApplication.getContext(), "JMessage密码修改成功", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MyApplication.getContext(), "JMessage密码修改成功", Toast.LENGTH_SHORT).show();
                     sendChangeRequest(oldPassword, newPassword);  // then send request to server
                 }
                 else {

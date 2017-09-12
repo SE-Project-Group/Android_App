@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -54,7 +56,9 @@ public class LogedUserFragment extends Fragment{
     private static final int PHONE_WRONG = 3;
     private static final int VERIFY_PHONE_FAILED = 4;
     private static final int NET_FAILED = 5;
-    private static final int CHANGE_PWD = 5;
+    private static final int CHANGE_PWD = 6;
+
+    public static final int EDIT_INFO = 7;
 
     private ProgressDialog progressDialog;  // used when clear user data
     private Boolean isChangingPwd = false;  // if it is change pwd, then do not need clear user data
@@ -76,14 +80,17 @@ public class LogedUserFragment extends Fragment{
         //set tool bar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.logedUserToolBar);
         toolbar.setTitleTextColor(getActivity().getResources().getColor(R.color.gray));
-        toolbar.setTitle("用户");
+        toolbar.setTitle("我的");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+        progressDialog = new ProgressDialog(getActivity());
 
         Verify verify = new Verify();
         user_id = Integer.valueOf(verify.getUser_id());
         setMyPortrait();
         setClickListener();
     }
+
 
     private void setMyPortrait(){
         portraitView = (CircleImageView) getActivity().findViewById(R.id.portrait_view);
@@ -174,7 +181,7 @@ public class LogedUserFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, EDIT_INFO);
             }
         });
     }
@@ -197,7 +204,7 @@ public class LogedUserFragment extends Fragment{
 
     private void editPwd(){
         isChangingPwd = true;
-        Toast.makeText(MyApplication.getContext(), "请先验证手机号码", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "请先验证手机号码", Toast.LENGTH_SHORT).show();
 
         EventHandler eventHandler = new EventHandler() {
             public void afterEvent(int event, int result, Object data) {
@@ -250,6 +257,10 @@ public class LogedUserFragment extends Fragment{
                     logOut();
                 }
                 break;
+
+            case LogedUserFragment.EDIT_INFO:
+                setMyPortrait();
+                break;
             default:
                 break;
         }
@@ -268,7 +279,6 @@ public class LogedUserFragment extends Fragment{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // show progress dialog
-                        progressDialog = new ProgressDialog(getActivity());
                         progressDialog.setTitle("清除数据");
                         progressDialog.setMessage("清除用户数据中......");
                         progressDialog.setCancelable(true);
@@ -298,8 +308,10 @@ public class LogedUserFragment extends Fragment{
                 case LOG_OUT_OK:
                     // if log out success, then delete the token store in XML file
                     new Verify().delete_token();
-                    if(!isChangingPwd)
+                    if(!isChangingPwd) {
                         showDialog();   // ask if clear user data
+                        isChangingPwd = false;
+                    }
 
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);

@@ -17,6 +17,8 @@ import java.util.List;
 import cn.jiguang.analytics.android.api.BrowseEvent;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
+import static org.apache.commons.lang3.StringUtils.indexOf;
+
 /**
  * Created by thor on 2017/8/8.
  */
@@ -42,7 +44,8 @@ public class MyImageAdapter extends PagerAdapter {
         if(last_position != -1){  // if its not from feed page, then upload browse data of last photo
             String last_url = imageUrls.get(last_position);
             // get file_name subString
-            int begin_index = last_url.indexOf("/");
+            int pre_index = last_url.indexOf("//");
+            int begin_index = last_url.indexOf("/", pre_index + 2);
             int end_index = last_url.indexOf("?");
             String subStirng = last_url.substring(begin_index+1, end_index);
             // get duration

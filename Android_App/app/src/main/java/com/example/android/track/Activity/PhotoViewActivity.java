@@ -45,6 +45,8 @@ import cn.jiguang.analytics.android.api.BrowseEvent;
 import cn.jiguang.analytics.android.api.CountEvent;
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
+import static android.R.attr.duration;
+import static android.R.attr.end;
 import static android.R.id.message;
 
 
@@ -71,6 +73,10 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
 
     private ProgressDialog progressDialog;
 
+    private boolean justOnePhoto = false;
+    private long begin_time;
+    private long end_time;
+
     //private
 
     @Override
@@ -95,6 +101,25 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(justOnePhoto){  // if just one photo, then upload its browse time
+            // get duration
+            end_time = System.currentTimeMillis();
+            long duration = end_time - begin_time;
+            duration = duration / 1000;
+            // get photo id
+            String url = Urls.get(0);
+            int pre_index = url.indexOf("//");
+            int begin_index = url.indexOf("/", pre_index + 2);
+            int end_index = url.indexOf("?");
+            String subStirng = url.substring(begin_index+1, end_index);
+            BrowseEvent bEvent = new BrowseEvent(subStirng, subStirng, "photo", duration);
+            bEvent.addKeyValue("browser_id", "" + new Verify().getUser_id());
+            JAnalyticsInterface.onEvent(PhotoViewActivity.this, bEvent);
+        }
+    }
 
     public static void initSystemBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//因为不是所有的系统都可以设置颜色的，在4.4以下就不可以。。有的说4.1，所以在设置的时候要检查一下系统版本是否是4.1以上
@@ -171,6 +196,10 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showPhotos() {
+        if(Urls.size() == 1){  // if this feed only have one photo,then begin count time
+            justOnePhoto = true;
+            begin_time = System.currentTimeMillis();
+        }
         adapter = new MyImageAdapter(Urls, this);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(currentPosition, false);
@@ -218,7 +247,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                     // save file if connection get success
                     if (conn.getResponseCode() == 200) {
                         // get album directory
-                        File dir = new File(Environment.getExternalStorageDirectory(),"track_download");
+                        File dir = new File(Environment.getExternalStorageDirectory(),"边走边拍");
                         if (!dir.exists()){
                             dir.mkdirs();
                         }
@@ -284,7 +313,7 @@ public class PhotoViewActivity extends AppCompatActivity implements View.OnClick
                 }
 
                 // upload downdata
-                CountEvent cEvent = new CountEvent("download count");
+                CountEvent cEvent = new CountEvent("download");
                 cEvent.addKeyValue("file_name",fileName);
                 cEvent.addKeyValue("downloader", verify.getUser_id());
                 JAnalyticsInterface.onEvent(PhotoViewActivity.this, cEvent);

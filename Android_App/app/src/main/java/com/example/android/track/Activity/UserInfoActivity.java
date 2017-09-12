@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.android.track.Application.MyApplication;
 import com.example.android.track.Model.ClientInfo;
 import com.example.android.track.R;
 import com.example.android.track.Util.AcquaintanceManager;
@@ -51,8 +52,13 @@ import java.io.IOException;
 import java.util.Calendar;
 
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.android.track.R.id.default_activity_button;
 import static com.example.android.track.R.id.user_name;
 
 public class UserInfoActivity extends AppCompatActivity {
@@ -81,7 +87,7 @@ public class UserInfoActivity extends AppCompatActivity {
     private final static int UPLOAD_INFO_OK = 5;
     private final static int UPLOAD_INFO_FAILED = 6;
     private final static int UPLOAD_PIC_OK = 7;
-
+    private final static int EXIST_NAME = 8;
 
     // record if has changed
     //private Boolean infoChanged = false; do not check info , upload anyway
@@ -183,6 +189,8 @@ public class UserInfoActivity extends AppCompatActivity {
         email_et = (EditText) findViewById(R.id.email_et);
 
         user_name_et.setText(user_name);
+        if(birthday.equals(""))         // set default birthday
+            birthday = "2017-09-01";
         birthday_tv.setText(birthday);
         if(gender.equals("male"))
             gender_group.check(R.id.male);
@@ -230,8 +238,11 @@ public class UserInfoActivity extends AppCompatActivity {
                 Message message = new Message();
                 if (result.equals("failed"))
                     message.what = UPLOAD_INFO_FAILED;
-                else
+                else if (result.equals("exist name"))
+                    message.what = EXIST_NAME;
+                else {
                     message.what = UPLOAD_INFO_OK;
+                }
                 handler.sendMessage(message);
             }
         }).start();
@@ -273,7 +284,7 @@ public class UserInfoActivity extends AppCompatActivity {
         }
         // create image URI
         if(Build.VERSION.SDK_INT >= 24){ // lower than Android 7.0
-            new_portrait_uri = FileProvider.getUriForFile(UserInfoActivity.this, "com.example.android.Android_app.fileProvider", outputImage);
+            new_portrait_uri = FileProvider.getUriForFile(UserInfoActivity.this, "com.example.android.track.fileProvider", outputImage);
         }else{
             new_portrait_uri = Uri.fromFile(outputImage);
         }
@@ -324,7 +335,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 portraitChanged = true;
                 break;
             case CHOOSE_PHOTO :
-                if(resultCode != 0) {
+                if(resultCode == RESULT_OK) {
                     ImageUriParser imageUriParser = new ImageUriParser(this);
                     String path = imageUriParser.parse(data.getData());
                     Bitmap bitmap = BitmapFactory.decodeFile(path, options);
@@ -423,6 +434,25 @@ public class UserInfoActivity extends AppCompatActivity {
                     setInfo();
                     break;
                 case UPLOAD_INFO_OK:
+                    JMessageClient.getUserInfo(new Verify().getUser_id(), new GetUserInfoCallback() {
+                        @Override
+                        public void gotResult(int i, String s, UserInfo userInfo) {
+                            if(i == 0){
+                                String user_name = user_name_et.getText().toString();
+                                userInfo.setNickname(user_name);
+                                JMessageClient.updateMyInfo(UserInfo.Field.nickname, userInfo, new BasicCallback() {
+                                    @Override
+                                    public void gotResult(int i, String s) {
+                                        if(i == 0) {
+                                            //Toast.makeText(MyApplication.getContext(), "修改昵称成功", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                            Toast.makeText(MyApplication.getContext(), "修改聊天昵称失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    });
                     progressDialog.setMessage("上传个人信息成功");
                     // upload new portrait
                     if (portraitChanged) {
@@ -432,17 +462,31 @@ public class UserInfoActivity extends AppCompatActivity {
                         String user_id = verify.getUser_id();
                         ossService.asyncPutImage(user_id + "_portrait", portrait_path);
                     }
-                    else
+                    else {
+                        Intent intent = new Intent();
+                        setResult(RESULT_OK, intent);
                         finish();
+                    }
                     break;
                 case UPLOAD_INFO_FAILED:
-                    Toast.makeText(UserInfoActivity.this, "edit failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserInfoActivity.this, "修改信息失败", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     break;
                 case UPLOAD_PIC_OK:
                     AcquaintanceManager.saveAcquaintance(Integer.valueOf(new Verify().getUser_id()));
                     progressDialog.setMessage("新头像上传成功");
                     progressDialog.dismiss();
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
                     finish();
+                    break;
+
+                case EXIST_NAME:
+                    progressDialog.dismiss();
+                    Toast.makeText(UserInfoActivity.this, "用户名已有人使用，请重新编辑",Toast.LENGTH_SHORT);
+                    break;
+
+                default:
                     break;
             }
         }
