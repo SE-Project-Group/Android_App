@@ -46,6 +46,7 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 import static android.R.id.list;
 import static cn.jpush.im.android.api.enums.ContentType.location;
+import static com.example.android.track.R.id.showLocation_btn;
 
 
 public class NewFeedActivity extends AppCompatActivity {
@@ -113,6 +114,7 @@ public class NewFeedActivity extends AppCompatActivity {
         mentionNames_tv = (TextView) findViewById(R.id.mention_names);
         shareArea_group = (RadioGroup) findViewById(R.id.shareArea_group);
         shareArea_group.check(R.id.rb1);  // default is public
+        showLocation_cb = (CheckBox) findViewById(showLocation_btn);
 
 
         mentionMenu.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +160,8 @@ public class NewFeedActivity extends AppCompatActivity {
             // if has building name , display it
             if(city == null && district == null & street == null){
                 detailed_location = "无法获取当前定位，请检查GPS及网络状态";
+                showLocation = false;
+                showLocation_cb.setChecked(false);
                 return;
             }
             if(building != null)
@@ -275,8 +279,8 @@ public class NewFeedActivity extends AppCompatActivity {
             case R.id.rb3:
                 shareArea = PRIVATE;
         }
-        CheckBox showLocation_btn = (CheckBox) findViewById(R.id.showLocation_btn);
-        if(showLocation_btn.isChecked())
+
+        if(showLocation_cb.isChecked())
             showLocation = true;
         else
             showLocation = false;

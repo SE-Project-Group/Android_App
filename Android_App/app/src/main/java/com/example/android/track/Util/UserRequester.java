@@ -290,6 +290,9 @@ public class UserRequester {
         if(response.equals("success")){
             return "success";
         }
+        else if(response.equals("exist name")){
+            return response;
+        }
         else
             return "failed";
     }

@@ -140,6 +140,8 @@ public class ChooseMentionActivity extends AppCompatActivity{
         new Thread(new Runnable() {
             @Override
             public void run() {
+                List<Integer> choosen = new ArrayList<Integer>();
+
                 Verify verify = new Verify();
                 int my_id = Integer.valueOf(verify.getUser_id());
                 UserRequester requester = new UserRequester();
@@ -147,12 +149,17 @@ public class ChooseMentionActivity extends AppCompatActivity{
                 for(Acquaintance acquaintance : acquaintanceList){
                     if(acquaintance.getUser_id() == my_id)
                         continue;
+
+                    if(choosen.contains(acquaintance.getUser_id()) == true)  // if choosen, drop it
+                        continue;
+
                     Follow follow = new Follow();
                     follow.setUser_name(acquaintance.getUser_name());
                     follow.setUser_id(acquaintance.getUser_id());
                     follow.setState("stranger");
                     follow.setportrait_url(requester.getPortraitUrl(acquaintance.getUser_id()));
                     follows.add(follow);
+                    choosen.add(acquaintance.getUser_id());
                 }
 
                 Message message = new Message();

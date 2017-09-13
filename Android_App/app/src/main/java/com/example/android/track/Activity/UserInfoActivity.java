@@ -58,6 +58,8 @@ import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static cn.jpush.im.android.api.model.UserInfo.Field.birthday;
+import static cn.jpush.im.android.api.model.UserInfo.Field.gender;
 import static com.example.android.track.R.id.default_activity_button;
 import static com.example.android.track.R.id.user_name;
 
@@ -208,6 +210,19 @@ public class UserInfoActivity extends AppCompatActivity {
     }
 
     private void upload() {
+        // check user_name
+        String user_name = user_name_et.getText().toString();
+        String gender = "male";
+        if(gender_group.getCheckedRadioButtonId()==R.id.female)
+            gender = "female";
+        String birthday = birthday_tv.getText().toString();
+        String email = email_et.getText().toString();
+
+        if(user_name.equals("") || user_name.length()>15){
+            Toast.makeText(UserInfoActivity.this, "用户名不符合规范", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // show dialog
         progressDialog.setTitle("正在拼命上传");
         progressDialog.setMessage("上传个人信息......");
@@ -215,12 +230,7 @@ public class UserInfoActivity extends AppCompatActivity {
         progressDialog.show();
 
         // upload info
-        String user_name = user_name_et.getText().toString();
-        String gender = "male";
-        if(gender_group.getCheckedRadioButtonId()==R.id.female)
-            gender = "female";
-        String birthday = birthday_tv.getText().toString();
-        String email = email_et.getText().toString();
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_name", user_name);
@@ -483,7 +493,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
                 case EXIST_NAME:
                     progressDialog.dismiss();
-                    Toast.makeText(UserInfoActivity.this, "用户名已有人使用，请重新编辑",Toast.LENGTH_SHORT);
+                    Toast.makeText(UserInfoActivity.this, "用户名已有人使用，请重新编辑",Toast.LENGTH_SHORT).show();
                     break;
 
                 default:

@@ -87,6 +87,8 @@ public class CommentActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         CommentAdapter adapter = new CommentAdapter(commentList, this, feed_id, false);
         recyclerView.setAdapter(adapter);
+        if(commentList.size() == 0)
+            Toast.makeText(CommentActivity.this, "暂时没有评论呢", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -102,6 +104,11 @@ public class CommentActivity extends AppCompatActivity {
                 // check input
                 if(comment.length() > 140){
                     Toast.makeText(CommentActivity.this, "输入内容不能超过140字哦", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(comment.equals("")){
+                    Toast.makeText(CommentActivity.this, "您尚未输入任何内容", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

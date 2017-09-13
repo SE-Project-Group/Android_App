@@ -75,8 +75,19 @@ public class AcquaintanceManager {
                             acquaintance.setUpdateTime(new Date(System.currentTimeMillis()));
                             acquaintance.save();
                         }
-                        else
+                        else {   // if user has not upload portrait, just get other info
+                            Acquaintance acquaintance = new Acquaintance();
+                            acquaintance.setUser_id(user_id);
+                            UserInfo userInfo = new UserRequester().getHomeInfo(user_id);
+                            if(userInfo != null)
+                                acquaintance.setUser_name(userInfo.getName());
+                            else
+                                acquaintance.setUser_name("stranger");
+                            acquaintance.setRelationship(userInfo.getRelationship());
+                            acquaintance.setUpdateTime(new Date(System.currentTimeMillis()));
+                            acquaintance.save();
                             return;
+                        }
                     }catch (Exception e){
                         e.printStackTrace();
                     }

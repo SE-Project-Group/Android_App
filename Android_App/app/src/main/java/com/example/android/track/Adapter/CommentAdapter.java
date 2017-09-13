@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.android.track.Activity.CommentActivity;
@@ -150,6 +151,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         // 获取EditView中的输入内容
                         EditText edit_text =
                                 (EditText) dialogView.findViewById(R.id.edit_text);
+                        if(edit_text.getText().toString().equals("")){
+                            Toast.makeText(context, "您尚未编辑任何内容", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
